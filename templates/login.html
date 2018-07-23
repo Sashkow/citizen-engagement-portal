@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <a
+           role="button"
+       {% with next=request.GET.next %}
+           href="{% url ‘social:begin’ ‘google-oauth2’ %}{% if next %}?next={{ next }}"{% endif %}
+       {% endwith %}
+       >Sign in with Google</a>
+</body>
+</html>
