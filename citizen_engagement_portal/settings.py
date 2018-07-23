@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from citizen_engagement_portal.password import getpass
+from citizen_engagement_portal.password import getpass, getdatabases
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -85,16 +85,7 @@ WSGI_APPLICATION = 'citizen_engagement_portal.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'volunteer_db',
-        'USER': 'volunteer_user',
-        'PASSWORD': getpass(),
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+DATABASES = getdatabases()
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
