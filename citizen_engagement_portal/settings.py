@@ -26,7 +26,7 @@ SECRET_KEY = '-7%yc)idb7m56wxee1@v4qh-q6aw-jutwq%%8@3%r@+o_)q#v!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 'social.apps.django_app.default',
-    'social_django',
+    # 'social_django',
     'volunteer',
 ]
 
@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+    # 'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'citizen_engagement_portal.urls'
@@ -142,12 +142,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 )
 
-# Add the google credentials
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '613230157576-6j46bo3jb1i2arb3fll50imcn102r04a.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ' ER-U8rN8TorZUOCRydbvSeaJ'
+# # Add the google credentials
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '613230157576-6j46bo3jb1i2arb3fll50imcn102r04a.apps.googleusercontent.com'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ' ER-U8rN8TorZUOCRydbvSeaJ'
 
 
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'index'
-LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'index'
+# LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
