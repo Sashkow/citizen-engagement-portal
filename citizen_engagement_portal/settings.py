@@ -126,15 +126,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.instagram.InstagramOAuth2',
-    'social.backends.google.GoogleOpenId',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOAuth',
-
-    'django.contrib.auth.backends.ModelBackend',
-)
+# AUTHENTICATION_BACKENDS = (
+#     'social_core.backends.facebook.FacebookOAuth2',
+#     'social_core.backends.instagram.InstagramOAuth2',
+#     'social.backends.google.GoogleOpenId',
+#     'social.backends.google.GoogleOAuth2',
+#     'social.backends.google.GoogleOAuth',
+#
+#     'django.contrib.auth.backends.ModelBackend',
+# )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.backends',
