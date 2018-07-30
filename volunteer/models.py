@@ -1,7 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User as DjangoUser
 
 
 #RETURN TO VERBOSE_NAME
+
 
 class EventsType(models.Model):
     type = models.CharField(max_length=80)
@@ -26,7 +28,7 @@ class User(models.Model):
     raiting_points = models.IntegerField(default=0)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     blocked = models.BooleanField(default=False)
-
+    django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
 
 
 
