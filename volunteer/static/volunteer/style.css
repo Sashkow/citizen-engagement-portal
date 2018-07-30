@@ -1,0 +1,60 @@
+.aboutus{
+    background-image:url('./images/volunteering.jpg');
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    height: 400px;
+}
+
+
+.navbarset{
+background-color:#4CAF50 !important;
+border-top-left-radius:25px;
+border-top-right-radius:25px;
+}
+
+#window{width:40vh;
+        height: 50vh;
+        margin:30vh auto;
+        border: 1px solid #fff;
+        border-radius: 10%;
+        z-index: 150;
+        display: none;
+        background: #fff;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+.form{
+    width: 35vh;
+    margin: 0px auto 20px auto;
+    text-align: center;
+}
+.input{
+    width: 33vh;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.close{
+    height: 20px;
+    margin: 2vh 0 0 36vh;
+    cursor: pointer;
+}
+.close:hover{
+    background: #fff;
+}
+#gray{
+    background-color: rgba(1,1,1,0.75);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: none;
+    z-index: 100;
+}
+

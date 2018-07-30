@@ -107,5 +107,3 @@ venv.bak/
 citizen_engagement_portal/password.py
 
 .idea
-
-static/
