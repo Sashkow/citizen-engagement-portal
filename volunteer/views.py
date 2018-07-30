@@ -17,9 +17,9 @@ from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeFor
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.shortcuts import render, redirect
 
-@login_required
-def home(request):
-    return render(request, 'core/home.html')
+# @login_required
+# def home(request):
+#     return render(request, 'core/home.html')
 
 def signup(request):
     if request.method == 'POST':
@@ -36,3 +36,9 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+def home(request):
+    return render(request, 'home.html')
+
+
+def profile(request):
+    return render(request, 'profile.html')
