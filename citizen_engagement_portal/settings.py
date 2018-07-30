@@ -26,7 +26,7 @@ SECRET_KEY = '-7%yc)idb7m56wxee1@v4qh-q6aw-jutwq%%8@3%r@+o_)q#v!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '159.89.111.14']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '159.89.111.14', 'localhost']
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 'social.apps.django_app.default',
-    # 'social_django',
+    'social_django',
     'volunteer',
 ]
 
@@ -70,6 +70,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect'
 
 
 
@@ -136,6 +139,17 @@ STATIC_URL = '/static/'
 #     'django.contrib.auth.backends.ModelBackend',
 # )
 
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
@@ -143,11 +157,33 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 # # Add the google credentials
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '613230157576-6j46bo3jb1i2arb3fll50imcn102r04a.apps.googleusercontent.com'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ' ER-U8rN8TorZUOCRydbvSeaJ'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '613230157576-6j46bo3jb1i2arb3fll50imcn102r04a.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ' ER-U8rN8TorZUOCRydbvSeaJ'
 
 
-# SOCIAL_AUTH_URL_NAMESPACE = 'social'
-# LOGIN_URL = 'login'
-# LOGIN_REDIRECT_URL = 'index'
-# LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
+SOCIAL_AUTH_FACEBOOK_KEY = '2125271371046613'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'b3bf33810e413c2be7c53e78395c9431'  # App Secret
+
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+
+# SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.social_details',
+#     'social_core.pipeline.social_auth.social_uid',
+#     'social_core.pipeline.social_auth.social_user',
+#     'social_core.pipeline.user.get_username',
+#     'social_core.pipeline.user.create_user',
+#     'social_core.pipeline.social_auth.associate_user',
+#     'social_core.pipeline.social_auth.load_extra_data',
+#     'social_core.pipeline.user.user_details',
+#     'social_core.pipeline.social_auth.associate_by_email',
+# )
+#
+# SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
+#
