@@ -41,7 +41,10 @@
 
           <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
           <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
-          <button class="btn text-primary-color dark-primary-color my-2 my-sm-0" type="submit">Вийти</button>
+        <form action="{% url 'logout' %}">
+            <button class="btn text-primary-color dark-primary-color my-2 my-sm-0" type="submit">Вийти</button>
+        </form>
+
 
       </div>
 </nav>
@@ -51,7 +54,7 @@
        <div class="row align-self-center"  style="height: 30vh;">
            <div class="col-md-4 text-center my-auto">
                <img  src="{% static 'volunteer/images/user_profile_default.png' %}" style="height: 20vh;">
-               <h1>Name</h1>
+               <h1>{{user.first_name}}</h1>
                <div class="progress">
                   <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                </div>

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # 'social.apps.django_app.default',
     'social_django',
     'volunteer',
+    'social-core-master',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +123,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -141,9 +141,13 @@ STATIC_URL = '/static/'
 
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
+
+    'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+
+    # 'social_core.backends.telegram.TelegramAuth',
 
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -157,19 +161,25 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 # # Add the google credentials
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '613230157576-6j46bo3jb1i2arb3fll50imcn102r04a.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ' ER-U8rN8TorZUOCRydbvSeaJ'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'ER-U8rN8TorZUOCRydbvSeaJ'
 
 
 SOCIAL_AUTH_FACEBOOK_KEY = '2125271371046613'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'b3bf33810e413c2be7c53e78395c9431'  # App Secret
+
+# SOCIAL_AUTH_TELEGRAM_BOT_TOKEN='672778965:AAExRuzTuJFJHBlhb9oX09rAO-4OYvNkIQ8'
+# SECRET_KEY='MyVerySecretKey'
+
 
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'profile'
+LOGOUT_REDIRECT_URL = 'login'
 
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 

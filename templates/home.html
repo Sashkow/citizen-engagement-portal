@@ -28,9 +28,13 @@
                  <input type="text" placeholder="Прізвище" name="name2" class="input">
                 <input type='tel' placeholder="Місто" name="tel" class="input">
                 <div class="socal_logos">
-                    <a href="#"><img class = "col-md-3" src="{% static 'volunteer/images/facebook.png' %}"></a>
-                    <a href="#"><img class = "col-md-3" src="{% static 'volunteer/images/telegram.png' %}"></a>
-                    <a href="#"><img class = "col-md-3" src="{% static 'volunteer/images/google.png' %}"></a>
+                    <a href="{% url 'social:begin' 'facebook' %}"><img class = "col-md-3" src="{% static 'volunteer/images/facebook.png' %}"></a>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}"><img class = "col-md-3" src="{% static 'volunteer/images/google.png' %}"></a>
+                    <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Login</button>
+                  </form>
                 </div>
                 <input type="submit" value="Реєстрація" name="sab" class="input">
 
