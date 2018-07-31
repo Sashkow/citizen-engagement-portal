@@ -58,3 +58,7 @@ border-top-right-radius:25px;
     z-index: 100;
 }
 
+.border-botom{
+    border-bottom-color:#4CAF50;
+}
+

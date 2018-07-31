@@ -52,10 +52,10 @@ class EventAdmin(admin.ModelAdmin):
     exclude = ['ID']
     fieldsets = (
         (None, {
-            'fields': ('name_of_event', 'organizer', 'date_event', 'events_type',)
+            'fields': ('name', 'organizer', 'date_event', 'events_type',)
         }),
         ('Address', {
-            'fields': ('city', 'district', 'address',)
+            'fields': ('district', 'address',)
         }),
         ('Description', {
             'classes': ('collapse',),
