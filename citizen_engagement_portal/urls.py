@@ -22,15 +22,16 @@ from volunteer import views as core_views
 from django.urls import path
 
 urlpatterns = [
-    url(r'^$', core_views.home, name='home'),
+    url(r'^$', auth_views.login, name='login'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^signup/$', core_views.signup, name='signup'),
-    url(r'^oauth/', include('social_django.urls', namespace='social2')),  # <--
-    url('auth/', include('social_django.urls', namespace='social')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
+    # url('auth/', include('social_django.urls', namespace='social')),
     url(r'^admin/', admin.site.urls),
-    url(r'home/$', core_views.home),
-    url(r'^profile/$', core_views.profile)
+
+    # url(r'^home/$', core_views.home),
+    url(r'^profile/$', core_views.profile, name='profile')
 ]
 
 
