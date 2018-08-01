@@ -5,6 +5,9 @@ from django.contrib.auth.models import User as DjangoUser
 #RETURN TO VERBOSE_NAME
 
 
+from citizen_engagement_portal import settings
+import os
+
 class EventsType(models.Model):
     type = models.CharField(max_length=80)
 
@@ -16,17 +19,17 @@ class City(models.Model):
 class Rank(models.Model):
     rank = models.CharField(max_length=80)
     quantity_of_points = models.IntegerField()
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='3')
 
 
 class User(models.Model):
     first_name = models.CharField(max_length=80)
     last_name = models.CharField(max_length=80)
     date_of_registration = models.DateField(auto_now_add=True)
-    photo = models.ImageField(null=True, blank=True)
-    rank = models.ForeignKey(Rank, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
+    rank = models.ForeignKey(Rank, on_delete=models.CASCADE, default='2')
     raiting_points = models.IntegerField(default=0)
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='3')
     blocked = models.BooleanField(default=False)
     django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
 
@@ -103,5 +106,6 @@ class Report(models.Model):
 
 class EventsPhoto(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'event_images'),)
     is_it_cover = models.BooleanField(default=False)
+
