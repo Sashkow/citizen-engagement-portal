@@ -17,5 +17,5 @@ urlpatterns = [
 
     url(r'^profile/$', core_views.profile, name='profile'),
     url(r'^event/$', core_views.event),
-    url(r'^newevent/$', core_views.new_event)
+    url(r'^newevent/$', core_views.new_event, name='newevent')
 ]
