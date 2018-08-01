@@ -1,40 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна</title>
 
-<!--{% load static %}<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head>-->
-  <!--<title>Simple Social Auth</title>-->
-  <!--<link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">-->
-<!--</head>-->
-<!--<body>-->
-  <!--<header>-->
-    <!--<h1>Simple Social Auth</h1>-->
-    <!--{% if user.is_authenticated %}-->
-      <!--You are signed in as <strong>{{ user.username }}</strong> /-->
-      <!--<a href="{% url 'home' %}">home</a> /-->
-      <!--<a href="{% url 'settings' %}">settings</a> /-->
-      <!--<a href="{% url 'password' %}">change password</a> /-->
-      <!--<a href="{% url 'logout' %}">logout</a>-->
-    <!--{% else %}-->
-      <!--<a href="{% url 'login' %}">login</a> /-->
-      <!--<a href="{% url 'signup' %}">signup</a>-->
-    <!--{% endif %}-->
-    <!--<hr>-->
-  <!--</header>-->
-  <!--<main>-->
-    <!--{% for message in messages %}-->
-      <!--<p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">-->
-        <!--{{ message }}-->
-      <!--</p>-->
-    <!--{% endfor %}-->
-    <!--{% block content %}-->
-    <!--{% endblock %}-->
-  <!--</main>-->
-  <!--<footer>-->
-    <!--<hr>-->
-    <!--<small>-->
-      <!--<a href="https://simpleisbetterthancomplex.com">simpleisbetterthancomplex.com</a> /-->
-      <!--<a href="https://simpleisbetterthancomplex.com/tutorial/2016/10/24/how-to-add-social-login-to-django.html">read more about this example</a>-->
-    <!--</small>-->
-  <!--</footer>-->
-<!--</body>-->
-<!--</html>-->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"  crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href = "{% static 'volunteer/palette.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'volunteer/style.css' %}" />
+
+    {% block adding_link %}{% endblock %}
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light navbarset container">
+        <a href="#" class="navbar-left">
+            <img src="{% static 'volunteer/images/hands.png' %}" style = "height:10vh">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% block menu_item %}{% endblock %}
+            </ul>
+
+            <!--<form action="{% url 'logout' %}">-->
+                {% block menu_button %}{% endblock %}
+            <!--</form>-->
+
+
+          </div>
+    </nav>
+
+
+
+
+
+    <div class="container">
+
+        <!--<div class="row mh70 aboutus align-items-center" style="height: 90vh;" >-->
+
+
+            <!--<div class="col-md-12">-->
+		<!--<div class="row ">-->
+
+
+		        <!--<div class="col-md-8 offset-md-4">-->
+				<!--<h2 class = "primary-text" style = "background : rgba(255,255,255,.6)">Платформа волонтерів — <smal> це портал, де одні небайдужі громадяни можуть шукати для себе волонтерські активності (події), а інші — додавати ці події</smal></h2>-->
+
+		       <!--</div>-->
+
+		<!--</div>-->
+            <!--</div>-->
+
+
+        <!--</div>-->
+
+        <!--<div class="row align-items-center" style="height: 80vh;">-->
+
+            <!--<div class="col-md-4 text-center ">-->
+               <!--<img src ="{% static 'volunteer/images/groups.png' %}"style = "height:15%"/>-->
+		<!--<div class="obertka">-->
+		        <!--<h2 class="text-center"> Спільнота </h2>-->
+		        <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>-->
+		<!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="col-md-4 text-center">-->
+
+                <!--<img src ="{% static 'volunteer/images/groups.png' %}" style = "height:15%"/>-->
+                <!--<h2 class="text-center"> Події </h2>-->
+                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>-->
+
+
+            <!--</div>-->
+
+            <!--<div class="col-md-4 text-center">-->
+                <!--<img src ="{% static 'volunteer/images/groups.png' %}" style = "height:15%"/>-->
+                <!--<h2 class="text-center"> Призи </h2>-->
+                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>-->
+            <!--</div>-->
+
+        <!--</div>-->
+
+
+
+        <!--<div class="row" style="height:20vh">-->
+            <!--<div class="col-md-12 text-center">-->
+                <!--<button class="btn btn-lg dark-primary-color text-primary-color" onclick = "show('block')">Приєднатися</button>-->
+            <!--</div>-->
+
+        <!--</div>-->
+        {% block container %}{% endblock %}
+    </div>
+    <script type="text/javascript">
+        function show(state){
+            document.getElementById('window').style.display = state;
+            document.getElementById('gray').style.display = state;
+        }
+    </script>
+</body>
+</html>
+

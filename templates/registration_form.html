@@ -1,0 +1,19 @@
+{% load static %}
+<div id="gray" onclick = "show('none')"></div>
+    <div id="window">
+    <img class = "close" src="{% static 'volunteer/images/close.png' %}" alt="" onclick = "show('none')">
+    <div class="form">
+        <h2>Реєстрація</h2>
+        <form action="index.html" name="f1">
+            <input type="text" placeholder="Ім'я" name="name1" class="input">
+            <input type="text" placeholder="Прізвище" name="name2" class="input">
+            <input type='tel' placeholder="Місто" name="tel" class="input">
+                <div class="socal_logos">
+                    <a href="{% url 'social:begin' 'facebook' %}"><img class = "col-md-3" src="{% static 'volunteer/images/facebook.png' %}"></a>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}"><img class = "col-md-3" src="{% static 'volunteer/images/google.png' %}"></a>
+                </div>
+            <input type="submit" value="Реєстрація" name="sab" class="input">
+
+        </form>
+    </div>
+</div>
