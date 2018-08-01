@@ -19,6 +19,8 @@ from django.shortcuts import render, redirect, reverse
 
 from volunteer.models import User, DjangoUser, Event, EventsPhoto
 
+from volunteer.forms import NewEventForm
+
 
 
 # @login_required
@@ -81,4 +83,17 @@ def event(request):
     return render(request, 'event.html')
 
 def new_event(request):
-    return render(request, 'new_event.html')
+    if request.method == "POST":
+        form = NewEventForm(request.POST)
+        if form.is_valid():
+            print("valid")
+            event = form.save(commit=False)
+            event.organizer = User.objects.get_or_create(djang_user = request.user)
+            event.save()
+            return redirect(reverse('profile'))
+        else:
+            print("not valid")
+
+    else:
+        form = NewEventForm()
+        return render(request, 'volunteer/new_event.html', {'form':form})
