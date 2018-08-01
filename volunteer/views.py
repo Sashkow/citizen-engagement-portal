@@ -76,3 +76,9 @@ def profile(request):
 
     return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events})
 
+
+def event(request):
+    return render(request, 'event.html')
+
+def new_event(request):
+    return render(request, 'new_event.html')

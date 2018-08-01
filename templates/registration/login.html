@@ -1,5 +1,4 @@
 
-
 {% load static %}
 {% csrf_token %}
 <!DOCTYPE html>
@@ -26,6 +25,7 @@
         <img class = "close" src="{% static 'volunteer/images/close.png' %}" alt="" onclick = "show('none')">
         <div class="form">
             <h2>Реєстрація</h2>
+
             <form method="post" name="f1">
                 <input type="text" placeholder="Ім'я" name="name1" class="input">
                 <input type="text" placeholder="Прізвище" name="name2" class="input">

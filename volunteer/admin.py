@@ -55,7 +55,7 @@ class EventAdmin(admin.ModelAdmin):
             'fields': ('name', 'organizer', 'date_event', 'events_type',)
         }),
         ('Address', {
-            'fields': ( 'district', 'address',)
+            'fields': ('district', 'address',)
         }),
         ('Description', {
             'classes': ('collapse',),
