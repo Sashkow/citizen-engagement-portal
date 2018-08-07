@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
-from volunteer import models
+from volunteer.models import Event
 
 
 class NewEventForm(ModelForm):
     class Meta:
-        model = models.Event
+        model = Event
         fields = ['name', 'date_event', 'events_type', 'address', 'district', 'description']
         labels = {
             'name': 'Назва',

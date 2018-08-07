@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-
-
 {% block menu_item %}
     <li class="nav-item">
         <a class="nav-link" href="#">Знайти подію<span class="sr-only">(current)</span></a>
@@ -21,24 +19,23 @@
 {% endblock %}
 
 {% block container %}
-           <form method="post" style="margin-top: 20vh;
-            border: solid 1px;
-            border-radius: 15px;
-            padding: 5vh;
-            background-color: grey;" enctype="multipart/form-data" action="/newevent/" >
+<!--enctype="multipart/form-data" action="/newevent/"-->
+    <form method="post" style="margin-top: 20vh;
+        border: solid 1px;
+        border-radius: 15px;
+        padding: 5vh;
+        background-color: grey;">
+    <div class="form-group row">
+    {% for field in form %}
 
-
-       <div class="form-group row">
-            {% for field in form %}
-
-                  <label  class="col-md-2 col-form-label">{{field.label}}</label>
-                  <div class="col-md-10">
-                    {{field}}
-                  </div>
-           {% endfor %}
-           <button class="btn" type="submit"> Додати подію</button>
-        </div>
-       </form>
+          <label  class="col-md-2 col-form-label">{{field.label}}</label>
+          <div class="col-md-10">
+            {{field}}
+          </div>
+   {% endfor %}
+   <button class="btn" type="submit"> Додати подію</button>
+    </div>
+    </form>
 {% endblock %}
 
 
