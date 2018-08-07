@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import *
 
 
+admin.site.empty_value_display = '(None)'
 
 
 class EventsTypeAdmin(admin.ModelAdmin):
@@ -30,6 +31,8 @@ admin.site.register(Rank, RankAdmin)
 class UserAdmin(admin.ModelAdmin):
     list_display = [field.name for field in User._meta.fields]
     exclude = ['rating_points', 'blocked', 'ID']
+    list_filter = ['rank', 'city', 'blocked']
+    search_fields = ['first_name', 'last_name']
 
 admin.site.register(User, UserAdmin)
 
@@ -38,18 +41,24 @@ admin.site.register(User, UserAdmin)
 class DigestListAdmin(admin.ModelAdmin):
     list_display = [field.name for field in DigestList._meta.fields]
     exclude = ['ID']
+    list_filter = ['type']
+
 admin.site.register(DigestList, DigestListAdmin)
 
 
 class DistrictAdmin(admin.ModelAdmin):
     list_display = [field.name for field in District._meta.fields]
     exclude = ['ID']
+    list_filter = ['city']
+    search_fields = ['district']
+
 admin.site.register(District, DistrictAdmin)
 
 
 class EventAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Event._meta.fields]
     exclude = ['ID']
+    list_filter = ['events_type', 'district']
     fieldsets = (
         (None, {
             'fields': ('name', 'organizer', 'date_event', 'events_type',)
@@ -62,6 +71,7 @@ class EventAdmin(admin.ModelAdmin):
             'fields' : ('description',),
         })
     )
+    search_fields = ['name']
 
 admin.site.register(Event, EventAdmin)
 

@@ -82,3 +82,5 @@ def event(request):
 
 def new_event(request):
     return render(request, 'new_event.html')
+
+
