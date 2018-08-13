@@ -17,9 +17,13 @@ from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeFor
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.shortcuts import render, redirect, reverse
 
-from volunteer.models import User, DjangoUser, Event, EventsPhoto
+from volunteer.models import User, DjangoUser, Event, EventsPhoto, EventsParticipant, EventsSubscriber
 
 from volunteer.forms import NewEventForm
+
+from django.core.exceptions import ObjectDoesNotExist
+
+from django.http import HttpResponse
 
 
 
@@ -69,6 +73,8 @@ def profile(request):
 
     events = Event.objects.all()
     for event in events:
+        event.following = len(EventsSubscriber.objects.filter(event=event))
+        event.going = len(EventsParticipant.objects.filter(event=event))
         event_photos = EventsPhoto.objects.filter(event = event, is_it_cover =True)
         if len(event_photos) == 1:
             event_photo = event_photos[0]
@@ -79,8 +85,20 @@ def profile(request):
     return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events})
 
 
-def event(request):
-    return render(request, 'event.html')
+def event(request, id):
+    try:
+        the_event = Event.objects.get(pk=id)
+        following = len(EventsSubscriber.objects.filter(event = the_event))
+        going = len(EventsParticipant.objects.filter(event = the_event))
+        return render(request, 'event.html', {
+            'event' : the_event,
+            'following': following,
+            'going': going
+        })
+    except ObjectDoesNotExist:
+        return HttpResponse("event with id:{} not found".format(id))
+
+
 
 def new_event(request):
     if request.method == "POST":
@@ -88,7 +106,7 @@ def new_event(request):
         if form.is_valid():
             print("valid")
             event = form.save(commit=False)
-            event.organizer = User.objects.get_or_create(djang_user = request.user)
+            event.organizer = User.objects.get_or_create(django_user_id = request.user)[0]
             event.save()
             return redirect(reverse('profile'))
         else:

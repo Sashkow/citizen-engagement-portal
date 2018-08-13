@@ -23,7 +23,7 @@
 <body>
 
     <nav class="navbar navbar-expand-md navbar-light bg-light navbarset container">
-        <a href="#" class="navbar-left">
+        <a href="{% url 'home' %}" class="navbar-left">
             <img src="{% static 'volunteer/images/hands.png' %}" style = "height:10vh">
         </a>
 
@@ -50,59 +50,7 @@
 
     <div class="container">
 
-        <!--<div class="row mh70 aboutus align-items-center" style="height: 90vh;" >-->
 
-
-            <!--<div class="col-md-12">-->
-		<!--<div class="row ">-->
-
-
-		        <!--<div class="col-md-8 offset-md-4">-->
-				<!--<h2 class = "primary-text" style = "background : rgba(255,255,255,.6)">Платформа волонтерів — <smal> це портал, де одні небайдужі громадяни можуть шукати для себе волонтерські активності (події), а інші — додавати ці події</smal></h2>-->
-
-		       <!--</div>-->
-
-		<!--</div>-->
-            <!--</div>-->
-
-
-        <!--</div>-->
-
-        <!--<div class="row align-items-center" style="height: 80vh;">-->
-
-            <!--<div class="col-md-4 text-center ">-->
-               <!--<img src ="{% static 'volunteer/images/groups.png' %}"style = "height:15%"/>-->
-		<!--<div class="obertka">-->
-		        <!--<h2 class="text-center"> Спільнота </h2>-->
-		        <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>-->
-		<!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="col-md-4 text-center">-->
-
-                <!--<img src ="{% static 'volunteer/images/groups.png' %}" style = "height:15%"/>-->
-                <!--<h2 class="text-center"> Події </h2>-->
-                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>-->
-
-
-            <!--</div>-->
-
-            <!--<div class="col-md-4 text-center">-->
-                <!--<img src ="{% static 'volunteer/images/groups.png' %}" style = "height:15%"/>-->
-                <!--<h2 class="text-center"> Призи </h2>-->
-                <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>-->
-            <!--</div>-->
-
-        <!--</div>-->
-
-
-
-        <!--<div class="row" style="height:20vh">-->
-            <!--<div class="col-md-12 text-center">-->
-                <!--<button class="btn btn-lg dark-primary-color text-primary-color" onclick = "show('block')">Приєднатися</button>-->
-            <!--</div>-->
-
-        <!--</div>-->
         {% block container %}{% endblock %}
     </div>
     <script type="text/javascript">

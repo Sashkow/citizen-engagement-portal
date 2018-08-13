@@ -34,7 +34,6 @@ class User(models.Model):
     django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
 
 
-
 class DigestList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey(EventsType, on_delete=models.CASCADE)
@@ -43,6 +42,7 @@ class DigestList(models.Model):
 class District(models.Model):
     district = models.CharField(max_length=200)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
+
 
 class Event(models.Model):
     name = models.CharField(max_length=300)
@@ -53,6 +53,8 @@ class Event(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     publication_date = models.DateField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
+
+
 
 
 class EventsSubscriber(models.Model):
@@ -81,8 +83,6 @@ class Comment(models.Model):
         unique_together = (("user", "event", "date"),)
 
 
-
-
 class PointsHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -92,7 +92,6 @@ class PointsHistory(models.Model):
 
     class Meta:
         unique_together = (("user", "event", "date"),)
-
 
 
 class Report(models.Model):

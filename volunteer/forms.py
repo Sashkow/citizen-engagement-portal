@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
 from volunteer.models import Event
+from django.forms import SelectDateWidget
+
 
 
 class NewEventForm(ModelForm):
@@ -13,5 +15,7 @@ class NewEventForm(ModelForm):
             'address': 'Адреса',
             'district': 'Район',
             'description': 'Опис',
-
+        }
+        widgets = {
+            'date_event': SelectDateWidget(),
         }

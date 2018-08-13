@@ -41,7 +41,7 @@
 
     <div class="row">
         <div class="col-md-12 text-center ">
-            <h1>Event's name</h1>
+            <h1>{{event.name}}</h1>
         </div>
     </div>
 
@@ -54,22 +54,22 @@
                     <thead>
                         <tr>
                             <th scope="col border-botom">Дата:</th>
-                            <th scope="col">01.02.2018</th>
+                            <th scope="col">{{event.date_event}}</th>
                         </tr>
                     <thead>
                         <tr>
                             <th scope="col">Тип:</th>
-                            <th scope="col">Екологія</th>
+                            <th scope="col">{{event.events_type}}</th>
                         </tr>
                     <thead>
                         <tr>
                             <th scope="col">Слідкують:</th>
-                            <th scope="col">16</th>
+                            <th scope="col">{{following}}</th>
                         </tr>
                     <thead>
                         <tr>
                             <th scope="col">Учасники:</th>
-                            <th scope="col">14</th>
+                            <th scope="col">{{going}}</th>
                         </tr>
 
                   </tbody>
@@ -80,7 +80,7 @@
                                                     background-color: #FFEB3B;
                                                     border-radius: 15px;
                                                     color: #212121;">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tincidunt, mauris nec porta varius, nisi metus hendrerit lacus, id condimentum purus eros sed justo. Suspendisse faucibus at quam vel scelerisque. Morbi tempor semper iaculis. Sed sodales libero ac orci viverra, volutpat aliquet erat ornare. Aliquam id posuere metus. Aenean quis ligula non quam iaculis aliquam. Aenean neque risus, tristique in mi sit amet, congue scelerisque ligula. Nulla euismod, risus non molestie interdum, augue diam condimentum risus, vel porta ex urna nec lectus. Morbi quis posuere lectus.</p>
+            <p>{{event.description}}</p>
         </div>
     </div>
 
