@@ -21,7 +21,8 @@
 
 {% block container %}
         <div class="row align-self-center"  style="height: 30vh;">
-            <div class="col-md-4 text-center my-auto">
+            <div class="profile_info col-md-4 text-center my-auto">
+                {% csrf_token %}
                 {% if volunteer.photo %}
                 <img  src="{{ volunteer.photo.url }}" style="height: 20vh;">
                 {% else %}
@@ -71,8 +72,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-center my-auto">
-                        <button type="button" class="btn  dark-primary-color text-primary-color" disabled>Слідкувати</button>
-                        <button type="button" class="btn dark-primary-color text-primary-color" disabled>Приєднатися</button>
+                        <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button>
+                        <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" >Приєднатися</button>
                     </div>
                 </div>
 
