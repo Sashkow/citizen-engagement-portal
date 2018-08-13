@@ -21,5 +21,6 @@ urlpatterns = [
     # url(r'^home/$', core_views.home),
     url(r'^profile/$', volunteer_views.profile, name='profile'),
     url(r'^event/(?P<id>\w+)/', volunteer_views.event, name='event'),
-    url(r'^newevent/$', volunteer_views.new_event, name='newevent')
-] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    url(r'^newevent/$', volunteer_views.new_event, name='newevent'),
+    url(r'^follow/$', volunteer_views.follow_event, name='follow_event'),
+    ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

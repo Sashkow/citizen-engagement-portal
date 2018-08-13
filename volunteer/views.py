@@ -16,6 +16,8 @@ from django.shortcuts import render
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm, UserCreationForm
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.shortcuts import render, redirect, reverse
+from django.http import JsonResponse
+
 
 from volunteer.models import User, DjangoUser, Event, EventsPhoto, EventsParticipant, EventsSubscriber
 
@@ -54,6 +56,7 @@ def home(request):
 
 @login_required
 def profile(request):
+    session_key = request.session.session_key
     django_user = request.user
     volunteer = User.objects.filter(django_user_id = django_user)
     if len(volunteer) == 0:
@@ -115,3 +118,13 @@ def new_event(request):
     else:
         form = NewEventForm()
         return render(request, 'volunteer/new_event.html', {'form':form})
+
+
+
+def follow_event(request):
+    return_dict = dict()
+    data = request.POST
+    result = int(data['id_event'].replace(',', '').replace(' ',''))
+    user_db = User.objects.get(django_user_id = request.user)
+    EventsSubscriber.objects.create(user = user_db, event = Event.objects.get(id = result))
+    return JsonResponse(return_dict)

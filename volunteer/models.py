@@ -11,15 +11,23 @@ import os
 class EventsType(models.Model):
     type = models.CharField(max_length=80)
 
+    def __str__(self):
+        return self.type
+
 
 class City(models.Model):
     city = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.city
 
 class Rank(models.Model):
     rank = models.CharField(max_length=80)
     quantity_of_points = models.IntegerField()
-    city = models.ForeignKey(City, on_delete=models.CASCADE, default='3')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1')
+
+    def __str__(self):
+        return '%s %s %s' % (self.rank, '|', self.city)
 
 
 class User(models.Model):
@@ -29,9 +37,12 @@ class User(models.Model):
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
     rank = models.ForeignKey(Rank, on_delete=models.CASCADE, default='2')
     raiting_points = models.IntegerField(default=0)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, default='3')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1')
     blocked = models.BooleanField(default=False)
     django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s %s %s' % (self.first_name, '|', self.last_name)
 
 
 class DigestList(models.Model):
@@ -43,6 +54,9 @@ class District(models.Model):
     district = models.CharField(max_length=200)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return '%s %s %s' % (self.district, '|', self.city)
+
 
 class Event(models.Model):
     name = models.CharField(max_length=300)
@@ -53,6 +67,9 @@ class Event(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     publication_date = models.DateField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return '%s %s %s' % (self.name, '|', self.date_event)
 
 
 
@@ -71,6 +88,8 @@ class EventsParticipant(models.Model):
 
     class Meta:
         unique_together = (("user", "event"),)
+
+
 
 
 class Comment(models.Model):
