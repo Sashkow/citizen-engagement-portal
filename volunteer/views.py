@@ -75,7 +75,22 @@ def profile(request):
         name = "Волонтер_ка"
 
     events = Event.objects.all()
+    events_subs = {}
+    events_part = {}
+
     for event in events:
+        try:
+            subscr = EventsSubscriber.objects.get(user=User.objects.get(django_user_id=django_user), event = event)
+            events_subs[event.id] = 1
+        except:
+            events_subs[event.id] = 0
+
+        try:
+            part = EventsParticipant.objects.get(user=User.objects.get(django_user_id=django_user), event = event)
+            events_part[event.id] = 1
+        except:
+            events_part[event.id] = 0
+
         event.following = len(EventsSubscriber.objects.filter(event=event))
         event.going = len(EventsParticipant.objects.filter(event=event))
         event_photos = EventsPhoto.objects.filter(event = event, is_it_cover =True)
@@ -85,9 +100,8 @@ def profile(request):
         else:
             event.event_photo = None
 
-    return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events})
+    return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events, 'events_subs':events_subs, 'events_part':events_part})
 
-@login_required
 def event(request, id):
     try:
         the_event = Event.objects.get(pk=id)
@@ -129,5 +143,24 @@ def follow_event(request):
     data = request.POST
     result = int(data['id_event'].replace(',', '').replace(' ',''))
     user_db = User.objects.get(django_user_id = request.user)
-    EventsSubscriber.objects.create(user = user_db, event = Event.objects.get(id = result))
+    print('in')
+    print(int(data['add']))
+    if int(data['add']) == 1:
+        print('ogo')
+        EventsSubscriber.objects.create(user = user_db, event = Event.objects.get(id = result))
+    else:
+        EventsSubscriber.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
+
+    return JsonResponse(return_dict)
+
+def subscribe_event(request):
+    return_dict = dict()
+    data = request.POST
+    result = int(data['id_event'].replace(',', '').replace(' ',''))
+    user_db = User.objects.get(django_user_id = request.user)
+    if int(data['add']) == 1:
+        EventsParticipant.objects.create(user = user_db, event = Event.objects.get(id = result))
+    else:
+        EventsParticipant.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
+
     return JsonResponse(return_dict)
