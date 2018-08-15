@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load volunteer_extras %}
 
 {% block menu_item %}
     <li class="nav-item active">
@@ -55,11 +56,12 @@
 
                 <div class="event-block row text-center my-auto align-items-center " style="height:22vh">
                 <div class="col-md-4 text-center my_auto">
-                {% if event.event_photo %}
+
+
                     <img src= "{{ event.event_photo.photo.url }}" style="height:18vh">
-                {% else %}
+
                     <img src= "{% static 'volunteer/images/event.jpg' %}" style="height:18vh">
-                {% endif %}
+
                 </div>
                 <div class="col-md-8">
                     <div class="row">
@@ -73,8 +75,17 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-center my-auto">
-                        <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button>
-                        <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" >Приєднатися</button>
+                        {% if events_subs|get_item:event.id == 0 %}
+                            <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button>
+                        {% else %}
+                            <button type="button" class="btn-refollow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Відписатися</button>
+                        {%  endif %}
+
+                        {% if events_part|get_item:event.id == 0 %}
+                            <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button>
+                        {% else %}
+                            <button type="button" class="btn-resubscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Від'єднатись</button>
+                        {% endif %}
                     </div>
                 </div>
 
