@@ -56,16 +56,16 @@
                 <div class="event-block row text-center my-auto align-items-center " style="height:22vh">
                 <div class="col-md-4 text-center my_auto">
                 {% if event.event_photo %}
-                    <img src= "{{ event.event_photo.photo.url }}" style="height:18vh">
+                    <img src= "{{ event.event_photo.photo.url }}" href="{% url 'event' id=event.id %}" style="height:18vh">
                 {% else %}
-                    <img src= "{% static 'volunteer/images/event.jpg' %}" style="height:18vh">
+                    <img src= "{% static 'volunteer/images/event.jpg' %}" href="{% url 'event' id=event.id %}" style="height:18vh">
                 {% endif %}
                 </div>
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-12 align-items-center">
                             <div>
-                                <h2>{{ event.name }}</h2>
+                                <h2><a href="{% url 'event' id=event.id %}">{{ event.name }}</a></h2>
                                 <p>{{ event.description }}</p>
                             </div>
                         </div>
@@ -77,11 +77,7 @@
                         <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" >Приєднатися</button>
                     </div>
                 </div>
-
-
                 </div>
-
-
                 </div>
 
             {% endfor %}

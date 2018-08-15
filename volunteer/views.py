@@ -87,22 +87,25 @@ def profile(request):
 
     return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events})
 
-
+@login_required
 def event(request, id):
     try:
         the_event = Event.objects.get(pk=id)
         following = len(EventsSubscriber.objects.filter(event = the_event))
         going = len(EventsParticipant.objects.filter(event = the_event))
+        photos = EventsPhoto.objects.filter(event=the_event)
+
         return render(request, 'event.html', {
             'event' : the_event,
             'following': following,
-            'going': going
+            'going': going,
+            'photos': photos
         })
     except ObjectDoesNotExist:
         return HttpResponse("event with id:{} not found".format(id))
 
 
-
+@login_required
 def new_event(request):
     if request.method == "POST":
         form = NewEventForm(request.POST)
@@ -120,7 +123,7 @@ def new_event(request):
         return render(request, 'volunteer/new_event.html', {'form':form})
 
 
-
+@login_required
 def follow_event(request):
     return_dict = dict()
     data = request.POST
