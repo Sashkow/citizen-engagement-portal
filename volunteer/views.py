@@ -17,16 +17,17 @@ from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeFor
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
 
 
-from volunteer.models import User, DjangoUser, Event, EventsPhoto, EventsParticipant, EventsSubscriber
+from volunteer.models import User, DjangoUser, Event, EventsPhoto, EventsParticipant, EventsSubscriber, EventsType
 
 from volunteer.forms import NewEventForm
 
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.http import HttpResponse
-
+import json
 
 
 # @login_required
@@ -74,7 +75,8 @@ def profile(request):
     else:
         name = "Волонтер_ка"
 
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('-publication_date')[:5]
+    types_events = EventsType.objects.all()
     events_subs = {}
     events_part = {}
 
@@ -100,7 +102,7 @@ def profile(request):
         else:
             event.event_photo = None
 
-    return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events, 'events_subs':events_subs, 'events_part':events_part})
+    return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events, 'events_subs':events_subs, 'events_part':events_part, 'types_events':types_events})
 
 def event(request, id):
     try:
@@ -143,10 +145,7 @@ def follow_event(request):
     data = request.POST
     result = int(data['id_event'].replace(',', '').replace(' ',''))
     user_db = User.objects.get(django_user_id = request.user)
-    print('in')
-    print(int(data['add']))
     if int(data['add']) == 1:
-        print('ogo')
         EventsSubscriber.objects.create(user = user_db, event = Event.objects.get(id = result))
     else:
         EventsSubscriber.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
@@ -164,3 +163,53 @@ def subscribe_event(request):
         EventsParticipant.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
 
     return JsonResponse(return_dict)
+
+
+def type_filter(request):
+    return_dict = {}
+    django_user = request.user
+    data = request.GET
+
+    if data['type'] == 'all':
+        dictionaries = []
+        for obj in Event.objects.all().order_by('-publication_date')[:5]:
+
+            dict_res = obj.as_dict()
+
+
+            if EventsSubscriber.objects.filter(user = User.objects.get(django_user_id=django_user), event=obj).exists():
+                dict_res['subscriber'] = 1
+
+
+            if EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user), event=obj).exists():
+                dict_res['part'] = 1
+
+
+
+
+
+            if EventsPhoto.objects.filter(event = obj, is_it_cover = True).exists():
+                dict_res['photo_event'] = EventsPhoto.objects.get(event = obj, is_it_cover = True).get_url()
+            dictionaries.append(dict_res)
+        return HttpResponse(json.dumps({"data": dictionaries}, cls = DjangoJSONEncoder))
+
+    else:
+        id = int(data['type'])
+
+        if Event.objects.filter(events_type = EventsType.objects.get(id = id)).exists():
+            dictionaries = []
+            for obj in  Event.objects.filter(events_type = EventsType.objects.get(id = id)):
+                dict_res = obj.as_dict()
+                if EventsPhoto.objects.all().filter(event = obj, is_it_cover = True).exists():
+                    dict_res['photo_event'] = EventsPhoto.objects.get(event = obj, is_it_cover = True).get_url()
+
+                if EventsSubscriber.objects.filter(user=User.objects.get(django_user_id=django_user), event=obj).exists():
+                    dict_res['subscriber'] = 1
+
+                if EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user), event=obj).exists():
+                    dict_res['part'] = 1
+
+                dictionaries.append(dict_res)
+            return HttpResponse(json.dumps({"data": dictionaries}, cls=DjangoJSONEncoder))
+        else:
+            return JsonResponse(return_dict)

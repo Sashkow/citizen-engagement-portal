@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
+from django.forms.models import model_to_dict
 
 
 #RETURN TO VERBOSE_NAME
@@ -71,6 +72,9 @@ class Event(models.Model):
     def __str__(self):
         return '%s %s %s' % (self.name, '|', self.date_event)
 
+    def as_dict(self):
+        return model_to_dict(self)
+
 
 
 
@@ -127,3 +131,13 @@ class EventsPhoto(models.Model):
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'event_images'),)
     is_it_cover = models.BooleanField(default=False)
 
+    def as_dict(self):
+        return model_to_dict(self)
+
+
+    def __str__(self):
+        return self.photo.path
+
+
+    def get_url(self):
+        return self.photo.url

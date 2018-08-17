@@ -22,7 +22,7 @@
 
 {% block container %}
         <div class="row align-self-center"  style="height: 30vh;">
-            <div class="profile_info col-md-4 text-center my-auto">
+            <div class="profile_info col-md-4 text-center my-auto" style="margin-top: 5vh !important;">
                 {% csrf_token %}
                 {% if volunteer.photo %}
                 <img  src="{{ volunteer.photo.url }}" style="height: 20vh;">
@@ -43,7 +43,14 @@
                                                                     border-bottom-left-radius: 15px;
                                                                     border-bottom-right-radius: 15px;">
                 <div class="col-md-4">
-                    Тип
+                    <div class="dropdown open">
+                        <select id="event-type" class="text-center" url_get = "{% url 'type_filter' %}">
+                            <option type_id = "all">Тип</option>
+                           {% for type_ev in types_events %}
+                                <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     Дата
@@ -51,52 +58,64 @@
                 <div class="col-md-4">
                     <input type="text" placeholder="Пошук">
                 </div>
-            </div>
-            {% for event in events %}
+            </div >
+            <div class="events-container">
 
-                <div class="event-block row text-center my-auto align-items-center " style="height:22vh">
-                <div class="col-md-4 text-center my_auto">
+                {% for event in events %}
 
-                {% if event.event_photo %}
-                    <img src= "{{ event.event_photo.photo.url }}" href="{% url 'event' id=event.id %}" style="height:18vh">
-                {% else %}
-                    <img src= "{% static 'volunteer/images/event.jpg' %}" href="{% url 'event' id=event.id %}" style="height:18vh">
-                {% endif %}
+                    <div class="event-block row text-center my-auto align-items-center " style="height:22vh">
+                    <div class="col-md-4 text-center my_auto">
 
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-12 align-items-center">
-                            <div>
-                                <h2><a href="{% url 'event' id=event.id %}">{{ event.name }}</a></h2>
-                                <p>{{ event.description }}</p>
-                            </div>
-                        </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-12 text-center my-auto">
-                        {% if events_subs|get_item:event.id == 0 %}
-                            <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button>
+                        {% if event.event_photo %}
+                            <img src= "{{ event.event_photo.photo.url }}" href="{% url 'event' id=event.id %}" style="height:18vh">
                         {% else %}
-                            <button type="button" class="btn-refollow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Відписатися</button>
-                        {%  endif %}
-
-                        {% if events_part|get_item:event.id == 0 %}
-                            <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button>
-                        {% else %}
-                            <button type="button" class="btn-resubscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Від'єднатися</button>
+                            <img src= "{% static 'volunteer/images/event.jpg' %}" href="{% url 'event' id=event.id %}" style="height:18vh">
                         {% endif %}
-                    </div>
-                </div>
-                </div>
-                </div>
 
-            {% endfor %}
+                    </div>
+                    <div class="col-md-8 info">
+                        <div class="row">
+                            <div class="col-md-12 align-items-center">
+                                <div>
+                                    <h2><a href="{% url 'event' id=event.id %}">{{ event.name }}</a></h2>
+                                    <p>{{ event.description }}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center my-auto">
+                                    {% if events_subs|get_item:event.id == 0 %}
+                                        <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button>
+                                    {% else %}
+                                        <button type="button" class="btn-refollow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Відписатися</button>
+                                    {%  endif %}
+
+                                    {% if events_part|get_item:event.id == 0 %}
+                                        <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button>
+                                    {% else %}
+                                        <button type="button" class="btn-resubscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Від'єднатися</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
             </div>
 
         </div>
 
+
 {% endblock %}
+
+<div class="row">
+    <div class="col-md-12 text-center my-auto"><button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button><button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button></div>
+                            </div>
+
+
 
 
