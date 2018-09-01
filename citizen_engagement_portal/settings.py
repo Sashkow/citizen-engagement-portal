@@ -164,6 +164,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 )
 
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "templates"),
+)
+
+EL_PAGINATION_PER_PAGE = 3
+
 # # Add the google credentials
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '613230157576-6j46bo3jb1i2arb3fll50imcn102r04a.apps.googleusercontent.com'
@@ -201,3 +207,6 @@ LOGOUT_REDIRECT_URL = 'login'
 #
 # SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 #
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'node_modules'),
+)

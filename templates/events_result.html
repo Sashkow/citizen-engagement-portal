@@ -1,0 +1,63 @@
+{% load static %}
+
+    {% for event in events %}
+
+        <div class="event-block row text-center my-auto align-items-center " style="height:22vh">
+        <div class="col-md-4 text-center my_auto">
+
+            {% if event.event_photo %}
+                <img src= "{{ event.event_photo.photo.url }}" href="{% url 'event' id=event.id %}" style="height:18vh">
+            {% else %}
+                <img src= "{% static 'volunteer/images/event.jpg' %}" href="{% url 'event' id=event.id %}" style="height:18vh">
+            {% endif %}
+
+        </div>
+        <div class="col-md-8 info">
+            <div class="row">
+                <div class="col-md-12 align-items-center">
+                    <div>
+                        <h2><a href="{% url 'event' id=event.id %}">{{ event.name }}</a></h2>
+                        <p>{{ event.description }}</p>
+                    </div>
+                </div>
+
+            </div>
+                <div class="row">
+                    <div class="col-md-12 text-center my-auto">
+                        {% if events_subs|get_item:event.id == 0 %}
+                            <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button>
+                        {% else %}
+                            <button type="button" class="btn-refollow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Відписатися</button>
+                        {%  endif %}
+
+                        {% if events_part|get_item:event.id == 0 %}
+                            <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button>
+                        {% else %}
+                            <button type="button" class="btn-resubscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Від'єднатися</button>
+                        {% endif %}
+                    </div>
+                </div>
+        </div>
+        </div>
+
+    {% endfor %}
+
+        <div class="row text-center">
+            <div class="col-md-12">
+
+                <ul class="pagination pagination-lg">
+                    {% if pages_max > 1 %}
+                        {% for i in pages %}
+                            {% if  i == current %}
+                                <li class="page-item  disabled" page = {{ i }}><a class="page-link">{{ i }}</a></li>
+                            {% else %}
+                                <li class="page-item" page = {{ i }}><a class="page-link">{{ i }}</a></li>
+                            {% endif %}
+                        {%endfor%}
+                    {%endif%}
+
+
+                </ul>
+            </div>
+        </div>
+

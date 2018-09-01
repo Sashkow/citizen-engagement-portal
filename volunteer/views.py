@@ -11,28 +11,35 @@
 #     # return HttpResponse('ok, Google')
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm, UserCreationForm
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
+import datetime
 
 
-from volunteer.models import User, DjangoUser, Event, EventsPhoto, EventsParticipant, EventsSubscriber, EventsType
+from volunteer.models import *
 
 from volunteer.forms import NewEventForm
 
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.http import HttpResponse
+from django.template import loader, Context
+from django.template.loader import render_to_string
+from .functionviews import *
 import json
 
+from django.template import RequestContext
 
 # @login_required
 # def home(request):
 #     return render(request, 'core/home.html')
+
+events_per_page = 1
+
 
 def signup(request):
     if request.method == 'POST':
@@ -60,6 +67,7 @@ def profile(request):
     session_key = request.session.session_key
     django_user = request.user
     volunteer = User.objects.filter(django_user_id = django_user)
+    status = Status.objects.filter(id__range = (1, 2))
     if len(volunteer) == 0:
         volunteer = User.objects.create(django_user_id = django_user)
     elif len(volunteer)> 1:
@@ -75,34 +83,22 @@ def profile(request):
     else:
         name = "Волонтер_ка"
 
-    events = Event.objects.all().order_by('-publication_date')[:5]
+    parameters = ['all', 1]
+    events, events_part, events_subs, events_quantity = get_events(Event, User, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+    pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
+
     types_events = EventsType.objects.all()
-    events_subs = {}
-    events_part = {}
 
-    for event in events:
-        try:
-            subscr = EventsSubscriber.objects.get(user=User.objects.get(django_user_id=django_user), event = event)
-            events_subs[event.id] = 1
-        except:
-            events_subs[event.id] = 0
-
-        try:
-            part = EventsParticipant.objects.get(user=User.objects.get(django_user_id=django_user), event = event)
-            events_part[event.id] = 1
-        except:
-            events_part[event.id] = 0
-
-        event.following = len(EventsSubscriber.objects.filter(event=event))
-        event.going = len(EventsParticipant.objects.filter(event=event))
-        event_photos = EventsPhoto.objects.filter(event = event, is_it_cover =True)
-        if len(event_photos) == 1:
-            event_photo = event_photos[0]
-            event.event_photo = event_photo
-        else:
-            event.event_photo = None
-
-    return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events, 'events_subs':events_subs, 'events_part':events_part, 'types_events':types_events})
+    return render(request, 'core/profile.html', {'volunteer':volunteer,
+                                                 'name':name,
+                                                 'events':events,
+                                                 'events_subs':events_subs,
+                                                 'events_part':events_part,
+                                                 'types_events':types_events,
+                                                 'current':1,
+                                                 'pages':pages_range,
+                                                 'pages_max': pages,
+                                                 'status':status})
 
 def event(request, id):
     try:
@@ -123,20 +119,57 @@ def event(request, id):
 
 @login_required
 def new_event(request):
-    if request.method == "POST":
-        form = NewEventForm(request.POST)
-        if form.is_valid():
-            print("valid")
-            event = form.save(commit=False)
-            event.organizer = User.objects.get_or_create(django_user_id = request.user)[0]
-            event.save()
-            return redirect(reverse('profile'))
-        else:
-            print("not valid")
 
+    data = request.POST
+    date = check_key_in_dict('date', data)
+
+    if date != None:
+        date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+
+    status = check_key_in_dict_int('status', data)
+    if status != None:
+        status_i = Status.objects.get(id = check_key_in_dict_int('status', data))
     else:
-        form = NewEventForm()
-        return render(request, 'volunteer/new_event.html', {'form':form})
+        status_i = None
+    events_or_task = True if check_key_in_dict('type', data) == 'event' else False
+
+
+    new_event_v  = Event.objects.create(
+        name = check_key_in_dict('name', data),
+        organizer = User.objects.get_or_create(django_user_id = request.user)[0],
+        events_or_task = events_or_task,
+        events_type = EventsType.objects.get(id = check_key_in_dict_int('category', data)),
+        date_event = date,
+        city = City.objects.get(id=1),
+        address = check_key_in_dict('address', data),
+        status = status_i,
+        max_part = check_key_in_dict_int('from', data),
+        min_part = check_key_in_dict_int('to', data),
+        recommended_points = check_key_in_dict_int('points_quant', data),
+        contact = check_key_in_dict('email', data),
+        description = check_key_in_dict('description_e', data)
+    )
+    if status == 1:
+        nmb = check_key_in_dict_int('numb', data)
+        for i in range(nmb):
+            str_name = 'task_arr['+str(i)+'][name_task]'
+            str_points = 'task_arr['+str(i)+'][point_task]'
+            str_descr = 'task_arr['+str(i)+'][descr_task]'
+
+            name_task = request.POST.get(str_name)
+            points_task = int(request.POST.get(str_points))
+            descr_task = request.POST.get(str_descr)
+
+            EventsOrgTask.objects.create(
+                event = Event.objects.get(id = new_event_v.id),
+                task_name = name_task,
+                task_description = descr_task,
+                recommended_points = points_task
+
+            )
+        print(nmb)
+    return_dict  ={}
+    return JsonResponse(return_dict)
 
 
 @login_required
@@ -169,47 +202,26 @@ def type_filter(request):
     return_dict = {}
     django_user = request.user
     data = request.GET
+    parametrs = [data['type'], data['page']]
+    print(parametrs)
 
-    if data['type'] == 'all':
-        dictionaries = []
-        for obj in Event.objects.all().order_by('-publication_date')[:5]:
-
-            dict_res = obj.as_dict()
-
-
-            if EventsSubscriber.objects.filter(user = User.objects.get(django_user_id=django_user), event=obj).exists():
-                dict_res['subscriber'] = 1
-
-
-            if EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user), event=obj).exists():
-                dict_res['part'] = 1
-
-
-
-
-
-            if EventsPhoto.objects.filter(event = obj, is_it_cover = True).exists():
-                dict_res['photo_event'] = EventsPhoto.objects.get(event = obj, is_it_cover = True).get_url()
-            dictionaries.append(dict_res)
-        return HttpResponse(json.dumps({"data": dictionaries}, cls = DjangoJSONEncoder))
-
+    if data['type']!= 'all' and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
+        return JsonResponse(return_dict)
     else:
-        id = int(data['type'])
+        events, events_part, events_subs, events_quantity = get_events(Event, User, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        types_events = EventsType.objects.all()
+        pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
+        cont = {
+            'events': events,
+            'events_subs': events_subs,
+            'events_part': events_part,
+            'types_events': types_events,
+            'pages': pages_range,
+            'pages_max': pages,
+            'current':int(parametrs[1]),
+            'request': request
+        }
+        html = render_to_string('events_result.html', cont)
+        return_dict = {'html': html}
+        return JsonResponse(return_dict)
 
-        if Event.objects.filter(events_type = EventsType.objects.get(id = id)).exists():
-            dictionaries = []
-            for obj in  Event.objects.filter(events_type = EventsType.objects.get(id = id)):
-                dict_res = obj.as_dict()
-                if EventsPhoto.objects.all().filter(event = obj, is_it_cover = True).exists():
-                    dict_res['photo_event'] = EventsPhoto.objects.get(event = obj, is_it_cover = True).get_url()
-
-                if EventsSubscriber.objects.filter(user=User.objects.get(django_user_id=django_user), event=obj).exists():
-                    dict_res['subscriber'] = 1
-
-                if EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user), event=obj).exists():
-                    dict_res['part'] = 1
-
-                dictionaries.append(dict_res)
-            return HttpResponse(json.dumps({"data": dictionaries}, cls=DjangoJSONEncoder))
-        else:
-            return JsonResponse(return_dict)

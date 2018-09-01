@@ -1,0 +1,22 @@
+{
+  "name": "citizen-engagement-portal",
+  "version": "1.0.0",
+  "description": "Platform to engage citizens of Khmelnitsky city into volunteering",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sashkow/citizen-engagement-portal.git"
+  },
+  "author": "oksana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sashkow/citizen-engagement-portal/issues"
+  },
+  "homepage": "https://github.com/Sashkow/citizen-engagement-portal#readme",
+  "dependencies": {
+    "tingle.js": "^0.13.2"
+  }
+}

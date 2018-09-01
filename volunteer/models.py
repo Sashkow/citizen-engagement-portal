@@ -15,6 +15,11 @@ class EventsType(models.Model):
     def __str__(self):
         return self.type
 
+class Status(models.Model):
+    status = models.CharField(max_length=80)
+
+    def __str__(self):
+        return self.status
 
 class City(models.Model):
     city = models.CharField(max_length=100)
@@ -51,21 +56,22 @@ class DigestList(models.Model):
     type = models.ForeignKey(EventsType, on_delete=models.CASCADE)
 
 
-class District(models.Model):
-    district = models.CharField(max_length=200)
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return '%s %s %s' % (self.district, '|', self.city)
 
 
 class Event(models.Model):
     name = models.CharField(max_length=300)
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_event = models.DateTimeField(null=True, blank=True)
+    events_or_task = models.BooleanField(default=True)
     events_type = models.ForeignKey(EventsType, on_delete=models.CASCADE)
-    address = models.CharField(max_length=300)
-    district = models.ForeignKey(District, on_delete=models.CASCADE)
+    date_event = models.DateTimeField(null=True, blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
+    address = models.CharField(max_length=300, null=True, blank=True)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE,  null=True, blank=True)
+    max_part = models.IntegerField(null=True, blank=True)
+    min_part = models.IntegerField(null=True, blank=True)
+    recommended_points = models.IntegerField()
+    contact = models.EmailField(null=True, blank=True)
     publication_date = models.DateField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
 
@@ -76,7 +82,12 @@ class Event(models.Model):
         return model_to_dict(self)
 
 
-
+class EventsOrgTask(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    task_name = models.CharField(max_length=80)
+    task_description = models.TextField(null=True, blank=True)
+    done = models.BooleanField(default=False)
+    recommended_points = models.IntegerField()
 
 class EventsSubscriber(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
