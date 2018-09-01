@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 from .models import *
 
@@ -46,31 +47,28 @@ class DigestListAdmin(admin.ModelAdmin):
 admin.site.register(DigestList, DigestListAdmin)
 
 
-class DistrictAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in District._meta.fields]
-    exclude = ['ID']
-    list_filter = ['city']
-    search_fields = ['district']
 
-admin.site.register(District, DistrictAdmin)
+class StatusAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Status._meta.fields]
 
+admin.site.register(Status, StatusAdmin)
 
 class EventAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Event._meta.fields]
     exclude = ['ID']
-    list_filter = ['events_type', 'district']
-    fieldsets = (
-        (None, {
-            'fields': ('name', 'organizer', 'date_event', 'events_type',)
-        }),
-        ('Address', {
-            'fields': ('district', 'address',)
-        }),
-        ('Description', {
-            'classes': ('collapse',),
-            'fields' : ('description',),
-        })
-    )
+    list_filter = ['events_type']
+    # fieldsets = (
+    #     (None, {
+    #         'fields': ('name', 'organizer', 'date_event', 'events_type',)
+    #     }),
+    #     ('Address', {
+    #         'fields': ('city', 'address',)
+    #     }),
+    #     ('Description', {
+    #         'classes': ('collapse',),
+    #         'fields' : ('description',),
+    #     })
+    # )
     search_fields = ['name']
 
 admin.site.register(Event, EventAdmin)
@@ -105,20 +103,7 @@ class EventsPhotoAdmin(admin.ModelAdmin):
     exclude = ['ID']
 admin.site.register(EventsPhoto, EventsPhotoAdmin)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+class EventsOrgTaskAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in EventsOrgTask._meta.fields]
+    exclude = ['ID']
+admin.site.register(EventsOrgTask, EventsOrgTaskAdmin)

@@ -207,3 +207,5 @@ LOGOUT_REDIRECT_URL = 'login'
 #
 # SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 #
+
+# DATETIME_FORMAT = '%d %b %H:%M'

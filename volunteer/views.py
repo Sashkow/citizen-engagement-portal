@@ -39,7 +39,7 @@ from notifications.signals import notify
 
 @login_required
 def live_tester(request):
-    notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
+    # notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
 
     return render(request, 'test_live.html', {
         'unread_count': request.user.notifications.unread().count(),
@@ -90,7 +90,7 @@ def home(request):
 
 @login_required
 def profile(request):
-    notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
+    # notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
 
     session_key = request.session.session_key
     django_user = request.user
@@ -144,7 +144,8 @@ def profile(request):
         'events_subs':events_subs,
         'events_part':events_part,
         'unread_count': request.user.notifications.unread().count(),
-        'notifications': request.user.notifications.all()
+        'notifications': request.user.notifications.all(),
+        'types_events':types_events
     })
 
 

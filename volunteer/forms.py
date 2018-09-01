@@ -8,12 +8,11 @@ from django.forms import SelectDateWidget
 class NewEventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'date_event', 'events_type', 'address', 'district', 'description']
+        fields = ['name', 'date_event', 'events_type', 'address', 'description']
         labels = {
             'name': 'Назва',
             'date_event': 'Дата та час',
             'address': 'Адреса',
-            'district': 'Район',
             'description': 'Опис',
         }
         widgets = {
