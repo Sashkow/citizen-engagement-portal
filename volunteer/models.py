@@ -1,6 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 
+from volunteer.helpers import has_changed
+from notifications.signals import notify
+
+from volunteer.get_username import current_request
+
+from django.contrib.auth.models import AnonymousUser
+
+import datetime
+
+import locale
+
+
+
 
 #RETURN TO VERBOSE_NAME
 
@@ -68,9 +81,30 @@ class Event(models.Model):
     publication_date = models.DateField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
 
+    def save(self, *args, **kwargs):
+        if has_changed(self,'date_event'):
+            followers = list(EventsSubscriber.objects.filter(event = self).values_list('user', flat=True))
+            participants = list(EventsParticipant.objects.filter(event = self).values_list('user', flat=True))
+            print(followers, participants, type(followers), type(participants))
+            concerned = list(set(followers) or set(participants))
+
+            for recipient in concerned:
+                django_user = User.objects.get(id=recipient).django_user_id
+                sender = current_request().user
+                if not sender:
+                    sender = AnonymousUser()
+                # recipient_obj = User.objects.get(id = recipient)
+                notify.send(
+                    sender,
+                    recipient = django_user,
+                    verb = 'Час події '+str(self.name) + ' змінено на ' + str(self.date_event.strftime("%d %b %H:%M")) + ". Сповіщення отримано",
+                    # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m")
+                )
+
+            super(Event, self).save(*args, **kwargs)
+
     def __str__(self):
         return '%s %s %s' % (self.name, '|', self.date_event)
-
 
 
 
@@ -88,8 +122,6 @@ class EventsParticipant(models.Model):
 
     class Meta:
         unique_together = (("user", "event"),)
-
-
 
 
 class Comment(models.Model):
@@ -126,4 +158,3 @@ class EventsPhoto(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'event_images'),)
     is_it_cover = models.BooleanField(default=False)
-

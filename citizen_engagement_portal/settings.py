@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 'social.apps.django_app.default',
+
+    'notifications',
     'social_django',
     'volunteer',
     'social-core-master',
@@ -53,6 +55,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'volunteer.get_username.RequestMiddleware',
+
 
 
     # 'social_django.middleware.SocialAuthExceptionMiddleware',
@@ -113,7 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+USE_I18N = True
+LANGUAGE_CODE = 'uk'
 
 TIME_ZONE = 'UTC'
 

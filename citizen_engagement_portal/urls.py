@@ -8,15 +8,24 @@ import citizen_engagement_portal.settings as settings
 from django.conf.urls.static import static
 
 from django.urls import path
+import notifications.urls
+
+from volunteer.views import live_tester, make_notification, mark_all_as_read
 
 urlpatterns = [
     url(r'^$', volunteer_views.home, name='home'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^signup/$', volunteer_views.signup, name='signup'),
+
     url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
     # url('auth/', include('social_django.urls', namespace='social')),
     url(r'^admin/', admin.site.urls),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
+
+    url(r'^test_make/', make_notification),
+    url(r'^mark_all_as_read/', mark_all_as_read),
+    url(r'^test/', live_tester),
 
     # url(r'^home/$', core_views.home),
     url(r'^profile/$', volunteer_views.profile, name='profile'),

@@ -27,11 +27,40 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django.http import HttpResponse
 
+import random
+
+from django.contrib.auth.decorators import login_required
+from notifications.signals import notify
 
 
-# @login_required
-# def home(request):
-#     return render(request, 'core/home.html')
+
+@login_required
+def live_tester(request):
+    notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
+
+    return render(request, 'test_live.html', {
+        'unread_count': request.user.notifications.unread().count(),
+        'notifications': request.user.notifications.all()
+    })
+
+
+def make_notification(request):
+    the_notification = random.choice([
+        'reticulating splines',
+        'cleaning the car',
+        'jumping the shark',
+        'testing the app',
+        'attaching the plumbus',
+    ])
+
+    notify.send(sender=request.user, recipient=request.user,
+                verb='you asked for a notification - you are ' + the_notification)
+
+
+def mark_all_as_read(request):
+    user = request.user
+    user.notifications.mark_all_as_read()
+
 
 def signup(request):
     if request.method == 'POST':
@@ -48,14 +77,18 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+
 def home(request):
     if request.user.is_authenticated:
         return redirect(reverse('profile'))
     else:
         return redirect(reverse('login'))
 
+
 @login_required
 def profile(request):
+    notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
+
     session_key = request.session.session_key
     django_user = request.user
     volunteer = User.objects.filter(django_user_id = django_user)
@@ -100,7 +133,16 @@ def profile(request):
         else:
             event.event_photo = None
 
-    return render(request, 'core/profile.html', {'volunteer':volunteer, 'name':name, 'events':events, 'events_subs':events_subs, 'events_part':events_part})
+    return render(request, 'core/profile.html', {
+        'volunteer':volunteer,
+        'name':name,
+        'events':events,
+        'events_subs':events_subs,
+        'events_part':events_part,
+        'unread_count': request.user.notifications.unread().count(),
+        'notifications': request.user.notifications.all()
+    })
+
 
 def event(request, id):
     try:
