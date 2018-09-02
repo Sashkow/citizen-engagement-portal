@@ -27,6 +27,7 @@ from volunteer.forms import NewEventForm
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.http import HttpResponse
+
 from django.template import loader, Context
 from django.template.loader import render_to_string
 from .functionviews import *
@@ -34,9 +35,41 @@ import json
 
 from django.template import RequestContext
 
-# @login_required
-# def home(request):
-#     return render(request, 'core/home.html')
+
+import random
+
+import json
+
+from django.contrib.auth.decorators import login_required
+from notifications.signals import notify
+
+@login_required
+def live_tester(request):
+    # notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
+
+    return render(request, 'test_live.html', {
+        'unread_count': request.user.notifications.unread().count(),
+        'notifications': request.user.notifications.all()
+    })
+
+
+def make_notification(request):
+    the_notification = random.choice([
+        'reticulating splines',
+        'cleaning the car',
+        'jumping the shark',
+        'testing the app',
+        'attaching the plumbus',
+    ])
+
+    notify.send(sender=request.user, recipient=request.user,
+                verb='you asked for a notification - you are ' + the_notification)
+
+
+def mark_all_as_read(request):
+    user = request.user
+    user.notifications.mark_all_as_read()
+
 
 events_per_page = 1
 
@@ -56,14 +89,17 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+
 def home(request):
     if request.user.is_authenticated:
         return redirect(reverse('profile'))
     else:
         return redirect(reverse('login'))
 
+
 @login_required
 def profile(request):
+
     session_key = request.session.session_key
     django_user = request.user
     volunteer = User.objects.filter(django_user_id = django_user)
@@ -88,7 +124,6 @@ def profile(request):
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
     types_events = EventsType.objects.all()
-
     return render(request, 'core/profile.html', {'volunteer':volunteer,
                                                  'name':name,
                                                  'events':events,
@@ -98,7 +133,11 @@ def profile(request):
                                                  'current':1,
                                                  'pages':pages_range,
                                                  'pages_max': pages,
-                                                 'status':status})
+                                                 'status':status,
+                                                'unread_count': request.user.notifications.unread().count(),
+                                                'notifications': request.user.notifications.all(),
+                                                'types_events':types_events
+    })
 
 def event(request, id):
     try:
@@ -106,12 +145,13 @@ def event(request, id):
         following = len(EventsSubscriber.objects.filter(event = the_event))
         going = len(EventsParticipant.objects.filter(event = the_event))
         photos = EventsPhoto.objects.filter(event=the_event)
-
+        absolute_url = request.build_absolute_uri(reverse('event', args=(id,)))
         return render(request, 'event.html', {
             'event' : the_event,
             'following': following,
             'going': going,
-            'photos': photos
+            'photos': photos,
+            'absolute_url':absolute_url
         })
     except ObjectDoesNotExist:
         return HttpResponse("event with id:{} not found".format(id))

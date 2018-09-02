@@ -1,4 +1,5 @@
 {% load static %}
+{% load static notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +18,15 @@
     <link rel="stylesheet" type="text/css" href = "{% static 'volunteer/palette.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'volunteer/style.css' %}" />
 
+
     <link rel="stylesheet" href="{% static '/tingle.js/dist/tingle.min.css' %}">
     <script src="{% static '/tingle.js/dist/tingle.min.js' %}"></script>
 
-     <script src="{% static 'volunteer/js/script.js' %}"></script>
+   {% block jscripts %}
+        <script src="{% static 'volunteer/js/profile.js' %}"></script>
+        <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+        <script src="{% static 'volunteer/js/live-test.js' %}" type="text/javascript"></script>
+    {% endblock %}
 
     {% block adding_link %}{% endblock %}
 

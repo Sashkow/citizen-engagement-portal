@@ -2,12 +2,63 @@ from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 from django.forms.models import model_to_dict
 
+from volunteer.helpers import has_changed
+from notifications.signals import notify
+
+from volunteer.get_username import current_request
+
+from django.contrib.auth.models import AnonymousUser
+
+from babel.dates import format_datetime
+
+
+import datetime
+
+import locale
+
+
+
 
 #RETURN TO VERBOSE_NAME
 
 
 from citizen_engagement_portal import settings
 import os
+
+
+def notify_event_changes(event_instance, event_field):
+    if has_changed(event_instance, event_field):
+        followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
+        participants = list(EventsParticipant.objects.filter(event=event_instance).values_list('user', flat=True))
+        print(followers, participants, type(followers), type(participants))
+        concerned = list(set(followers) or set(participants))
+
+        for recipient in concerned:
+            django_user = User.objects.get(id=recipient).django_user_id
+            sender = current_request().user
+            if not sender:
+                sender = AnonymousUser()
+            # recipient_obj = User.objects.get(id = recipient)
+
+            event_field_verbose_name = Event._meta.get_field(event_field).verbose_name.title()
+            if event_field == 'date_event':
+                event_field_value = format_datetime(getattr(event_instance, event_field), locale='uk_UA')
+            else:
+                event_field_value = getattr(event_instance, event_field)
+
+
+            notify.send(
+                sender,
+                recipient=django_user,
+                verb=event_field_verbose_name +
+                     ' події ' +
+                     str(event_instance.name) +
+                     ' змінено на ' +
+                     str(event_field_value) +
+                     ". Сповіщення отримано",
+                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m")
+            )
+
 
 class EventsType(models.Model):
     type = models.CharField(max_length=80)
@@ -57,23 +108,28 @@ class DigestList(models.Model):
 
 
 
-
-
 class Event(models.Model):
     name = models.CharField(max_length=300)
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
     events_or_task = models.BooleanField(default=True)
     events_type = models.ForeignKey(EventsType, on_delete=models.CASCADE)
-    date_event = models.DateTimeField(null=True, blank=True)
+    date_event = models.DateTimeField(null=True, blank=True, verbose_name='Час')
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     address = models.CharField(max_length=300, null=True, blank=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE,  null=True, blank=True)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE,  null=True, blank=True, verbose_name='Статус')
     max_part = models.IntegerField(null=True, blank=True)
     min_part = models.IntegerField(null=True, blank=True)
     recommended_points = models.IntegerField()
     contact = models.EmailField(null=True, blank=True)
     publication_date = models.DateField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
+
+
+    def save(self, *args, **kwargs):
+        notify_event_changes(self, 'date_event')
+        notify_event_changes(self, 'status')
+        super(Event, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return '%s %s %s' % (self.name, '|', self.date_event)
@@ -103,8 +159,6 @@ class EventsParticipant(models.Model):
 
     class Meta:
         unique_together = (("user", "event"),)
-
-
 
 
 class Comment(models.Model):
@@ -152,3 +206,4 @@ class EventsPhoto(models.Model):
 
     def get_url(self):
         return self.photo.url
+

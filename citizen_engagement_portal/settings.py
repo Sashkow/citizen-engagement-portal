@@ -38,12 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django.contrib.sites',
     # 'social.apps.django_app.default',
+
+    'notifications',
     'social_django',
     'volunteer',
     'social-core-master',
+    'disqus',
+
 ]
+
+DISQUS_API_KEY = 'HXEpZnRKJ0xtNiJUnY8Oau3jkERExk41z07gEDFmmtSHXdNZvEwYq7dpAn9s4mRd'
+DISQUS_WEBSITE_SHORTNAME = 'Changer'
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +62,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'volunteer.get_username.RequestMiddleware',
+
 
 
     # 'social_django.middleware.SocialAuthExceptionMiddleware',
@@ -113,7 +125,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+USE_I18N = True
+LANGUAGE_CODE = 'uk'
 
 TIME_ZONE = 'UTC'
 
@@ -207,6 +220,7 @@ LOGOUT_REDIRECT_URL = 'login'
 #
 # SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 #
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'node_modules'),
 )

@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 from .models import *
 
@@ -94,19 +95,3 @@ class EventsOrgTaskAdmin(admin.ModelAdmin):
     list_display = [field.name for field in EventsOrgTask._meta.fields]
     exclude = ['ID']
 admin.site.register(EventsOrgTask, EventsOrgTaskAdmin)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
