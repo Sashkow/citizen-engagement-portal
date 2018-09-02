@@ -119,8 +119,8 @@ def profile(request):
     else:
         name = "Волонтер_ка"
 
-    parameters = ['all', 1]
-    events, events_part, events_subs, events_quantity = get_events(Event, User, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+    parameters = ['all', 1, 'news']
+    events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
     types_events = EventsType.objects.all()
@@ -129,14 +129,14 @@ def profile(request):
                                                  'events':events,
                                                  'events_subs':events_subs,
                                                  'events_part':events_part,
-                                                 'types_events':types_events,
                                                  'current':1,
                                                  'pages':pages_range,
                                                  'pages_max': pages,
                                                  'status':status,
                                                 'unread_count': request.user.notifications.unread().count(),
                                                 'notifications': request.user.notifications.all(),
-                                                'types_events':types_events
+                                                'types_events':types_events,
+                                                 'events_org':events_org
     })
 
 def event(request, id):
@@ -231,6 +231,7 @@ def subscribe_event(request):
     result = int(data['id_event'].replace(',', '').replace(' ',''))
     user_db = User.objects.get(django_user_id = request.user)
     if int(data['add']) == 1:
+        EventsSubscriber.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
         EventsParticipant.objects.create(user = user_db, event = Event.objects.get(id = result))
     else:
         EventsParticipant.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
@@ -242,13 +243,14 @@ def type_filter(request):
     return_dict = {}
     django_user = request.user
     data = request.GET
-    parametrs = [data['type'], data['page']]
+    print(data)
+    parametrs = [data['type'], data['page'], data['state']]
     print(parametrs)
 
-    if data['type']!= 'all' and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
+    if data['type'] not in ['all', 'all_digest'] and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
         return JsonResponse(return_dict)
     else:
-        events, events_part, events_subs, events_quantity = get_events(Event, User, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
         cont = {
@@ -259,9 +261,41 @@ def type_filter(request):
             'pages': pages_range,
             'pages_max': pages,
             'current':int(parametrs[1]),
-            'request': request
+            'request': request,
+            'events_org': events_org
         }
         html = render_to_string('events_result.html', cont)
         return_dict = {'html': html}
         return JsonResponse(return_dict)
+
+
+def profile_edit(request):
+    django_user = request.user
+    current_user = User.objects.get(django_user_id=django_user)
+    if request.method == 'POST':
+        return_dict = {}
+        data = request.POST
+        types = EventsType.objects.all()
+        types = [id.id for id in types]
+        for i in types:
+            print(data[str(i)])
+            if data[str(i)] == 'true' and not DigestList.objects.filter(user = current_user, type = EventsType.objects.get(id = i)).exists():
+                print('in')
+                DigestList.objects.create(user = current_user, type = EventsType.objects.get(id = i))
+            elif data[str(i)] == 'false' and DigestList.objects.filter(user = current_user, type = EventsType.objects.get(id = i)).exists():
+                print('out')
+                DigestList.objects.filter(user=current_user, type=EventsType.objects.get(id=i)).delete()
+
+        return JsonResponse(return_dict)
+    else:
+        dict_digest = {}
+        type_events = EventsType.objects.all()
+        for i in type_events:
+            if DigestList.objects.filter(user = current_user, type = i).exists():
+                dict_digest[i.id] = 1
+            else:
+                dict_digest[i.id] = 0
+        return render(request, 'edit_profile.html', {'user':current_user,
+                                                     'type_events': type_events,
+                                                     'dict_digest':dict_digest})
 

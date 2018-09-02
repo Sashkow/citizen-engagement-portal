@@ -1,20 +1,40 @@
 #return events, events_part, events_subs
-def get_events(Event, User, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType):
+def get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType):
 
     from_page = events_per_page * int(parameters[1]) - events_per_page
     to_page = events_per_page * int(parameters[1])
 
     print(parameters[0])
-    if parameters[0] == 'all':
-        events = Event.objects.all().order_by('-publication_date')[from_page:to_page]
-        events_quantity = Event.objects.all().order_by('-publication_date').count()
+    if parameters[2] == 'news':
+        if parameters[0] == 'all':
+            events = Event.objects.all().order_by('-publication_date')[from_page:to_page]
+            events_quantity = Event.objects.all().order_by('-publication_date').count()
 
-    else:
-        events = Event.objects.filter(events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
-        events_quantity = Event.objects.filter(events_type=EventsType.objects.get(id=parameters[0])).count()
+        elif parameters[0] == 'all_digest':
+            digest = DigestList.objects.filter(user=User.objects.get(django_user_id=django_user)).values_list('type', flat=True)
+            types_dig = EventsType.objects.filter(id__in=list(digest))
+            events = Event.objects.filter(events_type__in=types_dig)[from_page:to_page]
+            events_quantity = Event.objects.filter(events_type__in=types_dig).count()
+
+        else:
+            events = Event.objects.filter(events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
+            events_quantity = Event.objects.filter(events_type=EventsType.objects.get(id=parameters[0])).count()
+
+    elif parameters[2] == 'volunteer':
+        if parameters[0] == 'all':
+            events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
+            events = Event.objects.filter(id__in=events_many)[from_page:to_page]
+            events_quantity = Event.objects.filter(id__in=events_many).count()
+        else:
+            events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
+            events = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
+            events_quantity = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0])).count()
+
+
 
     events_subs = {}
     events_part = {}
+    events_org = {}
 
     for event in events:
         try:
@@ -29,6 +49,11 @@ def get_events(Event, User, EventsSubscriber, EventsParticipant, EventsPhoto, dj
         except:
             events_part[event.id] = 0
 
+        if event.organizer.id == User.objects.get(django_user_id=django_user).id:
+            events_org[event.id] = 1
+        else:
+            events_org[event.id] = 0
+
         event.following = len(EventsSubscriber.objects.filter(event=event))
         event.going = len(EventsParticipant.objects.filter(event=event))
         event_photos = EventsPhoto.objects.filter(event = event, is_it_cover =True)
@@ -37,8 +62,8 @@ def get_events(Event, User, EventsSubscriber, EventsParticipant, EventsPhoto, dj
             event.event_photo = event_photo
         else:
             event.event_photo = None
-
-    return events, events_part, events_subs, events_quantity
+    print(events_org)
+    return events, events_part, events_subs, events_quantity, events_org
 
 #return pages
 def get_pages_number(events_quantity, events_per_page, current):
