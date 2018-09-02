@@ -2,6 +2,8 @@
 {% load static %}
 {% load volunteer_extras %}
 {% load static notifications_tags %}
+{% load disqus_tags %}
+
 
 {% block jscripts %}
     <script src="{% static 'volunteer/js/script.js' %}"></script>
@@ -122,13 +124,20 @@
                 {% endfor %}
 
             </div>
+            <!--<script type="text/javascript">-->
+                <!--var disqus_developer = 1;-->
+                <!--var disqus_url = 'https://localhost:8000/';-->
+             <!--</script>-->
 
-            </div>
+
+
+
 
         </div>
 
 
 {% endblock %}
+
 
 <div class="row">
     <div class="col-md-12 text-center my-auto"><button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button><button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button></div>

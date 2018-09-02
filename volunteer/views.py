@@ -35,8 +35,6 @@ import json
 from django.contrib.auth.decorators import login_required
 from notifications.signals import notify
 
-
-
 @login_required
 def live_tester(request):
     # notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
@@ -90,7 +88,6 @@ def home(request):
 
 @login_required
 def profile(request):
-    # notify.send(sender=request.user, recipient=request.user, verb='you loaded the page')
 
     session_key = request.session.session_key
     django_user = request.user
@@ -155,12 +152,13 @@ def event(request, id):
         following = len(EventsSubscriber.objects.filter(event = the_event))
         going = len(EventsParticipant.objects.filter(event = the_event))
         photos = EventsPhoto.objects.filter(event=the_event)
-
+        absolute_url = request.build_absolute_uri(reverse('event', args=(id,)))
         return render(request, 'event.html', {
             'event' : the_event,
             'following': following,
             'going': going,
-            'photos': photos
+            'photos': photos,
+            'absolute_url':absolute_url
         })
     except ObjectDoesNotExist:
         return HttpResponse("event with id:{} not found".format(id))

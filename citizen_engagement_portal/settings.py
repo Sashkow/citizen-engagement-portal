@@ -38,14 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django.contrib.sites',
     # 'social.apps.django_app.default',
 
     'notifications',
     'social_django',
     'volunteer',
     'social-core-master',
+    'disqus',
+
 ]
+
+DISQUS_API_KEY = 'HXEpZnRKJ0xtNiJUnY8Oau3jkERExk41z07gEDFmmtSHXdNZvEwYq7dpAn9s4mRd'
+DISQUS_WEBSITE_SHORTNAME = 'Changer'
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
