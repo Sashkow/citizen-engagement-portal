@@ -21,6 +21,7 @@ $( document ).ready(function() {
                             $('.more-tasks').unbind().click(function(){
                                 console.log('click')
                                  $('.task-info:first').clone().appendTo(".add-org-task")
+
                             })
                             }
                         else{
@@ -69,6 +70,7 @@ $( document ).ready(function() {
                              cache:true,
                              success: function(data){
                              console.log('OK')
+                             $('#event_e_register').modal('hide')
 
                              },
                              error: function(){
@@ -93,6 +95,7 @@ $( document ).ready(function() {
                              cache:true,
                              success: function(data){
                              console.log('OK')
+                             $('#task_register').modal('hide')
 
                              },
                              error: function(){
@@ -278,6 +281,7 @@ $( document ).ready(function() {
         var type_id = $('option:selected', '#event-type').attr('type_id');
         var page =$(this).attr('page');
         var state = $('#event-type').attr('state');
+        console.log(data)
         if(page == '...'){
             console.log('It is bed')
             if ($(this).prev().attr('page') == '1'){
@@ -370,6 +374,45 @@ $( document ).ready(function() {
         })
 
     });
+
+        $(document).on('click', '.my-org-events', function(){
+        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+        var data = {};
+        var url = $('#event-type').attr('url_get');
+        data.type = 'all';
+        data.page = 1;
+        data.state = 'organizer';
+        console.log(data)
+        $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                 if(!jQuery.isEmptyObject(data)){
+                        console.log(data)
+
+                        $(".events-container").html(data.html);
+                        $('#event-type').attr('state', 'organizer');
+
+                      }
+                     else{
+                            console.log('empty json')
+
+                         $('<h1>', {
+                            text: 'За заданими параметрами подій не знайдено',
+                         }).appendTo($(".events-container"))
+                 }
+             },
+             error: function(){
+             console.log('error')
+             }
+        })
+
+    });
+
+
 
     });
 
