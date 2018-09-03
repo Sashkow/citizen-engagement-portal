@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% load volunteer_extras %}
+
+
+
+
+
+
+
+
+{% block menu_item %}
+    <li class="nav-item active">
+        <a class="nav-link" href="#">Знайти подію<span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id = "open-reg-modal">Організувати подію</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="#">Новини</a>
+    </li>
+{% endblock %}
+
+{% block menu_button %}
+    <form action="{% url 'logout' %}">
+        <button class="btn text-primary-color dark-primary-color my-2 my-sm-0" type="submit">Вийти</button>
+    </form>
+{% endblock %}
+
+{% block container %}
+    <div class="btn-group" role="group" cerrent_league = {{ current_league }} aria-label="Basic example">
+        {% for league in leagues %}
+            {% if current_league == league.id%}
+                <button type="button" class="btn" legaues_id = "{{ league.id }}" disabled>{{league.league}}</button>
+            {% else %}
+                <button type="button" class="btn" legaues_id = "{{ league.id }}">{{league.league}}</button>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+
+    {% for achive in achivments %}
+    <div class="row lign-self-center my-auto">
+        <br><br>
+        <div class="col-md-2">
+            <div style="border-radius: 50%; height: 9vh; width: 9vh; background-color: blueviolet;">
+            </div>
+
+
+
+        </div>
+        <div class="col-md-6  achive-info">
+            <h5>{{achive.achievement}}</h5><br>
+            {% for currency in currency_dict|get_item:achive.id%}
+                <img src="{{currency.url}}" style="height: 5vh;"><p>{{currency.quant}}</p>
+            {% endfor %}
+            <button class="btn">Купить</button>
+        </div>
+    </div>
+
+    {% endfor %}
+
+{% endblock %}
+
+
+
+
+

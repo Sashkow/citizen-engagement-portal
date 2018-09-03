@@ -35,5 +35,6 @@ urlpatterns = [
     url(r'^subscribe/$', volunteer_views.subscribe_event, name='subscribe_event'),
     url(r'^typefilter/$', volunteer_views.type_filter, name='type_filter'),
     url(r'^profile/edit', volunteer_views.profile_edit, name='profile_edit'),
+    url(r'^achivments/$', volunteer_views.get_achivments, name='achivments'),
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

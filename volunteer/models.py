@@ -26,6 +26,8 @@ from citizen_engagement_portal import settings
 import os
 
 
+
+
 def notify_event_changes(event_instance, event_field):
     if has_changed(event_instance, event_field):
         followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
@@ -78,22 +80,20 @@ class City(models.Model):
     def __str__(self):
         return self.city
 
-class Rank(models.Model):
-    rank = models.CharField(max_length=80)
-    quantity_of_points = models.IntegerField()
-    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1')
+
+class League(models.Model):
+    league = models.CharField(max_length = 80)
+    quantity_achievement  =models.IntegerField()
 
     def __str__(self):
-        return '%s %s %s' % (self.rank, '|', self.city)
-
+        return self.league
 
 class User(models.Model):
     first_name = models.CharField(max_length=80)
     last_name = models.CharField(max_length=80)
     date_of_registration = models.DateField(auto_now_add=True)
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
-    rank = models.ForeignKey(Rank, on_delete=models.CASCADE, default='2')
-    raiting_points = models.IntegerField(default=0)
+    league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, default='1')
     blocked = models.BooleanField(default=False)
     django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
@@ -171,17 +171,6 @@ class Comment(models.Model):
         unique_together = (("user", "event", "date"),)
 
 
-class PointsHistory(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    date = models.DateTimeField()
-    points = models.IntegerField()
-    is_it_org = models.BooleanField()
-
-    class Meta:
-        unique_together = (("user", "event", "date"),)
-
-
 class Report(models.Model):
     user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name="from+")
     user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name="to+")
@@ -207,3 +196,67 @@ class EventsPhoto(models.Model):
     def get_url(self):
         return self.photo.url
 
+#NEW FOR POINTS
+
+# League
+
+class Currency(models.Model):
+    currency = models.CharField(max_length = 80)
+    type_event = models.ForeignKey(EventsType, on_delete = models.CASCADE)
+    image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'currency'),)
+
+    def __str__(self):
+        return self.currency
+
+class UserPoint(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    currency = models.ForeignKey(Currency, on_delete = models.CASCADE)
+    quantity = models.IntegerField()
+
+    class Meta:
+        unique_together = ('user', 'currency',)
+
+class Achievement(models.Model):
+    achievement = models.CharField(max_length = 200)
+    league = models.ForeignKey(League, on_delete = models.CASCADE)
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.achievement
+
+class AchievementValue(models.Model):
+    achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)
+    currency = models.ForeignKey(Currency, on_delete = models.CASCADE)
+    quantity = models.IntegerField()
+
+    class Meta:
+        unique_together = ('achievement', 'currency',)
+
+
+class PointsList(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    date = models.DateField()
+    increase = models.BooleanField(default = True)
+    points_quantity = models.IntegerField()
+
+class IncreasePointsType(models.Model):
+    increase_type = models.CharField(max_length = 100)
+
+    def __str__(self):
+        return self.increase_type
+
+class DecreasePointsType(models.Model):
+    decrease_type = models.CharField(max_length = 100)
+
+    def __str__(self):
+        return self.decrease_type
+
+class IncreasePointsInfo(models.Model):
+    increase = models.ForeignKey(PointsList, on_delete = models.CASCADE)
+    increase_type = models.ForeignKey(IncreasePointsType, on_delete = models.CASCADE)
+    event = models.ForeignKey(Event, on_delete = models.CASCADE)
+
+class DecreasePointsInfo(models.Model):
+    decrease = models.ForeignKey(PointsList, on_delete = models.CASCADE)
+    decrease_type = models.ForeignKey(IncreasePointsType, on_delete = models.CASCADE)
+    achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)
