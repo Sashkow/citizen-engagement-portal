@@ -29,7 +29,13 @@ def get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, Eve
             events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
             events = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
             events_quantity = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0])).count()
-
+    else:
+        if parameters[0] == 'all':
+            events = Event.objects.filter(organizer = User.objects.get(django_user_id=django_user))[from_page:to_page]
+            events_quantity = Event.objects.filter(organizer = User.objects.get(django_user_id=django_user)).count()
+        else:
+            events = Event.objects.filter(organizer=User.objects.get(django_user_id=django_user), events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
+            events_quantity = Event.objects.filter(organizer=User.objects.get(django_user_id=django_user), events_type=EventsType.objects.get(id=parameters[0])).count()
 
 
     events_subs = {}

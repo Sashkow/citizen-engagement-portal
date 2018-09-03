@@ -17,6 +17,7 @@ from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Max
 import datetime
 
 
@@ -119,9 +120,14 @@ def profile(request):
     else:
         name = "Волонтер_ка"
 
-    parameters = ['all', 1, 'news']
+    parameters = ['all_digest', 1, 'news']
     events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
+
+
+    user_points = UserPoint.objects.filter(user = volunteer).select_related('currency')
+    max_user_point = user_points.aggregate(Max('quantity'))
+    print(type(max_user_point['quantity__max']))
 
     types_events = EventsType.objects.all()
     return render(request, 'core/profile.html', {'volunteer':volunteer,
@@ -136,7 +142,9 @@ def profile(request):
                                                 'unread_count': request.user.notifications.unread().count(),
                                                 'notifications': request.user.notifications.all(),
                                                 'types_events':types_events,
-                                                 'events_org':events_org
+                                                 'events_org':events_org,
+                                                 'user_points':user_points,
+                                                 'max_points': max_user_point['quantity__max']
     })
 
 def event(request, id):
@@ -299,3 +307,27 @@ def profile_edit(request):
                                                      'type_events': type_events,
                                                      'dict_digest':dict_digest})
 
+def get_achivments(request):
+    if request.method == 'GET':
+        django_user = request.user
+        current_user = User.objects.get(django_user_id=django_user)
+        leagues = League.objects.all()
+        current_league = current_user.league.id
+        achivments = Achievement.objects.filter(league__id = current_league)
+        currency_dict = {}
+        for i in achivments:
+            currency_dict[i.id] = []
+            img_example = AchievementValue.objects.filter(achievement__id = i.id).select_related('currency')
+            for j in img_example:
+                helper = {}
+                quant = j.quantity
+                img_path = j.currency.image.url
+                helper['url'] = img_path
+                helper['quant'] = quant
+                currency_dict[i.id].append(helper)
+        print(currency_dict)
+        return render(request, 'achievements_list.html', {'leagues':leagues,
+                                                          'current_league':current_league,
+                                                          'achivments':achivments,
+                                                          'currency_dict':currency_dict
+                                                          })

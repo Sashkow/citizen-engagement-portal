@@ -22,17 +22,10 @@ admin.site.register(City, CityAdmin)
 
 
 
-class RankAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Rank._meta.fields]
-    exclude = ['Id']
-admin.site.register(Rank, RankAdmin)
-
-
-
 class UserAdmin(admin.ModelAdmin):
     list_display = [field.name for field in User._meta.fields]
-    exclude = ['rating_points', 'blocked', 'ID']
-    list_filter = ['rank', 'city', 'blocked']
+    exclude = ['blocked', 'ID']
+    list_filter = ['city', 'blocked']
     search_fields = ['first_name', 'last_name']
 
 admin.site.register(User, UserAdmin)
@@ -81,11 +74,6 @@ class ReportAdmin(admin.ModelAdmin):
     exclude = ['ID']
 admin.site.register(Report, ReportAdmin)
 
-class PointsHistoryAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in PointsHistory._meta.fields]
-    exclude = ['ID']
-admin.site.register(PointsHistory, PointsHistoryAdmin)
-
 class EventsPhotoAdmin(admin.ModelAdmin):
     list_display = [field.name for field in EventsPhoto._meta.fields]
     exclude = ['ID']
@@ -95,3 +83,37 @@ class EventsOrgTaskAdmin(admin.ModelAdmin):
     list_display = [field.name for field in EventsOrgTask._meta.fields]
     exclude = ['ID']
 admin.site.register(EventsOrgTask, EventsOrgTaskAdmin)
+
+
+class LeagueAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in League._meta.fields]
+    exclude = ['ID']
+admin.site.register(League, LeagueAdmin)
+
+class CurrencyAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Currency._meta.fields]
+    exclude = ['ID']
+admin.site.register(Currency, CurrencyAdmin)
+
+class UserPointAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in UserPoint._meta.fields]
+    exclude = ['ID']
+admin.site.register(UserPoint, UserPointAdmin)
+
+
+class AchievementAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Achievement._meta.fields]
+    exclude = ['ID']
+admin.site.register(Achievement, AchievementAdmin)
+
+
+class AchievementValueAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in AchievementValue._meta.fields]
+    exclude = ['ID']
+admin.site.register(AchievementValue, AchievementValueAdmin)
+
+class PointsListAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in PointsList._meta.fields]
+    exclude = ['ID']
+admin.site.register(PointsList, PointsListAdmin)
+

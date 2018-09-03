@@ -42,23 +42,32 @@
         <div class="row align-self-center"  style="height: 30vh;">
             <div class="profile_info col-md-4 text-center my-auto" style="margin-top: 5vh !important;">
                 {% csrf_token %}
+                <h2>{{ volunteer.league }}</h2>
                 {% if volunteer.photo %}
                 <img  src="{{ volunteer.photo.url }}" style="height: 20vh;">
                 {% else %}
                 <img  src="{% static 'volunteer/images/user_profile_default.png' %}" style="height: 20vh;">
                 {% endif %}
                 <h1>{{name}}</h1>
-                <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+
+                {% for point in user_points %}
+
+                <div class="progress" style="height:3vh">
+                    <img  src="{{ point.currency.image.url }}" style="height: 3vh;">
+                    <div class="progress-bar" role="progressbar" style="width: {{point.quantity|divide:max_points|multiply:100|to_int}}%" aria-valuenow="{{ point.quantity|divide:max_points|multiply:100}}" aria-valuemin="0" aria-valuemax="{{max_points}}"></div>
                 </div>
+                {% endfor %}
+
+
                 <div>
                     <a href="{% url 'profile_edit' %}"> Редагувати профіль</a>
                 </div>
                 <div>
                     <a href="#">Мої добрі справи</a><br>
                     <a class="my-volonter-events" href="#">Я волонтер</a><br>
-                    <a class="my-org-events" href="#">Я організатор</a>
-                    <a class="news" href="#">Новини</a>
+                    <a class="my-org-events" href="#">Я організатор</a><br>
+                    <a class="news" href="#">Новини</a><br>
+                    <a class="news" href="{% url 'achivments' %}">Досягнення</a><br>
 
                 </div>
             </div>
@@ -112,136 +121,8 @@
             </div>
 
         </div>
-<!-- Modal -->
-    <div class="modal fade" id="event_register" tabindex="-1" role="dialog" aria-labelledby="event_register_modal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="event_register_modal">Зареєструвати подію/завдання</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <input type="text" placeholder="Назва" name="name" class="input">
-              <hr>
-                <select id="event_task" class="text-center" >
-                    <option value="" disabled selected> Оберіть тип</option>
-                    <option type_id = "event">Подія</option>
-                    <option type_id = "task">Завдання</option>
-                </select>
-              <hr>
-                <select id="category" class="text-center">
-                            <option value="" disabled selected> Оберіть категорію</option>
-                           {% for type_ev in types_events %}
-                                <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
-                            {% endfor %}
-                </select>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-next">Далі</button>
-          </div>
-        </div>
-      </div>
-    </div>
-<!-- Modal -->
-    <div class="modal fade" id="event_e_register" post_url = "{% url 'newevent'%}" tabindex="-1" role="dialog" aria-labelledby="event_register_event" aria-hidden="true" style="overflow-y:auto;">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="event_register_event">Зареєструвати подію/завдання</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-                <select id="event_status" class="text-center" >
-                    <option value="" disabled selected> Оберіть тип</option>
-                    {% for st in status %}
-                        <option status_id = "{{st.id}}">{{ st.status }}</option>
-                    {% endfor %}
-                </select>
-                <div class="add-org-task d-none">
-                    <div class="task-info">
-                        <br>
-                        <label>Завдання в підготовці</label><br>
-                         <div class="input-group  add-task mb-3">
-                              <input type="text" class="form-control name_task" placeholder="Назва" >
-                              <input type="number" class="form-control point_task" placeholder="Балів за виконання">
-                          </div>
-                        <label>Описання</label><br>
-                        <textarea  rows="3" class="form-control descr_task" name="description_org_task"></textarea>
-                    </div>
 
-
-
-                </div>
-              <button class="btn more-tasks d-none"> Більше завдань </button>
-              <hr>
-              <input type="text" name="date" class="input" placeholder="Дата" onfocus="(this.type='date')">
-              <hr>
-              <input type="text" placeholder="Адреса" name="address" class="input">
-              <hr>
-              <label>Кількість учасників</label><br>
-              <div class="input-group mb-3">
-                  <input name="from" type="number" class="form-control" placeholder="Від" >
-                  <input name="to" type="number" class="form-control" placeholder="До">
-              </div>
-              <hr>
-              <label>Рекомендована кількість балів за участь</label><br>
-              <input type="number" name="points_quant" class="input">
-              <hr>
-              <label>Залиште Ваш контактний e-mail</label><br>
-              <input type="email" name="user_email" class="input">
-
-               <hr>
-              <label for="description">Описання:</label><br>
-              <textarea  rows="3" class="form-control" id="description_e"></textarea>
-
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="btn-done" class="btn btn-primary ">Готово</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="task_register" tabindex="-1" role="dialog" aria-labelledby="event_register_task" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="event_register_task">Зареєструвати подію/завдання</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-
-              <label>Рекомендована кількість балів за виконання завдання</label><br>
-              <input type="number" name="t_points_quant" class="input">
-              <hr>
-              <label>Залиште Ваш контактний e-mail</label><br>
-              <input type="email" name="t_user_email" class="input">
-
-               <hr>
-              <label for="description">Описання:</label><br>
-              <textarea  rows="3" class="form-control" id="description"></textarea>
-
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-done">Готово</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
+        {% include 'modal_event_register.html' %}
 
 {% endblock %}
 
