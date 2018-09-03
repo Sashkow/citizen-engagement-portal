@@ -1,53 +1,5 @@
 $( document ).ready(function() {
 
-
-//    $(document).on('click', '#open-reg-modal', function(){
-//        $('#event_register').modal()
-//        var data = {}
-//        $('.btn-next').click(function(){
-//            var name = $('input[name="name"]').val()
-//            var type_event = $('option:selected', '#event_task').attr('type_id')
-//            var category = $('option:selected', '#category').attr('type_id')
-//            data.name = name;
-//            data.type=type_event;
-//            data.category=category;
-//             $('#btn-done').click(function(){
-//                        var status = $('option:selected', '#event_status').attr('status_id')
-//                        var date = $('input[name="date"]').val()
-//                        var address = $('input[name="address"]').val()
-//                        var from = $('input[name="from"]').val()
-//                        var to = $('input[name="to"]').val()
-//                        var points_quant = $('input[name="points_quant"]').val()
-//                        var user_email = $('input[name="user_email"]').val()
-//                        var description_e = $('#description_e').val()
-//                    })
-//
-//            $('#event_register').modal('hide')
-//            if(data.type == 'event'){
-//                $('#event_e_register').modal()
-//                $('#event_status').change(function(){
-//                    if ($('option:selected', '#event_status').attr('status_id') == "1"){
-//                        $('.add-org-task').removeClass('d-none')
-//                        $('.more-tasks').removeClass('d-none')
-//                        $('.more-tasks').click(function(){
-//                            $('.task-info').clone().appendTo(".add-org-task")
-//
-//                        })
-//                    }
-//                    else{
-//                        $('.add-org-task').addClass('d-none')
-//                        $('.more-tasks').addClass('d-none')
-//                    }
-//                    })
-//                })
-//
-////            }else{
-////                $('#task_register').modal()
-////            }
-//        })
-//    })
-
-
     $(document).on('click', '#open-reg-modal', function(){
 
         $('#event_register').modal()
@@ -154,7 +106,7 @@ $( document ).ready(function() {
 
 
      console.log( "ready!" );
-     $('#datetimepicker1').datetimepicker();
+//     $('#datetimepicker1').datetimepicker();
 
 
      $(document).on('click', ".btn-follow", function() {
@@ -245,6 +197,10 @@ $( document ).ready(function() {
              $(this).html("Від'єднатись");
              $(this).toggleClass('btn-resubscribe');
              $(this).toggleClass('btn-subscribe');
+             $(this).prev().prop('disabled', true);
+             $(this).prev().addClass('btn-follow');
+             $(this).prev().removeClass('btn-refollow');
+             $(this).prev().text('Слідкувати');
     });
 
 
@@ -275,6 +231,7 @@ $( document ).ready(function() {
              $(this).html("Приєднатись  ");
              $(this).toggleClass('btn-resubscribe');
              $(this).toggleClass('btn-subscribe');
+             $('.btn-follow').prop('disabled', false);
     });
 
     $(document).on('change', '#event-type', function(){
@@ -283,6 +240,7 @@ $( document ).ready(function() {
         id = $('option:selected', this).attr('type_id');
         data.type = id;
         data.page = 1;
+        data.state = $('#event-type').attr('state');
          $.ajax({
              url: url,
              type :'GET',
@@ -319,6 +277,7 @@ $( document ).ready(function() {
         var url = $('#event-type').attr('url_get')
         var type_id = $('option:selected', '#event-type').attr('type_id');
         var page =$(this).attr('page');
+        var state = $('#event-type').attr('state');
         if(page == '...'){
             console.log('It is bed')
             if ($(this).prev().attr('page') == '1'){
@@ -341,6 +300,7 @@ $( document ).ready(function() {
 
         data.page = page;
         data.type = type_id;
+        data.state = state;
 
         $.ajax({
             url: url,
@@ -374,7 +334,42 @@ $( document ).ready(function() {
 
     })
 
+    $(document).on('click', '.my-volonter-events', function(){
+        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+        var data = {};
+        var url = $('#event-type').attr('url_get');
+        data.type = 'all';
+        data.page = 1;
+        data.state = 'volunteer';
+        console.log(data)
+        $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                 if(!jQuery.isEmptyObject(data)){
+                        console.log(data)
 
+                        $(".events-container").html(data.html);
+                        $('#event-type').attr('state', 'volunteer');
+
+                      }
+                     else{
+                            console.log('empty json')
+
+                         $('<h1>', {
+                            text: 'За заданими параметрами подій не знайдено',
+                         }).appendTo($(".events-container"))
+                 }
+             },
+             error: function(){
+             console.log('error')
+             }
+        })
+
+    });
 
     });
 

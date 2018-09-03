@@ -24,17 +24,29 @@
             </div>
                 <div class="row">
                     <div class="col-md-12 text-center my-auto">
-                        {% if events_subs|get_item:event.id == 0 %}
-                            <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button>
-                        {% else %}
-                            <button type="button" class="btn-refollow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Відписатися</button>
-                        {%  endif %}
+                        {% if events_org|get_item:event.id == 0 %}
+                            {% if events_subs|get_item:event.id == 0 %}
+                                {% if events_part|get_item:event.id == 1  %}
+                                <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, eurl_post = "{% url 'follow_event' %}" disabled>Слідкувати</button>
+                                {% else %}
+                                <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}" >Слідкувати</button>
+                                {% endif %}
+                            {% else %}
+                                <button type="button" class="btn-refollow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Відписатися</button>
+                            {%  endif %}
 
-                        {% if events_part|get_item:event.id == 0 %}
-                            <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button>
+
+                            {% if events_part|get_item:event.id == 0 %}
+                                <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button>
+                            {% else %}
+                                <button type="button" class="btn-resubscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Від'єднатися</button>
+                            {% endif %}
+
                         {% else %}
-                            <button type="button" class="btn-resubscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Від'єднатися</button>
+                            <button class="btn"> Редагувати</button>
                         {% endif %}
+
+
                     </div>
                 </div>
         </div>

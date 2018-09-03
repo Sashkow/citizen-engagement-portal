@@ -2,11 +2,9 @@
 {% load static %}
 {% load volunteer_extras %}
 {% load static notifications_tags %}
-{% load disqus_tags %}
-
 
 {% block jscripts %}
-    <script src="{% static 'volunteer/js/script.js' %}"></script>
+    <script src="{% static 'volunteer/js/profile.js' %}"></script>
     <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
     <script src="{% static 'volunteer/js/live-test.js' %}" type="text/javascript"></script>
 {% endblock %}
@@ -53,6 +51,16 @@
                 <div class="progress">
                 <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
+                <div>
+                    <a href="{% url 'profile_edit' %}"> Редагувати профіль</a>
+                </div>
+                <div>
+                    <a href="#">Мої добрі справи</a><br>
+                    <a class="my-volonter-events" href="#">Я волонтер</a><br>
+                    <a class="my-org-events" href="#">Я організатор</a>
+                    <a class="news" href="#">Новини</a>
+
+                </div>
             </div>
 
         <div class="col-md-8">
@@ -64,11 +72,13 @@
                                                                     border-bottom-right-radius: 15px;">
                 <div class="col-md-4">
                     <div class="dropdown open">
-                        <select id="event-type" class="text-center" url_get = "{% url 'type_filter' %}">
-                            <option type_id = "all">Тип</option>
+                        <select id="event-type" class="text-center" url_get = "{% url 'type_filter' %}" state = "news">
+                            <option type_id = "all_digest">Тип</option>
                            {% for type_ev in types_events %}
                                 <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
                             {% endfor %}
+                            <option type_id = "all">Всі</option>
+
                         </select>
                     </div>
                 </div>
@@ -100,14 +110,6 @@
 
 
             </div>
-            <!--<script type="text/javascript">-->
-                <!--var disqus_developer = 1;-->
-                <!--var disqus_url = 'https://localhost:8000/';-->
-             <!--</script>-->
-
-
-
-
 
         </div>
 <!-- Modal -->
@@ -243,11 +245,6 @@
 
 {% endblock %}
 
-
-
-<div class="row">
-    <div class="col-md-12 text-center my-auto"><button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Слідкувати</button><button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button></div>
-                            </div>
 
 
 
