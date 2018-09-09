@@ -21,6 +21,7 @@ $( document ).ready(function() {
                             $('.more-tasks').unbind().click(function(){
                                 console.log('click')
                                  $('.task-info:first').clone().appendTo(".add-org-task")
+
                             })
                             }
                         else{
@@ -69,6 +70,7 @@ $( document ).ready(function() {
                              cache:true,
                              success: function(data){
                              console.log('OK')
+                             $('#event_e_register').modal('hide')
 
                              },
                              error: function(){
@@ -93,6 +95,7 @@ $( document ).ready(function() {
                              cache:true,
                              success: function(data){
                              console.log('OK')
+                             $('#task_register').modal('hide')
 
                              },
                              error: function(){
@@ -249,14 +252,16 @@ $( document ).ready(function() {
              dataType:'json',
              success: function(data){
                  console.log('OK');
-                 $(".events-container").empty();
+
 
                  if(!jQuery.isEmptyObject(data)){
+                    $(".dynamic-block").empty();
 
-                    $(".events-container").html(data.html);
+                    $(".dynamic-block").html(data.html);
 
                   }
                  else{
+                        $(".events-container").empty();
                         console.log('empty json')
 
                      $('<h1>', {
@@ -311,11 +316,11 @@ $( document ).ready(function() {
              dataType:'json',
              success:function(data){
                 console.log('OK');
-                $(".events-container").empty();
+                $(".dynamic-block").empty();
 
                  if(!jQuery.isEmptyObject(data)){
 
-                    $(".events-container").html(data.html);
+                    $(".dynamic-block").html(data.html);
 
                   }
                  else{
@@ -323,7 +328,7 @@ $( document ).ready(function() {
 
                      $('<h1>', {
                         text: 'За заданими параметрами подій не знайдено',
-                     }).appendTo($(".events-container"))
+                     }).appendTo($(".dynamic-block"))
                  }
              },
              error:function(){
@@ -353,7 +358,7 @@ $( document ).ready(function() {
                  if(!jQuery.isEmptyObject(data)){
                         console.log(data)
 
-                        $(".events-container").html(data.html);
+                        $(".dynamic-block").html(data.html);
                         $('#event-type').attr('state', 'volunteer');
 
                       }
@@ -362,7 +367,7 @@ $( document ).ready(function() {
 
                          $('<h1>', {
                             text: 'За заданими параметрами подій не знайдено',
-                         }).appendTo($(".events-container"))
+                         }).appendTo($(".dynamic-block"))
                  }
              },
              error: function(){
@@ -390,7 +395,7 @@ $( document ).ready(function() {
                  if(!jQuery.isEmptyObject(data)){
                         console.log(data)
 
-                        $(".events-container").html(data.html);
+                        $(".dynamic-block").html(data.html);
                         $('#event-type').attr('state', 'organizer');
 
                       }
@@ -399,7 +404,7 @@ $( document ).ready(function() {
 
                          $('<h1>', {
                             text: 'За заданими параметрами подій не знайдено',
-                         }).appendTo($(".events-container"))
+                         }).appendTo($(".dynamic-block"))
                  }
              },
              error: function(){
@@ -408,6 +413,27 @@ $( document ).ready(function() {
         })
 
     });
+
+
+    $(document).on('click', '.get-achievements', function(){
+        var url = $(this).attr('get_url');
+        data = {}
+         $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                    $(".dynamic-block").empty()
+                    $(".dynamic-block").html(data.html)
+                 },
+             error: function(){
+                console.log('error')
+             }
+             })
+        })
+
 
 
 

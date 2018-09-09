@@ -84,6 +84,8 @@ class City(models.Model):
 class League(models.Model):
     league = models.CharField(max_length = 80)
     quantity_achievement  =models.IntegerField()
+    league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    user_frame = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
 
     def __str__(self):
         return self.league
@@ -220,6 +222,8 @@ class Achievement(models.Model):
     achievement = models.CharField(max_length = 200)
     league = models.ForeignKey(League, on_delete = models.CASCADE)
     description = models.TextField(null=True, blank=True)
+    image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+
 
     def __str__(self):
         return self.achievement
@@ -233,9 +237,17 @@ class AchievementValue(models.Model):
         unique_together = ('achievement', 'currency',)
 
 
+class UserAchievement(models.Model):
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    class Meta:
+        unique_together = ('achievement', 'user',)
+
 class PointsList(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
+    currency = models.ForeignKey(Currency, on_delete = models.CASCADE)
     increase = models.BooleanField(default = True)
     points_quantity = models.IntegerField()
 
@@ -258,5 +270,5 @@ class IncreasePointsInfo(models.Model):
 
 class DecreasePointsInfo(models.Model):
     decrease = models.ForeignKey(PointsList, on_delete = models.CASCADE)
-    decrease_type = models.ForeignKey(IncreasePointsType, on_delete = models.CASCADE)
+    decrease_type = models.ForeignKey(DecreasePointsType, on_delete = models.CASCADE)
     achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)

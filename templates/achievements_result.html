@@ -1,0 +1,59 @@
+{% load static %}
+<div class="btn-group" role="group" cerrent_league = {{ current_league }} aria-label="Basic example">
+        {% for league in leagues %}
+            {% if current_league == league.id%}
+                <button type="button" class="btn change-league" get_url="{% url 'achivments_legaue' %}" legaues_id = "{{ league.id }}" disabled>{{league.league}}</button>
+            {% else %}
+                <button type="button" class="btn change-league" get_url="{% url 'achivments_legaue' %}"  legaues_id = "{{ league.id }}">{{league.league}}</button>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div id="achiev-container">
+
+
+{% for ach in achivments %}
+
+    {% if forloop.first %} <div class="row "> {% endif %}
+
+
+
+            {% if ach.id in user_achivements %}
+                <div class="col-md-5th-1 text-center justify-content-center d-flex align-items-center" style="height: 45vh;">
+
+                    <div class="achievement-item my-flex-item unlocked-achievement">
+                            <h5 class="unlocked-achievement">{{ach.achievement}}</h5>
+                            <img class="unlocked-achievement" src="{{ach.image.url}}">
+                        <p class="unlocked-achievement">{{ach.description}}</p>
+            {% else %}
+                <div class="col-md-5th-1 text-center justify-content-center d-flex align-items-center" style="height: 45vh;">
+                    <div class="achievement-item  locked-achievement">
+                            <h5 class="locked-achievement">{{ach.achievement}}</h5>
+                            <img class="locked-achievement" src="{% static 'volunteer/images/locked_achieve.png' %}"  achieve_id = "{{ ach.id}}">
+
+
+
+                {% if ach.league_id <= current_league%}
+                <div class="align-items-end">
+                    {% for currency in currency_dict|get_item:ach.id%}
+                        <img class="d-inline currency-image" src="{{currency.url}}"><p class="d-inline currency-value">{{currency.quant}}</p>
+                    {% endfor %}
+                </div>
+
+                    <button class="btn buy-achieve my-flex-item" post_url = "{% url 'achivments_legaue' %}" achieve_id = "{{ ach.id}}">розблокувати</button>
+
+                {% endif %}
+
+            {% endif %}
+        </div>
+        </div>
+    {% if forloop.counter|divisibleby:5 %}
+    </div><div class="row">
+    {% endif %}
+{% endfor %}
+
+{% if forloop.counter.last %} </div> {% endif %}
+
+    </div>
+
+{% include 'buy_achieve_modal.html' %}

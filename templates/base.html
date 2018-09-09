@@ -12,11 +12,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"  crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.min.css">
 
     <link rel="stylesheet" type="text/css" href = "{% static 'volunteer/palette.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'volunteer/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'volunteer/fivecolumns.css' %}" />
 
 
     <link rel="stylesheet" href="{% static '/tingle.js/dist/tingle.min.css' %}">
@@ -30,13 +32,20 @@
 
     {% block adding_link %}{% endblock %}
 
+    <style>
+        .photo-frame:before{
+            content:'1';
+            position:absolute;
+        }
+    </style>
+
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-md navbar-light bg-light navbarset container-fluid">
+    <nav class="navbar navbar-expand-md navbarset container-fluid nvb-style">
         <a href="{% url 'home' %}" class="navbar-left">
-            <img src="{% static 'volunteer/images/hands.png' %}" style = "height:10vh">
+            <img src="{% static 'volunteer/images/hands.png' %}" class="logo">
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,9 +57,7 @@
                 {% block menu_item %}{% endblock %}
             </ul>
 
-            <!--<form action="{% url 'logout' %}">-->
                 {% block menu_button %}{% endblock %}
-            <!--</form>-->
 
 
           </div>

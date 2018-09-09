@@ -117,3 +117,21 @@ class PointsListAdmin(admin.ModelAdmin):
     exclude = ['ID']
 admin.site.register(PointsList, PointsListAdmin)
 
+class UserAchievementAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in UserAchievement._meta.fields]
+    exclude = ['ID']
+admin.site.register(UserAchievement, UserAchievementAdmin)
+
+
+class DecreasePointsTypeAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in DecreasePointsType._meta.fields]
+    exclude = ['ID']
+admin.site.register(DecreasePointsType, DecreasePointsTypeAdmin)
+
+
+class DecreasePointsInfoAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in DecreasePointsInfo._meta.fields]
+    exclude = ['ID']
+admin.site.register(DecreasePointsInfo, DecreasePointsInfoAdmin)
+
+
