@@ -36,5 +36,7 @@ urlpatterns = [
     url(r'^typefilter/$', volunteer_views.type_filter, name='type_filter'),
     url(r'^profile/edit', volunteer_views.profile_edit, name='profile_edit'),
     url(r'^achivments/$', volunteer_views.get_achivments, name='achivments'),
+    url(r'^achivment_legaue/$', volunteer_views.achivments_legaue, name='achivments_legaue'),
+    url(r'^testerer/$', volunteer_views.test, name='test'),
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

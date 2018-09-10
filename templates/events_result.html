@@ -1,4 +1,41 @@
 {% load static %}
+<div class="dynamic-block">
+            <div class="row text-center align-items-center" style="height:8vh;
+                                                                    border-style:solid;
+                                                                    border-width:1px;
+                                                                    border-color:#4CAF50;
+                                                                    border-bottom-left-radius: 15px;
+                                                                    border-bottom-right-radius: 15px;">
+                <div class="col-md-4">
+                    <div class="dropdown open">
+                        <select id="event-type" class="text-center" url_get = "{% url 'type_filter' %}" state = "news">
+                            {% if selected == "all_digest" %}
+                                <option type_id = "all_digest" selected>Тип</option>
+                            {% else %}
+                                <option type_id = "all_digest">Тип</option>
+                            {% endif %}
+                           {% for type_ev in types_events %}
+                                {% if type_ev.id == selected|to_int %}
+                                <option type_id = "{{type_ev.id}}" selected>{{ type_ev.type }}</option>
+                                {% else %}
+                                <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if selected == "all" %}
+                                <option type_id = "all" selected>Всі</option>
+                            {% else %}
+                                <option type_id = "all" >Всі</option>
+                            {% endif %}
+
+                        </select>
+                    </div>
+                </div>
+            </div >
+
+            <div class="row">
+                <div class="col-md-12">
+                     <div class="events-container">
 
     {% for event in events %}
 
@@ -73,3 +110,10 @@
             </div>
         </div>
 
+                     </div>
+                </div>
+
+
+            </div>
+
+        </div>
