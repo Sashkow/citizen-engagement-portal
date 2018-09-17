@@ -22,3 +22,9 @@ def multiply(value, arg):
 @register.filter()
 def to_int(value):
     return int(value)
+
+def to_float(value):
+    return float(value)
+
+def minus(value, arg):
+    return value - arg

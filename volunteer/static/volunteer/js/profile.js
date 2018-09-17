@@ -2,7 +2,7 @@ $( document ).ready(function() {
 
     $(document).on('click', '#open-reg-modal', function(){
 
-        $('#event_register').modal()
+        $('#event_register').modal('show')
         var data = {}
          $('.btn-next').click(function(){
              var name = $('input[name="name"]').val()
@@ -109,7 +109,6 @@ $( document ).ready(function() {
 
 
      console.log( "ready!" );
-//     $('#datetimepicker1').datetimepicker();
 
 
      $(document).on('click', ".btn-follow", function() {
@@ -252,14 +251,16 @@ $( document ).ready(function() {
              dataType:'json',
              success: function(data){
                  console.log('OK');
-                 $(".events-container").empty();
+
 
                  if(!jQuery.isEmptyObject(data)){
+                    $(".dynamic-block").empty();
 
-                    $(".events-container").html(data.html);
+                    $(".dynamic-block").html(data.html);
 
                   }
                  else{
+                        $(".events-container").empty();
                         console.log('empty json')
 
                      $('<h1>', {
@@ -275,7 +276,6 @@ $( document ).ready(function() {
 
 
     $(document).on('click', '.page-item', function(){
-        console.log("Page-click");
         data = {}
         var url = $('#event-type').attr('url_get')
         var type_id = $('option:selected', '#event-type').attr('type_id');
@@ -314,11 +314,11 @@ $( document ).ready(function() {
              dataType:'json',
              success:function(data){
                 console.log('OK');
-                $(".events-container").empty();
+                $(".dynamic-block").empty();
 
                  if(!jQuery.isEmptyObject(data)){
 
-                    $(".events-container").html(data.html);
+                    $(".dynamic-block").html(data.html);
 
                   }
                  else{
@@ -326,7 +326,7 @@ $( document ).ready(function() {
 
                      $('<h1>', {
                         text: 'За заданими параметрами подій не знайдено',
-                     }).appendTo($(".events-container"))
+                     }).appendTo($(".dynamic-block"))
                  }
              },
              error:function(){
@@ -356,7 +356,7 @@ $( document ).ready(function() {
                  if(!jQuery.isEmptyObject(data)){
                         console.log(data)
 
-                        $(".events-container").html(data.html);
+                        $(".dynamic-block").html(data.html);
                         $('#event-type').attr('state', 'volunteer');
 
                       }
@@ -365,7 +365,7 @@ $( document ).ready(function() {
 
                          $('<h1>', {
                             text: 'За заданими параметрами подій не знайдено',
-                         }).appendTo($(".events-container"))
+                         }).appendTo($(".dynamic-block"))
                  }
              },
              error: function(){
@@ -393,7 +393,7 @@ $( document ).ready(function() {
                  if(!jQuery.isEmptyObject(data)){
                         console.log(data)
 
-                        $(".events-container").html(data.html);
+                        $(".dynamic-block").html(data.html);
                         $('#event-type').attr('state', 'organizer');
 
                       }
@@ -402,7 +402,7 @@ $( document ).ready(function() {
 
                          $('<h1>', {
                             text: 'За заданими параметрами подій не знайдено',
-                         }).appendTo($(".events-container"))
+                         }).appendTo($(".dynamic-block"))
                  }
              },
              error: function(){
@@ -412,6 +412,156 @@ $( document ).ready(function() {
 
     });
 
+
+    $(document).on('click', '.get-achievements', function(){
+        var url = $(this).attr('get_url');
+        data = {}
+         $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                    $(".dynamic-block").empty()
+                    $(".dynamic-block").html(data.html)
+                 },
+             error: function(){
+                console.log('error')
+             }
+             })
+        })
+
+$(document).on('click', '.item-menu', function(){
+    if ($(this).attr('id')!= 'open-reg-modal'){
+             $('.current-menu-item').removeClass('current-menu-item')
+             $(this).parent().parent().addClass('current-menu-item')
+        }
+
+})
+
+$(document).on('click', '.news', function(){
+    console.log('in');
+    data = {}
+    var url = $(this).attr('url_get')
+    var type_id = 'all_digest';
+    var page = 1;
+    var state = 'news';
+    data.type = type_id;
+    data.page = page;
+    data.state = state;
+    console.log(data)
+
+    $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                 $(".dynamic-block").empty()
+                 $(".dynamic-block").html(data.html);
+                 $('#event-type').attr('state', 'organizer');
+             },
+             error: function(){
+             console.log('error')
+             }
+        })
+
+})
+
+
+
+        $(document).on('click', '.my-events', function(){
+           $(this).parent().parent().next().removeClass('d-none');
+           $(this).parent().parent().next().next().removeClass('d-none');
+           $('.my-org-events, .my-volonter-events').click(function(){
+                $('.my-events').parent().parent().addClass('current-menu-item');
+                $('.my-events').parent().parent().next().addClass('d-none');
+                $('.my-events').parent().parent().next().next().addClass('d-none');
+           })
+
+        })
+
+         $(document).on('click', '.setting-img', function(){
+          var url = $(this).attr('get_url')
+          var data = {}
+
+               $.ajax({
+                 url: url,
+                 type :'GET',
+                 data:data,
+                 cache:true,
+                 success: function(data){
+                     console.log('OK');
+                     $(".dynamic-block").empty()
+                     $(".dynamic-block").html(data.html);
+                 },
+                 error: function(){
+                 console.log('error')
+                 }
+                })
+        })
+
+
+        $(document).on('click', '.btn-event-edit', function(){
+//            data = {}
+            var url = $(this).attr('get_url');
+//            var event_id = $(this).attr('id_event');
+//            data.id = event_id;
+            console.log('data');
+                $.ajax({
+                     url: url,
+                     type :'GET',
+                     cache:true,
+                     success: function(data){
+                         console.log('OK');
+                         $(".dynamic-block").empty()
+                         $(".dynamic-block").html(data.html);
+                     },
+                     error: function(){
+                     console.log('error')
+                     }
+                    })
+        })
+
+
+//        Editing event
+        $(document).on('click', '.send_edit', function(){
+            var url = $(this).attr('post_url');
+            var event_id = $(this).attr('id_event');
+            var name = $('.event-edit-name').val()
+            var date = $('#date_event').val()
+            var time = $('#time_event').val()
+            var address = $('input[name="address"]').val()
+            console.log(event_id);
+            console.log(name);
+            console.log(date);
+            console.log(url);
+        })
+
+        $(document).on('click', '.event-name',  function(){
+            var url = $(this).attr('get_url');
+            var data = {}
+            console.log(url)
+            $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                 $(".dynamic-block").empty()
+                 console.log(data)
+                 $(".dynamic-block").html(data.html);
+//                 $('#event-type').attr('state', 'organizer');
+             },
+             error: function(){
+             console.log('error')
+             }
+        })
+
+        })
 
 
     });

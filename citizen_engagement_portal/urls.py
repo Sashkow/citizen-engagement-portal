@@ -10,6 +10,8 @@ from django.conf.urls.static import static
 from django.urls import path
 import notifications.urls
 
+import social_django.urls
+
 from volunteer.views import live_tester, make_notification, mark_all_as_read
 
 urlpatterns = [
@@ -29,6 +31,7 @@ urlpatterns = [
 
     # url(r'^home/$', core_views.home),
     url(r'^profile/$', volunteer_views.profile, name='profile'),
+    url(r'^success_oauth/$', volunteer_views.just_after_scuccess_auth, name='success_oauth'),
     url(r'^event/(?P<id>\w+)/', volunteer_views.event, name='event'),
     url(r'^newevent/$', volunteer_views.new_event, name='newevent'),
     url(r'^follow/$', volunteer_views.follow_event, name='follow_event'),
@@ -36,5 +39,11 @@ urlpatterns = [
     url(r'^typefilter/$', volunteer_views.type_filter, name='type_filter'),
     url(r'^profile/edit', volunteer_views.profile_edit, name='profile_edit'),
     url(r'^achivments/$', volunteer_views.get_achivments, name='achivments'),
+    url(r'^achivment_legaue/$', volunteer_views.achivments_legaue, name='achivments_legaue'),
+    url(r'^testerer/$', volunteer_views.test, name='test'),
+    url(r'^eventedit/(?P<id_event>\w+)/', volunteer_views.test_event, name='edit_event'),
+    url(r'^form/(?P<id>\d+)/', volunteer_views.form, name='form'),
+
+    url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login')
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

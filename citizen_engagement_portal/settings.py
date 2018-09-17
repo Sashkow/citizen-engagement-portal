@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'volunteer',
     'social-core-master',
     'disqus',
+    # 'background_task',
 
 ]
 
@@ -205,25 +206,29 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_REDIRECT_URL = 'success_oauth'
 LOGOUT_REDIRECT_URL = 'login'
 
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['first_name',]
 
-# SOCIAL_AUTH_PIPELINE = (
-#     'social_core.pipeline.social_auth.social_details',
-#     'social_core.pipeline.social_auth.social_uid',
-#     'social_core.pipeline.social_auth.social_user',
-#     'social_core.pipeline.user.get_username',
-#     'social_core.pipeline.user.create_user',
-#     'social_core.pipeline.social_auth.associate_user',
-#     'social_core.pipeline.social_auth.load_extra_data',
-#     'social_core.pipeline.user.user_details',
-#     'social_core.pipeline.social_auth.associate_by_email',
-# )
-#
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+
+    'volunteer.custom_social_pipeline.save_user_name',
+
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'social_core.pipeline.social_auth.associate_by_email',
+)
+
 # SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 #
 

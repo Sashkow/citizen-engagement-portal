@@ -1,67 +1,138 @@
 {% load static %}
+<div class="dynamic-block">
+            <div class="row text-center align-items-center event-navigation">
+                <div class="col-md-3">
+                    <div class="dropdown open text-left category-filter">
+                        <select id="event-type" class="text-left select" url_get = "{% url 'type_filter' %}" state = "news">
+                            {% if selected == "all_digest" %}
+                                <option type_id = "all_digest" selected>Тип</option>
+                            {% else %}
+                                <option type_id = "all_digest">Категорія</option>
+                            {% endif %}
+                           {% for type_ev in types_events %}
+                                {% if type_ev.id == selected|to_int %}
+                                <option type_id = "{{type_ev.id}}" selected>{{ type_ev.type }}</option>
+                                {% else %}
+                                <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if selected == "all" %}
+                                <option type_id = "all" selected>Всі</option>
+                            {% else %}
+                                <option type_id = "all" >Всі</option>
+                            {% endif %}
+
+                        </select>
+                        <img class="align-self-center what-img" src="{% static 'volunteer/images/what.png' %}">
+                    </div>
+
+                </div>
+                <div class="col-md-2 padding-0">
+                    <img class="align-self-center filter_event_task" src="{% static 'volunteer/images/event_fiter.png' %}">
+                    <img class="align-self-center what-img" src="{% static 'volunteer/images/what.png' %}">
+                    <img class="align-self-center filter_event_task" src="{% static 'volunteer/images/filter_task.png' %}">
+
+                </div>
+                <div class="col-md-2">
+                    <div class="dropdown open text-left category-filter">
+                        <select id="event-status" class="text-left select">
+                            <option status_id = "all_status" selected>статус</option>
+                        </select>
+                </div>
+                </div>
+                <div class="col-md-3">
+                        <input class="select search" type="text" >
+                </div>
+                <div class="col-md-2">
+                    <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
+                    <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">
+
+                </div>
+            </div >
+
+            <div class="row">
+                <div class="col-md-12">
+                     <div class="events-container">
 
     {% for event in events %}
 
-        <div class="event-block row text-center my-auto align-items-center " style="height:22vh">
-        <div class="col-md-4 text-center my_auto">
+        <div class="event-block row ">
+        <div class="col-md-3 text-center text-center my-auto align-items-center ">
 
-            {% if event.event_photo %}
-                <img src= "{{ event.event_photo.photo.url }}" href="{% url 'event' id=event.id %}" style="height:18vh">
-            {% else %}
-                <img src= "{% static 'volunteer/images/event.jpg' %}" href="{% url 'event' id=event.id %}" style="height:18vh">
-            {% endif %}
+
+                <img src= "{{ event.events_type.image.url }}" href="{% url 'event' id=event.id %}" style="height:18vh">
+
 
         </div>
-        <div class="col-md-8 info">
-            <div class="row">
-                <div class="col-md-12 align-items-center">
-                    <div>
-                        <h2><a href="{% url 'event' id=event.id %}">{{ event.name }}</a></h2>
-                        <p>{{ event.description }}</p>
+        <div class="col-md-7 info">
+            <!--<div class="row text-left full-row">-->
+                    <div class="event-item-info">
+                        <h2  class="event-name" get_url="{% url 'event' id=event.id %}">{{ event.name }}</h2>
+                        <p class="event-description">{{ event.description }}</p>
                     </div>
-                </div>
 
-            </div>
-                <div class="row">
-                    <div class="col-md-12 text-center my-auto">
-                        {% if events_org|get_item:event.id == 0 %}
+
+                        <div class="btn-div align-self-end">
+                             {% if events_org|get_item:event.id == 0 %}
                             {% if events_subs|get_item:event.id == 0 %}
                                 {% if events_part|get_item:event.id == 1  %}
-                                <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, eurl_post = "{% url 'follow_event' %}" disabled>Слідкувати</button>
+                                <button type="button" class="btn-follow    event-button" id="follow"  id_event = {{ event.id }}, eurl_post = "{% url 'follow_event' %}" disabled>підписатися</button>
                                 {% else %}
-                                <button type="button" class="btn-follow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}" >Слідкувати</button>
+                                <button type="button" class="btn-follow   event-button" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}" >підписатися</button>
                                 {% endif %}
                             {% else %}
-                                <button type="button" class="btn-refollow  btn  dark-primary-color text-primary-color" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">Відписатися</button>
+                                <button type="button" class="btn-refollow    event-button" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">відписатися</button>
                             {%  endif %}
 
 
                             {% if events_part|get_item:event.id == 0 %}
-                                <button type="button" class="btn-subscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Приєднатися</button>
+                                <button type="button" class="event-button btn-subscribe  " id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %} " >долучитися <img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
                             {% else %}
-                                <button type="button" class="btn-resubscribe btn dark-primary-color text-primary-color" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">Від'єднатися</button>
+                                <button type="button" class="btn-resubscribe  event-button" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">відлучитися</button>
                             {% endif %}
 
                         {% else %}
-                            <button class="btn"> Редагувати</button>
+                            <!--<button class="btn btn-event-edit" id_event = {{ event.id }} > Редагувати</button>-->
+                        <button class="btn-event-edit event-button" id_event = {{ event.id }} get_url = "{% url 'form' id=event.id %}">редагувати <img class="img-curr-in-button" src="{% static 'volunteer/images/edit.png' %}"</button>
                         {% endif %}
 
+                        </div>
 
-                    </div>
+
+
+
+                    <!--</div>-->
+
+        </div>
+        <div class="col-md-2 padding-0 d-flex justify-content-end">
+                        {% if event.events_or_task == True %}
+                            <img class="task-or-event-image align-self-end" src="{% static 'volunteer/images/event.png' %}">
+                        {% else %}
+                            <img class="task-or-event-image align-self-end" src="{% static 'volunteer/images/task.png' %}">
+                        {% endif%}
+            <div class="outer flex-right" style="background-color: {{event.status.color_background}}">
+                <img class="img-status align-self-center" src="{{ event.status.image.url }}">
+                <div class="inner rotate">
+                    <p class="event-status-info">{{event.status.frontend_value}}</p>
                 </div>
+            </div>
+
         </div>
+
         </div>
+
 
     {% endfor %}
 
-        <div class="row text-center">
-            <div class="col-md-12">
+        <div class="row text-center  justify-content-md-center">
+            <div class="col-md-auto">
 
                 <ul class="pagination pagination-lg">
                     {% if pages_max > 1 %}
                         {% for i in pages %}
                             {% if  i == current %}
-                                <li class="page-item  disabled" page = {{ i }}><a class="page-link">{{ i }}</a></li>
+                                    <li class="page-item  disabled" page = {{ i }}><a class="page-link">{{ i }}</a></li>
                             {% else %}
                                 <li class="page-item" page = {{ i }}><a class="page-link">{{ i }}</a></li>
                             {% endif %}
@@ -73,3 +144,10 @@
             </div>
         </div>
 
+                     </div>
+                </div>
+
+
+            </div>
+
+        </div>

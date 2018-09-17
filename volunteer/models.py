@@ -62,14 +62,20 @@ def notify_event_changes(event_instance, event_field):
             )
 
 
+
+
 class EventsType(models.Model):
     type = models.CharField(max_length=80)
+    image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements',), null=True, blank=True)
 
     def __str__(self):
         return self.type
 
 class Status(models.Model):
     status = models.CharField(max_length=80)
+    frontend_value = models.CharField(max_length=80, null=True, blank=True)
+    color_background = models.CharField(max_length = 13, null=True, blank=True)
+    image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'status',), null=True, blank=True)
 
     def __str__(self):
         return self.status
@@ -82,21 +88,55 @@ class City(models.Model):
 
 
 class League(models.Model):
+    DEFAULT_PK = 1
     league = models.CharField(max_length = 80)
     quantity_achievement  =models.IntegerField()
+    league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    user_frame = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    background_color = models.CharField(max_length =20, null=True, blank=True)
+    background_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'profile_backgrounds'), null=True, blank=True)
+    color_league_txt = models.CharField(max_length =20, null=True, blank=True)
+    color_volunteer_name = models.CharField(max_length =20, null=True, blank=True)
+    color_menu_item = models.CharField(max_length =20, null=True, blank=True)
+    color_current_grad1 = models.CharField(max_length =20, null=True, blank=True)
+    color_current_grad2 = models.CharField(max_length =20, null=True, blank=True)
+    color_current_text = models.CharField(max_length =20, null=True, blank=True)
+    color_current_border = models.CharField(max_length =20, null=True, blank=True)
 
     def __str__(self):
         return self.league
+
 
 class User(models.Model):
     first_name = models.CharField(max_length=80)
     last_name = models.CharField(max_length=80)
     date_of_registration = models.DateField(auto_now_add=True)
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
-    league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True)
+    league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True, default=League.DEFAULT_PK)
     city = models.ForeignKey(City, on_delete=models.CASCADE, default='1')
     blocked = models.BooleanField(default=False)
     django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        is_new_user = False
+        if self.pk is None:
+            is_new_user = True
+
+        super(User, self).save(*args, **kwargs)
+
+        if is_new_user:
+            currencies = Currency.objects.all()
+            for currency in currencies:
+                UserPoint.objects.create(user=self, # sosal
+                                         currency=currency,
+                                         quantity=0)
+
+            events_type = EventsType.objects.all()
+            for type_e in events_type:
+                DigestList.objects.create(
+                    user=self,
+                    type=type_e
+                )
 
     def __str__(self):
         return '%s %s %s' % (self.first_name, '|', self.last_name)
@@ -220,6 +260,8 @@ class Achievement(models.Model):
     achievement = models.CharField(max_length = 200)
     league = models.ForeignKey(League, on_delete = models.CASCADE)
     description = models.TextField(null=True, blank=True)
+    image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+
 
     def __str__(self):
         return self.achievement
@@ -233,9 +275,17 @@ class AchievementValue(models.Model):
         unique_together = ('achievement', 'currency',)
 
 
+class UserAchievement(models.Model):
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    class Meta:
+        unique_together = ('achievement', 'user',)
+
 class PointsList(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
+    currency = models.ForeignKey(Currency, on_delete = models.CASCADE)
     increase = models.BooleanField(default = True)
     points_quantity = models.IntegerField()
 
@@ -258,5 +308,5 @@ class IncreasePointsInfo(models.Model):
 
 class DecreasePointsInfo(models.Model):
     decrease = models.ForeignKey(PointsList, on_delete = models.CASCADE)
-    decrease_type = models.ForeignKey(IncreasePointsType, on_delete = models.CASCADE)
+    decrease_type = models.ForeignKey(DecreasePointsType, on_delete = models.CASCADE)
     achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)

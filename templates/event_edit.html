@@ -1,0 +1,7 @@
+{% load static %}
+<form action="{% url 'form' id=id %}" method="post">
+    {{form.as_p}}
+    <input type="submit" value="Submit">
+</form>
+
+

@@ -5,122 +5,180 @@
 
 {% block jscripts %}
     <script src="{% static 'volunteer/js/profile.js' %}"></script>
+    <script src="{% static 'volunteer/js/achievements.js' %}"></script>
     <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
     <script src="{% static 'volunteer/js/live-test.js' %}" type="text/javascript"></script>
+
+    <style>
+        p.ribbon{
+            color: {{volunteer.league.color_league_txt}};
+        }
+
+        .volunteer-name{
+            color: {{volunteer.league.color_volunteer_name}};
+        }
+
+        .curr_quat{
+            color: {{volunteer.league.color_menu_item}};
+        }
+
+
+        .item-menu{
+            color: {{volunteer.league.color_menu_item}};
+        }
+
+        .current-menu-item{
+            background-image:linear-gradient(
+              120deg,
+              {{volunteer.league.color_current_grad1}},
+              {{volunteer.league.color_current_grad2}},
+              {{volunteer.league.color_current_grad1}}
+            );
+            border-left: 1.3vh solid {{volunteer.league.color_current_border}} ;
+        }
+
+        div.current-menu-item p.item-menu{
+            color: {{volunteer.league.color_current_text}}!important;
+        }
+
+    </style>
 {% endblock %}
 
-
-
-
-
-
-{% block menu_item %}
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Знайти подію<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id = "open-reg-modal">Організувати подію</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link " href="#">Новини</a>
-    </li>
-{% endblock %}
+{{achieve_quant|divide:league_user.quantity_achievement|to_int}}
 
 {% block menu_button %}
     <form action="{% url 'logout' %}">
-        <button class="btn text-primary-color dark-primary-color my-2 my-sm-0" type="submit">Вийти</button>
+        <button class="btn btn-enter" type="submit">вийти</button>
     </form>
 {% endblock %}
 
 {% block container %}
 
-    {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' fetch=20 refresh_period=5 %}
-    Непрочитані сповіщення: {% live_notify_badge %}
-    <!--<button onclick='make_notification()'>Створити сповіщення</button>-->
-    <button onclick='mark_all_as_read()'>Позначити усе як прочитане</button>
-    {% live_notify_list %}
-        <div class="row align-self-center"  style="height: 30vh;">
-            <div class="profile_info col-md-4 text-center my-auto" style="margin-top: 5vh !important;">
+    <!--{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' fetch=20 refresh_period=5 %}-->
+    <!--Непрочитані сповіщення: {% live_notify_badge %}-->
+    <!--&lt;!&ndash;<button onclick='make_notification()'>Створити сповіщення</button>&ndash;&gt;-->
+    <!--<button onclick='mark_all_as_read()'>Позначити усе як прочитане</button>-->
+    <!--{% live_notify_list %}-->
+
+
+        <div class="row align-self-center h-100">
+            <div class="profile_info col-md-3 text-center align-items-center justify-content-center" style="background-image:url({{volunteer.league.background_image.url}}); background-color:{{volunteer.league.background_color}}">
                 {% csrf_token %}
-                <h2>{{ volunteer.league }}</h2>
-                {% if volunteer.photo %}
-                <img  src="{{ volunteer.photo.url }}" style="height: 20vh;">
-                {% else %}
-                <img  src="{% static 'volunteer/images/user_profile_default.png' %}" style="height: 20vh;">
-                {% endif %}
-                <h1>{{name}}</h1>
-
-                {% for point in user_points %}
-
-                <div class="progress" style="height:3vh">
-                    <img  src="{{ point.currency.image.url }}" style="height: 3vh;">
-                    <div class="progress-bar" role="progressbar" style="width: {{point.quantity|divide:max_points|multiply:100|to_int}}%" aria-valuenow="{{ point.quantity|divide:max_points|multiply:100}}" aria-valuemin="0" aria-valuemax="{{max_points}}"></div>
-                </div>
-                {% endfor %}
-
-
-                <div>
-                    <a href="{% url 'profile_edit' %}"> Редагувати профіль</a>
-                </div>
-                <div>
-                    <a href="#">Мої добрі справи</a><br>
-                    <a class="my-volonter-events" href="#">Я волонтер</a><br>
-                    <a class="my-org-events" href="#">Я організатор</a><br>
-                    <a class="news" href="#">Новини</a><br>
-                    <a class="news" href="{% url 'achivments' %}">Досягнення</a><br>
-
-                </div>
-            </div>
-
-        <div class="col-md-8">
-            <div class="row text-center align-items-center" style="height:8vh;
-                                                                    border-style:solid;
-                                                                    border-width:1px;
-                                                                    border-color:#4CAF50;
-                                                                    border-bottom-left-radius: 15px;
-                                                                    border-bottom-right-radius: 15px;">
-                <div class="col-md-4">
-                    <div class="dropdown open">
-                        <select id="event-type" class="text-center" url_get = "{% url 'type_filter' %}" state = "news">
-                            <option type_id = "all_digest">Тип</option>
-                           {% for type_ev in types_events %}
-                                <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
-                            {% endfor %}
-                            <option type_id = "all">Всі</option>
-
-                        </select>
+                <!--<h2>{{ volunteer.league }}</h2>-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="volunteer-name first-name">{{volunteer.first_name}}</h3>
+                        <h4 class="volunteer-name">{{volunteer.last_name}}</h4>
+                        <img class="setting-img" get_url = "{% url 'profile_edit' %}"src="{% static 'volunteer/images/setting.png'%}">
                     </div>
                 </div>
-                <div class="col-md-4">
-                    Дата
-                </div>
-                <div class="col-md-4">
-                    <input type="text" placeholder="Пошук">
-                </div>
-            </div >
 
-            <div class="row">
-                <div class="col-md-8">
-                     <div class="events-container">
-                    {% include 'events_result.html' %}
-
-                     </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="ribbon">
+                        <p class="ribbon">{{ volunteer.league }}</p>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                      <div class="input-group date" id="datetimepicker1">
-                        <input type="text" class="form-control" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                      </div>
                     </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 profile-image">
+                         <div>
+                            <img class="user-league-info league-logo" src="{{league_user.league_image.url}}">
+                            {% if volunteer.photo %}
+                            <img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}" style="background-image:url({{ volunteer.photo.url }})">
+                            {% else %}
+                            <img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}" style="background-image:url({% static 'volunteer/images/user_profile_default.png' %}")">
+                             {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row justify-content-center">
+                    <div class="col-md-9">
+                        <div class="own-progress-bar">
+                            <div class="own-progress-league" style="width: {{achieve_quant|divide:league_user.quantity_achievement|multiply:100|to_int}}%">
+                                <div class="progress_state">
+                                    <p class="quant-ach">{{achieve_quant}}</p>
+                                    <img class="img_progress_state" src="{% static 'volunteer/images/current_progress_state.png' %}">
+                                </div>
+                            </div>
+                        <p class="text-right" style="margin-right: 0.7vh;">5</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                    {% for point in user_points %}
+                        {% if forloop.first %} <div class="row justify-content-md-center"> {% endif %}
+                            <div class="col-md-2">
+                                <img  src="{{ point.currency.image.url }}" style="height: 3vh;">
+                                <p class="curr_quat">{{point.quantity}}</p>
+                            </div>
+                        {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-md-center"> {%endif%}
+                         {% if forloop.last %}</div>{% endif %}
+                    {% endfor %}
+
+
+
+               <div class="row profile-menu-item text-left justify-content-md-center">
+                    <div class="col-md-8">
+                        <p class="item-menu my-events">мої добрі справи</p>
+                    </div>
+                </div>
+                <div class="row profile-menu-item text-left justify-content-md-center d-none">
+                    <div class="col-md-8">
+                        <p class="my-volonter-events ">я волонтер</p>
+                    </div>
+                </div>
+                <div class="row profile-menu-item text-left justify-content-md-center d-none">
+                    <div class="col-md-8">
+                        <p  class="my-org-events ">я організатор</p>
+                    </div>
+                </div>
+                <div class="row profile-menu-item text-left justify-content-md-center current-menu-item">
+                    <div class="col-md-8">
+                        <p class="news item-menu " url_get = "{% url 'type_filter' %}">новини</p>
+                    </div>
+                </div>
+                <div class="row profile-menu-item text-left justify-content-md-center">
+                    <div class="col-md-8">
+                        <p class="get-achievements item-menu" get_url="{% url 'achivments' %}">мої досягнення</p>
+                    </div>
+                </div>
+                <div class="row profile-menu-item text-left justify-content-md-center">
+                    <div class="col-md-8">
+                        <p class="item-menu" id="open-reg-modal" post_url="{% url 'newevent' %}">організувати подію</p>
+                    </div>
+                </div>
+                <div class="row profile-menu-item text-left justify-content-md-center">
+                    <div class="col-md-8">
+                        <p  class="item-menu"  >сповіщення</p>
+
+                    </div>
+                </div>
+                <!--<div>-->
+                    <!--<a href="{% url 'profile_edit' %}"> Редагувати профіль</a>-->
+                <!--</div>-->
+                <!--<div>-->
+                    <!--<a href="#">Мої добрі справи</a><br>-->
+                    <!--<a class="my-volonter-events" href="#">Я волонтер</a><br>-->
+                    <!--<a class="my-org-events" href="#">Я організатор</a><br>-->
+                    <!--<a class="news" href="#">Новини</a><br>-->
+                    <!--<a class="get-achievements" href="#"     get_url="{% url 'achivments' %}">Досягнення</a><br>-->
+
+                <!--</div>-->
             </div>
+            <div class="col-md-9" style="background-color: #f9ffefff;
+                                         background-image:url({% static 'volunteer/images/bg_plastic1.png'%});">
 
 
+       {% include 'events_result.html' %}
             </div>
-
-        </div>
+            </div>
 
         {% include 'modal_event_register.html' %}
 

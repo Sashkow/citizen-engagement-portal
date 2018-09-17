@@ -13,17 +13,19 @@
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm, UserCreationForm
+from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.http import HttpResponseForbidden
+
 from django.contrib.auth import update_session_auth_hash, login, authenticate
 from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max
+from .forms import EditeEventForm
 import datetime
-
-
+from django.contrib.auth.models import User as DjangoUser
+from volunteer.models import User as VolunteerUser
 from volunteer.models import *
-
-from volunteer.forms import NewEventForm
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -72,7 +74,7 @@ def mark_all_as_read(request):
     user.notifications.mark_all_as_read()
 
 
-events_per_page = 1
+events_per_page = 6
 
 
 def signup(request):
@@ -104,14 +106,10 @@ def profile(request):
     session_key = request.session.session_key
     django_user = request.user
     volunteer = User.objects.filter(django_user_id = django_user)
+
     status = Status.objects.filter(id__range = (1, 2))
-    if len(volunteer) == 0:
-        volunteer = User.objects.create(django_user_id = django_user)
-    elif len(volunteer)> 1:
-        print("Duplicates!")
-        return None
-    else:
-        volunteer = volunteer.first()
+
+    volunteer = volunteer.first()
 
     if django_user.first_name:
         name = django_user.first_name
@@ -124,13 +122,21 @@ def profile(request):
     events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
-
+    # league_user = League.objects.get(id = volunteer.league)
+    league_user = volunteer.league
+    achievements_league_list = list(Achievement.objects.filter(league = league_user).values_list('id', flat = True))
+    achieve_quant = UserAchievement.objects.filter(user = volunteer, achievement_id__in = achievements_league_list).count()
     user_points = UserPoint.objects.filter(user = volunteer).select_related('currency')
     max_user_point = user_points.aggregate(Max('quantity'))
-    print(type(max_user_point['quantity__max']))
 
     types_events = EventsType.objects.all()
+
+    curr_category = {}
+    for type_e in types_events:
+        img = Currency.objects.get(type_event = type_e.id).image.url
+        curr_category[type_e.id] = img
     return render(request, 'core/profile.html', {'volunteer':volunteer,
+                                                 'league_user':league_user,
                                                  'name':name,
                                                  'events':events,
                                                  'events_subs':events_subs,
@@ -139,28 +145,58 @@ def profile(request):
                                                  'pages':pages_range,
                                                  'pages_max': pages,
                                                  'status':status,
+                                                 'achieve_quant':achieve_quant,
                                                 'unread_count': request.user.notifications.unread().count(),
                                                 'notifications': request.user.notifications.all(),
                                                 'types_events':types_events,
                                                  'events_org':events_org,
                                                  'user_points':user_points,
-                                                 'max_points': max_user_point['quantity__max']
+                                                 'max_points': max_user_point['quantity__max'],
+                                                 'curr_category':curr_category
     })
 
 def event(request, id):
     try:
+        django_user = request.user
+        volunteer = User.objects.get(django_user_id=django_user)
         the_event = Event.objects.get(pk=id)
         following = len(EventsSubscriber.objects.filter(event = the_event))
         going = len(EventsParticipant.objects.filter(event = the_event))
         photos = EventsPhoto.objects.filter(event=the_event)
         absolute_url = request.build_absolute_uri(reverse('event', args=(id,)))
-        return render(request, 'event.html', {
-            'event' : the_event,
+        types_events = EventsType.objects.all()
+
+        curr_category = {}
+        for type_e in types_events:
+            img = Currency.objects.get(type_event=type_e.id).image.url
+            curr_category[type_e.id] = img
+        if the_event.organizer == volunteer:
+            org_user = 1
+        else:
+            org_user = 0
+        if EventsSubscriber.objects.filter(event=the_event, user = volunteer).exists():
+            subscribe = 1
+        else:
+            subscribe = 0
+        if EventsParticipant.objects.filter(event = the_event, user = volunteer).exists():
+            part = 1
+        else:
+            part = 0
+        cont = {
+            'curr_category':curr_category,
+            'org_user':org_user,
+            'request': request,
+            'event': the_event,
             'following': following,
             'going': going,
             'photos': photos,
-            'absolute_url':absolute_url
-        })
+            'absolute_url': absolute_url,
+            'subscribe':subscribe,
+            'part':part
+            }
+        html = render_to_string('event_copy.html', cont)
+        return_dict = {'html': html}
+        return JsonResponse(return_dict)
     except ObjectDoesNotExist:
         return HttpResponse("event with id:{} not found".format(id))
 
@@ -238,12 +274,13 @@ def subscribe_event(request):
     data = request.POST
     result = int(data['id_event'].replace(',', '').replace(' ',''))
     user_db = User.objects.get(django_user_id = request.user)
+
     if int(data['add']) == 1:
         EventsSubscriber.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
         EventsParticipant.objects.create(user = user_db, event = Event.objects.get(id = result))
     else:
         EventsParticipant.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
-
+    #
     return JsonResponse(return_dict)
 
 
@@ -253,8 +290,12 @@ def type_filter(request):
     data = request.GET
     print(data)
     parametrs = [data['type'], data['page'], data['state']]
+    types_events = EventsType.objects.all()
     print(parametrs)
-
+    curr_category = {}
+    for type_e in types_events:
+        img = Currency.objects.get(type_event=type_e.id).image.url
+        curr_category[type_e.id] = img
     if data['type'] not in ['all', 'all_digest'] and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
         return JsonResponse(return_dict)
     else:
@@ -262,6 +303,7 @@ def type_filter(request):
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
         cont = {
+            'curr_category':curr_category,
             'events': events,
             'events_subs': events_subs,
             'events_part': events_part,
@@ -270,6 +312,7 @@ def type_filter(request):
             'pages_max': pages,
             'current':int(parametrs[1]),
             'request': request,
+            'selected':data['type'],
             'events_org': events_org
         }
         html = render_to_string('events_result.html', cont)
@@ -303,17 +346,23 @@ def profile_edit(request):
                 dict_digest[i.id] = 1
             else:
                 dict_digest[i.id] = 0
-        return render(request, 'edit_profile.html', {'user':current_user,
-                                                     'type_events': type_events,
-                                                     'dict_digest':dict_digest})
+        cont = {'user':current_user,
+                 'type_events': type_events,
+                 'dict_digest':dict_digest}
+        html = render_to_string('edit_profile.html', cont)
+        return_dict = {'html': html}
+        return JsonResponse(return_dict)
 
 def get_achivments(request):
+
     if request.method == 'GET':
         django_user = request.user
         current_user = User.objects.get(django_user_id=django_user)
         leagues = League.objects.all()
         current_league = current_user.league.id
         achivments = Achievement.objects.filter(league__id = current_league)
+        user_achivements = list(UserAchievement.objects.filter(user = current_user).values_list('achievement_id', flat = True))
+        print(user_achivements)
         currency_dict = {}
         for i in achivments:
             currency_dict[i.id] = []
@@ -325,9 +374,177 @@ def get_achivments(request):
                 helper['url'] = img_path
                 helper['quant'] = quant
                 currency_dict[i.id].append(helper)
-        print(currency_dict)
-        return render(request, 'achievements_list.html', {'leagues':leagues,
-                                                          'current_league':current_league,
-                                                          'achivments':achivments,
-                                                          'currency_dict':currency_dict
-                                                          })
+    cont = {
+        'leagues': leagues,
+        'achivments': achivments,
+        'currency_dict': currency_dict,
+        'user_achivements': user_achivements,
+        'current_league': current_league,
+        'request': request
+    }
+    html = render_to_string('achievements_result.html', cont)
+    return_dict = {'html': html}
+    return JsonResponse(return_dict)
+
+
+
+
+
+def achivments_legaue(request):
+    django_user = request.user
+    current_user = User.objects.get(django_user_id=django_user)
+    if request.method == 'GET':
+        current_league = current_user.league.id
+        data = request.GET
+        leagues = League.objects.all()
+        achivments = Achievement.objects.filter(league=data['id'])
+        user_achivements = list(UserAchievement.objects.filter(user=current_user).values_list('achievement_id', flat=True))
+        currency_dict = {}
+        for i in achivments:
+            currency_dict[i.id] = []
+            img_example = AchievementValue.objects.filter(achievement__id=i.id).select_related('currency')
+            for j in img_example:
+                helper = {}
+                quant = j.quantity
+                img_path = j.currency.image.url
+                helper['url'] = img_path
+                helper['quant'] = quant
+                currency_dict[i.id].append(helper)
+        cont = {
+            'leagues':leagues,
+            'achivments': achivments,
+            'currency_dict': currency_dict,
+            'user_achivements':user_achivements,
+            'current_league':current_league,
+            'request': request
+        }
+        html = render_to_string('achievements_result.html', cont)
+        return_dict = {'html': html}
+        return JsonResponse(return_dict)
+    else:
+        data = request.POST
+        print(data)
+
+        achieve = AchievementValue.objects.filter(achievement = Achievement.objects.get(id = data['id']))
+        for ach in achieve:
+            user_balance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id)).quantity
+            print(user_balance)
+            if user_balance < ach.quantity:
+                text_error = "Вам не вистачає " + str(ach.quantity - user_balance)+ ' ' + Currency.objects.get(id = ach.currency_id).currency
+                return_dict = {'error': ach.quantity - user_balance,
+                               'url_currency': Currency.objects.get(id = ach.currency_id).image.url}
+                return JsonResponse(return_dict)
+        for ach in achieve:
+            instance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id))
+            instance.quantity -= ach.quantity
+            instance.save()
+            pointslist = PointsList.objects.create(user = current_user,  currency = Currency.objects.get(id = ach.currency_id), increase = False, points_quantity = ach.quantity)
+            DecreasePointsInfo.objects.create(decrease = pointslist, decrease_type = DecreasePointsType.objects.get(id = 1), achievement = Achievement.objects.get(id = data['id']))
+        UserAchievement.objects.create(achievement = Achievement.objects.get(id = data['id']), user = current_user)
+        legaue_achievements = list(Achievement.objects.filter(league__id =current_user.league.id).values_list('id', flat = True))
+        quant = UserAchievement.objects.filter(user = current_user, achievement__id__in = legaue_achievements).count()
+        if quant == League.objects.get(id = current_user.league.id).quantity_achievement:
+            current_user.league =League.objects.get(id = current_user.league.id  + 1)
+            current_user.save()
+            print('New league')
+            return_dict = {
+                'success': True,
+                'image_url': Achievement.objects.get(id=data['id']).image.url,
+                'new_league' : League.objects.get(id = current_user.league.id).league
+            }
+        else:
+            return_dict = {'success':True,
+                           'image_url' : Achievement.objects.get(id=data['id']).image.url
+                           }
+
+        return JsonResponse(return_dict)
+
+
+def test(request):
+    return render(request, 'home_copy.html')
+
+
+def just_after_scuccess_auth(request):
+    # if threre is no volunteer_user user corresponding to django_user
+    # create new volunteer_user
+    django_user = request.user
+
+
+    return redirect(reverse('profile'))
+
+def dispatch_social_login(request):
+    first_name = request.GET['first_name']
+    second_name = request.GET['second_name']
+
+    if 'sub_fb' in request.GET:
+        provider = 'facebook'
+    elif 'sub_gg' in request.GET:
+        provider = 'google-oauth2'
+    else:
+        print('Niether fb no gg')
+        return None
+    return redirect(
+        reverse('social:begin', args=[provider, ]) + '?first_name={}&{}'.format(first_name, second_name))
+
+
+def test_event(request, id_event):
+    print(id_event)
+    event = Event.objects.get(id=id_event)
+    status = Status.objects.all()
+    subscribers = EventsSubscriber.objects.filter(event = event).count()
+    parts = EventsParticipant.objects.filter(event = event).count()
+    url_currency = Currency.objects.get(type_event = EventsType.objects.get(id = event.events_type.id)).image.url
+    event_org_tasks = []
+    if EventsOrgTask.objects.filter(event = event).exists():
+        event_org_tasks = EventsOrgTask.objects.filter(event = event)
+
+
+    form = EditeEventForm(request.POST or None, instance=Event.objects.get(id = id_event))
+
+    cont = {
+        'request':request,
+        'event': event,
+        'status': status,
+        'subscribers': subscribers,
+        'parts': parts,
+        "event_org_tasks": event_org_tasks,
+        'url_currency': url_currency,
+        'form':form
+    }
+    print(cont)
+    html = render_to_string('event_edit.html', cont)
+    print(html)
+    return_dict = {'html': html}
+
+
+    if request.POST and form.is_valid():
+            form.save()
+
+            # Save was successful, so redirect to another page
+            return JsonResponse(return_dict)
+
+
+    return JsonResponse(return_dict)
+
+
+def form(request, id = None):
+    if id:
+        event = get_object_or_404(Event, pk=id)
+        event = Event.objects.get(id=id)
+
+    form = EditeEventForm(request.POST or None, instance=event)
+    if request.POST and form.is_valid():
+        form.save()
+
+        # Save was successful, so redirect to another page
+        redirect_url = reverse('/profile')
+        return redirect(redirect_url)
+    return_dict = {}
+    cont = {
+        'id':id,
+        'form': form,
+        'request':request
+    }
+    html = render_to_string('event_edit.html', cont)
+    return_dict['html'] = html
+    return JsonResponse(return_dict)
