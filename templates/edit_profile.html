@@ -1,42 +1,13 @@
-{% extends "base.html" %}
 {% load static %}
 {% load volunteer_extras %}
-{% load static notifications_tags %}
-
-{% block jscripts %}
-    <script src="{% static 'volunteer/js/profileedit.js' %}"></script>
-    <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-    <script src="{% static 'volunteer/js/live-test.js' %}" type="text/javascript"></script>
-{% endblock %}
-
-
-{% block menu_item %}
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Знайти подію<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id = "open-reg-modal">Організувати подію</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link " href="#">Новини</a>
-    </li>
-{% endblock %}
 
 
 
-{% block menu_button %}
-    <form action="{% url 'logout' %}">
-        <button class="btn text-primary-color dark-primary-color my-2 my-sm-0" type="submit">Вийти</button>
-    </form>
-{% endblock %}
-
-{% block container %}
     <div id="adding-info" post_url = "{% url 'profile_edit' %}">
         {% csrf_token %}
 
     </div>
     <div class = "row text-center">
-        <div class="col-md-12"> 2 </div>
 
     </div>
     <div class="row text-center">
@@ -84,4 +55,4 @@
         </div>
 
     </div>
-{% endblock %}
+

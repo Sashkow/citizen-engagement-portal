@@ -38,5 +38,7 @@ urlpatterns = [
     url(r'^achivments/$', volunteer_views.get_achivments, name='achivments'),
     url(r'^achivment_legaue/$', volunteer_views.achivments_legaue, name='achivments_legaue'),
     url(r'^testerer/$', volunteer_views.test, name='test'),
+    url(r'^eventedit/(?P<id_event>\w+)/', volunteer_views.test_event, name='edit_event'),
+    url(r'^form/(?P<id>\d+)/', volunteer_views.form, name='form'),
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

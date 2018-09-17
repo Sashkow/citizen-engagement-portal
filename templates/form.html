@@ -1,0 +1,97 @@
+{% load static %}
+{{form.as_p}}
+
+
+
+    <!--<div class="row">-->
+        <!--<div class="col-md-3">-->
+
+        <!--</div>-->
+        <!--<div class="col-md-9 text-center">-->
+
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--<input class="event-edit-name" name="name" value="{{event.name}}">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                   <!--<div class="row">-->
+                        <!--<div class="col-md-6 text-right">-->
+                            <!--<p style="display:inline-block">{{event.events_type.type}}</p>-->
+                                <!--{{event.recommended_points}} <img src="{{url_currency}}" style="height:4vh">-->
+
+                        <!--</div>-->
+                       <!--<div  class="col-md-6 text-left">-->
+                            <!--нишпорять :{{subscribers}}-->
+                           <!--<br>беруть участь :{{parts}}-->
+                       <!--</div>-->
+                   <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--Дата та час:-->
+                            <!--<input id="date_event" type="date" datatype="date" value="{{ event.date_event|date:'Y-m-d' }}">-->
+                            <!--<input id="time_event" type="time" value="{{ event.date_event|time:'H:i'}}">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                        <!--Адреса: <input type="text" name="address" value="{{event.address}}">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--Статус:<select class="text-center">-->
+                                <!--{% for st in status %}-->
+                                    <!--{% if st.id == event.status.id %}-->
+                                        <!--<option type_id = "all_digest" status_id = {{st.id}} selected>{{st.status}}</option>-->
+                                    <!--{% else %}-->
+                                        <!--<option type_id = "all_digest" status_id = {{st.id}}>{{st.status}}</option>-->
+                                    <!--{% endif %}-->
+                                <!--{% endfor %}-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--Кількість учасників: max: <input type="number" value="{{event.max_part}}">-->
+                            <!--min: <input type="number" value="{{event.min_part}}">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--Контакт:  <input type="email" value="{{event.conact}}">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--<br>description<input type="text" value="{{event.description}}">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--{% if event.status.id == 1 %}-->
+
+                            <!--{% for task in event_org_tasks %}-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-12">-->
+                                    <!--<input type="text" value="{{task.task_name}}">{{task.recommended_points}}-->
+                                    <!--<img src="{{url_currency}}" style="height:4vh">-->
+                                    <!--<input type="text" value="{{task.task_description}}">-->
+                                    <!--{% if task.done == True %}-->
+                                    <!--<input type="checkbox" checked>-->
+                                    <!--{% else %}-->
+                                    <!--<input type="checkbox" checked>-->
+                                    <!--{% endif %}-->
+                                    <!--<input>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--{% endfor %}-->
+
+                    <!--{% endif %}-->
+                    <!--<button class="send_edit" id_event = "{{ event.id }}" post_url = "{% url 'edit_event'  %}">Зберегти зміни</button>-->
+
+
+        <!--</div>-->
+
+
+
+    <!--</div>-->
+

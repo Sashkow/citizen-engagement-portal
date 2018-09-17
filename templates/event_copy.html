@@ -1,0 +1,128 @@
+{% load static %}
+{% load disqus_tags %}
+
+{% block adding_link %}
+    <link  href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+{% endblock %}
+
+     <!--<div class="row">-->
+        <!--<div class="col-md-12">-->
+            <!--<div class="fotorama">-->
+                <!--{% if photos %}-->
+                    <!--{% for photo in photos %}-->
+                                      <!--<img src="{% static 'volunteer/images/test/1.jpg' %}" >-->
+                    <!--{% endfor %}-->
+                <!--{% else %}-->
+                    <!--<img src="{% static 'volunteer/images/test/2.jpg' %}" >-->
+                    <!--<img src="{% static 'volunteer/images/test/3.jpg' %}" >-->
+                    <!--<img src="{% static 'volunteer/images/test/4.jpg' %}" >-->
+                <!--{% endif %}-->
+
+            <!--</div>-->
+
+        <!--</div>-->
+
+    <!--</div>-->
+
+    <div class="row">
+        <div class="col-md-2 text-center ">
+            {% if event.events_or_task == True %}
+                <img class="align-self-end" src="{% static 'volunteer/images/event.png' %}">
+            {% else %}
+                <img class=" align-self-end" src="{% static 'volunteer/images/task.png' %}">
+            {% endif%}
+        </div>
+        <div class="col-md-6">
+            <h1>{{event.name}}</h1>
+            <p> додано {{ event.publication_date }}</p>
+            <div style="background-color: {{event.status.color_background}}">
+                <img class="" src="{{ event.status.image.url }}">
+                <p>{{event.status.frontend_value}}</p>
+            </div>
+            <p class="event-description">{{ event.description }}</p>
+        </div>
+        <div class="col-md-4">
+            <img class="category_event" src="{{ event.events_type.image.url }}">
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div>
+
+
+                <table class="table primary-text-color ">
+                    <thead>
+                        <tr>
+                            <th scope="col border-botom">Дата:</th>
+                            <th scope="col">{{event.date_event}}</th>
+                        </tr>
+                    <thead>
+                        <tr>
+                            <th scope="col">Тип:</th>
+                            <th scope="col">{{event.events_type}}</th>
+                        </tr>
+                    <thead>
+                        <tr>
+                            <th scope="col">Слідкують:</th>
+                            <th scope="col">{{following}}</th>
+                        </tr>
+                    <thead>
+                        <tr>
+                            <th scope="col">Учасники:</th>
+                            <th scope="col">{{going}}</th>
+                        </tr>
+
+                  </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-7 text-center my-auto" style="border: solid 1px #FFEB3B;
+                                                    background-color: #FFEB3B;
+                                                    border-radius: 15px;
+                                                    color: #212121;">
+            <p>{{event.description  }}</p>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="disqus_thread"></div>
+                <script>
+
+                /**
+                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+                var disqus_config = function () {
+                    this.page.url = "{{absolute_url}}";  // Replace PAGE_URL with your page's canonical URL variable
+                    this.page.identifier = "{{event.id}}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://changer.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+                </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
