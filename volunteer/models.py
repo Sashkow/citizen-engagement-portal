@@ -62,6 +62,8 @@ def notify_event_changes(event_instance, event_field):
             )
 
 
+
+
 class EventsType(models.Model):
     type = models.CharField(max_length=80)
 
@@ -82,6 +84,7 @@ class City(models.Model):
 
 
 class League(models.Model):
+    DEFAULT_PK = 1
     league = models.CharField(max_length = 80)
     quantity_achievement  =models.IntegerField()
     league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
@@ -90,15 +93,37 @@ class League(models.Model):
     def __str__(self):
         return self.league
 
+
 class User(models.Model):
     first_name = models.CharField(max_length=80)
     last_name = models.CharField(max_length=80)
     date_of_registration = models.DateField(auto_now_add=True)
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
-    league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True)
+    league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True, default=League.DEFAULT_PK)
     city = models.ForeignKey(City, on_delete=models.CASCADE, default='1')
     blocked = models.BooleanField(default=False)
     django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        is_new_user = False
+        if self.pk is None:
+            is_new_user = True
+
+        super(User, self).save(*args, **kwargs)
+
+        if is_new_user:
+            currencies = Currency.objects.all()
+            for currency in currencies:
+                UserPoint.objects.create(user=self, # sosal
+                                         currency=currency,
+                                         quantity=0)
+
+            events_type = EventsType.objects.all()
+            for type_e in events_type:
+                DigestList.objects.create(
+                    user=self,
+                    type=type_e
+                )
 
     def __str__(self):
         return '%s %s %s' % (self.first_name, '|', self.last_name)

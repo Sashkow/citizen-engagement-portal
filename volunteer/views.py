@@ -19,8 +19,8 @@ from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max
 import datetime
-
-
+from django.contrib.auth.models import User as DjangoUser
+from volunteer.models import User as VolunteerUser
 from volunteer.models import *
 
 from volunteer.forms import NewEventForm
@@ -106,13 +106,8 @@ def profile(request):
     volunteer = User.objects.filter(django_user_id = django_user)
 
     status = Status.objects.filter(id__range = (1, 2))
-    if len(volunteer) == 0:
-        volunteer = User.objects.create(django_user_id = django_user)
-    elif len(volunteer)> 1:
-        print("Duplicates!")
-        return None
-    else:
-        volunteer = volunteer.first()
+
+    volunteer = volunteer.first()
 
     if django_user.first_name:
         name = django_user.first_name
@@ -125,7 +120,8 @@ def profile(request):
     events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
-    league_user = League.objects.get(id = volunteer.league_id)
+    # league_user = League.objects.get(id = volunteer.league)
+    league_user = volunteer.league
     achievements_league_list = list(Achievement.objects.filter(league = league_user).values_list('id', flat = True))
     achieve_quant = UserAchievement.objects.filter(user = volunteer, achievement_id__in = achievements_league_list).count()
     print(achieve_quant)
@@ -424,3 +420,25 @@ def achivments_legaue(request):
 
 def test(request):
     return render(request, 'home_copy.html')
+
+def just_after_scuccess_auth(request):
+    # if threre is no volunteer_user user corresponding to django_user
+    # create new volunteer_user
+    django_user = request.user
+
+
+    return redirect(reverse('profile'))
+
+def dispatch_social_login(request):
+    first_name = request.GET['first_name']
+    second_name = request.GET['second_name']
+
+    if 'sub_fb' in request.GET:
+        provider = 'facebook'
+    elif 'sub_gg' in request.GET:
+        provider = 'google-oauth2'
+    else:
+        print('Niether fb no gg')
+        return None
+    return redirect(
+        reverse('social:begin', args=[provider, ]) + '?first_name={}&second_name'.format(first_name, second_name))
