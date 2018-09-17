@@ -66,12 +66,16 @@ def notify_event_changes(event_instance, event_field):
 
 class EventsType(models.Model):
     type = models.CharField(max_length=80)
+    image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements',), null=True, blank=True)
 
     def __str__(self):
         return self.type
 
 class Status(models.Model):
     status = models.CharField(max_length=80)
+    frontend_value = models.CharField(max_length=80, null=True, blank=True)
+    color_background = models.CharField(max_length = 13, null=True, blank=True)
+    image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'status',), null=True, blank=True)
 
     def __str__(self):
         return self.status
@@ -89,6 +93,15 @@ class League(models.Model):
     quantity_achievement  =models.IntegerField()
     league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
     user_frame = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    background_color = models.CharField(max_length =20, null=True, blank=True)
+    background_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'profile_backgrounds'), null=True, blank=True)
+    color_league_txt = models.CharField(max_length =20, null=True, blank=True)
+    color_volunteer_name = models.CharField(max_length =20, null=True, blank=True)
+    color_menu_item = models.CharField(max_length =20, null=True, blank=True)
+    color_current_grad1 = models.CharField(max_length =20, null=True, blank=True)
+    color_current_grad2 = models.CharField(max_length =20, null=True, blank=True)
+    color_current_text = models.CharField(max_length =20, null=True, blank=True)
+    color_current_border = models.CharField(max_length =20, null=True, blank=True)
 
     def __str__(self):
         return self.league
