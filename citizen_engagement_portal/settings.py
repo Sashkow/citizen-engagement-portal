@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from citizen_engagement_portal.password import getpass, getdatabases
+from citizen_engagement_portal.socialbackends import CustomFacebookOauth
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +28,7 @@ SECRET_KEY = '-7%yc)idb7m56wxee1@v4qh-q6aw-jutwq%%8@3%r@+o_)q#v!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '159.89.111.14', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '159.89.111.14', 'localhost', 'changer.in.ua', 'www.changer.in.ua']
 
 
 # Application definition
@@ -140,7 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'serve', 'static'))
 MEDIA_ROOT = 'media'
 
 MEDIA_URL = '/media/'
@@ -159,7 +161,7 @@ MEDIA_URL = '/media/'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
-
+    #'CustomFacebookOauth',
     'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
     'social_core.backends.google.GoogleOpenId',  # for Google authentication
     'social_core.backends.google.GoogleOAuth2',  # for Google authentication
@@ -192,6 +194,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'ER-U8rN8TorZUOCRydbvSeaJ'
 SOCIAL_AUTH_FACEBOOK_KEY = '2125271371046613'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = 'b3bf33810e413c2be7c53e78395c9431'  # App Secret
 
+
+
 # SOCIAL_AUTH_TELEGRAM_BOT_TOKEN='672778965:AAExRuzTuJFJHBlhb9oX09rAO-4OYvNkIQ8'
 # SECRET_KEY='MyVerySecretKey'
 
@@ -204,6 +208,8 @@ LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = 'login'
 
+
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 
 # SOCIAL_AUTH_PIPELINE = (
