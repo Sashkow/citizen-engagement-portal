@@ -236,6 +236,9 @@ class Achievement(models.Model):
     league = models.ForeignKey(League, on_delete = models.CASCADE)
     description = models.TextField(null=True, blank=True)
     image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    background_achieve = models.CharField(max_length = 15, null=True, blank=True)
+    color_text_achieve = models.CharField(max_length = 15, null=True, blank=True)
+
 
 
     def __str__(self):

@@ -25,68 +25,59 @@
     <!--</div>-->
 
     <div class="row">
-        <div class="col-md-2 text-center ">
-            {% if event.events_or_task == True %}
-                <img class="align-self-end" src="{% static 'volunteer/images/event.png' %}">
-            {% else %}
-                <img class=" align-self-end" src="{% static 'volunteer/images/task.png' %}">
-            {% endif%}
-        </div>
-        <div class="col-md-6">
-            <h1>{{event.name}}</h1>
-            <p> додано {{ event.publication_date }}</p>
-            <div style="background-color: {{event.status.color_background}}">
-                <img class="" src="{{ event.status.image.url }}">
-                <p>{{event.status.frontend_value}}</p>
+
+        <div class="col-md-8 ep-event-info">
+            <div class="row">
+                <div class="col-md-auto text-left ">
+                    {% if event.events_or_task == True %}
+                        <img class="ep_event_task" src="{% static 'volunteer/images/event.png' %}">
+                    {% else %}
+                        <img class="" src="{% static 'volunteer/images/task.png' %}">
+                    {% endif%}
+                </div>
+                <div class="col-md-8">
+                    <h1 class="ep_event_name">{{event.name}}</h1>
+                    <p> додано {{ event.publication_date }}</p>
+
+                    <button class="event-button status-button" style="background-color: {{event.status.color_background}}"> <img class="img-status-btn" src="{{ event.status.image.url }}" > {{event.status.frontend_value}} </button>
+
+                </div>
             </div>
-            <p class="event-description">{{ event.description }}</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="ep-event-description">{{ event.description }}</p>
+                    {% if org_user == 1 %}
+                        <button class="btn-event-edit event-button" id_event = {{ event.id }} get_url = "{% url 'form' id=event.id %}">редагувати <img class="img-curr-in-button" src="{% static 'volunteer/images/edit.png' %}"</button>
+                    {% else %}
+                        {% if subscribe == 1 %}
+                            {% if part == 1 %}
+                            <button type="button" class="btn-refollow    event-button" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">відписатися</button>
+                            {% else %}
+                            <button type="button" class="btn-refollow    event-button" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">відписатися</button>
+                            {% endif %}
+                        {% else %}
+                            <button type="button" class="btn-follow   event-button" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}" >підписатися</button>
+                        {% endif %}
+
+                        {% if part == 1 %}
+                            <button type="button" class="btn-resubscribe  event-button" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">відлучитися</button>
+                        {% else %}
+                            <button type="button" class="event-button btn-subscribe  " id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %} " >долучитися <img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
+                        {% endif %}
+
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <img class="category_event" src="{{ event.events_type.image.url }}">
+
+        <div class="col-md-4 text-right">
+            <img class="category_event " src="{{ event.events_type.image.url }}">
         </div>
 
 
     </div>
 
-    <div class="row">
-        <div class="col-md-5">
-            <div>
 
-
-                <table class="table primary-text-color ">
-                    <thead>
-                        <tr>
-                            <th scope="col border-botom">Дата:</th>
-                            <th scope="col">{{event.date_event}}</th>
-                        </tr>
-                    <thead>
-                        <tr>
-                            <th scope="col">Тип:</th>
-                            <th scope="col">{{event.events_type}}</th>
-                        </tr>
-                    <thead>
-                        <tr>
-                            <th scope="col">Слідкують:</th>
-                            <th scope="col">{{following}}</th>
-                        </tr>
-                    <thead>
-                        <tr>
-                            <th scope="col">Учасники:</th>
-                            <th scope="col">{{going}}</th>
-                        </tr>
-
-                  </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-md-7 text-center my-auto" style="border: solid 1px #FFEB3B;
-                                                    background-color: #FFEB3B;
-                                                    border-radius: 15px;
-                                                    color: #212121;">
-            <p>{{event.description  }}</p>
-        </div>
-
-    </div>
     <div class="row">
         <div class="col-md-12">
             <div id="disqus_thread"></div>

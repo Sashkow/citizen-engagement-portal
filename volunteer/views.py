@@ -427,14 +427,15 @@ def achivments_legaue(request):
         return JsonResponse(return_dict)
     else:
         data = request.POST
-        print(data)
+        return_dict ={}
+
 
         achieve = AchievementValue.objects.filter(achievement = Achievement.objects.get(id = data['id']))
         for ach in achieve:
             user_balance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id)).quantity
             print(user_balance)
             if user_balance < ach.quantity:
-                text_error = "Вам не вистачає " + str(ach.quantity - user_balance)+ ' ' + Currency.objects.get(id = ach.currency_id).currency
+                # text_error = "Вам не вистачає " + str(ach.quantity - user_balance)+ ' ' + Currency.objects.get(id = ach.currency_id).currency
                 return_dict = {'error': ach.quantity - user_balance,
                                'url_currency': Currency.objects.get(id = ach.currency_id).image.url}
                 return JsonResponse(return_dict)
@@ -452,15 +453,17 @@ def achivments_legaue(request):
             current_user.save()
             print('New league')
             return_dict = {
-                'success': True,
-                'image_url': Achievement.objects.get(id=data['id']).image.url,
                 'new_league' : League.objects.get(id = current_user.league.id).league
             }
-        else:
-            return_dict = {'success':True,
-                           'image_url' : Achievement.objects.get(id=data['id']).image.url
-                           }
+        achievement = Achievement.objects.get(id=data['id'])
 
+        cont = {
+            'request': request,
+            'achieve':achievement
+        }
+        html = render_to_string('new_achievement.html', cont)
+        return_dict['html'] = html
+        return_dict['success'] = True
         return JsonResponse(return_dict)
 
 
@@ -492,9 +495,7 @@ def test_event(request, id_event):
         'url_currency': url_currency,
         'form':form
     }
-    print(cont)
     html = render_to_string('event_edit.html', cont)
-    print(html)
     return_dict = {'html': html}
 
 
