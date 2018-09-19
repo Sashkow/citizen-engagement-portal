@@ -11,6 +11,10 @@ from django.contrib.auth.models import AnonymousUser
 
 from babel.dates import format_datetime
 
+from copy import deepcopy
+
+
+
 
 import datetime
 
@@ -26,42 +30,48 @@ from citizen_engagement_portal import settings
 import os
 
 
+from django.db.models.signals import pre_save, post_save, post_init
+from django.dispatch import receiver
+
+
+
+
 
 
 def notify_event_changes(event_instance, event_field):
-    if has_changed(event_instance, event_field):
-        followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
-        participants = list(EventsParticipant.objects.filter(event=event_instance).values_list('user', flat=True))
-        print(followers, participants, type(followers), type(participants))
-        concerned = list(set(followers) or set(participants))
+    followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
+    participants = list(EventsParticipant.objects.filter(event=event_instance).values_list('user', flat=True))
+    print(followers, participants, type(followers), type(participants))
+    concerned = list(set(followers) or set(participants))
 
-        for recipient in concerned:
-            django_user = User.objects.get(id=recipient).django_user_id
-            sender = current_request().user
-            if not sender:
-                sender = AnonymousUser()
-            # recipient_obj = User.objects.get(id = recipient)
+    for recipient in concerned:
+        django_user = User.objects.get(id=recipient).django_user_id
+        sender = current_request().user
+        if not sender:
+            sender = AnonymousUser()
+        # recipient_obj = User.objects.get(id = recipient)
 
-            event_field_verbose_name = Event._meta.get_field(event_field).verbose_name.title()
-            if event_field == 'date_event':
-                event_field_value = format_datetime(getattr(event_instance, event_field), locale='uk_UA')
-            else:
-                event_field_value = getattr(event_instance, event_field)
-
-
-            notify.send(
-                sender,
-                recipient=django_user,
-                verb=event_field_verbose_name +
-                     ' події ' +
-                     str(event_instance.name) +
-                     ' змінено на ' +
-                     str(event_field_value) +
-                     ". Сповіщення отримано",
-                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m")
-            )
+        event_field_verbose_name = Event._meta.get_field(event_field).verbose_name.title()
+        if event_field == 'date_event':
+            event_field_value = format_datetime(getattr(event_instance, event_field), locale='uk_UA')
+        else:
+            event_field_value = getattr(event_instance, event_field)
 
 
+        notify.send(
+            sender,
+            recipient=django_user,
+            verb=event_field_verbose_name +
+                 ' події ' +
+                 str(event_instance.name) +
+                 ' змінено на ' +
+                 str(event_field_value) +
+                 ". Сповіщення отримано",
+            # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m")
+        )
+
+# class NotificationType(models.Model):
+#     type = models.CharField(max_length=80)
 
 
 class EventsType(models.Model):
@@ -165,10 +175,9 @@ class Event(models.Model):
     description = models.TextField(null=True, blank=True)
 
 
-    def save(self, *args, **kwargs):
-        notify_event_changes(self, 'date_event')
-        notify_event_changes(self, 'status')
-        super(Event, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #
+    #     super(Event, self).save(*args, **kwargs)
 
 
     def __str__(self):
@@ -176,6 +185,34 @@ class Event(models.Model):
 
     def as_dict(self):
         return model_to_dict(self)
+
+@receiver(pre_save, sender=Event)
+def eventpresave(sender, **kwargs):
+    instance = kwargs['instance']
+
+    instance._old_date_event = deepcopy(Event.objects.get(pk = instance.pk).date_event)
+    instance._old_status = deepcopy(Event.objects.get(pk = instance.pk).status)
+    print("pre_save")
+
+# @receiver(post_init, sender=Event)
+# def eventpreinit(sender, **kwargs):
+#     instance = kwargs['instance']
+#     instance._old_date_event = instance.date_event
+#     instance._old_status = instance.status
+#     print("pre_init")
+
+@receiver(post_save, sender=Event)
+def eventpostsave(sender, **kwargs):
+    instance = kwargs['instance']
+    print(instance.date_event, instance._old_date_event)
+    if instance.date_event != instance._old_date_event:
+        notify_event_changes(instance, 'date_event')
+        print("date has changed!")
+
+    if instance.status != instance._old_status:
+        notify_event_changes(instance, 'status')
+        print("sttus has changed!")
+    print("post_save")
 
 
 class EventsOrgTask(models.Model):
@@ -310,3 +347,27 @@ class DecreasePointsInfo(models.Model):
     decrease = models.ForeignKey(PointsList, on_delete = models.CASCADE)
     decrease_type = models.ForeignKey(DecreasePointsType, on_delete = models.CASCADE)
     achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)
+
+
+from django.db import models
+
+
+
+
+def user_post_save(sender, instance, **kwargs):
+
+    if kwargs['created']:
+        django_user = instance
+        volunteer = User.objects.create(django_user_id=django_user)
+
+        if not volunteer.first_name:
+            if django_user.first_name or django_user.last_name:
+                volunteer.first_name = django_user.first_name
+                volunteer.second_name = django_user.last_name
+
+        volunteer.save()
+
+models.signals.post_save.connect(user_post_save, sender=DjangoUser)
+
+
+

@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^signup/$', volunteer_views.signup, name='signup'),
 
     url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
+    url(r'^success_oauth/$', volunteer_views.just_after_scuccess_auth, name='success_oauth'),
     # url('auth/', include('social_django.urls', namespace='social')),
     url(r'^admin/', admin.site.urls),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
@@ -31,7 +32,8 @@ urlpatterns = [
 
     # url(r'^home/$', core_views.home),
     url(r'^profile/$', volunteer_views.profile, name='profile'),
-    url(r'^success_oauth/$', volunteer_views.just_after_scuccess_auth, name='success_oauth'),
+    url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
+
     url(r'^event/(?P<id>\w+)/', volunteer_views.event, name='event'),
     url(r'^newevent/$', volunteer_views.new_event, name='newevent'),
     url(r'^follow/$', volunteer_views.follow_event, name='follow_event'),
