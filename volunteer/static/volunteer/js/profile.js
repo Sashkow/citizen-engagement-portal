@@ -27,8 +27,6 @@ $( document ).ready(function() {
             data.name = name;
             data.type=type_event;
             data.category=category;
-            FirstRegForm()
-            console.log($('input[name="name"]').valid())
             $('#event_register').modal('hide')
             if($('option:selected', '#even t_task').attr('type_id') == 'event'){
                 $('#event_e_register').modal()
@@ -579,6 +577,28 @@ $(document).on('click', '.news', function(){
              console.log('error')
              }
         })
+
+        })
+
+
+
+        $(document).on('click', '.notifications' function(){
+            data = {}
+            var url = $(this).attr('get_url')
+            $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                    $(".dynamic-block").empty()
+                    $(".dynamic-block").html(data.html)
+                 },
+             error: function(){
+                console.log('error')
+             }
+             })
 
         })
 

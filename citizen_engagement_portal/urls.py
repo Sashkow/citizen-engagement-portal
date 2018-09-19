@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^eventedit/(?P<id_event>\w+)/', volunteer_views.test_event, name='edit_event'),
     url(r'^form/(?P<id>\d+)/', volunteer_views.form, name='form'),
 
-    url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login')
+    url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login'),
+    url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

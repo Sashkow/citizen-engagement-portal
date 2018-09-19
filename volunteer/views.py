@@ -549,3 +549,13 @@ def form(request, id = None):
     html = render_to_string('event_edit.html', cont)
     return_dict['html'] = html
     return JsonResponse(return_dict)
+
+
+def notifications(request):
+    cont = {
+        'request': request,
+
+    }
+    html = render_to_string('notification.html', cont)
+    return_dict = {'html': html}
+    return JsonResponse(return_dict)
