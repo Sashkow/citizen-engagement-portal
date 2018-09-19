@@ -1,5 +1,21 @@
 $( document ).ready(function() {
 
+    function CheckEmptyField(selector){
+        if(selector.val() == ''){
+            return false
+        }
+        else {
+            return true
+        }
+    };
+
+    function FirstRegForm(){
+       if(!CheckEmptyField($('input[name="name"]'))){
+        console.log('EMPTY NAME')
+       }
+    }
+
+
     $(document).on('click', '#open-reg-modal', function(){
 
         $('#event_register').modal('show')
@@ -12,7 +28,7 @@ $( document ).ready(function() {
             data.type=type_event;
             data.category=category;
             $('#event_register').modal('hide')
-            if($('option:selected', '#event_task').attr('type_id') == 'event'){
+            if($('option:selected', '#even t_task').attr('type_id') == 'event'){
                 $('#event_e_register').modal()
                 $(document).on('change', '#event_status', function(){
                     if ($('option:selected', '#event_status').attr('status_id') == "1"){
@@ -80,7 +96,8 @@ $( document ).ready(function() {
                 })
             }else{
                 $('#task_register').modal()
-                if($('input[name="points_quant"]').val()){data.points_quant = $('input[name="t_points_quant"]').val()}
+                if($('input[name="t_points_quant"]').val()){data.points_quant = $('input[name="t_points_quant"]').val()}
+                console.log($('input[name="t_points_quant"]').val())
                 if($('input[name="user_email"]').val()){data.email = $('input[name="t_user_email"]').val()}
                 if($('#description').val()){data.description_e = $('#description').val()}
                 $('.btn-done').unbind().click(function(){
@@ -560,6 +577,28 @@ $(document).on('click', '.news', function(){
              console.log('error')
              }
         })
+
+        })
+
+
+
+        $(document).on('click', '.notifications' function(){
+            data = {}
+            var url = $(this).attr('get_url')
+            $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                    $(".dynamic-block").empty()
+                    $(".dynamic-block").html(data.html)
+                 },
+             error: function(){
+                console.log('error')
+             }
+             })
 
         })
 
