@@ -118,8 +118,9 @@ def profile(request):
     else:
         name = "Волонтер_ка"
 
-    parameters = ['all_digest', 1, 'news']
-    events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+    parameters = ['all_digest', 1, 'news', 'none', 'none']
+    events, events_part, events_subs, events_quantity, events_org = get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
     # league_user = League.objects.get(id = volunteer.league)
@@ -130,11 +131,14 @@ def profile(request):
     max_user_point = user_points.aggregate(Max('quantity'))
 
     types_events = EventsType.objects.all()
+    status_events = Status.objects.all()
 
     curr_category = {}
     for type_e in types_events:
         img = Currency.objects.get(type_event = type_e.id).image.url
         curr_category[type_e.id] = img
+
+
     return render(request, 'core/profile.html', {'volunteer':volunteer,
                                                  'league_user':league_user,
                                                  'name':name,
@@ -152,7 +156,8 @@ def profile(request):
                                                  'events_org':events_org,
                                                  'user_points':user_points,
                                                  'max_points': max_user_point['quantity__max'],
-                                                 'curr_category':curr_category
+                                                 'curr_category':curr_category,
+                                                 'status_events': status_events
     })
 
 def event(request, id):
@@ -289,7 +294,7 @@ def type_filter(request):
     django_user = request.user
     data = request.GET
     print(data)
-    parametrs = [data['type'], data['page'], data['state']]
+    parametrs = [data['type'], data['page'], data['state'], data['task_or_event'], data['status_id']]
     types_events = EventsType.objects.all()
     print(parametrs)
     curr_category = {}
@@ -299,7 +304,8 @@ def type_filter(request):
     if data['type'] not in ['all', 'all_digest'] and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
         return JsonResponse(return_dict)
     else:
-        events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        events, events_part, events_subs, events_quantity, events_org = get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        print(events)
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
         cont = {

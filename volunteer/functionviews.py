@@ -1,24 +1,28 @@
 #return events, events_part, events_subs
-def get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType):
+def make_filter(parameters, DigestList, EventsType, User, Status, django_user):
+    filter = {}
+    if parameters[0] not in ['all', 'all_digest']:
+        filter['events_type'] = EventsType.objects.get(id=parameters[0])
+    elif parameters[0] == 'all_digest':
+        digest = DigestList.objects.filter(user=User.objects.get(django_user_id=django_user)).values_list('type', flat=True)
+        types_dig = EventsType.objects.filter(id__in = list(digest))
+        filter['events_type__in'] = types_dig
+    if parameters[3] != 'none':
+        bool_value = True if parameters[3] == 'event' else False
+        filter['events_or_task'] = bool_value
+    if parameters[4] != 'none':
+        filter['status'] = Status.objects.get(id=parameters[4])
+    return filter
+
+def get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType):
 
     from_page = events_per_page * int(parameters[1]) - events_per_page
     to_page = events_per_page * int(parameters[1])
 
-    print(parameters[0])
     if parameters[2] == 'news':
-        if parameters[0] == 'all':
-            events = Event.objects.all().order_by('-publication_date')[from_page:to_page]
-            events_quantity = Event.objects.all().order_by('-publication_date').count()
-
-        elif parameters[0] == 'all_digest':
-            digest = DigestList.objects.filter(user=User.objects.get(django_user_id=django_user)).values_list('type', flat=True)
-            types_dig = EventsType.objects.filter(id__in=list(digest))
-            events = Event.objects.filter(events_type__in=types_dig)[from_page:to_page]
-            events_quantity = Event.objects.filter(events_type__in=types_dig).count()
-
-        else:
-            events = Event.objects.filter(events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
-            events_quantity = Event.objects.filter(events_type=EventsType.objects.get(id=parameters[0])).count()
+        filter_event = make_filter(parameters, DigestList, EventsType, User, Status, django_user)
+        events = Event.objects.filter(**filter_event).order_by('-publication_date')[from_page:to_page]
+        events_quantity = Event.objects.filter(**filter_event).order_by('-publication_date').count()
 
     elif parameters[2] == 'volunteer':
         if parameters[0] == 'all' or parameters[0] == 'all_digest':

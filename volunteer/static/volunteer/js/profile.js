@@ -16,12 +16,29 @@ $( document ).ready(function() {
     }
 
 
+    function InfoEventFilter(){
+        var category_id = $('option:selected', '#event-type').attr('type_id');
+        var status_id = $('option:selected', '#event-status').attr('status_id');
+        if($('.selected_event_task').length){
+            if($('.selected_event_task').hasClass('it_is_event')){
+                var task_or_event = 'event'
+            }else{
+                var task_or_event = 'task'
+            }
+        }else{
+            var task_or_event = 'none'
+        }
+        var state = $('#event-type').attr('state');
+        return [category_id, task_or_event, state, status_id]
+    }
+
+
     $(document).on('click', '#open-reg-modal', function(){
 
         $('#event_register').modal('show')
         var data = {}
          $('.btn-next').click(function(){
-             var name = $('input[name="name"]').val()
+            var name = $('input[name="name"]').val()
             var type_event = $('option:selected', '#event_task').attr('type_id')
             var category = $('option:selected', '#category').attr('type_id')
             data.name = name;
@@ -96,11 +113,12 @@ $( document ).ready(function() {
                 })
             }else{
                 $('#task_register').modal()
-                if($('input[name="t_points_quant"]').val()){data.points_quant = $('input[name="t_points_quant"]').val()}
-                console.log($('input[name="t_points_quant"]').val())
-                if($('input[name="user_email"]').val()){data.email = $('input[name="t_user_email"]').val()}
-                if($('#description').val()){data.description_e = $('#description').val()}
+                console.log('alalal')
                 $('.btn-done').unbind().click(function(){
+                if($('input[name="t_points_quant"]').val()){data.points_quant = $('input[name="t_points_quant"]').val()}
+                    console.log($('input[name="t_points_quant"]').val())
+                    if($('input[name="user_email"]').val()){data.email = $('input[name="t_user_email"]').val()}
+                    if($('#description').val()){data.description_e = $('#description').val()}
                     var url = $('#event_e_register').attr('post_url')
                         var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
                         data['csrfmiddlewaretoken'] = csrf_token;
@@ -256,10 +274,13 @@ $( document ).ready(function() {
     $(document).on('change', '#event-type', function(){
         data = {}
         var url = $(this).attr('url_get');
-        id = $('option:selected', this).attr('type_id');
-        data.type = id;
+        filter_info = InfoEventFilter()
+        data.type = filter_info[0];
         data.page = 1;
-        data.state = $('#event-type').attr('state');
+        data.state = filter_info[2];
+        data.task_or_event = filter_info[1]
+        data.status_id = filter_info[3]
+
          $.ajax({
              url: url,
              type :'GET',
@@ -271,18 +292,18 @@ $( document ).ready(function() {
 
 
                  if(!jQuery.isEmptyObject(data)){
-                    $(".dynamic-block").empty();
+                    $(".events-block").empty();
 
-                    $(".dynamic-block").html(data.html);
+                    $(".events-block").html(data.html);
 
                   }
                  else{
-                        $(".events-container").empty();
+                        $(".events-block").empty();
                         console.log('empty json')
 
                      $('<h1>', {
                         text: 'За заданими параметрами подій не знайдено',
-                     }).appendTo($(".events-container"))
+                     }).appendTo($(".events-block"))
                  }
              },
              error: function(){
@@ -295,10 +316,7 @@ $( document ).ready(function() {
     $(document).on('click', '.page-item', function(){
         data = {}
         var url = $('#event-type').attr('url_get')
-        var type_id = $('option:selected', '#event-type').attr('type_id');
         var page =$(this).attr('page');
-        var state = $('#event-type').attr('state');
-        console.log(data)
         if(page == '...'){
             console.log('It is bed')
             if ($(this).prev().attr('page') == '1'){
@@ -314,14 +332,15 @@ $( document ).ready(function() {
 
         }
 
-        console.log(page);
-        console.log('Here!')
-        console.log(type_id);
-        console.log(url);
+        filter_info = InfoEventFilter()
+        data.type = filter_info[0];
+        data.page = 1;
+        data.state = filter_info[2];
+        data.task_or_event = filter_info[1]
+        data.status_id = filter_info[3]
+
 
         data.page = page;
-        data.type = type_id;
-        data.state = state;
 
         $.ajax({
             url: url,
@@ -331,11 +350,11 @@ $( document ).ready(function() {
              dataType:'json',
              success:function(data){
                 console.log('OK');
-                $(".dynamic-block").empty();
+                $(".events-block").empty();
 
                  if(!jQuery.isEmptyObject(data)){
 
-                    $(".dynamic-block").html(data.html);
+                    $(".events-block").html(data.html);
 
                   }
                  else{
@@ -343,7 +362,7 @@ $( document ).ready(function() {
 
                      $('<h1>', {
                         text: 'За заданими параметрами подій не знайдено',
-                     }).appendTo($(".dynamic-block"))
+                     }).appendTo($(".events-block"))
                  }
              },
              error:function(){
@@ -410,7 +429,7 @@ $( document ).ready(function() {
                  if(!jQuery.isEmptyObject(data)){
                         console.log(data)
 
-                        $(".dynamic-block").html(data.html);
+                        $(".events-block").html(data.html);
                         $('#event-type').attr('state', 'organizer');
 
                       }
@@ -582,7 +601,7 @@ $(document).on('click', '.news', function(){
 
 
 
-        $(document).on('click', '.notifications' function(){
+        $(document).on('click', '.notifications', function(){
             data = {}
             var url = $(this).attr('get_url')
             $.ajax({
@@ -601,6 +620,109 @@ $(document).on('click', '.news', function(){
              })
 
         })
+
+
+
+        $(document).on('click', '.filter_event_task', function(){
+            console.log('what is it')
+            if(!$('.selected_event_task').length){
+                $(this).toggleClass('selected_event_task');
+            }
+            else{
+                if($(this).hasClass('selected_event_task')){
+                    $(this).toggleClass('selected_event_task');
+                }else{
+                    $('.selected_event_task').toggleClass('selected_event_task');
+                    $(this).toggleClass('selected_event_task');
+                }
+
+
+            }
+        })
+
+
+        $(document).on('click', '.filter_event_task', function(){
+            var data = {}
+            var url = $(this).attr('url_get')
+            console.log(url)
+            var info_filter = InfoEventFilter()
+            data.type = info_filter[0];
+            data.page = 1;
+            data.state = info_filter[2];
+            data.task_or_event = info_filter[1]
+            data.status_id = info_filter[3]
+             $.ajax({
+                 url: url,
+                 type :'GET',
+                 data:data,
+                 cache:true,
+                 dataType:'json',
+                 success: function(data){
+                     console.log('OK');
+
+
+                     if(!jQuery.isEmptyObject(data)){
+                        $(".events-block").empty();
+
+                        $(".events-block").html(data.html);
+
+                      }
+                     else{
+                            $(".events-block").empty();
+                            console.log('empty json')
+
+                         $('<h1>', {
+                            text: 'За заданими параметрами подій не знайдено',
+                         }).appendTo($(".events-block"))
+                     }
+                 },
+                 error: function(){
+                 console.log('error')
+                }
+             })
+        })
+
+        $(document).on('change', '#event-status', function(){
+        data = {}
+        var url = $(this).attr('url_get');
+        filter_info = InfoEventFilter()
+        console.log(filter_info)
+        data.type = filter_info[0];
+        data.page = 1;
+        data.state = filter_info[2];
+        data.task_or_event = filter_info[1]
+        data.status_id = filter_info[3]
+
+         $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             dataType:'json',
+             success: function(data){
+                 console.log('OK');
+
+
+                 if(!jQuery.isEmptyObject(data)){
+                    $(".events-block").empty();
+
+                    $(".events-block").html(data.html);
+
+                  }
+                 else{
+                        $(".events-block").empty();
+                        console.log('empty json')
+
+                     $('<h1>', {
+                        text: 'За заданими параметрами подій не знайдено',
+                     }).appendTo($(".events-block"))
+                 }
+             },
+             error: function(){
+             console.log('error')
+            }
+         })
+    })
 
 
     });
