@@ -218,7 +218,7 @@ def new_event(request):
     if status != None:
         status_i = Status.objects.get(id = check_key_in_dict_int('status', data))
     else:
-        status_i = None
+        status_i = Status.objects.get(id = 1)
     events_or_task = True if check_key_in_dict('type', data) == 'event' else False
 
 
