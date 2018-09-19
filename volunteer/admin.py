@@ -2,6 +2,7 @@
 from django.contrib import admin
 from .models import *
 
+from notifications.models import Notification
 
 admin.site.empty_value_display = '(None)'
 
@@ -27,6 +28,7 @@ class UserAdmin(admin.ModelAdmin):
     exclude = ['blocked', 'ID']
     list_filter = ['city', 'blocked']
     search_fields = ['first_name', 'last_name']
+
 
 admin.site.register(User, UserAdmin)
 
@@ -133,5 +135,16 @@ class DecreasePointsInfoAdmin(admin.ModelAdmin):
     list_display = [field.name for field in DecreasePointsInfo._meta.fields]
     exclude = ['ID']
 admin.site.register(DecreasePointsInfo, DecreasePointsInfoAdmin)
+
+
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Notification._meta.fields]
+    exclude = ['ID','decrease','decrease_type','achievement']
+
+admin.site.unregister(Notification)
+admin.site.register(Notification, NotificationAdmin)
+
+
+
 
 

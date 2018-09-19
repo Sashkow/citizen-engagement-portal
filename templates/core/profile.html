@@ -54,11 +54,7 @@
 
 {% block container %}
 
-    <!--{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' fetch=20 refresh_period=5 %}-->
-    <!--Непрочитані сповіщення: {% live_notify_badge %}-->
-    <!--&lt;!&ndash;<button onclick='make_notification()'>Створити сповіщення</button>&ndash;&gt;-->
-    <!--<button onclick='mark_all_as_read()'>Позначити усе як прочитане</button>-->
-    <!--{% live_notify_list %}-->
+
 
 
 
@@ -158,8 +154,9 @@
                 </div>
                 <div class="row profile-menu-item text-left justify-content-md-center">
                     <div class="col-md-8">
-                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}"  >сповіщення</p>
 
+                        <!--<a href="{% url 'notifications' %}" <p  class="item-menu"  >сповіщення</p>-->
+                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}"  >сповіщення</p>
                     </div>
                 </div>
                 <!--<div>-->
