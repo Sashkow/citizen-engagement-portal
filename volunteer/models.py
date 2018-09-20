@@ -1,15 +1,25 @@
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 from django.forms.models import model_to_dict
+from notifications.models import Notification
 
 from volunteer.helpers import has_changed
 from notifications.signals import notify
+
+# from notifications.models import Notification
+# Notification.data
 
 from volunteer.get_username import current_request
 
 from django.contrib.auth.models import AnonymousUser
 
 from babel.dates import format_datetime
+
+from copy import deepcopy
+
+
+
+
 
 
 import datetime
@@ -26,42 +36,44 @@ from citizen_engagement_portal import settings
 import os
 
 
+from django.db.models.signals import pre_save, post_save, post_init
+from django.dispatch import receiver
 
 
-def notify_event_changes(event_instance, event_field):
-    if has_changed(event_instance, event_field):
-        followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
-        participants = list(EventsParticipant.objects.filter(event=event_instance).values_list('user', flat=True))
-        print(followers, participants, type(followers), type(participants))
-        concerned = list(set(followers) or set(participants))
-
-        for recipient in concerned:
-            django_user = User.objects.get(id=recipient).django_user_id
-            sender = current_request().user
-            if not sender:
-                sender = AnonymousUser()
-            # recipient_obj = User.objects.get(id = recipient)
-
-            event_field_verbose_name = Event._meta.get_field(event_field).verbose_name.title()
-            if event_field == 'date_event':
-                event_field_value = format_datetime(getattr(event_instance, event_field), locale='uk_UA')
-            else:
-                event_field_value = getattr(event_instance, event_field)
 
 
-            notify.send(
-                sender,
-                recipient=django_user,
-                verb=event_field_verbose_name +
-                     ' події ' +
-                     str(event_instance.name) +
-                     ' змінено на ' +
-                     str(event_field_value) +
-                     ". Сповіщення отримано",
-                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m")
-            )
 
 
+def notify_event_changes(event_instance, event_field, old_value):
+    followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
+    participants = list(EventsParticipant.objects.filter(event=event_instance).values_list('user', flat=True))
+    print(followers, participants, type(followers), type(participants))
+    concerned = list(set(followers) or set(participants))
+
+    for recipient in concerned:
+        django_user = User.objects.get(id=recipient).django_user_id
+        sender = current_request().user
+        if not sender:
+            sender = AnonymousUser()
+        # recipient_obj = User.objects.get(id = recipient)
+
+        event_field_verbose_name = Event._meta.get_field(event_field).verbose_name.title()
+        if event_field == 'date_event':
+            event_field_value = format_datetime(getattr(event_instance, event_field), locale='uk_UA')
+        else:
+            event_field_value = getattr(event_instance, event_field)
+
+        notify.send(
+            sender,
+            recipient=django_user,
+            verb="changed",
+            target = event_instance,
+            # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+            data = {'type':'1', 'event_field':event_field, 'old_value' : old_value}, # Подію змінено
+        )
+
+# class NotificationType(models.Model):
+#     type = models.CharField(max_length=80)
 
 
 class EventsType(models.Model):
@@ -166,9 +178,26 @@ class Event(models.Model):
 
 
     def save(self, *args, **kwargs):
-        notify_event_changes(self, 'date_event')
-        notify_event_changes(self, 'status')
+        is_new_event = False
+        if self.pk is None:
+            is_new_event = True
+        else:
+            old_instance = Event.objects.get(pk = self.pk).status.id
+            old_status = old_instance.status.id
+            old_type = old_instance.events_type.id
+
         super(Event, self).save(*args, **kwargs)
+
+        if not is_new_event and self.status.id == 3 and old_status!=self.status.id:
+            print(self.pk)
+            part = list(EventsParticipant.objects.filter(event = Event.objects.get(pk = self.pk)).values_list('user__id', flat = True))
+            part_user = User.objects.filter(id__in = part)
+
+            # for user in part_user:
+            #     PointsList.objects.create()
+            print(part_user)
+            print('It is victory!')
+
 
 
     def __str__(self):
@@ -176,6 +205,34 @@ class Event(models.Model):
 
     def as_dict(self):
         return model_to_dict(self)
+
+@receiver(pre_save, sender=Event)
+def eventpresave(sender, **kwargs):
+    instance = kwargs['instance']
+
+    instance._old_date_event = deepcopy(Event.objects.get(pk = instance.pk).date_event)
+    instance._old_status = deepcopy(Event.objects.get(pk = instance.pk).status)
+    print("pre_save")
+
+# @receiver(post_init, sender=Event)
+# def eventpreinit(sender, **kwargs):
+#     instance = kwargs['instance']
+#     instance._old_date_event = instance.date_event
+#     instance._old_status = instance.status
+#     print("pre_init")
+
+@receiver(post_save, sender=Event)
+def eventpostsave(sender, **kwargs):
+    instance = kwargs['instance']
+    print(instance.date_event, instance._old_date_event)
+    if instance.date_event != instance._old_date_event:
+        notify_event_changes(instance, 'date_event', str(instance._old_date_event))
+        print("date has changed!")
+
+    if instance.status != instance._old_status:
+        notify_event_changes(instance, 'status', str(instance._old_status))
+        print("sttus has changed!")
+    print("post_save")
 
 
 class EventsOrgTask(models.Model):
@@ -236,7 +293,7 @@ class EventsPhoto(models.Model):
     def get_url(self):
         return self.photo.url
 
-#NEW FOR POINTS
+#NEW FOTS
 
 # League
 
@@ -261,6 +318,9 @@ class Achievement(models.Model):
     league = models.ForeignKey(League, on_delete = models.CASCADE)
     description = models.TextField(null=True, blank=True)
     image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    background_achieve = models.CharField(max_length = 15, null=True, blank=True)
+    color_text_achieve = models.CharField(max_length = 15, null=True, blank=True)
+
 
 
     def __str__(self):
@@ -310,3 +370,69 @@ class DecreasePointsInfo(models.Model):
     decrease = models.ForeignKey(PointsList, on_delete = models.CASCADE)
     decrease_type = models.ForeignKey(DecreasePointsType, on_delete = models.CASCADE)
     achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)
+
+class NotificationsType(models.Model):
+    title = models.CharField(max_length = 100)
+    template = models.TextField(null=True, blank=True)
+    model_name = models.CharField(max_length = 100)
+    image_field_name = models.CharField(max_length = 100)
+
+class Tupo(models.Model):
+    f = models.CharField(max_length=100)
+
+    # model_name = 'Invoice'
+    # app_name = 'invoice'
+    # from django.apps import apps
+    # Invoice = apps.get_model(app_label=app_name, model_name=model_name)
+    # i = Invoice.objects.filter(id=1234).first()
+
+#
+# class Notification(object):
+#     notification_type = models.ForeignKey(NotificationType, on_delete = models.CASCADE)
+#     sender = models.ForeignKey(User, on_delete = models.CASCADE)
+#     recipient = models.ForeignKey(User, on_delete=models.CASCADE)
+#     is_read = models.BooleanField(default=False)
+#     timestamp = models.DateTimeField(null=True, blank=True, verbose_name='Отримано')
+
+#
+#
+#
+#     def description(self):
+#         if self.notification_type.title == 'Оцініть подію':
+#             pass
+#             # from model_name get fields and insert
+#
+#     def image(self):
+#         pass
+#         # from model_name get image_field_name, return url
+
+
+
+
+
+
+
+
+class NotificaationType(models.Model):
+    title = models.CharField(max_length = 100)
+    template = models.TextField(null=True, blank=True)
+    model_name = models.CharField(max_length = 100)
+    image_field_name = models.CharField(max_length = 100)
+
+def user_post_save(sender, instance, **kwargs):
+
+    if kwargs['created']:
+        django_user = instance
+        volunteer = User.objects.create(django_user_id=django_user)
+
+        if not volunteer.first_name:
+            if django_user.first_name or django_user.last_name:
+                volunteer.first_name = django_user.first_name
+                volunteer.second_name = django_user.last_name
+
+        volunteer.save()
+
+models.signals.post_save.connect(user_post_save, sender=DjangoUser)
+
+
+

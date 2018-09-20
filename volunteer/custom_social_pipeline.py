@@ -20,7 +20,7 @@ def save_user_name(backend, user, response, *args, **kwargs):
         volunteer.second_name = second_name
 
     elif not volunteer.first_name:
-        if django_user.first_name or django_user.second_name:
+        if django_user.first_name or django_user.last_name:
             volunteer.first_name = django_user.first_name
             volunteer.second_name = django_user.last_name
 

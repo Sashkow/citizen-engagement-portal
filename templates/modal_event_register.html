@@ -11,15 +11,15 @@
             </button>
           </div>
           <div class="modal-body">
-              <input type="text" placeholder="Назва" name="name" class="input">
+              <input type="text" placeholder="Назва" name="name" class="input" required>
               <hr>
-                <select id="event_task" class="text-center" >
+                <select id="event_task" class="text-center" required>
                     <option value="" disabled selected> Оберіть тип</option>
                     <option type_id = "event">Подія</option>
                     <option type_id = "task">Завдання</option>
                 </select>
               <hr>
-                <select id="category" class="text-center">
+                <select id="category" class="text-center" required>
                             <option value="" disabled selected> Оберіть категорію</option>
                            {% for type_ev in types_events %}
                                 <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
@@ -27,7 +27,7 @@
                 </select>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary btn-next">Далі</button>
+            <button type="submit" class="btn btn-primary btn-next" >Далі</button>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
           </div>
           <div class="modal-body">
                 <select id="event_status" class="text-center" >
-                    <option value="" disabled selected> Оберіть тип</option>
+                    <option value="" disabled selected required> Оберіть тип</option>
                     {% for st in status %}
                         <option status_id = "{{st.id}}">{{ st.status }}</option>
                     {% endfor %}
@@ -77,7 +77,7 @@
               </div>
               <hr>
               <label>Рекомендована кількість балів за участь</label><br>
-              <input type="number" name="points_quant" class="input">
+              <input type="number" name="points_quant" class="input" required>
               <hr>
               <label>Залиште Ваш контактний e-mail</label><br>
               <input type="email" name="user_email" class="input">
@@ -109,14 +109,14 @@
           <div class="modal-body">
 
               <label>Рекомендована кількість балів за виконання завдання</label><br>
-              <input type="number" name="t_points_quant" class="input">
+              <input type="number" name="t_points_quant" class="input" required>
               <hr>
               <label>Залиште Ваш контактний e-mail</label><br>
-              <input type="email" name="t_user_email" class="input">
+              <input type="email" name="t_user_email" class="input" required>
 
                <hr>
               <label for="description">Описання:</label><br>
-              <textarea  rows="3" class="form-control" id="description"></textarea>
+              <textarea  rows="3" class="form-control" id="description" ></textarea>
 
 
           </div>

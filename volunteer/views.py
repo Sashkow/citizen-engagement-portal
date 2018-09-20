@@ -34,17 +34,25 @@ from django.http import HttpResponse
 from django.template import loader, Context
 from django.template.loader import render_to_string
 from .functionviews import *
+
+from datetime import timedelta, datetime
+from babel.dates import format_timedelta
 import json
 
 from django.template import RequestContext
 
 
 import random
+import pprint
 
 import json
 
 from django.contrib.auth.decorators import login_required
 from notifications.signals import notify
+from django.template import RequestContext
+
+from volunteer.notification_helpers import notification_description, notification_title, notification_image
+
 
 @login_required
 def live_tester(request):
@@ -118,8 +126,9 @@ def profile(request):
     else:
         name = "Волонтер_ка"
 
-    parameters = ['all_digest', 1, 'news']
-    events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+    parameters = ['all_digest', 1, 'news', 'none', 'none']
+    events, events_part, events_subs, events_quantity, events_org = get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
     # league_user = League.objects.get(id = volunteer.league)
@@ -130,11 +139,14 @@ def profile(request):
     max_user_point = user_points.aggregate(Max('quantity'))
 
     types_events = EventsType.objects.all()
+    status_events = Status.objects.all()
 
     curr_category = {}
     for type_e in types_events:
         img = Currency.objects.get(type_event = type_e.id).image.url
         curr_category[type_e.id] = img
+
+
     return render(request, 'core/profile.html', {'volunteer':volunteer,
                                                  'league_user':league_user,
                                                  'name':name,
@@ -152,9 +164,11 @@ def profile(request):
                                                  'events_org':events_org,
                                                  'user_points':user_points,
                                                  'max_points': max_user_point['quantity__max'],
-                                                 'curr_category':curr_category
+                                                 'curr_category':curr_category,
+                                                 'status_events': status_events
     })
 
+@login_required
 def event(request, id):
     try:
         django_user = request.user
@@ -214,7 +228,7 @@ def new_event(request):
     if status != None:
         status_i = Status.objects.get(id = check_key_in_dict_int('status', data))
     else:
-        status_i = None
+        status_i = Status.objects.get(id = 1)
     events_or_task = True if check_key_in_dict('type', data) == 'event' else False
 
 
@@ -289,7 +303,7 @@ def type_filter(request):
     django_user = request.user
     data = request.GET
     print(data)
-    parametrs = [data['type'], data['page'], data['state']]
+    parametrs = [data['type'], data['page'], data['state'], data['task_or_event'], data['status_id']]
     types_events = EventsType.objects.all()
     print(parametrs)
     curr_category = {}
@@ -299,7 +313,8 @@ def type_filter(request):
     if data['type'] not in ['all', 'all_digest'] and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
         return JsonResponse(return_dict)
     else:
-        events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        events, events_part, events_subs, events_quantity, events_org = get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        print(events)
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
         cont = {
@@ -317,6 +332,11 @@ def type_filter(request):
         }
         html = render_to_string('events_result.html', cont)
         return_dict = {'html': html}
+        if 'add_filter' in  data.keys():
+            status_events = Status.objects.all()
+            cont['status_events'] = status_events
+            filter_html = render_to_string('events_filter.html', cont)
+            return_dict['filter_html'] = filter_html
         return JsonResponse(return_dict)
 
 
@@ -423,14 +443,15 @@ def achivments_legaue(request):
         return JsonResponse(return_dict)
     else:
         data = request.POST
-        print(data)
+        return_dict ={}
+
 
         achieve = AchievementValue.objects.filter(achievement = Achievement.objects.get(id = data['id']))
         for ach in achieve:
             user_balance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id)).quantity
             print(user_balance)
             if user_balance < ach.quantity:
-                text_error = "Вам не вистачає " + str(ach.quantity - user_balance)+ ' ' + Currency.objects.get(id = ach.currency_id).currency
+                # text_error = "Вам не вистачає " + str(ach.quantity - user_balance)+ ' ' + Currency.objects.get(id = ach.currency_id).currency
                 return_dict = {'error': ach.quantity - user_balance,
                                'url_currency': Currency.objects.get(id = ach.currency_id).image.url}
                 return JsonResponse(return_dict)
@@ -448,15 +469,17 @@ def achivments_legaue(request):
             current_user.save()
             print('New league')
             return_dict = {
-                'success': True,
-                'image_url': Achievement.objects.get(id=data['id']).image.url,
                 'new_league' : League.objects.get(id = current_user.league.id).league
             }
-        else:
-            return_dict = {'success':True,
-                           'image_url' : Achievement.objects.get(id=data['id']).image.url
-                           }
+        achievement = Achievement.objects.get(id=data['id'])
 
+        cont = {
+            'request': request,
+            'achieve':achievement
+        }
+        html = render_to_string('new_achievement.html', cont)
+        return_dict['html'] = html
+        return_dict['success'] = True
         return JsonResponse(return_dict)
 
 
@@ -511,9 +534,7 @@ def test_event(request, id_event):
         'url_currency': url_currency,
         'form':form
     }
-    print(cont)
     html = render_to_string('event_edit.html', cont)
-    print(html)
     return_dict = {'html': html}
 
 
@@ -535,16 +556,54 @@ def form(request, id = None):
     form = EditeEventForm(request.POST or None, instance=event)
     if request.POST and form.is_valid():
         form.save()
-
-        # Save was successful, so redirect to another page
-        redirect_url = reverse('/profile')
+        # print('here is form')
+        event = Event.objects.get(id=id)
+        # print(event)
+        redirect_url = reverse('profile')
         return redirect(redirect_url)
     return_dict = {}
+    subs = EventsSubscriber.objects.filter(event = event).count()
+    part = EventsParticipant.objects.filter(event = event).count()
     cont = {
         'id':id,
+        'event':event,
         'form': form,
-        'request':request
+        'subs':subs,
+        'part':part,
+        'request':request,
     }
-    html = render_to_string('event_edit.html', cont)
+    html = render_to_string('event_edit.html', cont, request=request)
     return_dict['html'] = html
     return JsonResponse(return_dict)
+
+@login_required
+def notifications(request):
+    unread = request.user.notifications.unread()
+    for notification in unread:
+        # from notification_helpers.py
+
+        notification.description = notification_description(notification)
+        notification.image = notification_image(notification)
+        notification.title = notification_title(notification)
+
+        naive = notification.timestamp.replace(tzinfo=None)
+        delta = datetime.now() - naive
+        relative_time = format_timedelta(delta, locale='uk_UA')
+        relative_time = relative_time.replace("година", "годину")
+        relative_time = relative_time.replace("хвилина", "хвилину")
+        relative_time = relative_time.replace("секунда", "секунду")
+        relative_time = relative_time + " тому"
+        notification.relative_time = relative_time
+
+    cont = {
+        'request': request,
+        'unread': unread,
+
+    }
+    html = render_to_string('notification.html', cont)
+    return_dict = {'html': html}
+    return JsonResponse(return_dict)
+
+
+def map_show(request):
+    return render(request, 'map.html')

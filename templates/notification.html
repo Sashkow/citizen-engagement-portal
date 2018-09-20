@@ -1,0 +1,25 @@
+{% load static %}
+
+{% load static notifications_tags %}
+
+
+
+    {% for notification in unread %}
+<div class="row event-block">
+
+        <div class="col-md-3 text-center text-center my-auto align-items-center ">
+            <img src= "{{notification.image}}" style="height:18vh">
+        </div>
+        <div class="col-md-7 info">
+            <div class="event-item-info">
+                <h2  class="event-name" >{{notification.title}}</h2>
+                <p class="event-description">{{notification.description|safe}}</p>
+            </div>
+        </div>
+        <div class="col-md-2 padding-0">
+            {{notification.relative_time}}
+
+
+        </div>
+    </div>
+    {% endfor %}

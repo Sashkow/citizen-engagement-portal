@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^signup/$', volunteer_views.signup, name='signup'),
 
     url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
+    url(r'^success_oauth/$', volunteer_views.just_after_scuccess_auth, name='success_oauth'),
     # url('auth/', include('social_django.urls', namespace='social')),
     url(r'^admin/', admin.site.urls),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
@@ -31,7 +32,8 @@ urlpatterns = [
 
     # url(r'^home/$', core_views.home),
     url(r'^profile/$', volunteer_views.profile, name='profile'),
-    url(r'^success_oauth/$', volunteer_views.just_after_scuccess_auth, name='success_oauth'),
+    url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
+
     url(r'^event/(?P<id>\w+)/', volunteer_views.event, name='event'),
     url(r'^newevent/$', volunteer_views.new_event, name='newevent'),
     url(r'^follow/$', volunteer_views.follow_event, name='follow_event'),
@@ -44,6 +46,8 @@ urlpatterns = [
     url(r'^eventedit/(?P<id_event>\w+)/', volunteer_views.test_event, name='edit_event'),
     url(r'^form/(?P<id>\d+)/', volunteer_views.form, name='form'),
 
-    url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login')
+    url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login'),
+    url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
+    url(r'^map/$', volunteer_views.map_show, name = "map")
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

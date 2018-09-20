@@ -46,9 +46,9 @@ $( document ).ready(function() {
                     $('p.error-currency').text(data.error)
                     $('img.error-currency').attr('src', data.url_currency)
                     }else if('success' in data){
-                        console.log('in')
-                        $('img[achieve_id = '+ id_achieve +' ]').attr('src', data.image_url );
-                        $('button[achieve_id = '+ id_achieve +' ]').parent().empty();
+                        var needed_object = $('.ach-container[achieve_id = '+ id_achieve +' ]')
+                        needed_object.empty();
+                        needed_object.append(data.html);
                         if('new_league' in data){
                             $('#new-league').modal()
                             $('.new-league').text(data.new_league)
