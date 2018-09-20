@@ -623,6 +623,7 @@ $(document).on('click', '.news', function(){
 
         $(document).on('click', '.notifications', function(){
             data = {}
+            console.log('notnotnot')
             var url = $(this).attr('get_url')
             $.ajax({
              url: url,

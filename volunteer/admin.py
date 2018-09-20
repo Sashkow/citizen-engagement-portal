@@ -2,7 +2,7 @@
 from django.contrib import admin
 from .models import *
 
-from notifications.models import Notification
+# from notifications.models import Notification
 
 admin.site.empty_value_display = '(None)'
 
@@ -136,6 +136,16 @@ class DecreasePointsInfoAdmin(admin.ModelAdmin):
     exclude = ['ID']
 admin.site.register(DecreasePointsInfo, DecreasePointsInfoAdmin)
 
+class NotificationsTypeAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in NotificationsType._meta.fields]
+    exclude = ['ID']
+admin.site.register(NotificationsType, NotificationsTypeAdmin)
+
+
+class TupoAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Tupo._meta.fields]
+    exclude = ['ID']
+admin.site.register(Tupo, TupoAdmin)
 
 class NotificationTypeAdmin(admin.ModelAdmin):
     list_display = [field.name for field in NotificaationType._meta.fields]
@@ -152,5 +162,16 @@ admin.site.register(NotificaationType, NotificationTypeAdmin)
 
 
 
+
+#
+# class NotificationAdmin(admin.ModelAdmin):
+#     list_display = [field.name for field in Notification._meta.fields]
+#     exclude = ['ID','decrease','decrease_type','achievement']
+#
+# admin.site.unregister(Notification)
+# admin.site.register(Notification, NotificationAdmin)
+#
+#
+#
 
 

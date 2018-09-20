@@ -1,9 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 from django.forms.models import model_to_dict
+from notifications.models import Notification
 
 from volunteer.helpers import has_changed
 from notifications.signals import notify
+
+# from notifications.models import Notification
+# Notification.data
 
 from volunteer.get_username import current_request
 
@@ -12,6 +16,8 @@ from django.contrib.auth.models import AnonymousUser
 from babel.dates import format_datetime
 
 from copy import deepcopy
+
+
 
 
 
@@ -38,7 +44,7 @@ from django.dispatch import receiver
 
 
 
-def notify_event_changes(event_instance, event_field):
+def notify_event_changes(event_instance, event_field, old_value):
     followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
     participants = list(EventsParticipant.objects.filter(event=event_instance).values_list('user', flat=True))
     print(followers, participants, type(followers), type(participants))
@@ -57,17 +63,13 @@ def notify_event_changes(event_instance, event_field):
         else:
             event_field_value = getattr(event_instance, event_field)
 
-
         notify.send(
             sender,
             recipient=django_user,
-            verb=event_field_verbose_name +
-                 ' події ' +
-                 str(event_instance.name) +
-                 ' змінено на ' +
-                 str(event_field_value) +
-                 ". Сповіщення отримано",
-            # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m")
+            verb="changed",
+            target = event_instance,
+            # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+            data = {'type':'1', 'event_field':event_field, 'old_value' : old_value}, # Подію змінено
         )
 
 # class NotificationType(models.Model):
@@ -224,11 +226,11 @@ def eventpostsave(sender, **kwargs):
     instance = kwargs['instance']
     print(instance.date_event, instance._old_date_event)
     if instance.date_event != instance._old_date_event:
-        notify_event_changes(instance, 'date_event')
+        notify_event_changes(instance, 'date_event', str(instance._old_date_event))
         print("date has changed!")
 
     if instance.status != instance._old_status:
-        notify_event_changes(instance, 'status')
+        notify_event_changes(instance, 'status', str(instance._old_status))
         print("sttus has changed!")
     print("post_save")
 
@@ -368,6 +370,47 @@ class DecreasePointsInfo(models.Model):
     decrease = models.ForeignKey(PointsList, on_delete = models.CASCADE)
     decrease_type = models.ForeignKey(DecreasePointsType, on_delete = models.CASCADE)
     achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)
+
+class NotificationsType(models.Model):
+    title = models.CharField(max_length = 100)
+    template = models.TextField(null=True, blank=True)
+    model_name = models.CharField(max_length = 100)
+    image_field_name = models.CharField(max_length = 100)
+
+class Tupo(models.Model):
+    f = models.CharField(max_length=100)
+
+    # model_name = 'Invoice'
+    # app_name = 'invoice'
+    # from django.apps import apps
+    # Invoice = apps.get_model(app_label=app_name, model_name=model_name)
+    # i = Invoice.objects.filter(id=1234).first()
+
+#
+# class Notification(object):
+#     notification_type = models.ForeignKey(NotificationType, on_delete = models.CASCADE)
+#     sender = models.ForeignKey(User, on_delete = models.CASCADE)
+#     recipient = models.ForeignKey(User, on_delete=models.CASCADE)
+#     is_read = models.BooleanField(default=False)
+#     timestamp = models.DateTimeField(null=True, blank=True, verbose_name='Отримано')
+
+#
+#
+#
+#     def description(self):
+#         if self.notification_type.title == 'Оцініть подію':
+#             pass
+#             # from model_name get fields and insert
+#
+#     def image(self):
+#         pass
+#         # from model_name get image_field_name, return url
+
+
+
+
+
+
 
 
 class NotificaationType(models.Model):
