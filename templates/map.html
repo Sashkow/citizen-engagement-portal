@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -42,26 +43,26 @@
       var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( 26.957,49.4210).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
-            {externalGraphic: 'img/donor_marker.png', graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
+            {externalGraphic: "{% static  'volunteer/images/donor_marker.png'%}", graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
       var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( 26.947,49.4210).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
-            {externalGraphic: 'img/blago_marker.png', graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
+            {externalGraphic: "{% static  'volunteer/images/blago_marker.png'%}", graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
     var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( 26.987,49.4230).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
-            {externalGraphic: 'img/eco_marker.png', graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
+            {externalGraphic: "{% static  'volunteer/images/eco_marker.png'%}", graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
     map.addLayer(vectorLayer);
      var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( 26.987,49.4260).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
-            {externalGraphic: 'img/educ_marker.png', graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
+            {externalGraphic: "{% static  'volunteer/images/educ_marker.png'%}", graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
     map.addLayer(vectorLayer);
@@ -69,27 +70,27 @@
      var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( 26.957,49.4250).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
-            {externalGraphic: 'img/varta_marker.png', graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
+            {externalGraphic: "{% static  'volunteer/images/varta_marker.png'%}", graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
     map.addLayer(vectorLayer);
     var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( 26.977,49.4280).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
-            {externalGraphic: 'img/proz_marker.png', graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
+            {externalGraphic: "{% static  'volunteer/images/proz_marker.png'%}", graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
       var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( 26.997,49.4250).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
-            {externalGraphic: 'img/marker_urban.png', graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
+            {externalGraphic: "{% static  'volunteer/images/marker_urban.png'%}", graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
       vectorLayer.addFeatures(feature);
       var feature = new OpenLayers.Feature.Vector(
             new OpenLayers.Geometry.Point( 26.997,49.4200).transform(epsg4326, projectTo),
             {description:'London Eye'} ,
-            {externalGraphic: 'img/animal_marker.png', graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
+            {externalGraphic: "{% static  'volunteer/images/animal_marker.png'%}", graphicHeight: 50, graphicWidth: 33, graphicXOffset:-12, graphicYOffset:-25  }
         );
     vectorLayer.addFeatures(feature);
     map.addLayer(vectorLayer);

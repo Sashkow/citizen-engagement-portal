@@ -36,7 +36,10 @@
                         <input class="select search" type="text" >
                 </div>
                 <div class="col-md-2">
-                    <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
+                    <a href="{% url 'map' %}">
+                         <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
+                    </a>
+
                     <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">
 
                 </div>
