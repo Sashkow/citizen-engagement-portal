@@ -569,7 +569,7 @@ $(document).on('click', '.news', function(){
                      url: url,
                      type :'GET',
                      cache:true,
-                     success: function(data){
+                     success: functigon(data){
                          console.log('OK');
                          $(".dynamic-block").empty()
                          $(".dynamic-block").html(data.html);
