@@ -48,5 +48,6 @@ urlpatterns = [
 
     url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login'),
     url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
+    url(r'^map/$', volunteer_views.map_show, name = "map")
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
