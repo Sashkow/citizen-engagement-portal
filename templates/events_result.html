@@ -17,8 +17,6 @@
                         <h2  class="event-name" get_url="{% url 'event' id=event.id %}">{{ event.name }}</h2>
                         <p class="event-description">{{ event.description }}</p>
                     </div>
-
-
                         <div class="btn-div align-self-end">
                              {% if events_org|get_item:event.id == 0 %}
                             {% if events_subs|get_item:event.id == 0 %}

@@ -25,21 +25,28 @@ def get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticip
         events_quantity = Event.objects.filter(**filter_event).order_by('-publication_date').count()
 
     elif parameters[2] == 'volunteer':
-        if parameters[0] == 'all' or parameters[0] == 'all_digest':
-            events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
-            events = Event.objects.filter(id__in=events_many)[from_page:to_page]
-            events_quantity = Event.objects.filter(id__in=events_many).count()
-        else:
-            events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
-            events = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
-            events_quantity = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0])).count()
+        filter_event = make_filter(parameters, DigestList, EventsType, User, Status, django_user)
+        events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
+        events = Event.objects.filter(**filter_event, id__in=events_many).order_by('-publication_date')[from_page:to_page]
+        events_quantity = Event.objects.filter(**filter_event, id__in=events_many).order_by('-publication_date').count()
+        # if parameters[0] == 'all' or parameters[0] == 'all_digest':
+        #     events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
+        #     events = Event.objects.filter(id__in=events_many)[from_page:to_page]
+        #     events_quantity = Event.objects.filter(id__in=events_many).count()
+        # else:
+        #     events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
+        #     events = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
+        #     events_quantity = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0])).count()
     else:
-        if parameters[0] == 'all' or parameters[0] == 'all_digest':
-            events = Event.objects.filter(organizer = User.objects.get(django_user_id=django_user))[from_page:to_page]
-            events_quantity = Event.objects.filter(organizer = User.objects.get(django_user_id=django_user)).count()
-        else:
-            events = Event.objects.filter(organizer=User.objects.get(django_user_id=django_user), events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
-            events_quantity = Event.objects.filter(organizer=User.objects.get(django_user_id=django_user), events_type=EventsType.objects.get(id=parameters[0])).count()
+        filter_event = make_filter(parameters, DigestList, EventsType, User, Status, django_user)
+        events = Event.objects.filter(**filter_event, organizer = User.objects.get(django_user_id=django_user)).order_by('-publication_date')[from_page:to_page]
+        events_quantity = Event.objects.filter(**filter_event, organizer = User.objects.get(django_user_id=django_user)).order_by('-publication_date').count()
+        # if parameters[0] == 'all' or parameters[0] == 'all_digest':
+        #     events = Event.objects.filter(organizer = User.objects.get(django_user_id=django_user))[from_page:to_page]
+        #     events_quantity = Event.objects.filter(organizer = User.objects.get(django_user_id=django_user)).count()
+        # else:
+        #     events = Event.objects.filter(organizer=User.objects.get(django_user_id=django_user), events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
+        #     events_quantity = Event.objects.filter(organizer=User.objects.get(django_user_id=django_user), events_type=EventsType.objects.get(id=parameters[0])).count()
 
 
     events_subs = {}

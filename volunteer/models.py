@@ -175,9 +175,27 @@ class Event(models.Model):
     description = models.TextField(null=True, blank=True)
 
 
-    # def save(self, *args, **kwargs):
-    #
-    #     super(Event, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        is_new_event = False
+        if self.pk is None:
+            is_new_event = True
+        else:
+            old_instance = Event.objects.get(pk = self.pk).status.id
+            old_status = old_instance.status.id
+            old_type = old_instance.events_type.id
+
+        super(Event, self).save(*args, **kwargs)
+
+        if not is_new_event and self.status.id == 3 and old_status!=self.status.id:
+            print(self.pk)
+            part = list(EventsParticipant.objects.filter(event = Event.objects.get(pk = self.pk)).values_list('user__id', flat = True))
+            part_user = User.objects.filter(id__in = part)
+
+            # for user in part_user:
+            #     PointsList.objects.create()
+            print(part_user)
+            print('It is victory!')
+
 
 
     def __str__(self):
@@ -273,7 +291,7 @@ class EventsPhoto(models.Model):
     def get_url(self):
         return self.photo.url
 
-#NEW FOR POINTS
+#NEW FOTS
 
 # League
 
@@ -352,10 +370,11 @@ class DecreasePointsInfo(models.Model):
     achievement = models.ForeignKey(Achievement, on_delete = models.CASCADE)
 
 
-from django.db import models
-
-
-
+class NotificaationType(models.Model):
+    title = models.CharField(max_length = 100)
+    template = models.TextField(null=True, blank=True)
+    model_name = models.CharField(max_length = 100)
+    image_field_name = models.CharField(max_length = 100)
 
 def user_post_save(sender, instance, **kwargs):
 

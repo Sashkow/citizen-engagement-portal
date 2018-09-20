@@ -40,11 +40,13 @@ from django.template import RequestContext
 
 
 import random
+import pprint
 
 import json
 
 from django.contrib.auth.decorators import login_required
 from notifications.signals import notify
+from django.template import RequestContext
 
 @login_required
 def live_tester(request):
@@ -323,6 +325,12 @@ def type_filter(request):
         }
         html = render_to_string('events_result.html', cont)
         return_dict = {'html': html}
+        if 'add_filter' in  data.keys():
+            status_events = Status.objects.all()
+            cont['status_events'] = status_events
+            filter_html = render_to_string('events_filter.html', cont)
+            return_dict['filter_html'] = filter_html
+            pprint.pprint(return_dict)
         return JsonResponse(return_dict)
 
 
@@ -542,17 +550,23 @@ def form(request, id = None):
     form = EditeEventForm(request.POST or None, instance=event)
     if request.POST and form.is_valid():
         form.save()
-
-        # Save was successful, so redirect to another page
-        redirect_url = reverse('/profile')
+        # print('here is form')
+        event = Event.objects.get(id=id)
+        # print(event)
+        redirect_url = reverse('profile')
         return redirect(redirect_url)
     return_dict = {}
+    subs = EventsSubscriber.objects.filter(event = event).count()
+    part = EventsParticipant.objects.filter(event = event).count()
     cont = {
         'id':id,
+        'event':event,
         'form': form,
-        'request':request
+        'subs':subs,
+        'part':part,
+        'request':request,
     }
-    html = render_to_string('event_edit.html', cont)
+    html = render_to_string('event_edit.html', cont, request=request)
     return_dict['html'] = html
     return JsonResponse(return_dict)
 

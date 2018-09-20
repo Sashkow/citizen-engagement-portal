@@ -33,6 +33,24 @@ $( document ).ready(function() {
     }
 
 
+     function processForm() {
+      var data = $('#the_form').serializeArray();
+      var url = $('#the_form').attr('post_url');
+      var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+      console.log('url')
+
+      data.push(
+        {name: 'csrfmiddlewaretoken',  value: csrf_token}
+      );
+        console.log(data)
+      $.ajax({
+        type: 'POST',
+        url:  url,
+        data:  data,
+        dataType: 'json'
+      }).done(alert("STOP!"))
+    }
+
     $(document).on('click', '#open-reg-modal', function(){
 
         $('#event_register').modal('show')
@@ -378,9 +396,12 @@ $( document ).ready(function() {
         var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
         var data = {};
         var url = $('#event-type').attr('url_get');
-        data.type = 'all';
+        var info_filter = InfoEventFilter()
+        data.type = info_filter[0];
         data.page = 1;
-        data.state = 'volunteer';
+        data.state = info_filter[2];
+        data.task_or_event = info_filter[1];
+        data.status_id = info_filter[3];
         console.log(data)
         $.ajax({
              url: url,
@@ -392,7 +413,7 @@ $( document ).ready(function() {
                  if(!jQuery.isEmptyObject(data)){
                         console.log(data)
 
-                        $(".dynamic-block").html(data.html);
+                        $(".events-block").html(data.html);
                         $('#event-type').attr('state', 'volunteer');
 
                       }
@@ -401,7 +422,7 @@ $( document ).ready(function() {
 
                          $('<h1>', {
                             text: 'За заданими параметрами подій не знайдено',
-                         }).appendTo($(".dynamic-block"))
+                         }).appendTo($(".events-block"))
                  }
              },
              error: function(){
@@ -415,9 +436,12 @@ $( document ).ready(function() {
         var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
         var data = {};
         var url = $('#event-type').attr('url_get');
-        data.type = 'all';
+        var info_filter = InfoEventFilter()
+        data.type = info_filter[0];
         data.page = 1;
-        data.state = 'organizer';
+        data.state = info_filter[2];
+        data.task_or_event = info_filter[1];
+        data.status_id = info_filter[3];
         console.log(data)
         $.ajax({
              url: url,
@@ -427,8 +451,6 @@ $( document ).ready(function() {
              success: function(data){
                  console.log('OK');
                  if(!jQuery.isEmptyObject(data)){
-                        console.log(data)
-
                         $(".events-block").html(data.html);
                         $('#event-type').attr('state', 'organizer');
 
@@ -477,16 +499,15 @@ $(document).on('click', '.item-menu', function(){
 })
 
 $(document).on('click', '.news', function(){
-    console.log('in');
     data = {}
     var url = $(this).attr('url_get')
-    var type_id = 'all_digest';
-    var page = 1;
-    var state = 'news';
-    data.type = type_id;
-    data.page = page;
-    data.state = state;
-    console.log(data)
+    data.type = 'all_digest';
+    data.page = 1;
+    data.state = 'news';
+    data.task_or_event = 'none';
+    data.status_id = 'none';
+    data.add_filter = 1;
+
 
     $.ajax({
              url: url,
@@ -494,9 +515,9 @@ $(document).on('click', '.news', function(){
              data:data,
              cache:true,
              success: function(data){
-                 console.log('OK');
                  $(".dynamic-block").empty()
-                 $(".dynamic-block").html(data.html);
+                 $(".dynamic-block").html(data.filter_html);
+                 $(".dynamic-block").append(data.html);
                  $('#event-type').attr('state', 'organizer');
              },
              error: function(){
@@ -541,12 +562,10 @@ $(document).on('click', '.news', function(){
 
 
         $(document).on('click', '.btn-event-edit', function(){
-//            data = {}
             var url = $(this).attr('get_url');
-//            var event_id = $(this).attr('id_event');
-//            data.id = event_id;
-            console.log('data');
+            console.log(url);
                 $.ajax({
+
                      url: url,
                      type :'GET',
                      cache:true,
@@ -557,6 +576,7 @@ $(document).on('click', '.news', function(){
                      },
                      error: function(){
                      console.log('error')
+                     console.log(url)
                      }
                     })
         })
@@ -722,6 +742,14 @@ $(document).on('click', '.news', function(){
              console.log('error')
             }
          })
+    })
+
+    $(document).on('submit', '#the_form', function(){
+        console.log('send edited info');
+        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+        $(this).append(csrf_token);
+        return True;
+
     })
 
 
