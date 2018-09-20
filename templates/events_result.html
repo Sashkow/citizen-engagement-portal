@@ -1,61 +1,7 @@
 {% load static %}
-<div class="dynamic-block">
-            <div class="row text-center align-items-center event-navigation">
-                <div class="col-md-3">
-                    <div class="dropdown open text-left category-filter">
-                        <select id="event-type" class="text-left select" url_get = "{% url 'type_filter' %}" state = "news">
-                            {% if selected == "all_digest" %}
-                                <option type_id = "all_digest" selected>Тип</option>
-                            {% else %}
-                                <option type_id = "all_digest">Категорія</option>
-                            {% endif %}
-                           {% for type_ev in types_events %}
-                                {% if type_ev.id == selected|to_int %}
-                                <option type_id = "{{type_ev.id}}" selected>{{ type_ev.type }}</option>
-                                {% else %}
-                                <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
-                                {% endif %}
-                            {% endfor %}
-
-                            {% if selected == "all" %}
-                                <option type_id = "all" selected>Всі</option>
-                            {% else %}
-                                <option type_id = "all" >Всі</option>
-                            {% endif %}
-
-                        </select>
-                        <img class="align-self-center what-img" src="{% static 'volunteer/images/what.png' %}">
-                    </div>
-
-                </div>
-                <div class="col-md-2 padding-0">
-                    <img class="align-self-center filter_event_task" src="{% static 'volunteer/images/event_fiter.png' %}">
-                    <img class="align-self-center what-img" src="{% static 'volunteer/images/what.png' %}">
-                    <img class="align-self-center filter_event_task" src="{% static 'volunteer/images/filter_task.png' %}">
-
-                </div>
-                <div class="col-md-2">
-                    <div class="dropdown open text-left category-filter">
-                        <select id="event-status" class="text-left select">
-                            <option status_id = "all_status" selected>статус</option>
-                        </select>
-                </div>
-                </div>
-                <div class="col-md-3">
-                        <input class="select search" type="text" >
-                </div>
-                <div class="col-md-2">
-                    <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
-                    <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">
-
-                </div>
-            </div >
-
-            <div class="row">
-                <div class="col-md-12">
-                     <div class="events-container">
 
     {% for event in events %}
+<div class="events-block">
 
         <div class="event-block row ">
         <div class="col-md-3 text-center text-center my-auto align-items-center ">
@@ -71,8 +17,6 @@
                         <h2  class="event-name" get_url="{% url 'event' id=event.id %}">{{ event.name }}</h2>
                         <p class="event-description">{{ event.description }}</p>
                     </div>
-
-
                         <div class="btn-div align-self-end">
                              {% if events_org|get_item:event.id == 0 %}
                             {% if events_subs|get_item:event.id == 0 %}
@@ -150,4 +94,4 @@
 
             </div>
 
-        </div>
+</div>

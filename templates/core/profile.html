@@ -174,8 +174,10 @@
             <div class="col-md-9" style="background-color: #f9ffefff;
                                          background-image:url({% static 'volunteer/images/bg_plastic1.png'%});">
 
-
-       {% include 'events_result.html' %}
+            <div class="dynamic-block">
+                    {% include 'events_filter.html' %}
+                   {% include 'events_result.html' %}
+            </div>
             </div>
             </div>
 

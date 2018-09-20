@@ -43,11 +43,13 @@ from django.template import RequestContext
 
 
 import random
+import pprint
 
 import json
 
 from django.contrib.auth.decorators import login_required
 from notifications.signals import notify
+from django.template import RequestContext
 
 from volunteer.notification_helpers import notification_description, notification_title, notification_image
 
@@ -124,8 +126,9 @@ def profile(request):
     else:
         name = "Волонтер_ка"
 
-    parameters = ['all_digest', 1, 'news']
-    events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+    parameters = ['all_digest', 1, 'news', 'none', 'none']
+    events, events_part, events_subs, events_quantity, events_org = get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
     # league_user = League.objects.get(id = volunteer.league)
@@ -136,11 +139,14 @@ def profile(request):
     max_user_point = user_points.aggregate(Max('quantity'))
 
     types_events = EventsType.objects.all()
+    status_events = Status.objects.all()
 
     curr_category = {}
     for type_e in types_events:
         img = Currency.objects.get(type_event = type_e.id).image.url
         curr_category[type_e.id] = img
+
+
     return render(request, 'core/profile.html', {'volunteer':volunteer,
                                                  'league_user':league_user,
                                                  'name':name,
@@ -158,7 +164,8 @@ def profile(request):
                                                  'events_org':events_org,
                                                  'user_points':user_points,
                                                  'max_points': max_user_point['quantity__max'],
-                                                 'curr_category':curr_category
+                                                 'curr_category':curr_category,
+                                                 'status_events': status_events
     })
 
 @login_required
@@ -296,7 +303,7 @@ def type_filter(request):
     django_user = request.user
     data = request.GET
     print(data)
-    parametrs = [data['type'], data['page'], data['state']]
+    parametrs = [data['type'], data['page'], data['state'], data['task_or_event'], data['status_id']]
     types_events = EventsType.objects.all()
     print(parametrs)
     curr_category = {}
@@ -306,7 +313,8 @@ def type_filter(request):
     if data['type'] not in ['all', 'all_digest'] and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
         return JsonResponse(return_dict)
     else:
-        events, events_part, events_subs, events_quantity, events_org = get_events(Event, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        events, events_part, events_subs, events_quantity, events_org = get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        print(events)
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
         cont = {
@@ -324,6 +332,12 @@ def type_filter(request):
         }
         html = render_to_string('events_result.html', cont)
         return_dict = {'html': html}
+        if 'add_filter' in  data.keys():
+            status_events = Status.objects.all()
+            cont['status_events'] = status_events
+            filter_html = render_to_string('events_filter.html', cont)
+            return_dict['filter_html'] = filter_html
+            pprint.pprint(return_dict)
         return JsonResponse(return_dict)
 
 
@@ -543,17 +557,23 @@ def form(request, id = None):
     form = EditeEventForm(request.POST or None, instance=event)
     if request.POST and form.is_valid():
         form.save()
-
-        # Save was successful, so redirect to another page
-        redirect_url = reverse('/profile')
+        # print('here is form')
+        event = Event.objects.get(id=id)
+        # print(event)
+        redirect_url = reverse('profile')
         return redirect(redirect_url)
     return_dict = {}
+    subs = EventsSubscriber.objects.filter(event = event).count()
+    part = EventsParticipant.objects.filter(event = event).count()
     cont = {
         'id':id,
+        'event':event,
         'form': form,
-        'request':request
+        'subs':subs,
+        'part':part,
+        'request':request,
     }
-    html = render_to_string('event_edit.html', cont)
+    html = render_to_string('event_edit.html', cont, request=request)
     return_dict['html'] = html
     return JsonResponse(return_dict)
 
