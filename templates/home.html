@@ -1,24 +1,13 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Головна</title>
 
+{% block menu_button %}
+    <button class="btn btn-enter"  onclick = "show('block')">вхід</button>
+{% endblock %}
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+{% block container %}
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href = "{% static 'volunteer/palette.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'volunteer/style.css' %}" />
-
-</head>
-
-<body>
-
-    <div id="gray" onclick = "show('none')"></div>
+<div id="gray" onclick = "show('none')"></div>
     <div id="window">
         <img class = "close" src="{% static 'volunteer/images/close.png' %}" alt="" onclick = "show('none')">
         <div class="form">
@@ -42,100 +31,214 @@
         </div>
     </div>
 
-
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark navbarset container" >
-        <a href="#" class="navbar-left">
-        <img src="{% static 'volunteer/images/hands.png' %}" style = "height:10vh">
-	</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!--<div class="collapse navbar-collapse" id="navbarMenu">-->
-            <!---->
-        <!--</div>-->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto"></ul>
-              <ul class="navbar-nav">
-                <li class="nav-item text-primary-color">
-                    <button href="#" class="btn text-primary-color dark-primary-color" onclick = "show('block')">Увійти/Зареєструватись</button>
-                </li>
-            </ul>
-         </div>
-
-
-    </nav>
-
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-crossorigin="anonymous"></script>
-
-
-    <div class="container">
-
-        <div class="row mh70 aboutus align-items-center" style="height: 90vh;" >
-
-
-            <div class="col-md-12">
-		<div class="row ">
-
-
-		        <div class="col-md-8 offset-md-4">
-				<h2 class = "primary-text" style = "background : rgba(255,255,255,.6)">Платформа волонтерів — <smal> це портал, де одні небайдужі громадяни можуть шукати для себе волонтерські активності (події), а інші — додавати ці події</smal></h2>
-
-		       </div>
-
-		</div>
-            </div>
-
-
-        </div>
-
-        <div class="row align-items-center" style="height: 80vh;">
-
-            <div class="col-md-4 text-center ">
-               <img src ="{% static 'volunteer/images/groups.png' %}"style = "height:15%"/>
-		<div class="obertka">
-		        <h2 class="text-center"> Спільнота </h2>
-		        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>
-		</div>
-            </div>
-
-            <div class="col-md-4 text-center">
-
-                <img src ="{% static 'volunteer/images/groups.png' %}" style = "height:15%"/>
-                <h2 class="text-center"> Події </h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>
-
-
-            </div>
-
-            <div class="col-md-4 text-center">
-                <img src ="{% static 'volunteer/images/groups.png' %}" style = "height:15%"/>
-                <h2 class="text-center"> Призи </h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lectus sem, pulvinar et dapibus et, interdum non libero. Phasellus pellentesque turpis ut lorem feugiat tristique.</p>
-            </div>
-
-        </div>
-
-
-
-        <div class="row" style="height:20vh">
-            <div class="col-md-12 text-center">
-                <button class="btn btn-lg dark-primary-color text-primary-color" onclick = "show('block')">Приєднатися</button>
-            </div>
-
-        </div>
-
-    </div>
-        <script type="text/javascript">
+<script type="text/javascript">
         function show(state){
             document.getElementById('window').style.display = state;
             document.getElementById('gray').style.display = state;
         }
     </script>
-</body>
-</html>
 
+<div class="row aboutus">
+    <div class="col-md-9 text-center">
+         <h1 class = "slog">волонтером бути легко</h1>
+            <p class="p-slog"> приєднуйся до Ліги Волонтерів і <br/> відчуй себе частиною міста </p>
+    </div>
+</div>
+
+<div class="row task-info ">
+    <div class="col-md-4">
+
+        <img class="golden-cup" src="{% static 'volunteer/images/golden_cup.png' %}">
+
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12 text-left mt10vh">
+                <h2 class=" slog make-task">виконуй завдання  —  <br> отримуй винагороди</h2>
+            </div>
+
+        </div>
+
+        <div class="row text-left">
+
+            <div class="col-md-6">
+                <ul>
+                    <li class="first-li">Завдання</li>
+                    <li>-прибирай</li>
+                    <li>-будуй</li>
+                    <li>-висаджуй дерева</li>
+                    <li>-допомагай тваринам</li>
+                    <li>-патрулюй вулиці</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+                    <ul>
+                    <li  class="first-li" >Винагороди</li>
+                    <li>-знижки на комуналки</li>
+                    <li>-е-квитки на проїзд</li>
+                    <li>-подарунки від мера</li>
+                    <li>-футболки, чашки, сумки</li>
+                    <li>-місто твоєї мрії!</li>
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row how-it-works my-auto align-items-center justify-content-center">
+    <!--<div class="col-md-2"></div>-->
+    <div class="col-md-auto">
+        <h4 class="mot-text">Бачиш проблему?</h4>
+        <img class="hiw-image" src="{% static 'volunteer/images/binocle.png' %}">
+    </div>
+    <div class="col-md-auto">
+        <h4 class="mot-text">Створюй завдання</h4>
+        <img class="hiw-image"  src="{% static 'volunteer/images/task_list.png' %}">
+    </div>
+    <div class="col-md-auto">
+        <h4 class="mot-text">Знаходь однодумців</h4>
+        <img class="hiw-image"  src="{% static 'volunteer/images/help.png' %}">
+    </div>
+    <div class="col-md-auto">
+        <h4 class="mot-text">Допомагай місту</h4>
+        <img class="hiw-image"  src="{% static 'volunteer/images/wand.png' %}">
+    </div>
+
+</div>
+
+<div class="row superman">
+    <div class="col-md-5th-3 justify-content-center d-flex align-items-start">
+        <h1 class="my-flex-item slog mot-h">Хочеш бути супергероєм <br> міста?</h1>
+
+    </div>
+    <div class="col-md-5th-2 justify-content-center d-flex align-items-end">
+        <img class=" my-flex-item"  src="{% static 'volunteer/images/superhero.png' %}">
+    </div>
+
+</div>
+
+
+
+
+<div class="row stairs">
+    <div class="col-md-12">
+        <div class="row ">
+            <div class="col-md-5th-3 step ">
+
+            </div>
+            <div class="col-md-5th-1 justify-content-center step d-flex align-items-end">
+                <img class="achievement-image my-flex-item"  src="{% static 'volunteer/images/achievement.png' %}">
+            </div>
+
+            <div class="col-md-5th-1 justify-content-center d-flex align-items-center">
+                <button class="btn btn-block btn-join">приєднатися</button>
+            </div>
+        </div>
+        <div class="row my-auto align-items-center">
+            <div class="col-md-5th-2 step">
+
+            </div>
+            <div class="col-md-5th-1 justify-content-center step d-flex align-items-end">
+                <img class="achievement-image my-flex-item"  src="{% static 'volunteer/images/coins.png' %}">
+            </div>
+            <div class="col-md-5th-1 text-center step-info">
+                <p>Отримуй <br>прикольні ачівки</p>
+
+            </div>
+        </div>
+        <div class="row my-auto align-items-center">
+            <div class="col-md-5th-1 text-center step">
+
+            </div>
+            <div class="col-md-5th-1  justify-content-center step d-flex align-items-end">
+                <img class="achievement-image my-flex-item"  src="{% static 'volunteer/images/flag.png' %}">
+            </div>
+            <div class="col-md-5th-1 text-center step-info">
+                 <p>Заробляй <br>бали</p>
+            </div>
+        </div>
+        <div class="row my-auto align-items-center ">
+            <div class="col-md-5th-1 justify-content-center step d-flex align-items-end">
+                <img class="achievement-image my-flex-item"  src="{% static 'volunteer/images/find.png' %}">
+            </div>
+            <div class="col-md-5th-1  text-center step-info">
+                <p>Бери участь <br>у подіях міста</p>
+
+            </div>
+
+        </div>
+        <div class="row my-auto align-items-center">
+            <div class="col-md-5th-1 text-center step-info">
+                <p>Обирай цікаві <br>тобі завдання</p>
+            </div>
+
+        </div>
+
+        <div class="row my-auto align-items-end  d-flex justify-content-center wait-for-you">
+
+
+            <div class="col-md-3 text-center justify-content-center  align-items-center">
+
+                    <img class="cirle" src="{% static 'volunteer/images/team.png'%}">
+
+                <p class="step-info">
+                    дружня команда <br> волонтерів
+                </p>
+
+            </div>
+
+            <div class="col-md-3 text-center">
+
+                     <img class="cirle" src="{% static 'volunteer/images/party.png' %}">
+
+                 <p class="step-info">
+                    яскраві події <br>та хороший настрій
+                </p>
+
+
+            </div>
+            <div class="col-md-3 text-center">
+
+                     <img class="cirle" src="{% static 'volunteer/images/gifts.png' %}">
+
+                 <p class="step-info">
+                    плюшки місцевого<br>виробництва
+                </p>
+
+
+            </div>
+
+
+
+        </div>
+
+        <div class="row align-items-center text-center join">
+            <div class="col-md-12">
+                <img class="my-flex-item img-join"  src="{% static 'volunteer/images/dirizable.png' %}">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row faq t">
+    <div class="col-md-4 justify-content-right d-flex align-items-star">
+    <h1 class="slog my-flex-item">F.A.Q.</h1>
+    </div>
+    <div class="col-md-auto">
+    2
+    </div>
+
+</div>
+
+
+{% endblock %}

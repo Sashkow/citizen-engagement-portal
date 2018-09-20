@@ -330,7 +330,6 @@ def type_filter(request):
             cont['status_events'] = status_events
             filter_html = render_to_string('events_filter.html', cont)
             return_dict['filter_html'] = filter_html
-            pprint.pprint(return_dict)
         return JsonResponse(return_dict)
 
 
@@ -579,3 +578,7 @@ def notifications(request):
     html = render_to_string('notification.html', cont)
     return_dict = {'html': html}
     return JsonResponse(return_dict)
+
+
+def map_show(request):
+    return render(request, 'map.html')
