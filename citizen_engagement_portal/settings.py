@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'volunteer',
     'social-core-master',
     'disqus',
-    # 'background_task',
+    'background_task',
 
 ]
 
@@ -229,3 +229,5 @@ SOCIAL_AUTH_PIPELINE = (
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'node_modules'),
 )
+
+DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}

@@ -34,6 +34,9 @@ from django.http import HttpResponse
 from django.template import loader, Context
 from django.template.loader import render_to_string
 from .functionviews import *
+
+from datetime import timedelta, datetime
+from babel.dates import format_timedelta
 import json
 
 from django.template import RequestContext
@@ -45,6 +48,9 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from notifications.signals import notify
+
+from volunteer.notification_helpers import notification_description, notification_title, notification_image
+
 
 @login_required
 def live_tester(request):
@@ -155,6 +161,7 @@ def profile(request):
                                                  'curr_category':curr_category
     })
 
+@login_required
 def event(request, id):
     try:
         django_user = request.user
@@ -550,10 +557,28 @@ def form(request, id = None):
     return_dict['html'] = html
     return JsonResponse(return_dict)
 
-
+@login_required
 def notifications(request):
+    unread = request.user.notifications.unread()
+    for notification in unread:
+        # from notification_helpers.py
+
+        notification.description = notification_description(notification)
+        notification.image = notification_image(notification)
+        notification.title = notification_title(notification)
+
+        naive = notification.timestamp.replace(tzinfo=None)
+        delta = datetime.now() - naive
+        relative_time = format_timedelta(delta, locale='uk_UA')
+        relative_time = relative_time.replace("година", "годину")
+        relative_time = relative_time.replace("хвилина", "хвилину")
+        relative_time = relative_time.replace("секунда", "секунду")
+        relative_time = relative_time + " тому"
+        notification.relative_time = relative_time
+
     cont = {
         'request': request,
+        'unread': unread,
 
     }
     html = render_to_string('notification.html', cont)
