@@ -152,6 +152,17 @@ class NotificationTypeAdmin(admin.ModelAdmin):
     exclude = ['ID']
 admin.site.register(NotificaationType, NotificationTypeAdmin)
 
+class IncreasePointsTypeAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in IncreasePointsType._meta.fields]
+    exclude = ['ID']
+admin.site.register(IncreasePointsType, IncreasePointsTypeAdmin)
+
+
+class IncreasePointsInfoAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in IncreasePointsInfo._meta.fields]
+    exclude = ['ID']
+admin.site.register(IncreasePointsInfo, IncreasePointsInfoAdmin)
+
 #
 # class NotificationAdmin(admin.ModelAdmin):
 #     list_display = [field.name for field in Notification._meta.fields]

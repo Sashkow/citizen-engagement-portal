@@ -76,4 +76,15 @@
         <button type="submit " class="edit-event-send" >Зберегти зміни</button>
     </div>
 </div>
+
 </form>
+{% for task in tasks_form_list %}
+<div class="row">
+    {% if forloop.first %}
+    <h2> Додаткові завдання </h2>
+    {% endif %}
+    <div class="col-md-12">
+       {{ task.as_p }}
+    </div>
+</div>
+{% endfor %}

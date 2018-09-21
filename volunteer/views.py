@@ -21,7 +21,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max
-from .forms import EditeEventForm
+from .forms import EditeEventForm, EventOrgTaskForm
 import datetime
 from django.contrib.auth.models import User as DjangoUser
 from volunteer.models import User as VolunteerUser
@@ -131,7 +131,6 @@ def profile(request):
 
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
-    # league_user = League.objects.get(id = volunteer.league)
     league_user = volunteer.league
     achievements_league_list = list(Achievement.objects.filter(league = league_user).values_list('id', flat = True))
     achieve_quant = UserAchievement.objects.filter(user = volunteer, achievement_id__in = achievements_league_list).count()
@@ -219,34 +218,39 @@ def event(request, id):
 def new_event(request):
 
     data = request.POST
+    models_field = {
+        'name': check_key_in_dict('name', data),
+        'organizer': User.objects.get_or_create(django_user_id = request.user)[0],
+        'events_type': EventsType.objects.get(id = check_key_in_dict_int('category', data)),
+        'address': check_key_in_dict('address', data),
+        'max_part': check_key_in_dict_int('from', data),
+        'min_part': check_key_in_dict_int('to', data),
+        'recommended_points':check_key_in_dict_int('points_quant', data),
+        'contact': check_key_in_dict('email', data),
+        'description': check_key_in_dict('description_e', data)
+    }
+
+
+
     date = check_key_in_dict('date', data)
 
     if date != None:
         date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+        models_field['date_event'] = date
 
     status = check_key_in_dict_int('status', data)
     if status != None:
         status_i = Status.objects.get(id = check_key_in_dict_int('status', data))
+        models_field['status'] = status_i
     else:
         status_i = Status.objects.get(id = 1)
+        models_field['status'] = status_i
+
     events_or_task = True if check_key_in_dict('type', data) == 'event' else False
+    models_field['events_or_task'] = events_or_task
+    print (models_field)
+    Event.objects.create(**models_field)
 
-
-    new_event_v  = Event.objects.create(
-        name = check_key_in_dict('name', data),
-        organizer = User.objects.get_or_create(django_user_id = request.user)[0],
-        events_or_task = events_or_task,
-        events_type = EventsType.objects.get(id = check_key_in_dict_int('category', data)),
-        date_event = date,
-        city = City.objects.get(id=1),
-        address = check_key_in_dict('address', data),
-        status = status_i,
-        max_part = check_key_in_dict_int('from', data),
-        min_part = check_key_in_dict_int('to', data),
-        recommended_points = check_key_in_dict_int('points_quant', data),
-        contact = check_key_in_dict('email', data),
-        description = check_key_in_dict('description_e', data)
-    )
     if status == 1:
         nmb = check_key_in_dict_int('numb', data)
         for i in range(nmb):
@@ -510,42 +514,42 @@ def dispatch_social_login(request):
         reverse('social:begin', args=[provider, ]) + '?first_name={}&{}'.format(first_name, second_name))
 
 
-def test_event(request, id_event):
-    print(id_event)
-    event = Event.objects.get(id=id_event)
-    status = Status.objects.all()
-    subscribers = EventsSubscriber.objects.filter(event = event).count()
-    parts = EventsParticipant.objects.filter(event = event).count()
-    url_currency = Currency.objects.get(type_event = EventsType.objects.get(id = event.events_type.id)).image.url
-    event_org_tasks = []
-    if EventsOrgTask.objects.filter(event = event).exists():
-        event_org_tasks = EventsOrgTask.objects.filter(event = event)
-
-
-    form = EditeEventForm(request.POST or None, instance=Event.objects.get(id = id_event))
-
-    cont = {
-        'request':request,
-        'event': event,
-        'status': status,
-        'subscribers': subscribers,
-        'parts': parts,
-        "event_org_tasks": event_org_tasks,
-        'url_currency': url_currency,
-        'form':form
-    }
-    html = render_to_string('event_edit.html', cont)
-    return_dict = {'html': html}
-
-
-    if request.POST and form.is_valid():
-            form.save()
-
-            # Save was successful, so redirect to another page
-            return JsonResponse(return_dict)
-
-
-    return JsonResponse(return_dict)
+# def test_event(request, id_event):
+#     print(id_event)
+#     event = Event.objects.get(id=id_event)
+#     status = Status.objects.all()
+#     subscribers = EventsSubscriber.objects.filter(event = event).count()
+#     parts = EventsParticipant.objects.filter(event = event).count()
+#     url_currency = Currency.objects.get(type_event = EventsType.objects.get(id = event.events_type.id)).image.url
+#     event_org_tasks = []
+#     if EventsOrgTask.objects.filter(event = event).exists():
+#         event_org_tasks = EventsOrgTask.objects.filter(event = event)
+#
+#
+#     form = EditeEventForm(request.POST or None, instance=Event.objects.get(id = id_event))
+#
+#     cont = {
+#         'request':request,
+#         'event': event,
+#         'status': status,
+#         'subscribers': subscribers,
+#         'parts': parts,
+#         "event_org_tasks": event_org_tasks,
+#         'url_currency': url_currency,
+#         'form':form
+#     }
+#     html = render_to_string('event_edit.html', cont)
+#     return_dict = {'html': html}
+#
+#
+#     if request.POST and form.is_valid():
+#             form.save()
+#
+#             # Save was successful, so redirect to another page
+#             return JsonResponse(return_dict)
+#
+#
+#     return JsonResponse(return_dict)
 
 
 def form(request, id = None):
@@ -556,22 +560,26 @@ def form(request, id = None):
     form = EditeEventForm(request.POST or None, instance=event)
     if request.POST and form.is_valid():
         form.save()
-        # print('here is form')
-        event = Event.objects.get(id=id)
-        # print(event)
         redirect_url = reverse('profile')
         return redirect(redirect_url)
     return_dict = {}
     subs = EventsSubscriber.objects.filter(event = event).count()
     part = EventsParticipant.objects.filter(event = event).count()
     cont = {
-        'id':id,
-        'event':event,
+        'id': id,
+        'event': event,
         'form': form,
-        'subs':subs,
-        'part':part,
-        'request':request,
+        'subs': subs,
+        'part': part,
+        'request': request,
     }
+    if event.events_or_task == True and event.status.id == 1:
+        tasks = EventsOrgTask.objects.filter(event = event)
+        tasks_form_list = []
+        for task in tasks:
+            tasks_form_list.append(EventOrgTaskForm(instance=task))
+            cont['tasks_form_list'] = tasks_form_list
+    print (cont)
     html = render_to_string('event_edit.html', cont, request=request)
     return_dict['html'] = html
     return JsonResponse(return_dict)

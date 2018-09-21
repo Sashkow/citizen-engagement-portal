@@ -182,20 +182,37 @@ class Event(models.Model):
         if self.pk is None:
             is_new_event = True
         else:
-            old_instance = Event.objects.get(pk = self.pk).status.id
+            old_instance = Event.objects.get(pk = self.pk)
             old_status = old_instance.status.id
             old_type = old_instance.events_type.id
+            currency = Currency.objects.get(type_event__id=old_type)
 
         super(Event, self).save(*args, **kwargs)
 
         if not is_new_event and self.status.id == 3 and old_status!=self.status.id:
-            print(self.pk)
             part = list(EventsParticipant.objects.filter(event = Event.objects.get(pk = self.pk)).values_list('user__id', flat = True))
             part_user = User.objects.filter(id__in = part)
 
-            # for user in part_user:
-            #     PointsList.objects.create()
-            print(part_user)
+            for user in part_user:
+                points_list = PointsList.objects.create(user = user, currency = currency, points_quantity = self.recommended_points)
+                IncreasePointsInfo.objects.create(increase = points_list, increase_type_id = 1,  event_id = self.id)
+                user_points = UserPoint.objects.get(user = user, currency = currency)
+                user_points.quantity +=  self.recommended_points
+                user_points.save()
+
+            if len(part_user)>=3 and self.events_or_task == True:
+                points_list = PointsList.objects.create(user = self.organizer, currency = currency, points_quantity = self.recommended_points)
+                IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=2, event_id=self.id)
+                user_points = UserPoint.objects.get(user=self.organizer, currency=currency)
+                user_points.quantity += 30
+                user_points.save()
+            elif self.events_or_task == False:
+                points_list = PointsList.objects.create(user=self.organizer, currency=currency,points_quantity=self.recommended_points)
+                IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=2, event_id=self.id)
+                user_points = UserPoint.objects.get(user=self.organizer, currency=currency)
+                user_points.quantity += 30
+                user_points.save()
+
             print('It is victory!')
 
 
@@ -206,32 +223,30 @@ class Event(models.Model):
     def as_dict(self):
         return model_to_dict(self)
 
+
 @receiver(pre_save, sender=Event)
 def eventpresave(sender, **kwargs):
     instance = kwargs['instance']
+    if instance.pk:
+        instance._old_date_event = deepcopy(Event.objects.get(pk = instance.pk).date_event)
+        instance._old_status = deepcopy(Event.objects.get(pk = instance.pk).status)
+        print("pre_save")
 
-    instance._old_date_event = deepcopy(Event.objects.get(pk = instance.pk).date_event)
-    instance._old_status = deepcopy(Event.objects.get(pk = instance.pk).status)
-    print("pre_save")
 
-# @receiver(post_init, sender=Event)
-# def eventpreinit(sender, **kwargs):
-#     instance = kwargs['instance']
-#     instance._old_date_event = instance.date_event
-#     instance._old_status = instance.status
-#     print("pre_init")
 
 @receiver(post_save, sender=Event)
 def eventpostsave(sender, **kwargs):
     instance = kwargs['instance']
-    print(instance.date_event, instance._old_date_event)
-    if instance.date_event != instance._old_date_event:
-        notify_event_changes(instance, 'date_event', str(instance._old_date_event))
-        print("date has changed!")
 
-    if instance.status != instance._old_status:
-        notify_event_changes(instance, 'status', str(instance._old_status))
-        print("sttus has changed!")
+    if not kwargs['created']:
+        print(instance.date_event, instance._old_date_event)
+        if instance.date_event != instance._old_date_event:
+            notify_event_changes(instance, 'date_event', str(instance._old_date_event))
+            print("date has changed!")
+
+        if instance.status != instance._old_status:
+            notify_event_changes(instance, 'status', str(instance._old_status))
+            print("sttus has changed!")
     print("post_save")
 
 

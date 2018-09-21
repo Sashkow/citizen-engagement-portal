@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
-from volunteer.models import Event
+from volunteer.models import Event, EventsOrgTask
 from django.forms import SelectDateWidget
 
 
@@ -35,4 +35,16 @@ class EditeEventForm(ModelForm):
         }
         widgets = {
             'date_event': SelectDateWidget(),
+        }
+
+
+class EventOrgTaskForm(ModelForm):
+    class Meta:
+        model = EventsOrgTask
+        fields = ['task_name', 'task_description', 'done']
+        localized_fields = ('task_name', 'task_description', 'done')
+        labels = {
+            'task_name': 'Назва організаційного завдання',
+            'task_description': 'Опис',
+            'done': 'Виконано'
         }

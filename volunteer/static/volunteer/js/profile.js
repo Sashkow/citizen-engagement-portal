@@ -63,7 +63,8 @@ $( document ).ready(function() {
             data.type=type_event;
             data.category=category;
             $('#event_register').modal('hide')
-            if($('option:selected', '#even t_task').attr('type_id') == 'event'){
+
+            if($('option:selected', '#event_task').attr('type_id') == 'event'){
                 $('#event_e_register').modal()
                 $(document).on('change', '#event_status', function(){
                     if ($('option:selected', '#event_status').attr('status_id') == "1"){
