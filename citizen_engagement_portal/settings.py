@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'volunteer',
     'social-core-master',
     'disqus',
-    'background_task',
+   # 'background_task',
 
 ]
 

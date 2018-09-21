@@ -209,10 +209,11 @@ class Event(models.Model):
 @receiver(pre_save, sender=Event)
 def eventpresave(sender, **kwargs):
     instance = kwargs['instance']
+    if instance.pk:
 
-    instance._old_date_event = deepcopy(Event.objects.get(pk = instance.pk).date_event)
-    instance._old_status = deepcopy(Event.objects.get(pk = instance.pk).status)
-    print("pre_save")
+        instance._old_date_event = deepcopy(Event.objects.get(pk = instance.pk).date_event)
+        instance._old_status = deepcopy(Event.objects.get(pk = instance.pk).status)
+        print("pre_save")
 
 # @receiver(post_init, sender=Event)
 # def eventpreinit(sender, **kwargs):
@@ -224,14 +225,15 @@ def eventpresave(sender, **kwargs):
 @receiver(post_save, sender=Event)
 def eventpostsave(sender, **kwargs):
     instance = kwargs['instance']
-    print(instance.date_event, instance._old_date_event)
-    if instance.date_event != instance._old_date_event:
-        notify_event_changes(instance, 'date_event', str(instance._old_date_event))
-        print("date has changed!")
+    if not kwargs['created']:
+        print(instance.date_event, instance._old_date_event)
+        if instance.date_event != instance._old_date_event:
+            notify_event_changes(instance, 'date_event', str(instance._old_date_event))
+            print("date has changed!")
 
-    if instance.status != instance._old_status:
-        notify_event_changes(instance, 'status', str(instance._old_status))
-        print("sttus has changed!")
+        if instance.status != instance._old_status:
+            notify_event_changes(instance, 'status', str(instance._old_status))
+            print("sttus has changed!")
     print("post_save")
 
 
@@ -419,20 +421,20 @@ class NotificaationType(models.Model):
     model_name = models.CharField(max_length = 100)
     image_field_name = models.CharField(max_length = 100)
 
-def user_post_save(sender, instance, **kwargs):
-
-    if kwargs['created']:
-        django_user = instance
-        volunteer = User.objects.create(django_user_id=django_user)
-
-        if not volunteer.first_name:
-            if django_user.first_name or django_user.last_name:
-                volunteer.first_name = django_user.first_name
-                volunteer.second_name = django_user.last_name
-
-        volunteer.save()
-
-models.signals.post_save.connect(user_post_save, sender=DjangoUser)
+#def user_post_save(sender, instance, **kwargs):
+#
+#    if kwargs['created']:
+#        django_user = instance
+#        volunteer = User.objects.create(django_user_id=django_user)
+#
+#        if not volunteer.first_name:
+#            if django_user.first_name or django_user.last_name:
+#                volunteer.first_name = django_user.first_name
+#                volunteer.second_name = django_user.last_name
+#
+#        volunteer.save()
+#
+#models.signals.post_save.connect(user_post_save, sender=DjangoUser)
 
 
 
