@@ -17,6 +17,10 @@ from babel.dates import format_datetime
 
 from copy import deepcopy
 
+from djgeojson.fields import  PointField
+from geopy.geocoders import Nominatim
+
+
 
 
 
@@ -79,6 +83,7 @@ def notify_event_changes(event_instance, event_field, old_value):
 class EventsType(models.Model):
     type = models.CharField(max_length=80)
     image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements',), null=True, blank=True)
+    marker_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'markers',), null=True, blank=True)
 
     def __str__(self):
         return self.type
@@ -93,7 +98,15 @@ class Status(models.Model):
         return self.status
 
 class City(models.Model):
+    DEFAULT_CITY = 'Хмельницький'
+
     city = models.CharField(max_length=100)
+
+    def safe_get_city(self):
+        if self.city:
+            return self.city
+        else:
+            return City.DEFAULT_CITY
 
     def __str__(self):
         return self.city
@@ -175,9 +188,24 @@ class Event(models.Model):
     contact = models.EmailField(null=True, blank=True)
     publication_date = models.DateField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
+    geom = PointField(null=True, blank=True)
+
+    @property
+    def get_events_type_url(self):
+        return self.events_type.image.url
+
+    @property
+    def get_events_type_marker_url(self):
+        return self.events_type.marker_image.url
 
 
     def save(self, *args, **kwargs):
+        if self.address:
+            nom = Nominatim(user_agent="changer.in.ua")
+            point = nom.geocode(" ".join(["Україна", self.city.safe_get_city(), self.address]))
+            self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}
+
+
         is_new_event = False
         if self.pk is None:
             is_new_event = True
@@ -186,6 +214,7 @@ class Event(models.Model):
             old_status = old_instance.status.id
             old_type = old_instance.events_type.id
             currency = Currency.objects.get(type_event__id=old_type)
+
 
         super(Event, self).save(*args, **kwargs)
 
@@ -214,6 +243,17 @@ class Event(models.Model):
                 user_points.save()
 
             print('It is victory!')
+
+
+
+
+
+
+
+
+
+
+
 
 
 
