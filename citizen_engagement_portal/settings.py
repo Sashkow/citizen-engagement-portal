@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'social-core-master',
     'disqus',
    # 'background_task',
+    'leaflet',
+    'djgeojson',
+
 
 ]
 
@@ -237,3 +240,11 @@ STATICFILES_DIRS = (
 )
 
 DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
+
+LEAFLET_CONFIG = {
+    'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
+    'DEFAULT_CENTER': ( 49.4196404, 26.9793793),
+    'DEFAULT_ZOOM': 12,
+    'MIN_ZOOM': 5,
+    'MAX_ZOOM': 18,
+}

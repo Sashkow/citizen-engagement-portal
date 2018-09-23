@@ -43,6 +43,8 @@ from django.template import RequestContext
 
 
 import random
+
+from django.utils.decorators import classonlymethod
 import pprint
 
 import json
@@ -52,6 +54,8 @@ from notifications.signals import notify
 from django.template import RequestContext
 
 from volunteer.notification_helpers import notification_description, notification_title, notification_image
+
+
 
 
 @login_required
@@ -615,3 +619,6 @@ def notifications(request):
 
 def map_show(request):
     return render(request, 'map.html')
+
+
+
