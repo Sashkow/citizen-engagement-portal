@@ -588,6 +588,16 @@ def form(request, id = None):
     return_dict['html'] = html
     return JsonResponse(return_dict)
 
+
+def change_org_task(request, id):
+    if request.POST:
+        task = EventsOrgTask.objects.get(id = id)
+        form = EventOrgTaskForm(request.POST or None, instance=task)
+        if form.is_valid():
+            return_dict = {}
+            form.save()
+            return JsonResponse(return_dict)
+
 @login_required
 def notifications(request):
     unread = request.user.notifications.unread()
@@ -620,5 +630,13 @@ def notifications(request):
 def map_show(request):
     return render(request, 'map.html')
 
+
+
+def cancel_task(request, id):
+    return_dict = {}
+    task = EventsOrgTask.objects.get(id = id)
+    task.canceled = True
+    task.save()
+    return JsonResponse(return_dict)
 
 

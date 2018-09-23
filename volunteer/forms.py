@@ -2,6 +2,7 @@
 from django.forms import ModelForm
 from volunteer.models import Event, EventsOrgTask
 from django.forms import SelectDateWidget
+from django.forms.widgets import HiddenInput
 
 
 
@@ -41,10 +42,14 @@ class EditeEventForm(ModelForm):
 class EventOrgTaskForm(ModelForm):
     class Meta:
         model = EventsOrgTask
-        fields = ['task_name', 'task_description', 'done']
-        localized_fields = ('task_name', 'task_description', 'done')
+        fields = ['task_name', 'task_description', 'done',  'recommended_points', 'event', 'canceled']
+        localized_fields = ('task_name', 'task_description', 'done',  'recommended_points', 'event', 'canceled')
         labels = {
             'task_name': 'Назва організаційного завдання',
             'task_description': 'Опис',
             'done': 'Виконано'
         }
+    def __init__(self, *args, **kwargs):
+        super(EventOrgTaskForm, self).__init__(*args, **kwargs)
+        self.fields['event'].widget = HiddenInput()
+        self.fields['canceled'].widget = HiddenInput()

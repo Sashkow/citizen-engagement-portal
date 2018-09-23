@@ -80,11 +80,25 @@
 </form>
 {% for task in tasks_form_list %}
 <div class="row">
-    {% if forloop.first %}
+
+    {% if not task.canceled.value %}
+    {% if forloop.first%}
     <h2> Додаткові завдання </h2>
     {% endif %}
-    <div class="col-md-12">
-       {{ task.as_p }}
+
+    <div class="col-md-9">
+        <form class="edit-adding-task" action="{% url 'changetask' id=task.instance.id %}" method="post" onsubmit="return false">
+            {{task.canceled.value}}
+            {{task.task_name.value}}
+            {% csrf_token %}
+            {{ task.as_p }}
+            <button type="submit " >Змінити організаційне завдання</button>
+        </form>
     </div>
+    <div class="col-md-3">
+        <button class="cancel-task" post_url="{% url 'cancel_task' id=task.instance.id %}"> Відмінити </button>
+    </div>
+
+    {% endif %}
 </div>
 {% endfor %}

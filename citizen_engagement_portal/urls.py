@@ -46,10 +46,15 @@ urlpatterns = [
     url(r'^achivment_legaue/$', volunteer_views.achivments_legaue, name='achivments_legaue'),
     url(r'^testerer/$', volunteer_views.test, name='test'),
     url(r'^form/(?P<id>\d+)/', volunteer_views.form, name='form'),
+    url(r'^changeorgtask/(?P<id>\d+)/', volunteer_views.change_org_task, name='changetask'),
 
     url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login'),
     url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
     url(r'^map/$', volunteer_views.map_show, name = "map"),
+
+    url(r'^canceledtask/(?P<id>\d+)$', volunteer_views.cancel_task, name = "cancel_task"),
+
     url(r'^data.geojson$', GeoJSONLayerView.as_view( model=Event, properties=('name', 'description','events_type', 'get_events_type_url', 'get_events_type_marker_url', )), name='event_geo_data'),
+
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
