@@ -253,6 +253,7 @@ class EventsOrgTask(models.Model):
     task_name = models.CharField(max_length=80)
     task_description = models.TextField(null=True, blank=True)
     done = models.BooleanField(default=False)
+    canceled = models.BooleanField(default = False)
     recommended_points = models.IntegerField()
 
 class EventsSubscriber(models.Model):

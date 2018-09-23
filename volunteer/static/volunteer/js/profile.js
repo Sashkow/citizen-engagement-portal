@@ -302,7 +302,6 @@ $( document ).ready(function() {
 
          $.ajax({
              url: url,
-             type :'GET',
              data:data,
              cache:true,
              dataType:'json',
@@ -746,12 +745,45 @@ $(document).on('click', '.news', function(){
          })
     })
 
-    $(document).on('submit', '#the_form', function(){
-        console.log('send edited info');
-        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
-        $(this).append(csrf_token);
-        return True;
 
+
+    $(document).on('submit', '.edit-adding-task', function(){
+           $.ajax({
+            data: $(this).serialize(),
+            type: 'POST',
+            url: $(this).attr('action'),
+            success: function(data){
+                alert('Зміни збережено!')
+            },
+            error: function(){
+                console.log(error)
+            }
+           })
+
+    })
+
+    $(document).on('click', '.cancel-task', function(){
+            var url = $(this).attr('post_url');
+            var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+            var data = {};
+            data['csrfmiddlewaretoken'] = csrf_token;
+            console.log($('.cancel-task[post_url = "' + url + '"]'))
+
+            $.ajax({
+
+                 url: url,
+                 type :'POST',
+                 data:data,
+                 cache:true,
+                 success: function(data){
+                     console.log('OK');
+                      $('.cancel-task[post_url = "' + url + '"]').remove();
+                     },
+                 error: function(){
+                    console.log('error');
+
+                 }
+            })
     })
 
 
