@@ -626,7 +626,7 @@ def notifications(request):
     return_dict = {'html': html}
     return JsonResponse(return_dict)
 
-
+@login_required
 def map_show(request):
     return render(request, 'map.html')
 

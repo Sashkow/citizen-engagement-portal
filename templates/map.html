@@ -11,7 +11,10 @@
 
 function onEachFeature(feature, layer) {
   var props = feature.properties;
-  var content = `<img width="300" src="${props.get_events_type_url}"/><h3>${props.name}</h3><p>${props.description}</p>`;
+  if (!props.description){
+    props.description = "Немає опису";
+  }
+  var content = `<img width="300" src="${props.get_events_type_url}"/><h3><a class="event-name" get_url="${props.get_event_url}">${props.name}</a></h3><p>${props.description}</p>`;
   layer.bindPopup(content);
 }
 
