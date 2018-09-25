@@ -24,6 +24,8 @@ from django.conf import settings
 
 from django.shortcuts import reverse
 
+from schedule.models import Event as CalendarEvent
+
 
 
 
@@ -187,6 +189,7 @@ class Event(models.Model):
     publication_date = models.DateField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
     geom = PointField(null=True, blank=True)
+    # calendar_event = models.ForeignKey(CalendarEvent, on_delete=models.CASCADE, null=True, blank=True)
 
     @property
     def get_events_type_url(self):

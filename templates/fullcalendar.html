@@ -17,7 +17,7 @@
 <link rel='stylesheet' type='text/css' href="{% static 'volunteer/calendar/fullcalendar/dist/fullcalendar.css' %}" />
 <script type='text/javascript' src="{% static 'volunteer/calendar/moment/moment.js' %}"></script>
 <script type='text/javascript' src="{% static 'volunteer/calendar/fullcalendar/dist/fullcalendar.js' %}"></script>
-
+<script type='text/javascript' src="{% static 'volunteer/calendar/fullcalendar/dist/locale-all.js' %}"></script>
     </head>
 
     <body>
@@ -35,7 +35,8 @@ $(document).ready(function() {
     // page is now ready, initialize the calendar...
     $('#calendar').fullCalendar({
         // put your options and callbacks here
-      events: '/schedule/api/occurrences?calendar_slug=volunteer_calendar_slug'
+      events: '/schedule/api/occurrences?calendar_slug=volunteer_calendar_slug',
+      locale: 'uk'
     })
 
 });
