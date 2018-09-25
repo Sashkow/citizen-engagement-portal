@@ -9,10 +9,9 @@
       </div>
       <div class="modal-body">
            <form action="{% url 'dispatch_social_login' %}" name="f1">
-                <!--<div class="center-personal">-->
-                    <!--<input type="text" placeholder="Ім'я" name="first_name" class="input input-reg">-->
-                   <!--<input type="text" placeholder="Прізвище" name="second_name" class="input input-reg">-->
-                <!--</div>-->
+                <p><a href="{% url 'usual_login' %}">Введіть логін і пароль</a></p>
+                <p align="middle">або</p>
+                <p>увійдіть через соцмережі:</p>
                <div class="socal_logos text-center">
                    <a href="{% url 'social:begin' 'facebook' %}"><img class="soc-icon" type="submit" value="Реєстрація Facebook" name="sub_fb"  src="{% static 'volunteer/images/facebook.png' %}"></a>
                    <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="soc-icon" type="submit" value="Реєстрація Google" name="sub_gg" src="{% static 'volunteer/images/google.png' %}"></a>

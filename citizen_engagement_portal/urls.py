@@ -21,6 +21,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     url(r'^$', volunteer_views.home, name='home'),
     url(r'^login/$', auth_views.login, name='login'),
+    url(r'^usual_login/$', auth_views.login, {'template_name': 'usual_login.html'}, name='usual_login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^signup/$', volunteer_views.signup, name='signup'),
 
