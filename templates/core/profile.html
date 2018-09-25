@@ -86,7 +86,7 @@
                                 {% if volunteer.photo %}
                                  <img class="photo-user" src="{{ volunteer.photo.url }}">
                                 {% else %}
-                                <img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}" style="background-image:url({% static 'volunteer/images/user_profile_default.png' %}")">
+                                <img class="photo-user" src="{% static  'volunteer/images/user_profile_default.png' %}" >
                                 {% endif %}
                              <img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}">
                         </div>
