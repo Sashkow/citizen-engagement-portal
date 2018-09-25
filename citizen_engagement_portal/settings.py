@@ -51,6 +51,7 @@ INSTALLED_APPS = [
    # 'background_task',
     'leaflet',
     'djgeojson',
+    'schedule',
 
 
 ]
@@ -180,6 +181,7 @@ AUTHENTICATION_BACKENDS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
+    "django.template.context_processors.request",
 
 )
 

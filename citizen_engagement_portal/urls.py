@@ -15,6 +15,8 @@ import social_django.urls
 from volunteer.views import live_tester, make_notification, mark_all_as_read
 from volunteer.models import Event
 from djgeojson.views import GeoJSONLayerView
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
     url(r'^$', volunteer_views.home, name='home'),
@@ -55,6 +57,8 @@ urlpatterns = [
     url(r'^canceledtask/(?P<id>\d+)$', volunteer_views.cancel_task, name = "cancel_task"),
 
     url(r'^data.geojson$', GeoJSONLayerView.as_view( model=Event, properties=('name', 'description','events_type', 'get_events_type_url', 'get_events_type_marker_url', 'get_event_url')), name='event_geo_data'),
+
+    url(r'^fullcalendar/', TemplateView.as_view(template_name="fullcalendar.html"), name='fullcalendar'),
 
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
