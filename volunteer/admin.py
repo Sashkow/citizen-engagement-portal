@@ -6,10 +6,23 @@ from .models import *
 
 admin.site.empty_value_display = '(None)'
 
+from django import forms
+from schedule.widgets import ColorInput
+
+
+class EventAdminForm(forms.ModelForm):
+    class Meta:
+        exclude = []
+        model = Event
+        widgets = {
+            'color_event': ColorInput,
+        }
+
 
 class EventsTypeAdmin(admin.ModelAdmin):
     list_display = [field.name for field in EventsType._meta.fields]
     exclude = ['id']
+    form = EventAdminForm
 
 admin.site.register(EventsType, EventsTypeAdmin)
 
@@ -162,6 +175,15 @@ class IncreasePointsInfoAdmin(admin.ModelAdmin):
     list_display = [field.name for field in IncreasePointsInfo._meta.fields]
     exclude = ['ID']
 admin.site.register(IncreasePointsInfo, IncreasePointsInfoAdmin)
+
+
+
+
+
+
+
+
+
 
 #
 # class NotificationAdmin(admin.ModelAdmin):

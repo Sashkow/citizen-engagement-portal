@@ -91,6 +91,7 @@ class EventsType(models.Model):
     type = models.CharField(max_length=80)
     image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements',), null=True, blank=True)
     marker_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'markers',), null=True, blank=True)
+    color_event = models.CharField(blank=True, max_length=10)
 
     def __str__(self):
         return self.type
