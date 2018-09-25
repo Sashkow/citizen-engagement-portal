@@ -805,6 +805,12 @@ $(document).on('click', '.news', function(){
         $('#registration').modal('show')
     })
 
+    $(document).on('click', '.open-login', function(){
+        $('#login').modal('show')
+    })
+
+    login
+
 
     });
 
