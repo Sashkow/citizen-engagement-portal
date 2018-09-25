@@ -21,7 +21,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max
-from .forms import EditeEventForm, EventOrgTaskForm
+from .forms import EditeEventForm, EventOrgTaskForm, UserForm
 import datetime
 from django.contrib.auth.models import User as DjangoUser
 from volunteer.models import User as VolunteerUser
@@ -349,23 +349,28 @@ def type_filter(request):
 
 
 def profile_edit(request):
+    print(request)
     django_user = request.user
     current_user = User.objects.get(django_user_id=django_user)
-    if request.method == 'POST':
-        return_dict = {}
-        data = request.POST
-        types = EventsType.objects.all()
-        types = [id.id for id in types]
-        for i in types:
-            print(data[str(i)])
-            if data[str(i)] == 'true' and not DigestList.objects.filter(user = current_user, type = EventsType.objects.get(id = i)).exists():
-                print('in')
-                DigestList.objects.create(user = current_user, type = EventsType.objects.get(id = i))
-            elif data[str(i)] == 'false' and DigestList.objects.filter(user = current_user, type = EventsType.objects.get(id = i)).exists():
-                print('out')
-                DigestList.objects.filter(user=current_user, type=EventsType.objects.get(id=i)).delete()
+    form = UserForm(request.POST or None, instance=current_user)
 
-        return JsonResponse(return_dict)
+    if request.method == 'POST':
+        form = UserForm(request.POST, request.FILES, instance = current_user)
+        print (form)
+
+        # for i in types:
+            # print(data[str(i)])
+            # if data[str(i)] == 'true' and not DigestList.objects.filter(user = current_user, type = EventsType.objects.get(id = i)).exists():
+            #     print('in')
+            #     DigestList.objects.create(user = current_user, type = EventsType.objects.get(id = i))
+            # elif data[str(i)] == 'false' and DigestList.objects.filter(user = current_user, type = EventsType.objects.get(id = i)).exists():
+            #     print('out')
+            #     DigestList.objects.filter(user=current_user, type=EventsType.objects.get(id=i)).delete()
+        if form.is_valid():
+            form.save()
+            print('form is saved')
+            redirect_url = reverse('profile')
+            return redirect(redirect_url)
     else:
         dict_digest = {}
         type_events = EventsType.objects.all()
@@ -376,8 +381,9 @@ def profile_edit(request):
                 dict_digest[i.id] = 0
         cont = {'user':current_user,
                  'type_events': type_events,
+                'form':form,
                  'dict_digest':dict_digest}
-        html = render_to_string('edit_profile.html', cont)
+        html = render_to_string('edit_profile.html', cont, request=request)
         return_dict = {'html': html}
         return JsonResponse(return_dict)
 
@@ -518,43 +524,6 @@ def dispatch_social_login(request):
         reverse('social:begin', args=[provider, ]) + '?first_name={}&{}'.format(first_name, second_name))
 
 
-# def test_event(request, id_event):
-#     print(id_event)
-#     event = Event.objects.get(id=id_event)
-#     status = Status.objects.all()
-#     subscribers = EventsSubscriber.objects.filter(event = event).count()
-#     parts = EventsParticipant.objects.filter(event = event).count()
-#     url_currency = Currency.objects.get(type_event = EventsType.objects.get(id = event.events_type.id)).image.url
-#     event_org_tasks = []
-#     if EventsOrgTask.objects.filter(event = event).exists():
-#         event_org_tasks = EventsOrgTask.objects.filter(event = event)
-#
-#
-#     form = EditeEventForm(request.POST or None, instance=Event.objects.get(id = id_event))
-#
-#     cont = {
-#         'request':request,
-#         'event': event,
-#         'status': status,
-#         'subscribers': subscribers,
-#         'parts': parts,
-#         "event_org_tasks": event_org_tasks,
-#         'url_currency': url_currency,
-#         'form':form
-#     }
-#     html = render_to_string('event_edit.html', cont)
-#     return_dict = {'html': html}
-#
-#
-#     if request.POST and form.is_valid():
-#             form.save()
-#
-#             # Save was successful, so redirect to another page
-#             return JsonResponse(return_dict)
-#
-#
-#     return JsonResponse(return_dict)
-
 
 def form(request, id = None):
     if id:
@@ -639,4 +608,26 @@ def cancel_task(request, id):
     task.save()
     return JsonResponse(return_dict)
 
+def refresh_digest(request):
+    if request.method == 'POST':
+        return_dict = {}
+        data = request.POST
+        django_user = request.user
+        current_user = User.objects.get(django_user_id=django_user)
+        types = EventsType.objects.all()
+        types = [id.id for id in types]
+        for i in types:
+            print(data[str(i)])
+            if data[str(i)] == 'true' and not DigestList.objects.filter(user = current_user, type = EventsType.objects.get(id = i)).exists():
+                print('in')
+                DigestList.objects.create(user = current_user, type = EventsType.objects.get(id = i))
+            elif data[str(i)] == 'false' and DigestList.objects.filter(user = current_user, type = EventsType.objects.get(id = i)).exists():
+                print('out')
+                DigestList.objects.filter(user=current_user, type=EventsType.objects.get(id=i)).delete()
+        return JsonResponse(return_dict)
 
+
+def change_photo(request):
+    print(request.FILES['userpic'])
+    return_dict = {}
+    return JsonResponse(return_dict)

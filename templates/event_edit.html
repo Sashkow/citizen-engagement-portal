@@ -1,5 +1,5 @@
 {% load static %}
-<form action="{% url 'form'  id=event.id  %}" method="post">
+<form action="{% url 'form'  id=event.id  %}">
     {% csrf_token %}
 <div class="row">
     <div class="col-md-8 ep-event-info">

@@ -276,8 +276,7 @@ h4.volunteer-name{
 }
 
 .ribbon{
-    font-family: 'Ubuntu',sans-serif!important;
-  /*  height:3vh; */
+
     width:70%;
     background-color: white;
     margin:auto;
@@ -337,6 +336,7 @@ h4.volunteer-name{
 .profile_info{
     background-color: #84c754;
     min-height:94vh;
+    background-attachment: fixed;
 }
 
 
@@ -655,7 +655,8 @@ img.unlocked-achievement{
  }
 
  .photo-user{
-    clip-path: url(#svgPath);
+    -webkit-clip-path: polygon(2% 1%, 2% 62%, 9% 78%, 23% 89%, 36% 95%, 50% 100%, 63% 95%, 79% 89%, 91% 78%, 97% 64%, 98% 2%);
+    clip-path: polygon(2% 1%, 2% 62%, 9% 78%, 23% 89%, 36% 95%, 50% 100%, 63% 95%, 79% 89%, 91% 78%, 97% 64%, 98% 2%);
     position: absolute;
     left: 50%;
     width: 39%;
@@ -697,3 +698,46 @@ img.unlocked-achievement{
     -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
     filter: grayscale(1);
  }
+
+ .reg-logo{
+    height: 45%;
+    margin: 0 auto;
+ }
+
+ .center-personal{
+     margin: auto auto;
+     text-align:center;
+ }
+
+ .input-reg{
+    border:none;
+    border-bottom: 1px solid #999898ff;
+ }
+
+  .input-reg::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #999898ff;
+    opacity: 1; /* Firefox */
+}
+
+ .input-reg:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #999898ff;
+}
+
+ .input-reg::-ms-input-placeholder { /* Microsoft Edge */
+    color: #999898ff;
+}
+
+.soc-icon{
+    height:6vh;
+}
+
+.task-or-event-images{
+    height:9vh;
+    margin-right: 2vw;
+    margin-left: 3vw;
+}
+
+.text-describe{
+    padding: 0 3vw;
+    margin-top: 5vh;
+}
