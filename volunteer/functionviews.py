@@ -79,7 +79,6 @@ def get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticip
             event.event_photo = event_photo
         else:
             event.event_photo = None
-    print(events_org)
     return events, events_part, events_subs, events_quantity, events_org
 
 #return pages

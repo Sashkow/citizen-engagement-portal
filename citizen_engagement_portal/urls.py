@@ -46,7 +46,9 @@ urlpatterns = [
     url(r'^achivment_legaue/$', volunteer_views.achivments_legaue, name='achivments_legaue'),
     url(r'^testerer/$', volunteer_views.test, name='test'),
     url(r'^form/(?P<id>\d+)/', volunteer_views.form, name='form'),
+    url(r'^refresh/digest/$', volunteer_views.refresh_digest, name='refresh_digest'),
     url(r'^changeorgtask/(?P<id>\d+)/', volunteer_views.change_org_task, name='changetask'),
+    url(r'^changephoto/', volunteer_views.change_photo, name='changephoto'),
 
     url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login'),
     url(r'^notifications/$', volunteer_views.notifications, name='notifications'),

@@ -1,20 +1,31 @@
 {% load static %}
-<div id="gray" onclick = "show('none')"></div>
-    <div id="window">
-    <img class = "close" src="{% static 'volunteer/images/close.png' %}" alt="" onclick = "show('none')">
-    <div class="form">
-        <h2>Реєстрація через соцмережі</h2>
-        <form action="{% url 'dispatch_social_login' %}" name="f1">
-            <div class="socal_logos">
-                <a href="{% url 'social:begin' 'facebook' %}"><img type="submit" value="Реєстрація Facebook" name="sub_fb" class = "col-md-3" src="{% static 'volunteer/images/facebook.png' %}"></a>
-                <a href="{% url 'social:begin' 'google-oauth2' %}"><img type="submit" value="Реєстрація Google" name="sub_gg" class = "col-md-3" src="{% static 'volunteer/images/google.png' %}"></a>
-            </div>
 
-            <div>За бажанням вкажіть також:</div>
-            <input type="text" placeholder="Ім'я" name="first_name" class="input">
-            <input type="text" placeholder="Прізвище" name="second_name" class="input">
+
+<div class="modal fade" id="registration" tabindex="-1" role="dialog" aria-labelledby="registrationLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+           <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
+      </div>
+      <div class="modal-body">
+           <form action="{% url 'dispatch_social_login' %}" name="f1">
+
+                <div class="center-personal">
+                    <input type="text" placeholder="Ім'я" name="first_name" class="input input-reg">
+                   <input type="text" placeholder="Прізвище" name="second_name" class="input input-reg">
+
+                </div>
+
+               <div class="socal_logos text-center">
+                   <a href="{% url 'social:begin' 'facebook' %}"><img class="soc-icon" type="submit" value="Реєстрація Facebook" name="sub_fb"  src="{% static 'volunteer/images/facebook.png' %}"></a>
+                   <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="soc-icon" type="submit" value="Реєстрація Google" name="sub_gg" src="{% static 'volunteer/images/google.png' %}"></a>
+               </div>
+
 
 
         </form>
+
+      </div>
     </div>
+  </div>
 </div>

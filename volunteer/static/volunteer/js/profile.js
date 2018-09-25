@@ -15,6 +15,21 @@ $( document ).ready(function() {
        }
     }
 
+    function readURL(input) {
+
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('#upload-image').attr('src', e.target.result);
+          $('#upload-image').removeClass('d-none');
+
+        }
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
 
     function InfoEventFilter(){
         var category_id = $('option:selected', '#event-type').attr('type_id');
@@ -759,7 +774,6 @@ $(document).on('click', '.news', function(){
                 console.log(error)
             }
            })
-
     })
 
     $(document).on('click', '.cancel-task', function(){
@@ -784,6 +798,11 @@ $(document).on('click', '.news', function(){
 
                  }
             })
+    })
+
+
+    $(document).on('click', '.open-register', function(){
+        $('#registration').modal('show')
     })
 
 
