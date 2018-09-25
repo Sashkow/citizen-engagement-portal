@@ -776,29 +776,29 @@ $(document).on('click', '.news', function(){
            })
     })
 
-    $(document).on('click', '.cancel-task', function(){
-            var url = $(this).attr('post_url');
-            var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
-            var data = {};
-            data['csrfmiddlewaretoken'] = csrf_token;
-            console.log($('.cancel-task[post_url = "' + url + '"]'))
-
-            $.ajax({
-
-                 url: url,
-                 type :'POST',
-                 data:data,
-                 cache:true,
-                 success: function(data){
-                     console.log('OK');
-                      $('.cancel-task[post_url = "' + url + '"]').remove();
-                     },
-                 error: function(){
-                    console.log('error');
-
-                 }
-            })
-    })
+//    $(document).on('click', '.cancel-task', function(){
+//            var url = $(this).attr('post_url');
+//            var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+//            var data = {};
+//            data['csrfmiddlewaretoken'] = csrf_token;
+//            console.log($('.cancel-task[post_url = "' + url + '"]'))
+//
+//            $.ajax({
+//
+//                 url: $('#registration').modal('show'),
+//                 type :'POST',
+//                 data:data,
+//                 cache:true,
+//                 success: function(data){
+//                     console.log('OK');
+//                      $('.cancel-task[post_url = "' + url + '"]').remove();
+//                     },
+//                 error: function(){
+//                    console.log('error');
+//
+//                 }
+//            })
+//    })
 
 
     $(document).on('click', '.open-register', function(){
