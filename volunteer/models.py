@@ -20,6 +20,10 @@ from copy import deepcopy
 from djgeojson.fields import  PointField
 from geopy.geocoders import Nominatim
 
+from django.conf import settings
+
+from django.shortcuts import reverse
+
 
 
 
@@ -101,12 +105,6 @@ class City(models.Model):
     DEFAULT_CITY = 'Хмельницький'
 
     city = models.CharField(max_length=100)
-
-    def safe_get_city(self):
-        if self.city:
-            return self.city
-        else:
-            return City.DEFAULT_CITY
 
     def __str__(self):
         return self.city
@@ -198,12 +196,25 @@ class Event(models.Model):
     def get_events_type_marker_url(self):
         return self.events_type.marker_image.url
 
+    @property
+    def get_event_url(self):
+        return reverse('event', args=(self.id,))
+
 
     def save(self, *args, **kwargs):
         if self.address:
-            nom = Nominatim(user_agent="changer.in.ua")
-            point = nom.geocode(" ".join(["Україна", self.city.safe_get_city(), self.address]))
-            self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}
+            extent = settings.LEAFLET_CONFIG['SPATIAL_EXTENT']
+            view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
+            nom = Nominatim(user_agent="changer.in.ua", view_box=view_box, bounded=True)
+            # if self.city:
+            #     city = self.city.city
+            # else:
+            #     city = City.DEFAULT_CITY
+            point = nom.geocode(self.address)
+            if point:
+                self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}
+            else:
+                print('coordinates for address not found')
 
 
         is_new_event = False
@@ -270,14 +281,14 @@ def eventpresave(sender, **kwargs):
     if instance.pk:
         instance._old_date_event = deepcopy(Event.objects.get(pk = instance.pk).date_event)
         instance._old_status = deepcopy(Event.objects.get(pk = instance.pk).status)
-        print("pre_save")
+
 
 
 @receiver(post_save, sender=Event)
 def eventpostsave(sender, **kwargs):
     instance = kwargs['instance']
     if not kwargs['created']:
-        print(instance.date_event, instance._old_date_event)
+
         if instance.date_event != instance._old_date_event:
             notify_event_changes(instance, 'date_event', str(instance._old_date_event))
             print("date has changed!")
@@ -285,7 +296,6 @@ def eventpostsave(sender, **kwargs):
         if instance.status != instance._old_status:
             notify_event_changes(instance, 'status', str(instance._old_status))
             print("sttus has changed!")
-    print("post_save")
 
 
 class EventsOrgTask(models.Model):
@@ -473,20 +483,7 @@ class NotificaationType(models.Model):
     model_name = models.CharField(max_length = 100)
     image_field_name = models.CharField(max_length = 100)
 
-#def user_post_save(sender, instance, **kwargs):
-#
-#    if kwargs['created']:
-#        django_user = instance
-#        volunteer = User.objects.create(django_user_id=django_user)
-#
-#        if not volunteer.first_name:
-#            if django_user.first_name or django_user.last_name:
-#                volunteer.first_name = django_user.first_name
-#                volunteer.second_name = django_user.last_name
-#
-#        volunteer.save()
-#
-#models.signals.post_save.connect(user_post_save, sender=DjangoUser)
+
 
 
 

@@ -1,78 +1,24 @@
-{% extends "base.html" %}
 {% load static %}
 
 
-{% block container %}
+{% load leaflet_tags %}
+
+    {% leaflet_js %}
+    {% leaflet_css %}
+    <style>
+      .leaflet-container { height: 100%; }
+    </style>
+    <script type="text/javascript"></script>
 
 
-<div class="upload-image">
-
-</div>
-
-<input id="upload" value="Choose a file" accept="image/*" type="file">
-<button class="upload-result">Result</button>
-
-
-
-<script>
-$uploadCrop = $('.upload-image').croppie({
-    enableExif: true,
-    viewport: {
-        width: 156,
-        height: 176,
-    },
-    boundary: {
-        width: 200,
-        height: 300
-    }
-});
-
-function readFile(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('.upload-image').addClass('ready');
-            $uploadCrop.croppie('bind', {
-                url: e.target.result
-            }).then(function(){
-                console.log('jQuery bind complete');
-            });
-
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-    else {
-        swal("Sorry - you're browser doesn't support the FileReader API");
-    }
+function onEachFeature(feature, layer) {
+  var props = feature.properties;
+  if (!props.description){
+    props.description = "Немає опису";
+  }
+  var content = "<img width="300" src="${props.get_events_type_url}"/><h3><a class="event-name" get_url="${props.get_event_url}">${props.name}</a></h3><p>${props.description}</p>";
+  layer.bindPopup(content);
 }
 
 
-
-$('#upload').on('change', function(){
-
-  readFile(this);
-
-      $('.upload-result').on('click', function (ev) {
-        $uploadCrop.croppie('result', {
-            type: 'canvas',
-            size: 'original'
-        }).then(function (resp) {
-            console.log(resp);
-            var strImage = resp.replace(/^data:image\/[a-z]+;base64,/, "");
-            console.log(strImage)
-            var blob = b64toBlob(strImage, 'image/png');
-            var blobUrl = URL.createObjectURL(blob);
-            console.log(blobUrl);
-            console.log(typeof(blob));
-            $('#image').val(blob);
-            console.log( $('#image').val());
-            })
-        })
-
-})
-
-</script>
-
-{% endblock %}
+    </script>

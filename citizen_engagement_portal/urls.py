@@ -56,7 +56,7 @@ urlpatterns = [
 
     url(r'^canceledtask/(?P<id>\d+)$', volunteer_views.cancel_task, name = "cancel_task"),
 
-    url(r'^data.geojson$', GeoJSONLayerView.as_view( model=Event, properties=('name', 'description','events_type', 'get_events_type_url', 'get_events_type_marker_url', )), name='event_geo_data'),
+    url(r'^data.geojson$', GeoJSONLayerView.as_view( model=Event, properties=('name', 'description','events_type', 'get_events_type_url', 'get_events_type_marker_url', 'get_event_url')), name='event_geo_data'),
 
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
