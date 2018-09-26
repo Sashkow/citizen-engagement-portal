@@ -68,9 +68,7 @@ $( document ).ready(function() {
 
 
     $(document).on('click', '#open-reg-modal', function(){
-//        $(document).on('click', '#task-or-event', function(){
-//
-//        })
+
         $('#task-or-event').modal('show')
 
         $('.task-select').click(function(){
@@ -86,115 +84,6 @@ $( document ).ready(function() {
         })
     })
 
-//    $(document).on('click', '#open-reg-modal', function(){
-//
-//        $('#event_register').modal('show')
-//        var data = {}
-//         $('.btn-next').click(function(){
-//            var name = $('input[name="name"]').val()
-//            var type_event = $('option:selected', '#event_task').attr('type_id')
-//            var category = $('option:selected', '#category').attr('type_id')
-//            data.name = name;
-//            data.type=type_event;
-//            data.category=category;
-//            $('#event_register').modal('hide')
-//
-//            if($('option:selected', '#event_task').attr('type_id') == 'event'){
-//                $('#event_e_register').modal()
-//                $(document).on('change', '#event_status', function(){
-//                    if ($('option:selected', '#event_status').attr('status_id') == "1"){
-//                            $('.add-org-task').removeClass('d-none')
-//                            $('.more-tasks').removeClass('d-none')
-//                            $('.more-tasks').unbind().click(function(){
-//                                console.log('click')
-//                                 $('.task-info:first').clone().appendTo(".add-org-task")
-//
-//                            })
-//                            }
-//                        else{
-//                            console.log('in')
-//                             var add_element = $('.task-info:first').clone()
-//                            $('.add-org-task').empty()
-//                            $(add_element).appendTo('.add-org-task')
-//                            $('.add-org-task').addClass('d-none')
-//                            $('.more-tasks').addClass('d-none')
-//                        }
-//                    })
-//                $('#btn-done').unbind().click(function(){
-//                        if($('option:selected', '#event_status').attr('status_id')){data['status'] = $('option:selected', '#event_status').attr('status_id')}
-//                        if($('input[name="address"]').val()){data['address']= $('input[name="address"]').val()}
-//                        if($('input[name="date"]').val()){data.date = $('input[name="date"]').val()}
-//                        if($('input[name="from"]').val()){data.from = $('input[name="from"]').val()}
-//                        if($('input[name="to"]').val()){data.to = $('input[name="tp"]').val()}
-//                        if($('input[name="points_quant"]').val()){data.points_quant = $('input[name="points_quant"]').val()}
-//                        if($('input[name="user_email"]').val()){data.email = $('input[name="user_email"]').val()}
-//                        if($('#description_e').val()){data.description_e = $('#description_e').val()}
-//                        if($('option:selected', '#event_status').attr('status_id') == '1'){
-//                            arr = []
-//                            numb = 0
-//                            $('.task-info').each(function(index){
-//                                dict = {}
-//                                name_task = $(this).find( 'input.name_task' ).val()
-//                                point_task = $(this).find( 'input.point_task' ).val()
-//                                descr_task = $(this).find( '.descr_task' ).val()
-//                                dict.name_task = name_task
-//                                dict.point_task = point_task
-//                                dict.descr_task = descr_task
-//                                arr.push(dict)
-//                                numb = numb+1
-//                            })
-//                            data['task_arr'] = arr
-//                            data['numb'] = numb
-//                        }
-//                        var url = $('#event_e_register').attr('post_url')
-//                        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
-//                        data['csrfmiddlewaretoken'] = csrf_token;
-//                        console.log(data)
-//                        $.ajax({
-//                             url: url,
-//                             type :'POST',
-//                             data:data,
-//                             cache:true,
-//                             success: function(data){
-//                             console.log('OK')
-//                             $('#event_e_register').modal('hide')
-//
-//                             },
-//                             error: function(){
-//                             console.log('error')
-//                             }
-//                         })
-//                })
-//            }else{
-//                $('#task_register').modal()
-//                console.log('alalal')
-//                $('.btn-done').unbind().click(function(){
-//                if($('input[name="t_points_quant"]').val()){data.points_quant = $('input[name="t_points_quant"]').val()}
-//                    console.log($('input[name="t_points_quant"]').val())
-//                    if($('input[name="user_email"]').val()){data.email = $('input[name="t_user_email"]').val()}
-//                    if($('#description').val()){data.description_e = $('#description').val()}
-//                    var url = $('#event_e_register').attr('post_url')
-//                        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
-//                        data['csrfmiddlewaretoken'] = csrf_token;
-//                        console.log(data)
-//                        $.ajax({
-//                             url: url,
-//                             type :'POST',
-//                             data:data,
-//                             cache:true,
-//                             success: function(data){
-//                             console.log('OK')
-//                             $('#task_register').modal('hide')
-//
-//                             },
-//                             error: function(){
-//                             console.log('error')
-//                             }
-//                         })
-//                })
-//            }
-//        })
-//     })
 
 
      console.log( "ready!" );
@@ -829,7 +718,18 @@ $(document).on('click', '.news', function(){
         $('#login').modal('show')
     })
 
-    login
+    $('.show-map').mouseenter(function(){
+
+        $('.map-contailer').css('z-index', 800);
+
+    })
+
+    $('.map-contailer').mouseleave(function(){
+
+        $('.map-contailer').css('z-index', -1);
+
+
+    })
 
 
     });

@@ -1,4 +1,7 @@
 {% load static %}
+{% load leaflet_tags %}
+{% leaflet_js %}
+{% leaflet_css %}
 
             <div class="row text-center align-items-center event-navigation">
                 <div class="col-md-3">
@@ -30,15 +33,17 @@
                                 <option status_id = "{{status.id}}" >{{status.status}}</option>
                             {% endfor %}
                         </select>
+                            <div class="map-contailer">
+                                {% leaflet_map "not_main" %}
+                            </div>
                 </div>
                 </div>
                 <div class="col-md-3">
                         <input class="select search" type="text" >
                 </div>
                 <div class="col-md-2">
-                    <a href="{% url 'map' %}">
-                         <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
-                    </a>
+                         <img class="align-self-center float-left nav-add show-map" src="{% static 'volunteer/images/map.png' %}">
+
                     <a href="{% url 'fullcalendar' %}">
                         <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">
                     </a>

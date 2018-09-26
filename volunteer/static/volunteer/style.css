@@ -744,3 +744,15 @@ img.unlocked-achievement{
     margin-top: 5vh;
 }
 
+.map-contailer{
+    position: absolute;
+    height: 50vh;
+    width: 48vw;
+    left: -7vw;
+    top: 5vh;
+    z-index:-1;
+}
+
+#not_main{
+    height: 100%;
+}

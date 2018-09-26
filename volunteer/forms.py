@@ -43,7 +43,7 @@ class EditeEventForm(ModelForm):
             'address': 'Адреса',
             'status': 'Статус',
             'max_part' : 'Максимальна кількість учасників',
-            'min_part': 'Мінімальнв кількість учасників',
+            'min_part': 'Мінімальна кількість учасників',
             'description': 'Опис',
         }
         widgets = {

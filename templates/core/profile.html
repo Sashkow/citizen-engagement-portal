@@ -2,6 +2,9 @@
 {% load static %}
 {% load volunteer_extras %}
 {% load static notifications_tags %}
+{% load leaflet_tags %}
+
+
 
 {% block jscripts %}
     <script src="{% static 'volunteer/js/profile.js' %}"></script>
@@ -9,6 +12,10 @@
     <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
     <script src="{% static 'volunteer/js/live-test.js' %}" type="text/javascript"></script>
     <script src="{% static 'volunteer/js/profileedit.js' %}"></script>
+
+    {% leaflet_js %}
+    {% leaflet_css %}
+
     <style>
         p.ribbon{
             color: {{volunteer.league.color_league_txt}};
@@ -39,9 +46,64 @@
 
         div.current-menu-item p.item-menu{
             color: {{volunteer.league.color_current_text}}!important;
+
+        .leaflet-container {
+                height:100%!important;
+                             }
         }
 
     </style>
+
+       <script type="text/javascript">
+
+
+            function onEachFeature(feature, layer) {
+              var props = feature.properties;
+              if (!props.description){
+                props.description = "Немає опису";
+              }
+              var content = `<img width="300" src="${props.get_events_type_url}"/><h3><a class="event-name" get_url="${props.get_event_url}">${props.name}</a></h3><p>${props.description}</p>`;
+              layer.bindPopup(content);
+            }
+
+
+            function pointToLayer(feature, latlng) {
+              var EventIcon = L.Icon.extend({
+                options: {
+                  // shadowUrl:    '/static/img/shadow.png',
+                  iconSize:   [50, 58],
+                  iconAnchor:   [30, 55],
+                  popupAnchor:  [0, 0],
+                  shadowSize:   [50, 58],
+                  shadowAnchor: [15, 55],
+                }
+              });
+              var event_icon = new EventIcon({iconUrl: feature.properties.get_events_type_marker_url});
+              return L.marker(latlng, {icon: event_icon});
+            }
+
+
+            var dataurl = '{% url "event_geo_data" %}';
+
+
+            window.addEventListener("map:init", function (event) {
+              var map = event.detail.map;
+              map.invalidateSize()
+              console.log('here');
+              console.log(map);
+              fetch(dataurl)
+                .then(function(resp) {
+                  return resp.json();
+                })
+                .then(function(data) {
+                  L.geoJSON(data, {
+                    onEachFeature: onEachFeature,
+                    pointToLayer: pointToLayer
+                  }).addTo(map);
+              });
+            });
+
+    </script>
 {% endblock %}
 
 {{achieve_quant|divide:league_user.quantity_achievement|to_int}}
@@ -181,13 +243,6 @@
             </div>
 
         {% include 'modal_event_register.html' %}
-    <svg  width="0" height="0">
-	    <defs>
-	        <clipPath id="svgPath">
-	            <path transform="scale(1.5)" fill="#FFFFFF" stroke="#000000" stroke-width="1.5794" stroke-miterlimit="10" d="m 1.5771027,1.6517761 0,55.8294389 c 0,0 2.009798,14.041225 11.7386873,22.695515 8.444108,7.511418 28.319723,13.893271 28.319723,13.893271 0,0 19.585789,-6.785685 27.542412,-13.118135 9.678786,-7.70307 11.569738,-23.470651 11.569738,-23.470651 l 0,-55.8294389 z"/>
-	        </clipPath>
-	    </defs>
-	</svg>
 
 {% endblock %}
 

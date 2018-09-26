@@ -622,17 +622,7 @@ def notifications(request):
     return_dict = {'html': html}
     return JsonResponse(return_dict)
 
-@login_required
-def map_show(request):
-    return_dict = {}
-    cont = {
-      'request':request
-    }
-    html = render_to_string('map.html', cont)
-    return_dict = {'html': html}
-    return JsonResponse(return_dict)
 
-    return render(request, 'map.html')
 
 
 
