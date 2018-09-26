@@ -83,7 +83,9 @@ def make_notification(request):
 
 def mark_all_as_read(request):
     user = request.user
-    user.notifications.mark_all_as_read()
+    user.notifications.mark_all_as_unread()
+    # return redirect(reverse('notifications'))
+
 
 
 events_per_page = 6
@@ -584,13 +586,17 @@ def change_org_task(request, id):
 
 @login_required
 def notifications(request):
-    unread = request.user.notifications.unread()
-    for notification in unread:
+    unread_read = list(request.user.notifications.unread()) + list(request.user.notifications.read())
+
+    for notification in unread_read:
         # from notification_helpers.py
 
         notification.description = notification_description(notification)
         notification.image = notification_image(notification)
         notification.title = notification_title(notification)
+
+        notification.is_unread = notification.unread
+
 
         naive = notification.timestamp.replace(tzinfo=None)
         delta = datetime.now() - naive
@@ -601,9 +607,11 @@ def notifications(request):
         relative_time = relative_time + " тому"
         notification.relative_time = relative_time
 
+    request.user.notifications.mark_all_as_read()
+
     cont = {
         'request': request,
-        'unread': unread,
+        'unread_read': unread_read,
 
     }
     html = render_to_string('notification.html', cont)

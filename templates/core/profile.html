@@ -2,6 +2,7 @@
 {% load static %}
 {% load volunteer_extras %}
 {% load static notifications_tags %}
+{% load notifications_tags %}
 
 {% block jscripts %}
     <script src="{% static 'volunteer/js/profile.js' %}"></script>
@@ -164,7 +165,7 @@
                 <div class="row profile-menu-item text-left justify-content-md-center">
                     <div class="col-md-8">
                         <!--<a href="{% url 'notifications' %}" <p  class="item-menu"  >сповіщення</p>-->
-                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}"  >сповіщення</p>
+                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}">сповіщення {% notifications_unread %}</p>
                     </div>
                 </div>
 
