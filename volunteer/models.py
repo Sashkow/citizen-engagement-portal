@@ -244,13 +244,15 @@ class Event(models.Model):
                 else:
                     calendar = Calendar.objects.create(name=calendar_name, slug=calendar_slug)
 
+
                 data = {
                     'title': self.name,
                     'start': self.date_event,
                     'end': datetime.datetime(self.date_event.year, self.date_event.month, self.date_event.day, 23, 59),
                     # 'end_recurring_period': datetime.datetime(today.year + 30, 6, 1, 0, 0),
                     # 'rule': rule,
-                    'calendar': calendar
+                    'calendar': calendar,
+                    'color_event': self.events_type.color_event,
                 }
 
                 new_calendar_event = CalendarEvent.objects.create(**data)

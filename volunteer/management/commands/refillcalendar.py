@@ -37,8 +37,9 @@ class Command(BaseCommand):
                     'end': datetime.datetime(event.date_event.year,event.date_event.month, event.date_event.day, 23, 59),
                     # 'end_recurring_period': datetime.datetime(today.year + 30, 6, 1, 0, 0),
                     # 'rule': rule,
-                    'calendar': calendar
+                    'calendar': calendar,
+                    'color_event': event.events_type.color_event
                 }
-                CalendarEvent.objects.create(**data)
+                new_event = CalendarEvent.objects.create(**data)
                 # calendar_event.save()
                 print(i, event)
