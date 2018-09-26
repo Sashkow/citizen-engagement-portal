@@ -9,7 +9,7 @@ from django.forms.widgets import HiddenInput
 class NewEventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'events_or_task', 'events_type', 'date_event', 'address', 'status',  'description', 'max_part', 'min_part', 'recommended_points', 'contact']
+        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event', 'address', 'status',  'description', 'max_part', 'min_part', 'recommended_points', 'contact']
         labels = {
             'name': 'Назва',
             'date_event': 'Дата та час',
@@ -18,12 +18,15 @@ class NewEventForm(ModelForm):
             'status': 'Статус',
             'max_part': 'Мінімальна кількість учасників',
             'min_part': 'Максимальна кількість учасників',
-            'recommended_points': 'Рекомендована кількість болів',
+            'recommended_points': 'Рекомендована кількість балів',
             'contact':'Ваш контаактний e-mail',
+            'events_type':'Категорія'
         }
         widgets = {
             'date_event': SelectDateWidget(),
         }
+
+
 
 
 
@@ -40,7 +43,7 @@ class EditeEventForm(ModelForm):
             'address': 'Адреса',
             'status': 'Статус',
             'max_part' : 'Максимальна кількість учасників',
-            'min_part': 'Мінімальнв кількість учасників',
+            'min_part': 'Мінімальна кількість учасників',
             'description': 'Опис',
         }
         widgets = {

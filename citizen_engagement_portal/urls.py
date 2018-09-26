@@ -41,8 +41,9 @@ urlpatterns = [
     url(r'^profile/$', volunteer_views.profile, name='profile'),
     url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
 
-    url(r'^event/(?P<id>\w+)/', volunteer_views.event, name='event'),
+    url(r'^event/(?P<id>\w+)/', volunteer_views.event, name='volunteer_event'),
     url(r'^newevent/$', volunteer_views.new_event, name='newevent'),
+    url(r'^follow/$', volunteer_views.follow_event, name='follow_event'),
     url(r'^follow/$', volunteer_views.follow_event, name='follow_event'),
     url(r'^subscribe/$', volunteer_views.subscribe_event, name='subscribe_event'),
     url(r'^typefilter/$', volunteer_views.type_filter, name='type_filter'),
@@ -57,7 +58,6 @@ urlpatterns = [
 
     url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login'),
     url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
-    url(r'^map/$', volunteer_views.map_show, name = "map"),
 
     url(r'^canceledtask/(?P<id>\d+)$', volunteer_views.cancel_task, name = "cancel_task"),
 

@@ -10,4 +10,27 @@ function mark_all_as_read() {
     var r = new XMLHttpRequest();
     r.open("GET", '/mark_all_as_read/', true);
     r.send();
+
+    data = {}
+    console.log('notnotnot')
+    var url = '/notifications/'
+    $.ajax({
+     url: url,
+     type :'GET',
+     data:data,
+     cache:true,
+     success: function(data){
+         console.log('OK');
+            $(".dynamic-block").empty()
+            $(".dynamic-block").html(data.html)
+         },
+     error: function(){
+        console.log('error')
+     }
+     })
+
+
+
 }
+
+
