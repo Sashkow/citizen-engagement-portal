@@ -24,6 +24,9 @@ from django.conf import settings
 
 from django.shortcuts import reverse
 
+from schedule.models import Event as CalendarEvent
+from schedule.models import Calendar
+
 
 
 
@@ -88,6 +91,7 @@ class EventsType(models.Model):
     type = models.CharField(max_length=80)
     image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements',), null=True, blank=True)
     marker_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'markers',), null=True, blank=True)
+    color_event = models.CharField(blank=True, max_length=10)
 
     def __str__(self):
         return self.type
@@ -97,6 +101,7 @@ class Status(models.Model):
     frontend_value = models.CharField(max_length=80, null=True, blank=True)
     color_background = models.CharField(max_length = 13, null=True, blank=True)
     image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'status',), null=True, blank=True)
+
 
     def __str__(self):
         return self.status
@@ -187,6 +192,7 @@ class Event(models.Model):
     publication_date = models.DateField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
     geom = PointField(null=True, blank=True)
+    calendar_event = models.ForeignKey(CalendarEvent, on_delete=models.SET_NULL, null=True, blank=True)
 
     @property
     def get_events_type_url(self):
@@ -226,6 +232,32 @@ class Event(models.Model):
             old_type = old_instance.events_type.id
             currency = Currency.objects.get(type_event__id=old_type)
 
+            # calendar part
+            if self.calendar_event:
+                self.calendar_event.delete()
+
+            if self.date_event:
+                calendar_name = 'volunteer_calendar'
+                calendar_slug = 'volunteer_calendar_slug'
+                if Calendar.objects.filter(name=calendar_name).exists():
+                    calendar = Calendar.objects.get(name=calendar_name)
+                else:
+                    calendar = Calendar.objects.create(name=calendar_name, slug=calendar_slug)
+
+
+                data = {
+                    'title': self.name,
+                    'start': self.date_event,
+                    'end': datetime.datetime(self.date_event.year, self.date_event.month, self.date_event.day, 23, 59),
+                    # 'end_recurring_period': datetime.datetime(today.year + 30, 6, 1, 0, 0),
+                    # 'rule': rule,
+                    'calendar': calendar,
+                    'color_event': self.events_type.color_event,
+                }
+
+                new_calendar_event = CalendarEvent.objects.create(**data)
+                self.calendar_event = new_calendar_event
+            # end calendar_part
 
         super(Event, self).save(*args, **kwargs)
 
@@ -254,6 +286,10 @@ class Event(models.Model):
                 user_points.save()
 
             print('It is victory!')
+
+
+
+
 
 
 
@@ -482,6 +518,22 @@ class NotificaationType(models.Model):
     template = models.TextField(null=True, blank=True)
     model_name = models.CharField(max_length = 100)
     image_field_name = models.CharField(max_length = 100)
+
+
+def user_post_save(sender, instance, **kwargs):
+
+    if kwargs['created']:
+        django_user = instance
+        volunteer = User.objects.create(django_user_id=django_user)
+
+        if not volunteer.first_name:
+            if django_user.first_name or django_user.last_name:
+                volunteer.first_name = django_user.first_name
+                volunteer.second_name = django_user.last_name
+
+        volunteer.save()
+
+models.signals.post_save.connect(user_post_save, sender=DjangoUser)
 
 
 

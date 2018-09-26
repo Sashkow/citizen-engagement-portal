@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 
-{% block content %}
-  <h2>Signup</h2>
+{% block container %}
+  <h2>Реєстрація</h2>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Signup</button>
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit">Зареєструватися</button>
   </form>
-  <br>
-  <p><strong>-- OR --</strong></p>
-  <a href="{% url 'social:begin' 'github' %}">Signup with GitHub</a><br>
-  <a href="{% url 'social:begin' 'twitter' %}">Signup with Twitter</a><br>
-  <a href="{% url 'social:begin' 'facebook' %}">Signup with Facebook</a>
 {% endblock %}
