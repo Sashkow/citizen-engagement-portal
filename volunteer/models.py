@@ -219,7 +219,7 @@ class Event(models.Model):
 
     @property
     def get_event_url(self):
-        return reverse('event', args=(self.id,))
+        return reverse('volunteer_event', args=(self.id,))
 
 
     def save(self, *args, **kwargs):
