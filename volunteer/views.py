@@ -21,7 +21,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max
-from .forms import EditeEventForm, EventOrgTaskForm, UserForm
+from .forms import EditeEventForm, EventOrgTaskForm, UserForm, NewEventForm
 import datetime
 from django.contrib.auth.models import User as DjangoUser
 from volunteer.models import User as VolunteerUser
@@ -166,7 +166,7 @@ def profile(request):
         img = Currency.objects.get(type_event = type_e.id).image.url
         curr_category[type_e.id] = img
 
-
+    form = NewEventForm()
     return render(request, 'core/profile.html', {'volunteer':volunteer,
                                                  'league_user':league_user,
                                                  'name':name,
@@ -185,7 +185,8 @@ def profile(request):
                                                  'user_points':user_points,
                                                  'max_points': max_user_point['quantity__max'],
                                                  'curr_category':curr_category,
-                                                 'status_events': status_events
+                                                 'status_events': status_events,
+                                                 'form': form
     })
 
 @login_required
@@ -237,62 +238,74 @@ def event(request, id):
 
 @login_required
 def new_event(request):
-
-    data = request.POST
-    models_field = {
-        'name': check_key_in_dict('name', data),
-        'organizer': User.objects.get_or_create(django_user_id = request.user)[0],
-        'events_type': EventsType.objects.get(id = check_key_in_dict_int('category', data)),
-        'address': check_key_in_dict('address', data),
-        'max_part': check_key_in_dict_int('from', data),
-        'min_part': check_key_in_dict_int('to', data),
-        'recommended_points':check_key_in_dict_int('points_quant', data),
-        'contact': check_key_in_dict('email', data),
-        'description': check_key_in_dict('description_e', data)
-    }
-
-
-
-    date = check_key_in_dict('date', data)
-
-    if date != None:
-        date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
-        models_field['date_event'] = date
-
-    status = check_key_in_dict_int('status', data)
-    if status != None:
-        status_i = Status.objects.get(id = check_key_in_dict_int('status', data))
-        models_field['status'] = status_i
-    else:
-        status_i = Status.objects.get(id = 1)
-        models_field['status'] = status_i
-
-    events_or_task = True if check_key_in_dict('type', data) == 'event' else False
-    models_field['events_or_task'] = events_or_task
-    print (models_field)
-    Event.objects.create(**models_field)
-
-    if status == 1:
-        nmb = check_key_in_dict_int('numb', data)
-        for i in range(nmb):
-            str_name = 'task_arr['+str(i)+'][name_task]'
-            str_points = 'task_arr['+str(i)+'][point_task]'
-            str_descr = 'task_arr['+str(i)+'][descr_task]'
-
-            name_task = request.POST.get(str_name)
-            points_task = int(request.POST.get(str_points))
-            descr_task = request.POST.get(str_descr)
-
-            EventsOrgTask.objects.create(
-                event = Event.objects.get(id = new_event_v.id),
-                task_name = name_task,
-                task_description = descr_task,
-                recommended_points = points_task
-
-            )
-        print(nmb)
-    return_dict  ={}
-    return JsonResponse(return_dict)
+    if request.method == 'POST':
+        django_user = request.user
+        current_user = User.objects.get(django_user_id=django_user)
+        updated_data = request.POST.copy()
+        print (updated_data)
+        updated_data.update({'organizer': current_user.id})
+        form = NewEventForm(data = updated_data)
+        print(form)
+    if form.is_valid():
+        print ('hoy')
+        form.save()
+        redirect_url = reverse('profile')
+        return redirect(redirect_url)
+    # data = request.POST
+    # models_field = {
+    #     'name': check_key_in_dict('name', data),
+    #     'organizer': User.objects.get_or_create(django_user_id = request.user)[0],
+    #     'events_type': EventsType.objects.get(id = check_key_in_dict_int('category', data)),
+    #     'address': check_key_in_dict('address', data),
+    #     'max_part': check_key_in_dict_int('from', data),
+    #     'min_part': check_key_in_dict_int('to', data),
+    #     'recommended_points':check_key_in_dict_int('points_quant', data),
+    #     'contact': check_key_in_dict('email', data),
+    #     'description': check_key_in_dict('description_e', data)
+    # }
+    #
+    #
+    #
+    # date = check_key_in_dict('date', data)
+    #
+    # if date != None:
+    #     date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+    #     models_field['date_event'] = date
+    #
+    # status = check_key_in_dict_int('status', data)
+    # if status != None:
+    #     status_i = Status.objects.get(id = check_key_in_dict_int('status', data))
+    #     models_field['status'] = status_i
+    # else:
+    #     status_i = Status.objects.get(id = 1)
+    #     models_field['status'] = status_i
+    #
+    # events_or_task = True if check_key_in_dict('type', data) == 'event' else False
+    # models_field['events_or_task'] = events_or_task
+    # print (models_field)
+    # Event.objects.create(**models_field)
+    #
+    # if status == 1:
+    #     nmb = check_key_in_dict_int('numb', data)
+    #     for i in range(nmb):
+    #         str_name = 'task_arr['+str(i)+'][name_task]'
+    #         str_points = 'task_arr['+str(i)+'][point_task]'
+    #         str_descr = 'task_arr['+str(i)+'][descr_task]'
+    #
+    #         name_task = request.POST.get(str_name)
+    #         points_task = int(request.POST.get(str_points))
+    #         descr_task = request.POST.get(str_descr)
+    #
+    #         EventsOrgTask.objects.create(
+    #             event = Event.objects.get(id = new_event_v.id),
+    #             task_name = name_task,
+    #             task_description = descr_task,
+    #             recommended_points = points_task
+    #
+    #         )
+    #     print(nmb)
+    # return_dict  ={}
+    # return JsonResponse(return_dict)
 
 
 @login_required
@@ -366,7 +379,6 @@ def type_filter(request):
 
 
 def profile_edit(request):
-    print(request)
     django_user = request.user
     current_user = User.objects.get(django_user_id=django_user)
     form = UserForm(request.POST or None, instance=current_user)
@@ -618,9 +630,7 @@ def notifications(request):
     return_dict = {'html': html}
     return JsonResponse(return_dict)
 
-@login_required
-def map_show(request):
-    return render(request, 'map.html')
+
 
 
 
