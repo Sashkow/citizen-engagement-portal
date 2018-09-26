@@ -736,8 +736,11 @@ img.unlocked-achievement{
     margin-right: 2vw;
     margin-left: 3vw;
 }
-
+.task-or-event-images{
+    cursor:pointer;
+}
 .text-describe{
     padding: 0 3vw;
     margin-top: 5vh;
 }
+

@@ -128,6 +128,9 @@
     </div>
 
 
+
+<!--Modal init-->
+
 <div class="modal fade" id="task-or-event" tabindex="-1" role="dialog" aria-labelledby="taskoreventLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -137,8 +140,8 @@
       <div class="modal-body">
 
        <div class="text-center">
-            <img class="task-or-event-images" src="{% static 'volunteer/images/event.png' %}">
-            <img class="task-or-event-images" src="{% static 'volunteer/images/task.png' %}">
+            <img class="task-or-event-images event-select" src="{% static 'volunteer/images/event.png' %}">
+            <img class="task-or-event-images task-select" src="{% static 'volunteer/images/task.png' %}">
        </div>
 
         <div>
@@ -153,5 +156,124 @@
   </div>
 </div>
 
+<!--End of modal init-->
 
 
+<!--Modal task-->
+<form action="{% url 'newevent'%}" method="post">
+     <div class="modal fade" id="event_register_main" tabindex="-1" role="dialog" aria-labelledby="event_register_modal" aria-hidden="true">
+      <div class="modal-dialog " role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="event_register_main_modal">Зареєструвати подію</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                {% csrf_token %}
+
+                {{form.name.errors}}
+                {{ form.name.label_tag }}<br>
+                {{form.name}}<br>
+
+                {{form.events_type.errors}}
+                {{ form.events_type.label_tag }}<br>
+                {{form.events_type}}<br>
+
+                {{form.status.errors}}
+                {{ form.status.label_tag }}<br>
+                {{form.status}}<br>
+
+                {{form.date_event.errors}}
+                {{ form.date_event.label_tag }}<br>
+                {{form.date_event}}<br>
+
+                {{form.address.errors}}
+                {{ form.address.label_tag }}<br>
+                {{form.address}}<br>
+
+                {{form.max_part.errors}}
+                {{ form.max_part.label_tag }}<br>
+                {{form.max_part}}<br>
+
+                {{form.min_part.errors}}
+                {{ form.min_part.label_tag }}<br>
+                {{form.min_part}}<br>
+
+                {{form.recommended_points.errors}}
+                {{ form.recommended_points.label_tag }}<br>
+                {{form.recommended_points}}<br>
+
+                {{form.contsact.errors}}
+                {{ form.contact.label_tag }}<br>
+                {{form.contact}}<br>
+
+
+                {{form.description.errors}}
+                {{ form.description.label_tag }}<br>
+                {{form.description}}<br>
+
+                {{form.events_or_task}}
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn" >Далі</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+
+<!--End Modal task-->
+
+
+<!--Modal event-->
+    <form action="{% url 'newevent'%}" method="post">
+         <div class="modal fade" id="task_register_main" tabindex="-1" role="dialog" aria-labelledby="task_register_main_modal" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="task_register_main_modal">Зареєструвати завдання</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                    {% csrf_token %}
+
+                    {{form.name.errors}}
+                    {{ form.name.label_tag }}<br>
+                    {{form.name}}<br>
+
+                    {{form.events_type.errors}}
+                    {{ form.events_type.label_tag }}<br>
+                    {{form.events_type}}<br>
+
+                    {{form.recommended_points.errors}}
+                    {{ form.recommended_points.label_tag }}<br>
+                    {{form.recommended_points}}<br>
+                    <!--<label for="{{ form.photo.id_for_label}}"> Фото </label>-->
+
+                    {{form.contsact.errors}}
+                    {{ form.contact.label_tag }}<br>
+                    {{form.contact}}<br>
+
+                    {{form.description.errors}}
+                    {{ form.description.label_tag }}<br>
+                    {{form.description}}<br>
+
+                    {{form.events_or_task}}
+                    {{form.status}}
+
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn" >Далі</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+
+<!--End Modal task-->
