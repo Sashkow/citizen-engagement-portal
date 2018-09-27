@@ -96,6 +96,15 @@ def notify_event_needs_help(event_instance):
         data={'type': '2'},  # Подія потребує допомоги в підготовці
     )
 
+def notify_good_job(sender,recipient,event_instance, currency_quantity, currency_type):
+    notify.send(
+        sender,
+        recipient=recipient,
+        verb="good_job",
+        target=event_instance,
+        # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+        data={'type': '4','currency_quantity':currency_quantity, 'currency_type':currency_type},  # Подія потребує допомоги в підготовці
+    )
 
 
 # class NotificationType(models.Model):
@@ -181,6 +190,20 @@ class User(models.Model):
                     type=type_e
                 )
 
+            #Вітаємо в команді волонтерів!	За якими подіями ти бажаєш стежити? Відредагуй свій профіль.
+            sender = self.django_user_id
+            recipient = self.django_user_id
+
+            notify.send(
+                sender,
+                recipient=recipient,
+                verb="needs_help",
+                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+                data={'type': '3'},  # Вітаємо в команді волонтерів!
+            )
+
+
     def __str__(self):
         return '%s %s %s' % (self.first_name, '|', self.last_name)
 
@@ -223,6 +246,7 @@ class Event(models.Model):
 
 
     def save(self, *args, **kwargs):
+        print("stoppp")
         if self.address:
             extent = settings.LEAFLET_CONFIG['SPATIAL_EXTENT']
             view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
@@ -254,8 +278,8 @@ class Event(models.Model):
             if self.date_event:
                 calendar_name = 'volunteer_calendar'
                 calendar_slug = 'volunteer_calendar_slug'
-                if Calendar.objects.filter(name=calendar_name).exists():
-                    calendar = Calendar.objects.get(name=calendar_name)
+                if Calendar.objects.filter(name=calendar_name, slug='volunteer_calendar_slug').exists():
+                    calendar = Calendar.objects.filter(name=calendar_name, slug='volunteer_calendar_slug')[0]
                 else:
                     calendar = Calendar.objects.create(name=calendar_name, slug=calendar_slug)
 
@@ -287,12 +311,22 @@ class Event(models.Model):
                 user_points.quantity +=  self.recommended_points
                 user_points.save()
 
+                notify_good_job(sender=self.organizer.django_user_id,
+                                recipient=user.django_user_id,
+                                event_instance=self,
+                                currency_quantity=self.recommended_points,
+                                currency_type=currency.currency)
+
+
+
+
             if len(part_user)>=3 and self.events_or_task == True:
                 points_list = PointsList.objects.create(user = self.organizer, currency = currency, points_quantity = self.recommended_points)
                 IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=2, event_id=self.id)
                 user_points = UserPoint.objects.get(user=self.organizer, currency=currency)
                 user_points.quantity += 30
                 user_points.save()
+
             elif self.events_or_task == False:
                 points_list = PointsList.objects.create(user=self.organizer, currency=currency,points_quantity=self.recommended_points)
                 IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=2, event_id=self.id)
