@@ -119,6 +119,13 @@ $( document ).ready(function() {
     });
 
 
+    $(document).on('click', ".btn-app-task", function() {
+        $('#task_applicate').modal('show')
+        console.log($(this).attr('id_event'))
+        $('#task_applicate').find('#id_event').val($(this).attr('id_event')).addClass('d-none')
+    });
+
+
     $(document).on('click', '.btn-refollow', function() {
     var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
             var data = {};
@@ -735,4 +742,52 @@ $(document).on('click', '.news', function(){
     });
 
 
+    $(document).on('click', '.get-executers-form', function(){
+        var data = {}
+        var url = $(this).attr('get_url');
+        var event_id = $(this).attr('event_id');
+        data.event_id= event_id;
+         $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                    $(".dynamic-block").append(data.html);
+                    $('#modal_executor').modal('show');
+                 },
+             error: function(){
+                console.log('error')
+             }
+             })
 
+    })
+
+
+
+    $(document).on('click', '.select-executor', function(){
+
+        var user_id = $('input[name = "execute"]:checked').val()
+        var event_id = $(this).attr('event_id')
+        var url = $(this).attr('post_url');
+        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+        var data = {};
+        data['csrfmiddlewaretoken'] = csrf_token;
+        data.user_id = user_id
+        data.event_id = event_id
+         $.ajax({
+             url: url,
+             type :'POST',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                 $('#modal_executor').modal('hide');
+                 $('.get-executers-form').remove();
+                 },
+             error: function(){
+                console.log('error')
+             }
+             })
+    })

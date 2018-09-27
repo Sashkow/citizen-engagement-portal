@@ -54,6 +54,8 @@ urlpatterns = [
     url(r'^refresh/digest/$', volunteer_views.refresh_digest, name='refresh_digest'),
     url(r'^changeorgtask/(?P<id>\d+)/', volunteer_views.change_org_task, name='changetask'),
     url(r'^changephoto/', volunteer_views.change_photo, name='changephoto'),
+    url(r'^app/task/', volunteer_views.app_task, name='app_task'),
+    url(r'^task/executor', volunteer_views.task_executor, name='task_executor'),
 
     url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login'),
     url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
@@ -61,9 +63,7 @@ urlpatterns = [
     url(r'^canceledtask/(?P<id>\d+)$', volunteer_views.cancel_task, name = "cancel_task"),
 
     url(r'^data.geojson$', GeoJSONLayerView.as_view( model=Event, properties=('name', 'description','events_type', 'get_events_type_url', 'get_events_type_marker_url', 'get_event_url')), name='event_geo_data'),
-
     url(r'^fullcalendar/', login_required(TemplateView.as_view(template_name="fullcalendar.html")), name='fullcalendar'),
-
     url(r'^schedule/', include('schedule.urls')),
 
 
