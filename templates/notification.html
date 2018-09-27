@@ -3,7 +3,7 @@
 {% load static notifications_tags %}
 
 
-
+<button onclick='mark_all_as_read()'>Позначити усе як прочитане</button>
     {% for notification in unread %}
 <div class="row event-block">
 
@@ -17,8 +17,12 @@
             </div>
         </div>
         <div class="col-md-2 padding-0">
-            {{notification.relative_time}}
-
+            <p>{{notification.relative_time}}</p>
+            {% if notification.is_unread %}
+                <p>Непрочитане</p>
+            {% else %}
+                <p>Прочитане</p>
+            {% endif %}
 
         </div>
     </div>

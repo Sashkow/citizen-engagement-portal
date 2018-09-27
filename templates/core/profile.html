@@ -2,7 +2,11 @@
 {% load static %}
 {% load volunteer_extras %}
 {% load static notifications_tags %}
+
+{% load notifications_tags %}
+
 {% load leaflet_tags %}
+
 
 
 
@@ -62,7 +66,7 @@
               if (!props.description){
                 props.description = "Немає опису";
               }
-              var content = `<img width="300" src="${props.get_events_type_url}"/><h3><a class="event-name" get_url="${props.get_event_url}">${props.name}</a></h3><p>${props.description}</p>`;
+              var content = `<img width="100" src="${props.get_events_type_url}"/><h3><a class="event-name" get_url="${props.get_event_url}">${props.name}</a></h3><p>${props.description}</p>`;
               layer.bindPopup(content);
             }
 
@@ -226,7 +230,7 @@
                 <div class="row profile-menu-item text-left justify-content-md-center">
                     <div class="col-md-8">
                         <!--<a href="{% url 'notifications' %}" <p  class="item-menu"  >сповіщення</p>-->
-                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}"  >сповіщення</p>
+                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}">сповіщення {% notifications_unread %}</p>
                     </div>
                 </div>
 

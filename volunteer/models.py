@@ -83,6 +83,21 @@ def notify_event_changes(event_instance, event_field, old_value):
             data = {'type':'1', 'event_field':event_field, 'old_value' : old_value}, # Подію змінено
         )
 
+    #
+def notify_event_needs_help(event_instance):
+    sender = current_request().user
+    recipient = current_request().user
+    notify.send(
+        sender,
+        recipient=recipient,
+        verb="needs_help",
+        target=event_instance,
+        # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+        data={'type': '2'},  # Подія потребує допомоги в підготовці
+    )
+
+
+
 # class NotificationType(models.Model):
 #     type = models.CharField(max_length=80)
 
@@ -204,7 +219,7 @@ class Event(models.Model):
 
     @property
     def get_event_url(self):
-        return reverse('event', args=(self.id,))
+        return reverse('volunteer_event', args=(self.id,))
 
 
     def save(self, *args, **kwargs):
@@ -295,6 +310,13 @@ class Event(models.Model):
                 user_points.save()
 
             print('It is victory!')
+
+
+        if is_new_event and self.status.id == 1: # потребує допомоги в підготовці
+            notify_event_needs_help(self)
+
+
+
 
 
 

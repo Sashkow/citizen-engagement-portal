@@ -19,9 +19,9 @@ def get_notification_type(notification):
 
 
 def notification_description(notification):
-    notifiation_type = get_notification_type(notification)
-    if notifiation_type:
-        if notifiation_type.id == 1: #Подію змінено
+    notification_type = get_notification_type(notification)
+    if notification_type:
+        if notification_type.id == 1: #Подію змінено
             """{{властивість}} <a class="event-name" get_url="{{лінк}}">{{подія}}</a> змінено з {{було}} на {{стало}}"""
             event = notification.target
             property_name = event.__class__._meta.get_field(notification.data['event_field']).verbose_name.title()
@@ -32,14 +32,23 @@ def notification_description(notification):
             else:
                 was = '"не має"'
             became = str(getattr(event, notification.data['event_field']))
-            description = str(notifiation_type.template)
+            description = str(notification_type.template)
             description = description.replace('{{властивість}}',property_name)
             description = description.replace('{{лінк}}', event_url)
             description = description.replace('{{подія}}', event_name)
             description = description.replace('{{було}}', was)
             description = description.replace('{{стало}}', became)
             return description
-
+        elif notification_type.id == 2: # подія потребує допомоги
+            event = notification.target
+            event_url = reverse('volunteer_event', args=(event.id,))
+            event_url2 = reverse('form', args=(event.id,))
+            event_name = event.name
+            description = str(notification_type.template)
+            description = description.replace('{{лінк}}', event_url)
+            description = description.replace('{{лінк2}}', event_url2)
+            description = description.replace('{{подія}}', event_name)
+            return description
     else:
         print("unknown notification type")
         return "Невідома подія"
@@ -56,6 +65,10 @@ def notification_image(notification):
     notifiation_type = get_notification_type(notification)
     if notifiation_type:
         if notifiation_type.id == 1: # Подію змінено
+            image = notification.target.events_type.image.url
+            return image
+
+        if notifiation_type.id == 2: # подія потребує допомоги
             image = notification.target.events_type.image.url
             return image
 
