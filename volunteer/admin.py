@@ -176,6 +176,10 @@ class IncreasePointsInfoAdmin(admin.ModelAdmin):
     exclude = ['ID']
 admin.site.register(IncreasePointsInfo, IncreasePointsInfoAdmin)
 
+class TaskApplicationAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in TaskApplication._meta.fields]
+    exclude = ['ID']
+admin.site.register(TaskApplication, TaskApplicationAdmin)
 
 
 

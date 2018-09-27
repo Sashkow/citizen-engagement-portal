@@ -96,6 +96,15 @@ def notify_event_needs_help(event_instance):
         data={'type': '2'},  # Подія потребує допомоги в підготовці
     )
 
+def notify_good_job(sender,recipient,event_instance, currency_quantity, currency_type):
+    notify.send(
+        sender,
+        recipient=recipient,
+        verb="good_job",
+        target=event_instance,
+        # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+        data={'type': '4','currency_quantity':currency_quantity, 'currency_type':currency_type},  # Подія потребує допомоги в підготовці
+    )
 
 
 # class NotificationType(models.Model):
@@ -181,8 +190,22 @@ class User(models.Model):
                     type=type_e
                 )
 
+            #Вітаємо в команді волонтерів!	За якими подіями ти бажаєш стежити? Відредагуй свій профіль.
+            sender = self.django_user_id
+            recipient = self.django_user_id
+
+            notify.send(
+                sender,
+                recipient=recipient,
+                verb="needs_help",
+                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+                data={'type': '3'},  # Вітаємо в команді волонтерів!
+            )
+
+
     def __str__(self):
-        return '%s %s %s' % (self.first_name, '|', self.last_name)
+        return '%s %s' % (self.first_name,  self.last_name)
 
 
 class DigestList(models.Model):
@@ -223,6 +246,7 @@ class Event(models.Model):
 
 
     def save(self, *args, **kwargs):
+        print("stoppp")
         if self.address:
             extent = settings.LEAFLET_CONFIG['SPATIAL_EXTENT']
             view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
@@ -254,8 +278,8 @@ class Event(models.Model):
             if self.date_event:
                 calendar_name = 'volunteer_calendar'
                 calendar_slug = 'volunteer_calendar_slug'
-                if Calendar.objects.filter(name=calendar_name).exists():
-                    calendar = Calendar.objects.get(name=calendar_name)
+                if Calendar.objects.filter(name=calendar_name, slug='volunteer_calendar_slug').exists():
+                    calendar = Calendar.objects.filter(name=calendar_name, slug='volunteer_calendar_slug')[0]
                 else:
                     calendar = Calendar.objects.create(name=calendar_name, slug=calendar_slug)
 
@@ -280,25 +304,61 @@ class Event(models.Model):
             part = list(EventsParticipant.objects.filter(event = Event.objects.get(pk = self.pk)).values_list('user__id', flat = True))
             part_user = User.objects.filter(id__in = part)
 
-            for user in part_user:
-                points_list = PointsList.objects.create(user = user, currency = currency, points_quantity = self.recommended_points)
-                IncreasePointsInfo.objects.create(increase = points_list, increase_type_id = 1,  event_id = self.id)
-                user_points = UserPoint.objects.get(user = user, currency = currency)
-                user_points.quantity +=  self.recommended_points
+            if self.events_or_task == True:
+                for user in part_user:
+                    points_list = PointsList.objects.create(user = user, currency = currency, points_quantity = self.recommended_points)
+                    IncreasePointsInfo.objects.create(increase = points_list, increase_type_id = 1,  event_id = self.id)
+                    user_points = UserPoint.objects.get(user = user, currency = currency)
+                    user_points.quantity +=  self.recommended_points
+                    user_points.save()
+
+                    notify_good_job(sender=self.organizer.django_user_id,
+                                    recipient=user.django_user_id,
+                                    event_instance=self,
+                                    currency_quantity=self.recommended_points,
+                                    currency_type=currency.currency)
+            else:
+                user = TaskApplication.objects.get(event__id = self.id, executer = True).user
+                points_list = PointsList.objects.create(user=user, currency=currency, points_quantity=self.recommended_points)
+                IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=1, event_id=self.id)
+                user_points = UserPoint.objects.get(user=user, currency=currency)
+                user_points.quantity += self.recommended_points
                 user_points.save()
 
+                notify_good_job(sender=self.organizer.django_user_id,
+                                recipient=user.django_user_id,
+                                event_instance=self,
+                                currency_quantity=self.recommended_points,
+                                currency_type=currency.currency)
+
+
             if len(part_user)>=3 and self.events_or_task == True:
+                organizer_points = 30
                 points_list = PointsList.objects.create(user = self.organizer, currency = currency, points_quantity = self.recommended_points)
                 IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=2, event_id=self.id)
                 user_points = UserPoint.objects.get(user=self.organizer, currency=currency)
-                user_points.quantity += 30
+                user_points.quantity += organizer_points
                 user_points.save()
+
+                notify_good_job(sender=self.organizer.django_user_id,
+                                recipient=self.organizer.django_user_id,
+                                event_instance=self,
+                                currency_quantity=organizer_points,
+                                currency_type=currency.currency)
+
             elif self.events_or_task == False:
+                organizer_points = 30
                 points_list = PointsList.objects.create(user=self.organizer, currency=currency,points_quantity=self.recommended_points)
                 IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=2, event_id=self.id)
                 user_points = UserPoint.objects.get(user=self.organizer, currency=currency)
-                user_points.quantity += 30
+                user_points.quantity += organizer_points
                 user_points.save()
+
+                notify_good_job(sender=self.organizer.django_user_id,
+                                recipient=self.organizer.django_user_id,
+                                event_instance=self,
+                                currency_quantity=organizer_points,
+                                currency_type=currency.currency)
 
             print('It is victory!')
 
@@ -487,6 +547,16 @@ class IncreasePointsInfo(models.Model):
     increase = models.ForeignKey(PointsList, on_delete = models.CASCADE)
     increase_type = models.ForeignKey(IncreasePointsType, on_delete = models.CASCADE)
     event = models.ForeignKey(Event, on_delete = models.CASCADE)
+
+class TaskApplication(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE )
+    event = models.ForeignKey(Event,  on_delete = models.CASCADE)
+    contact = models.EmailField()
+    executer = models.BooleanField(default = False)
+
+    class Meta:
+        unique_together = ('user', 'event',)
+
 
 class DecreasePointsInfo(models.Model):
     decrease = models.ForeignKey(PointsList, on_delete = models.CASCADE)

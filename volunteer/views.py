@@ -21,7 +21,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max
-from .forms import EditeEventForm, EventOrgTaskForm, UserForm, NewEventForm
+from .forms import EditeEventForm, EventOrgTaskForm, UserForm, NewEventForm, TaskApplicationForm
 import datetime
 from django.contrib.auth.models import User as DjangoUser
 from volunteer.models import User as VolunteerUser
@@ -148,7 +148,7 @@ def profile(request):
         name = "Волонтер_ка"
 
     parameters = ['all_digest', 1, 'news', 'none', 'none']
-    events, events_part, events_subs, events_quantity, events_org = get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
+    events, events_part, events_subs, events_quantity, events_org, events_task_app= get_events(Event, TaskApplication,  Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
 
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
 
@@ -167,6 +167,7 @@ def profile(request):
         curr_category[type_e.id] = img
 
     form = NewEventForm()
+    form_task = TaskApplicationForm()
     return render(request, 'core/profile.html', {'volunteer':volunteer,
                                                  'league_user':league_user,
                                                  'name':name,
@@ -186,7 +187,9 @@ def profile(request):
                                                  'max_points': max_user_point['quantity__max'],
                                                  'curr_category':curr_category,
                                                  'status_events': status_events,
-                                                 'form': form
+                                                 'form': form,
+                                                 'events_task_app':events_task_app,
+                                                 'form_task':form_task
     })
 
 @login_required
@@ -247,65 +250,9 @@ def new_event(request):
         form = NewEventForm(data = updated_data)
         print(form)
     if form.is_valid():
-        print ('hoy')
         form.save()
         redirect_url = reverse('profile')
         return redirect(redirect_url)
-    # data = request.POST
-    # models_field = {
-    #     'name': check_key_in_dict('name', data),
-    #     'organizer': User.objects.get_or_create(django_user_id = request.user)[0],
-    #     'events_type': EventsType.objects.get(id = check_key_in_dict_int('category', data)),
-    #     'address': check_key_in_dict('address', data),
-    #     'max_part': check_key_in_dict_int('from', data),
-    #     'min_part': check_key_in_dict_int('to', data),
-    #     'recommended_points':check_key_in_dict_int('points_quant', data),
-    #     'contact': check_key_in_dict('email', data),
-    #     'description': check_key_in_dict('description_e', data)
-    # }
-    #
-    #
-    #
-    # date = check_key_in_dict('date', data)
-    #
-    # if date != None:
-    #     date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
-    #     models_field['date_event'] = date
-    #
-    # status = check_key_in_dict_int('status', data)
-    # if status != None:
-    #     status_i = Status.objects.get(id = check_key_in_dict_int('status', data))
-    #     models_field['status'] = status_i
-    # else:
-    #     status_i = Status.objects.get(id = 1)
-    #     models_field['status'] = status_i
-    #
-    # events_or_task = True if check_key_in_dict('type', data) == 'event' else False
-    # models_field['events_or_task'] = events_or_task
-    # print (models_field)
-    # Event.objects.create(**models_field)
-    #
-    # if status == 1:
-    #     nmb = check_key_in_dict_int('numb', data)
-    #     for i in range(nmb):
-    #         str_name = 'task_arr['+str(i)+'][name_task]'
-    #         str_points = 'task_arr['+str(i)+'][point_task]'
-    #         str_descr = 'task_arr['+str(i)+'][descr_task]'
-    #
-    #         name_task = request.POST.get(str_name)
-    #         points_task = int(request.POST.get(str_points))
-    #         descr_task = request.POST.get(str_descr)
-    #
-    #         EventsOrgTask.objects.create(
-    #             event = Event.objects.get(id = new_event_v.id),
-    #             task_name = name_task,
-    #             task_description = descr_task,
-    #             recommended_points = points_task
-    #
-    #         )
-    #     print(nmb)
-    # return_dict  ={}
-    # return JsonResponse(return_dict)
 
 
 @login_required
@@ -332,7 +279,6 @@ def subscribe_event(request):
         EventsParticipant.objects.create(user = user_db, event = Event.objects.get(id = result))
     else:
         EventsParticipant.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
-    #
     return JsonResponse(return_dict)
 
 
@@ -351,7 +297,7 @@ def type_filter(request):
     if data['type'] not in ['all', 'all_digest'] and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
         return JsonResponse(return_dict)
     else:
-        events, events_part, events_subs, events_quantity, events_org = get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
+        events, events_part, events_subs, events_quantity, events_org, events_task_app = get_events(Event, TaskApplication,  Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
         print(events)
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
@@ -366,7 +312,8 @@ def type_filter(request):
             'current':int(parametrs[1]),
             'request': request,
             'selected':data['type'],
-            'events_org': events_org
+            'events_org': events_org,
+            'events_task_app':events_task_app
         }
         html = render_to_string('events_result.html', cont)
         return_dict = {'html': html}
@@ -659,8 +606,53 @@ def refresh_digest(request):
                 DigestList.objects.filter(user=current_user, type=EventsType.objects.get(id=i)).delete()
         return JsonResponse(return_dict)
 
+def app_task(request):
+    return_dict = {}
+    if request.method == 'POST':
+        django_user = request.user
+        current_user = User.objects.get(django_user_id=django_user)
+        updated_data = request.POST.copy()
+        # print (updated_data)
+        updated_data.update({'user': current_user.id})
+        # print(updated_data)
+        form = TaskApplicationForm(data = updated_data)
+        print(form)
+        if form.is_valid():
+            print('Hi')
+            form.save()
+            redirect_url = reverse('profile')
+            return redirect(redirect_url)
+
+def task_executor(request):
+    if request.method == "GET":
+        data = request.GET
+        executors = TaskApplication.objects.filter(event__id = data['event_id'])
+        print (executors)
+        cont = {
+            'request': request,
+            'executors': executors,
+            'event_id' : data['event_id']
+        }
+        html = render_to_string('possieble_executors.html', cont)
+        return_dict = {'html': html}
+        return JsonResponse(return_dict)
+    elif request.method == 'POST':
+        data = request.POST
+        return_dict = {}
+        if TaskApplication.objects.filter(event__id = data['event_id'], executer = True).count() == 0:
+            executor = TaskApplication.objects.get(event__id = data['event_id'], user__id = data['user_id'])
+            executor.executer = True
+            executor.save()
+        return JsonResponse(return_dict)
+
+@login_required()
+def notifications_count(request):
+    return_dict = {'notifications_count':Notification.objects.filter(recipient=request.user, unread = True).count(),}
+    return JsonResponse(return_dict)
+
 
 def change_photo(request):
     print(request.FILES['userpic'])
     return_dict = {}
     return JsonResponse(return_dict)
+

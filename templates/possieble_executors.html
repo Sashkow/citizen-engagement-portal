@@ -1,0 +1,26 @@
+{% load static %}
+
+
+<div class="modal fade" id="modal_executor" tabindex="-1" role="dialog" aria-labelledby="modal_executor_modal" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal_executor_modal">Обрати виконавця завдання </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                    {% for executor in executors %}
+
+                         <p><input name="execute" type="radio" value="{{executor.user.id}}">{{executor.user}}</p>
+
+                    {% endfor %}
+              </div>
+              <div class="modal-footer">
+                <button class="btn select-executor" event_id = "{{event_id}}" post_url="{% url 'task_executor' %}" >Обрати</button>
+              </div>
+            </div>
+          </div>
+        </div>
