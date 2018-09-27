@@ -612,14 +612,16 @@ def app_task(request):
         django_user = request.user
         current_user = User.objects.get(django_user_id=django_user)
         updated_data = request.POST.copy()
-        print (updated_data)
+        # print (updated_data)
         updated_data.update({'user': current_user.id})
+        # print(updated_data)
         form = TaskApplicationForm(data = updated_data)
         print(form)
-    if form.is_valid():
-        form.save()
-        redirect_url = reverse('profile')
-        return redirect(redirect_url)
+        if form.is_valid():
+            print('Hi')
+            form.save()
+            redirect_url = reverse('profile')
+            return redirect(redirect_url)
 
 def task_executor(request):
     if request.method == "GET":
