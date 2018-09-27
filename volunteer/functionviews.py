@@ -14,7 +14,7 @@ def make_filter(parameters, DigestList, EventsType, User, Status, django_user):
         filter['status'] = Status.objects.get(id=parameters[4])
     return filter
 
-def get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType):
+def get_events(Event, TaskApplication, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType):
 
     from_page = events_per_page * int(parameters[1]) - events_per_page
     to_page = events_per_page * int(parameters[1])
@@ -29,29 +29,17 @@ def get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticip
         events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
         events = Event.objects.filter(**filter_event, id__in=events_many).order_by('-publication_date')[from_page:to_page]
         events_quantity = Event.objects.filter(**filter_event, id__in=events_many).order_by('-publication_date').count()
-        # if parameters[0] == 'all' or parameters[0] == 'all_digest':
-        #     events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
-        #     events = Event.objects.filter(id__in=events_many)[from_page:to_page]
-        #     events_quantity = Event.objects.filter(id__in=events_many).count()
-        # else:
-        #     events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
-        #     events = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
-        #     events_quantity = Event.objects.filter(id__in=events_many, events_type=EventsType.objects.get(id=parameters[0])).count()
+
     else:
         filter_event = make_filter(parameters, DigestList, EventsType, User, Status, django_user)
         events = Event.objects.filter(**filter_event, organizer = User.objects.get(django_user_id=django_user)).order_by('-publication_date')[from_page:to_page]
         events_quantity = Event.objects.filter(**filter_event, organizer = User.objects.get(django_user_id=django_user)).order_by('-publication_date').count()
-        # if parameters[0] == 'all' or parameters[0] == 'all_digest':
-        #     events = Event.objects.filter(organizer = User.objects.get(django_user_id=django_user))[from_page:to_page]
-        #     events_quantity = Event.objects.filter(organizer = User.objects.get(django_user_id=django_user)).count()
-        # else:
-        #     events = Event.objects.filter(organizer=User.objects.get(django_user_id=django_user), events_type=EventsType.objects.get(id=parameters[0]))[from_page:to_page]
-        #     events_quantity = Event.objects.filter(organizer=User.objects.get(django_user_id=django_user), events_type=EventsType.objects.get(id=parameters[0])).count()
 
 
     events_subs = {}
     events_part = {}
     events_org = {}
+    events_task_app = {}
 
     for event in events:
         try:
@@ -66,6 +54,12 @@ def get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticip
         except:
             events_part[event.id] = 0
 
+        try:
+            app = TaskApplication.objects.get(user=User.objects.get(django_user_id=django_user), event = event)
+            events_task_app[event.id] = 1
+        except:
+            events_task_app[event.id] = 0
+
         if event.organizer.id == User.objects.get(django_user_id=django_user).id:
             events_org[event.id] = 1
         else:
@@ -79,7 +73,7 @@ def get_events(Event, Status, User, DigestList, EventsSubscriber, EventsParticip
             event.event_photo = event_photo
         else:
             event.event_photo = None
-    return events, events_part, events_subs, events_quantity, events_org
+    return events, events_part, events_subs, events_quantity, events_org, events_task_app
 
 #return pages
 def get_pages_number(events_quantity, events_per_page, current):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
-from volunteer.models import Event, EventsOrgTask, User
+from volunteer.models import Event, EventsOrgTask, User, TaskApplication
 from django.forms import SelectDateWidget
 from django.forms.widgets import HiddenInput
 
@@ -27,7 +27,13 @@ class NewEventForm(ModelForm):
         }
 
 
-
+class TaskApplicationForm(ModelForm):
+    class Meta:
+        model = TaskApplication
+        fields = ['user', 'event', 'contact']
+        labels = {
+            'contact': 'Залиште Ваш контактный e-mail',
+        }
 
 
 
