@@ -69,5 +69,7 @@ urlpatterns = [
     url(r'^fullcalendar/', login_required(TemplateView.as_view(template_name="fullcalendar.html")), name='fullcalendar'),
     url(r'^schedule/', include('schedule.urls')),
 
+    url(r'^terms_of_use/$', TemplateView.as_view(template_name="terms_of_use.html"), name='terms_of_use'),
+
 
               ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
