@@ -57,7 +57,7 @@
               if (!props.description){
                 props.description = "Немає опису";
               }
-              var content = `<img width="300" src="${props.get_events_type_url}"/><h3><a class="event-name" get_url="${props.get_event_url}">${props.name}</a></h3><p>${props.description}</p>`;
+              var content = `<img width="70" src="${props.get_events_type_url}"/><h4><a class="event-name" get_url="${props.get_event_url}">${props.name}</a></h4><p>${props.description}</p>`;
               layer.bindPopup(content);
             }
 
@@ -66,7 +66,7 @@
               var EventIcon = L.Icon.extend({
                 options: {
                   // shadowUrl:    '/static/img/shadow.png',
-                  iconSize:   [50, 58],
+                  iconSize:   [37, 63],
                   iconAnchor:   [30, 55],
                   popupAnchor:  [0, 0],
                   shadowSize:   [50, 58],
