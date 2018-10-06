@@ -612,20 +612,20 @@ class NotificaationType(models.Model):
     image_field_name = models.CharField(max_length = 100)
 
 
-def user_post_save(sender, instance, **kwargs):
-
-    if kwargs['created']:
-        django_user = instance
-        volunteer = User.objects.create(django_user_id=django_user)
-
-        if not volunteer.first_name:
-            if django_user.first_name or django_user.last_name:
-                volunteer.first_name = django_user.first_name
-                volunteer.second_name = django_user.last_name
-
-        volunteer.save()
-
-models.signals.post_save.connect(user_post_save, sender=DjangoUser)
+# def user_post_save(sender, instance, **kwargs):
+#
+#     if kwargs['created']:
+#         django_user = instance
+#         volunteer = User.objects.create(django_user_id=django_user)
+#
+#         if not volunteer.first_name:
+#             if django_user.first_name or django_user.last_name:
+#                 volunteer.first_name = django_user.first_name
+#                 volunteer.second_name = django_user.last_name
+#
+#         volunteer.save()
+#
+# models.signals.post_save.connect(user_post_save, sender=DjangoUser)
 
 
 

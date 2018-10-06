@@ -17,8 +17,8 @@
                    <input type="text" placeholder="Прізвище" name="second_name" class="input input-reg">
                 </div>
                <div class="socal_logos text-center">
-                   <a href="{% url 'social:begin' 'facebook' %}"><img class="soc-icon" type="submit" value="Реєстрація Facebook" name="sub_fb"  src="{% static 'volunteer/images/facebook.png' %}"></a>
-                   <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="soc-icon" type="submit" value="Реєстрація Google" name="sub_gg" src="{% static 'volunteer/images/google.png' %}"></a>
+                   <input type="image" name="sub_fb" class="soc-icon" value="Реєстрація Facebook" src="{% static 'volunteer/images/facebook.png' %}" >
+                   <input type="image" name="sub_fb" class="soc-icon" value="Реєстрація Google" src="{% static 'volunteer/images/google.png' %}" >
                </div>
         </form>
       </div>

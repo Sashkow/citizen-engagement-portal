@@ -481,6 +481,17 @@ def just_after_scuccess_auth(request):
     # if threre is no volunteer_user user corresponding to django_user
     # create new volunteer_user
     django_user = request.user
+    volunteer_user = User.objects.filter(django_user_id=django_user)
+
+    if not volunteer_user.exists():
+        volunteer = User.objects.create(django_user_id=django_user)
+
+        if not volunteer.first_name:
+            if django_user.first_name or django_user.last_name:
+                volunteer.first_name = django_user.first_name
+                volunteer.second_name = django_user.last_name
+
+        volunteer.save()
 
 
     return redirect(reverse('profile'))
@@ -489,15 +500,15 @@ def dispatch_social_login(request):
     first_name = request.GET['first_name']
     second_name = request.GET['second_name']
 
-    if 'sub_fb' in request.GET:
+    if 'sub_fb.x' in request.GET:
         provider = 'facebook'
-    elif 'sub_gg' in request.GET:
+    elif 'sub_gg.x' in request.GET:
         provider = 'google-oauth2'
     else:
         print('Niether fb no gg')
         return None
     return redirect(
-        reverse('social:begin', args=[provider, ]) + '?first_name={}&{}'.format(first_name, second_name))
+        reverse('social:begin', args=[provider, ]) + '?first_name={}&second_name={}'.format(first_name, second_name))
 
 
 
