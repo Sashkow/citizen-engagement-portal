@@ -31,6 +31,12 @@
 
         .curr_quat{
             color: {{volunteer.league.color_menu_item}};
+
+        }
+
+        .curr_symbol {
+            height:120%;
+
         }
 
 
@@ -131,8 +137,8 @@
                 <!--<h2>{{ volunteer.league }}</h2>-->
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="volunteer-name first-name">{{volunteer.first_name}}</h3>
-                        <h4 class="volunteer-name">{{volunteer.last_name}}</h4>
+                        <h3 get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}}</h3>
+                        <h4 get_url="{% url 'profile_edit' %}" class="volunteer-name setting-img">{{volunteer.last_name}}</h4>
 
                     </div>
                 </div>
@@ -140,7 +146,7 @@
                     <div class="col-md-12">
                         <h3 class="volunteer-name first-name"> </h3>
                         <h4 class="volunteer-name"> </h4>
-                        <img  class="setting-img" get_url="{% url 'profile_edit' %}" src="{% static 'volunteer/images/setting.png'%}">
+                        <!--<img  class="setting-img" get_url="{% url 'profile_edit' %}" src="{% static 'volunteer/images/setting.png'%}">-->
                     </div>
                 </div>
 
@@ -155,11 +161,11 @@
                 <div class="row">
                     <div class="col-md-12 profile-image">
                          <div>
-                             <img class="user-league-info league-logo" src="{{league_user.league_image.url}}">
+                             <img class="user-league-info league-logo setting-img" get_url="{% url 'profile_edit' %}" src="{{league_user.league_image.url}}">
                                 {% if volunteer.photo %}
-                                 <img class="photo-user" src="{{ volunteer.photo.url }}">
+                                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{{ volunteer.photo.url }}">
                                 {% else %}
-                                <img class="photo-user" src="{% static  'volunteer/images/user_profile_default.png' %}" >
+                                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{% static  'volunteer/images/user_profile_default.png' %}" >
                                 {% endif %}
                              <!--{{league_user.user_frame.url}}-->
                              <img class="user-league-info photo-frame" src="">
@@ -188,7 +194,7 @@
                     {% for point in user_points %}
                         {% if forloop.first %} <div class="row justify-content-md-center"> {% endif %}
                             <div class="col-md-2">
-                                <img  src="{{ point.currency.image.url }}" style="height: 3vh;">
+                                <img  src="{{ point.currency.image.url }}" style="height: 7vh;">
                                 <p class="curr_quat">{{point.quantity}}</p>
                             </div>
                         {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-md-center"> {%endif%}

@@ -263,9 +263,9 @@ h4.volunteer-name{
     display: inline-block;
 }
 .setting-img{
-    height: 4vh;
+    /* height: 4vh;
     position: absolute;
-    bottom: 1.1vh;
+    bottom: 1.1vh; */
 }
 .setting-img:hover{
     cursor:pointer;
@@ -375,7 +375,7 @@ h4.volunteer-name{
 }
 
 .own-progress-bar{
-  height: 2vh;
+  height: 3vh;
   width: 100%;
   background-color:#fff;
   margin-bottom: 4vh;
