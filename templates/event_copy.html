@@ -25,7 +25,6 @@
     <!--</div>-->
 
     <div class="row">
-
         <div class="col-md-8 ep-event-info">
             <div class="row">
                 <div class="col-md-auto text-left ">
@@ -39,7 +38,11 @@
                     <h1 class="ep_event_name">{{event.name}}</h1>
                     <p> додано {{ event.publication_date }}</p>
 
-                    <button class="event-button status-button" style="background-color: {{event.status.color_background}}"> <img class="img-status-btn" src="{{ event.status.image.url }}" > {{event.status.frontend_value}} </button>
+                    {% if event.status.id == 1%}
+                    <button class="event-button status-button get-org-tasks" get_url = "{% url 'get_event_org_tasks' %}"style="background-color: {{event.status.color_background}}" event_id = "{{event.id}}"> <img class="img-status-btn" src="{{ event.status.image.url }}" > {{event.status.frontend_value}} </button>
+                    {% else %}
+                    <button class="event-button status-button" style="background-color: {{event.status.color_background}}" disabled> <img class="img-status-btn" src="{{ event.status.image.url }}" > {{event.status.frontend_value}} </button>
+                    {% endif %}
 
                 </div>
             </div>

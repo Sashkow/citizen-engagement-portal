@@ -539,9 +539,7 @@ $(document).on('click', '.news', function(){
              success: function(data){
                  console.log('OK');
                  $(".dynamic-block").empty()
-                 console.log(data)
                  $(".dynamic-block").html(data.html);
-//                 $('#event-type').attr('state', 'organizer');
              },
              error: function(){
              console.log('error')
@@ -783,8 +781,30 @@ $(document).on('click', '.news', function(){
              cache:true,
              success: function(data){
                  console.log('OK');
-                 $('#modal_executor').modal('hide');
-                 $('.get-executers-form').remove();
+                 $(".dynamic-block").append(data.html);
+                 $('#event_tasks').modal('show');
+                 },
+             error: function(){
+                console.log('error')
+             }
+             })
+    })
+
+
+    $(document).on('click', '.get-org-tasks', function(){
+        var url = $(this).attr('get_url');
+        var event_id  =  $(this).attr('event_id');
+        var data = {};
+        data.event_id = event_id;
+        $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: function(data){
+                 console.log('OK');
+                 $(".dynamic-block").append(data.html);
+                 $('#event_tasks').modal('show');
                  },
              error: function(){
                 console.log('error')

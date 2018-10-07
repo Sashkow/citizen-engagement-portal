@@ -551,7 +551,14 @@ class Tupo(models.Model):
 
 
 
+class OrgTaskApplication(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(EventsOrgTask, on_delete=models.CASCADE)
+    contact = models.EmailField()
+    executer = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ('user', 'task',)
 
 
 class NotificaationType(models.Model):

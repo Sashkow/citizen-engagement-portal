@@ -21,7 +21,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max
-from .forms import EditeEventForm, EventOrgTaskForm, UserForm, NewEventForm, TaskApplicationForm
+from .forms import EditeEventForm, EventOrgTaskForm, UserForm, NewEventForm, TaskApplicationForm, OrgTaskApplicationForm
 import datetime
 from django.contrib.auth.models import User as DjangoUser
 from volunteer.models import User as VolunteerUser
@@ -168,6 +168,7 @@ def profile(request):
 
     form = NewEventForm()
     form_task = TaskApplicationForm()
+    form_org_task = OrgTaskApplicationForm()
     return render(request, 'core/profile.html', {'volunteer':volunteer,
                                                  'league_user':league_user,
                                                  'name':name,
@@ -189,7 +190,8 @@ def profile(request):
                                                  'status_events': status_events,
                                                  'form': form,
                                                  'events_task_app':events_task_app,
-                                                 'form_task':form_task
+                                                 'form_task':form_task,
+                                                 'form_org_task':form_org_task
     })
 
 @login_required
@@ -643,6 +645,20 @@ def task_executor(request):
             executor.save()
         return JsonResponse(return_dict)
 
+def get_event_org_tasks(request):
+    if request.method == "GET":
+        data = request.GET
+        org_tasks = EventsOrgTask.objects.filter(event__id = data['event_id'])
+        cont = {
+            'request':request,
+            'org_tasks':org_tasks
+        }
+        print(org_tasks)
+        html = render_to_string('event_org_task.html', cont)
+        return_dict = {'html': html}
+        return JsonResponse(return_dict)
+    return_dict = {}
+    return JsonResponse(return_dict)
 
 def change_photo(request):
     print(request.FILES['userpic'])
