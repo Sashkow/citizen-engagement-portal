@@ -219,7 +219,8 @@ class Event(models.Model):
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
     events_or_task = models.BooleanField(default=True)
     events_type = models.ForeignKey(EventsType, on_delete=models.CASCADE)
-    date_event = models.DateTimeField(null=True, blank=True, verbose_name='Час')
+    date_event = models.DateField (null=True, blank=True, verbose_name='Дата')
+    time_event = models.TimeField(null=True, blank=True, verbose_name='Час')
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     address = models.CharField(max_length=300, null=True, blank=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE,  null=True, blank=True, verbose_name='Статус')
@@ -602,7 +603,14 @@ class Tupo(models.Model):
 
 
 
+class OrgTaskApplication(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(EventsOrgTask, on_delete=models.CASCADE)
+    contact = models.EmailField()
+    executer = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ('user', 'task',)
 
 
 class NotificaationType(models.Model):

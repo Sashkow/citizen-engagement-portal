@@ -1,0 +1,29 @@
+{% load static %}
+
+
+<div class="modal fade" id="event_tasks" tabindex="-1" role="dialog" aria-labelledby="event_tasks_modal" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="event_tasks_modal">Обрати виконавця завдання </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                    {% for org_task in org_tasks %}
+                        {% if org_task.done == False and org_task.canceled == False %}
+                            <p>{{org_task.task_name}}</p>
+                            <p>{{org_task.task_description}}</p>
+                            <p>{{org_task.recommended_points}}</p>
+                            <button class="aply-org-task" id_org_task = {{org_task.id}}> Подати заявку </button>
+                        <hr>
+                        {% endif %}
+                    {% endfor %}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>              </div>
+            </div>
+          </div>
+        </div>

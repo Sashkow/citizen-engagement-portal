@@ -57,6 +57,7 @@ urlpatterns = [
     url(r'^changephoto/', volunteer_views.change_photo, name='changephoto'),
     url(r'^app/task/', volunteer_views.app_task, name='app_task'),
     url(r'^task/executor', volunteer_views.task_executor, name='task_executor'),
+    url(r'^get/org/tasks', volunteer_views.get_event_org_tasks, name='get_event_org_tasks'),
 
     url(r'^dispatch_social_login/$', volunteer_views.dispatch_social_login, name='dispatch_social_login'),
     url(r'^notifications/$', volunteer_views.notifications, name='notifications'),

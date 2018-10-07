@@ -14,6 +14,10 @@ li{
 }
 
 
+button:hover{
+    cursor:pointer;
+}
+
 ul{
      padding-left:0
 }
@@ -496,7 +500,9 @@ img.unlocked-achievement{
     font-size: 130%;
     padding-top: 3%;
 }
-
+.event-name:hover{
+    cursor:pointer;
+}
 .event-description{
     font-size: 91%;
 

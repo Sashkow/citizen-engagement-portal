@@ -189,6 +189,10 @@
                 {{ form.date_event.label_tag }}<br>
                 {{form.date_event}}<br>
 
+                {{form.time_event.errors}}
+                {{ form.time_event.label_tag }}<br>
+                {{form.time_event}}<br>
+
                 {{form.address.errors}}
                 {{ form.address.label_tag }}<br>
                 {{form.address}}<br>
@@ -302,3 +306,26 @@
           </div>
         </div>
     </form>
+
+         <div class="modal fade" id="org_task_applicate" tabindex="-1" role="dialog" aria-labelledby="org_task_applicatemodal" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="org_task_applicatemodal">Залишити заявку </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                    {% csrf_token %}
+                        {{form_org_task.contact.errors}}
+                        {{ form_org_task.contact.label_tag }}<br>
+                        {{form_org_task.contact}}<br>
+                        {{form_task.task}}
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn" >Далі</button>
+              </div>
+            </div>
+          </div>
+        </div>
