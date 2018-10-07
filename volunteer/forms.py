@@ -2,17 +2,18 @@
 from django.forms import ModelForm
 from volunteer.models import Event, EventsOrgTask, User, TaskApplication, OrgTaskApplication
 from django.forms import SelectDateWidget
-from django.forms.widgets import HiddenInput
-
+from django.forms.widgets import HiddenInput, TimeInput
+from django.contrib.admin import widgets
 
 
 class NewEventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event', 'address', 'status',  'description', 'max_part', 'min_part', 'recommended_points', 'contact']
+        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'status',  'description', 'max_part', 'min_part', 'recommended_points', 'contact']
         labels = {
             'name': 'Назва',
-            'date_event': 'Дата та час',
+            'date_event': 'Дата',
+            'time_event': 'Час',
             'address': 'Адреса',
             'description': 'Опис',
             'status': 'Статус',
@@ -24,6 +25,7 @@ class NewEventForm(ModelForm):
         }
         widgets = {
             'date_event': SelectDateWidget(),
+            'time_event': TimeInput(),
         }
 
 
