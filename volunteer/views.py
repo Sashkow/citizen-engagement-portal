@@ -483,6 +483,17 @@ def just_after_scuccess_auth(request):
     # if threre is no volunteer_user user corresponding to django_user
     # create new volunteer_user
     django_user = request.user
+    volunteer_user = User.objects.filter(django_user_id=django_user)
+
+    if not volunteer_user.exists():
+        volunteer = User.objects.create(django_user_id=django_user)
+
+        if not volunteer.first_name:
+            if django_user.first_name or django_user.last_name:
+                volunteer.first_name = django_user.first_name
+                volunteer.second_name = django_user.last_name
+
+        volunteer.save()
 
 
     return redirect(reverse('profile'))
@@ -491,15 +502,15 @@ def dispatch_social_login(request):
     first_name = request.GET['first_name']
     second_name = request.GET['second_name']
 
-    if 'sub_fb' in request.GET:
+    if 'sub_fb.x' in request.GET:
         provider = 'facebook'
-    elif 'sub_gg' in request.GET:
+    elif 'sub_gg.x' in request.GET:
         provider = 'google-oauth2'
     else:
         print('Niether fb no gg')
         return None
     return redirect(
-        reverse('social:begin', args=[provider, ]) + '?first_name={}&{}'.format(first_name, second_name))
+        reverse('social:begin', args=[provider, ]) + '?first_name={}&second_name={}'.format(first_name, second_name))
 
 
 
@@ -614,14 +625,16 @@ def app_task(request):
         django_user = request.user
         current_user = User.objects.get(django_user_id=django_user)
         updated_data = request.POST.copy()
-        print (updated_data)
+        # print (updated_data)
         updated_data.update({'user': current_user.id})
+        # print(updated_data)
         form = TaskApplicationForm(data = updated_data)
         print(form)
-    if form.is_valid():
-        form.save()
-        redirect_url = reverse('profile')
-        return redirect(redirect_url)
+        if form.is_valid():
+            print('Hi')
+            form.save()
+            redirect_url = reverse('profile')
+            return redirect(redirect_url)
 
 def task_executor(request):
     if request.method == "GET":
@@ -645,6 +658,7 @@ def task_executor(request):
             executor.save()
         return JsonResponse(return_dict)
 
+
 def get_event_org_tasks(request):
     if request.method == "GET":
         data = request.GET
@@ -659,6 +673,12 @@ def get_event_org_tasks(request):
         return JsonResponse(return_dict)
     return_dict = {}
     return JsonResponse(return_dict)
+
+@login_required()
+def notifications_count(request):
+    return_dict = {'notifications_count':Notification.objects.filter(recipient=request.user, unread = True).count(),}
+    return JsonResponse(return_dict)
+
 
 def change_photo(request):
     print(request.FILES['userpic'])
