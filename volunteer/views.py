@@ -534,6 +534,7 @@ def form(request, id = None):
         'subs': subs,
         'part': part,
         'request': request,
+        'zero_executor':False
     }
     if event.events_or_task == True and event.status.id == 1:
         tasks = EventsOrgTask.objects.filter(event = event)
@@ -541,7 +542,10 @@ def form(request, id = None):
         for task in tasks:
             tasks_form_list.append(EventOrgTaskForm(instance=task))
             cont['tasks_form_list'] = tasks_form_list
-    print (cont)
+
+    if event.events_or_task == False and TaskApplication.objects.filter(event = event).exists() and not TaskApplication.objects.filter(event = event, executer = True).exists():
+        zero_executor = True
+        cont['zero_executor'] = zero_executor
     html = render_to_string('event_edit.html', cont, request=request)
     return_dict['html'] = html
     return JsonResponse(return_dict)

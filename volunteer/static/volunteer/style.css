@@ -386,7 +386,7 @@ h4.volunteer-name{
   width: 100%;
   background-color:#fff;
   margin-bottom: 4vh;
-  border-radius: 4px;
+  border-radius: 7px;
 }
 
 .own-progress-league{
@@ -394,7 +394,7 @@ h4.volunteer-name{
     height: 3vh;
     float: left;
     position:relative;
-    border-radius: 4px;
+    border-radius: 7px;
 
 }
 .progress_state{
@@ -472,13 +472,6 @@ img.unlocked-achievement{
     color: #e3a002ff;
 }
 
-.my-volonter-events {
-    padding-left: 3.5vh;
-}
-
-.my-org-events {
-    padding-left: 3.5vh;
-}
 
 /* Event-edit */
 
@@ -784,4 +777,22 @@ img.unlocked-achievement{
 
 .ribbon-div{
     height:4vh;
+}
+
+.notif-quant{
+    height: 3vh;
+    width: 3vh;
+    background-color: #fff;
+    border-radius: 50%;
+    opacity: 0.6;
+    float: right;
+    font-weight:bold;
+}
+
+.notifications{
+    float: left;
+}
+
+.user-name{
+    margin-bottom:3vh;
 }
