@@ -6,6 +6,8 @@ body{
 
 
 }
+
+strong { font-weight: bold; }
 li{
     list-style-type: none;
     font-weight: 100;
@@ -761,4 +763,15 @@ img.unlocked-achievement{
 
 #not_main{
     height: 100%;
+}
+
+.padding-faq{
+    padding-top:12vh;
+}
+
+.answer{
+    padding-left: 7vw;
+}
+.question:hover{
+    cursor:pointer;
 }

@@ -30,6 +30,15 @@ $( document ).ready(function() {
       }
     }
 
+    $(document).on('click', '.question', function(){
+        console.log('here');
+         var answer = $(this).attr('answer');
+         $('.answer').each(function(index){
+            $(this).addClass('d-none');
+         })
+         $('.' + answer).toggleClass('d-none');
+    })
+
 
     function InfoEventFilter(){
         var category_id = $('option:selected', '#event-type').attr('type_id');
@@ -788,7 +797,7 @@ $(document).on('click', '.news', function(){
                 console.log('error')
              }
              })
-    })
+
 
 
     $(document).on('click', '.get-org-tasks', function(){
@@ -811,3 +820,7 @@ $(document).on('click', '.news', function(){
              }
              })
     })
+
+
+
+  })
