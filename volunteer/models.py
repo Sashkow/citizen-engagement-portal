@@ -154,6 +154,8 @@ class League(models.Model):
     color_current_grad2 = models.CharField(max_length =20, null=True, blank=True)
     color_current_text = models.CharField(max_length =20, null=True, blank=True)
     color_current_border = models.CharField(max_length =20, null=True, blank=True)
+    img_user_width = models.CharField(max_length =4, null=True, blank=True)
+    img_user_height = models.CharField(max_length =4, null=True, blank=True)
 
     def __str__(self):
         return self.league

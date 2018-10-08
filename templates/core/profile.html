@@ -62,6 +62,11 @@
                              }
         }
 
+        .photo-user{
+           width: {{volunteer.league.img_user_width}};
+           right: {{volunteer.league.img_user_height}};
+        }
+
     </style>
 
        <script type="text/javascript">
@@ -146,15 +151,14 @@
                     <div class="col-md-12">
                         <h3 class="volunteer-name first-name"> </h3>
                         <h4 class="volunteer-name"> </h4>
-                        <!--<img  class="setting-img" get_url="{% url 'profile_edit' %}" src="{% static 'volunteer/images/setting.png'%}">-->
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div>
-                        <p class="ribbon">{{ volunteer.league }}</p>
-                </div>
+                        <div class="ribbon-div">
+                         <p class="ribbon ">{{ volunteer.league }}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -168,7 +172,7 @@
                                     <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{% static  'volunteer/images/user_profile_default.png' %}" >
                                 {% endif %}
                              <!--{{league_user.user_frame.url}}-->
-                             <img class="user-league-info photo-frame" src="">
+                             <img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}">
                         </div>
                     </div>
 
@@ -194,7 +198,7 @@
                     {% for point in user_points %}
                         {% if forloop.first %} <div class="row justify-content-md-center"> {% endif %}
                             <div class="col-md-2">
-                                <img  src="{{ point.currency.image.url }}" style="height: 7vh;">
+                                <img class="currency-image" src="{{ point.currency.image.url }}" >
                                 <p class="curr_quat">{{point.quantity}}</p>
                             </div>
                         {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-md-center"> {%endif%}

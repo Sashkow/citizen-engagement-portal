@@ -286,36 +286,37 @@ h4.volunteer-name{
     width:70%;
     background-color: white;
     margin:auto;
-    margin-top:3vh;
     position:relative;
     border-radius: 4px;
+    height:100%;
+    font-size: larger;
 }
 
 .ribbon:after{
     content: '';
     position:absolute;
-    top:1vh;
-    right:-2vh;
-    border-left: 1.5vh solid #fff;
-    border-right: 1.5vh solid transparent;
-    border-top: 1.5vh solid #fff;
-    border-bottom: 1.5vh solid #fff;
+    top:1.5vh;
+    right:-2.3vh;
+    border-left: 1.8vh solid #fff;
+    border-right: 1.8vh solid transparent;
+    border-top: 1.8vh solid #fff;
+    border-bottom: 1.8vh solid #fff;
 }
 
 
 .ribbon:before{
     content: '';
     position:absolute;
-    top:1vh;
-    left:-2vh;
-    border-left: 1.5vh solid transparent;
-    border-right: 1.5vh solid #fff;
-    border-top: 1.5vh solid #fff;
-    border-bottom: 1.5vh solid #fff;
+    top:1.5vh;
+    left:-2.3vh;
+    border-left: 1.8vh solid transparent;
+    border-right: 1.8vh solid #fff;
+    border-top: 1.8vh solid #fff;
+    border-bottom: 1.8vh solid #fff;
 }
 
 .user-league-info{
-    width:35%;
+    width:37%;
     position: relative;
 }
 
@@ -323,7 +324,7 @@ h4.volunteer-name{
     z-index:200!important;
     margin-right:-2vh;
     z-index: 100;
-    margin-right: -2vh;
+    margin-right: -6%;
 
 }
 
@@ -390,7 +391,7 @@ h4.volunteer-name{
 
 .own-progress-league{
     background-color: #65f0fb;
-    height: 2vh;
+    height: 3vh;
     float: left;
     position:relative;
     border-radius: 4px;
@@ -401,7 +402,7 @@ h4.volunteer-name{
   position:absolute;
   right: -2vh;
   top: -0.2vh;
-  height:170%;
+  height:138%;
 }
 
 .img_progress_state{
@@ -462,8 +463,8 @@ img.unlocked-achievement{
 }
 
 .currency-image{
-    height:4vh;
-    margin-top:2vh;
+    height:5.3vh;
+
 }
 
 .currency-value{
@@ -577,7 +578,7 @@ img.unlocked-achievement{
     background-image: url('./images/select.png');
     background-repeat: no-repeat;
     background-position: right center;
-    background-size: 10%;
+    background-size: auto 30%;
     background-origin: content-box;
     padding-left: 5%;
     text-transform: lowercase;
@@ -591,9 +592,6 @@ img.unlocked-achievement{
     height:auto;
 }
 
-.search{
-    background-image: url('./images/search.png');
-}
 
 .nav-add{
     max-width:30%;
@@ -666,8 +664,7 @@ img.unlocked-achievement{
     -webkit-clip-path: polygon(2% 1%, 2% 62%, 9% 78%, 23% 89%, 36% 95%, 50% 100%, 63% 95%, 79% 89%, 91% 78%, 97% 64%, 98% 2%);
     clip-path: polygon(2% 1%, 2% 62%, 9% 78%, 23% 89%, 36% 95%, 50% 100%, 63% 95%, 79% 89%, 91% 78%, 97% 64%, 98% 2%);
     position: absolute;
-    left: 50%;
-    width: 39%;
+
  }
 
  .ep_event_task{
@@ -715,6 +712,7 @@ img.unlocked-achievement{
  .center-personal{
      margin: auto auto;
      text-align:center;
+
  }
 
  .input-reg{
@@ -774,4 +772,16 @@ img.unlocked-achievement{
 }
 .question:hover{
     cursor:pointer;
+}
+
+#event-type{
+    width: 85%;
+}
+
+#event-status{
+    width: 80%;
+}
+
+.ribbon-div{
+    height:4vh;
 }
