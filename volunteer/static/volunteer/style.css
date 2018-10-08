@@ -261,7 +261,7 @@ height:14vh;
 .volunteer-name{
     font-family: 'Ubuntu',sans-serif!important;
     font-size: 191%;
-    font-weight: 100;
+    font-weight: bold;
     margin:0;
 }
 h4.volunteer-name{
@@ -831,4 +831,18 @@ svg{
         opacity: 0;
     }
 
+}
+
+.btn-app-task{
+    background-color:#00bbbbff!important;
+    border-bottom-right-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    padding-right: 7% !important;
+}
+
+.re-btn-app-task{
+    background-color:#00bbbbff!important;
+    border-bottom-right-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    padding-right: 7% !important;
 }

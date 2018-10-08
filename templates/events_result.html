@@ -47,7 +47,7 @@
                                         {% if events_task_app|get_item:event.id == 0 %}
                                             <button type="button" class="event-button btn-app-task  " id_event = "{{ event.id }}" post_url = "{% url 'app_task' %}">подати заявку <img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
                                         {% else %}
-                                            <button type="button" class="event-button " id_event = "{{ event.id }}" disabled>заявка подана<img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
+                                            <button type="button" class="event-button re-btn-app-task" id_event = "{{ event.id }}" disabled>заявка подана<img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
                                         {% endif %}
 
 

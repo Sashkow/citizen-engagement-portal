@@ -462,6 +462,7 @@ def achivments_legaue(request):
             return_dict = {
                 'new_league' : League.objects.get(id = current_user.league.id).league
             }
+            return redirect(reverse('profile'))
         achievement = Achievement.objects.get(id=data['id'])
 
         cont = {
