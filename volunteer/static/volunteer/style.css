@@ -796,3 +796,39 @@ img.unlocked-achievement{
 .user-name{
     margin-bottom:3vh;
 }
+
+
+
+svg{
+
+    animation: dirizable 4s infinite;
+}
+
+@keyframes dirizable{
+    50%{
+        transform: translateY(10%)
+    }
+
+}
+
+.flagup{
+    opacity:0;
+    animation: blum 0.7s infinite;
+}
+@keyframes blum{
+    50%{
+        opacity: 1;
+    }
+
+}
+.flagdown{
+    opacity:1;
+    animation: blim 0.7s infinite;}
+
+
+@keyframes blim{
+    50%{
+        opacity: 0;
+    }
+
+}
