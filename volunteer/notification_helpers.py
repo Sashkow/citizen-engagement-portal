@@ -31,7 +31,8 @@ def notification_description(notification):
             """{{властивість}} <a class="event-name" get_url="{{лінк}}">{{подія}}</a> змінено з {{було}} на {{стало}}"""
             event = notification.target
             if event.__class__:
-                property_name = event.__class__._meta.get_field(notification.data['event_field']).verbose_name.title()
+                property_name = 'Властивість є' + str(event) + str(type(event))
+                # property_name = event.__class__._meta.get_field(notification.data['event_field']).verbose_name.title()
             else:
                 property_name = 'Властивість' + str(event) + str(type(event))
             event_url = reverse('volunteer_event',args=(event.id,))
