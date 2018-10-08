@@ -30,6 +30,58 @@ $( document ).ready(function() {
       }
     }
 
+    $(document).on('change', '#event-status', function(){
+        data = {}
+        var url = $(this).attr('url_get');
+        filter_info = InfoEventFilter()
+        console.log(filter_info)
+        data.type = filter_info[0];
+        data.page = 1;
+        data.state = filter_info[2];
+        data.task_or_event = filter_info[1]
+        data.status_id = filter_info[3]
+
+         $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             dataType:'json',
+             success: function(data){
+                 console.log(data)
+                 console.log('OK');
+
+
+                 if(!jQuery.isEmptyObject(data)){
+
+                    if(data.html != ""){
+                        $(".events-block").empty();
+                        console.log('not here')
+                        $(".events-block").html(data.html);
+                    }else{
+                        $(".events-block").empty();
+                        console.log('here')
+                        $('<h1>', { text: 'За заданими параметрами подій не знайдено', }).appendTo($(".events-block"))
+                    }
+
+
+                  }
+                 else{
+                        $(".events-block").empty();
+                        console.log('empty json')
+
+                     $('<h1>', {
+                        text: 'За заданими параметрами подій не знайдено',
+                     }).appendTo($(".events-block"))
+                 }
+             },
+             error: function(){
+             console.log('error')
+            }
+         })
+    })
+
+
     $(document).on('click', '.question', function(){
         console.log('here');
          var answer = $(this).attr('answer');
@@ -250,14 +302,20 @@ $( document ).ready(function() {
 
 
                  if(!jQuery.isEmptyObject(data)){
-                    $(".events-block").empty();
-
-                    $(".events-block").html(data.html);
+                    if(data.html != ""){
+                        $(".events-block").empty();
+                        console.log('not here')
+                        $(".events-block").html(data.html);
+                    }else{
+                        $(".events-block").empty();
+                        console.log('here')
+                        $('<h1>', { text: 'За заданими параметрами подій не знайдено', }).appendTo($(".events-block"))
+                    }
 
                   }
                  else{
-                        $(".events-block").empty();
-                        console.log('empty json')
+                    $(".events-block").empty();
+                    console.log('empty json')
 
                      $('<h1>', {
                         text: 'За заданими параметрами подій не знайдено',
@@ -276,14 +334,12 @@ $( document ).ready(function() {
         var url = $('#event-type').attr('url_get')
         var page =$(this).attr('page');
         if(page == '...'){
-            console.log('It is bed')
             if ($(this).prev().attr('page') == '1'){
                 console.log('start')
                 page = Number($(this).next().attr('page')) - 1
                 console.log(page)
             }
             else{
-                console.log('end')
                 page = Number($(this).prev().attr('page')) + 1
                 console.log(page)
             }
@@ -299,7 +355,7 @@ $( document ).ready(function() {
 
 
         data.page = page;
-
+        console.log(data)
         $.ajax({
             url: url,
              type :'GET',
@@ -308,7 +364,13 @@ $( document ).ready(function() {
              dataType:'json',
              success:function(data){
                 console.log('OK');
-                $(".events-block").empty();
+                if(data.html != ""){
+                    $(".events-block").empty();
+                    $(".events-block").html(data.html);
+                }else{
+                    $(".events-block").empty();
+                    $('<h1>', { text: 'За заданими параметрами подій не знайдено', }).appendTo($(".events-block"))
+                }
 
                  if(!jQuery.isEmptyObject(data)){
 
@@ -333,16 +395,31 @@ $( document ).ready(function() {
     })
 
     $(document).on('click', '.my-volonter-events', function(){
+        console.log('.my-volonter-events')
         var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
         var data = {};
-        var url = $('#event-type').attr('url_get');
-        var info_filter = InfoEventFilter()
-        data.type = info_filter[0];
-        data.page = 1;
-        data.state = info_filter[2];
-        data.task_or_event = info_filter[1];
-        data.status_id = info_filter[3];
+        if( !$('#event-type').length ){
+            var url = "/typefilter/"
+            data.type = 'all'
+            data.state = 'volunteer'
+            data.page = 1
+            data.task_or_event = "none"
+            data.status_id = "none"
+            data.add_filter = 1;
+
+        }else{
+            $('#event-type').attr('state', 'volunteer');
+            var url = $('#event-type').attr('url_get');
+            var info_filter = InfoEventFilter()
+            data.type = info_filter[0];
+            data.page = 1;
+            data.state = info_filter[2];
+            data.task_or_event = info_filter[1];
+            data.status_id = info_filter[3];
+        }
+
         console.log(data)
+        console.log(url)
         $.ajax({
              url: url,
              type :'GET',
@@ -350,20 +427,36 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                  console.log('OK');
-                 if(!jQuery.isEmptyObject(data)){
+                 if( 'filter_html' in data ){
+                     $(".dynamic-block").empty()
+                     $(".dynamic-block").html(data.filter_html);
+                     $(".dynamic-block").append(data.html);
+                      $('#event-type').attr('state', 'volunteer');
+                 } else {
+                    if(!jQuery.isEmptyObject(data)){
                         console.log(data)
+                            if(data.html != ""){
+                                $(".events-block").empty();
+                                console.log('not here')
+                                $(".events-block").html(data.html);
+                            }else{
+                                $(".events-block").empty();
+                                console.log('here')
+                                $('<h1>', { text: 'Ви не приймаєте участь в подіях', }).appendTo($(".events-block"))
+                            }
 
-                        $(".events-block").html(data.html);
-                        $('#event-type').attr('state', 'volunteer');
 
-                      }
-                     else{
-                            console.log('empty json')
+                          }
+                         else{
+                                console.log('empty json')
 
-                         $('<h1>', {
-                            text: 'За заданими параметрами подій не знайдено',
-                         }).appendTo($(".events-block"))
+                             $('<h1>', {
+                                text: 'За заданими параметрами подій не знайдено',
+                             }).appendTo($(".events-block"))
+                     }
                  }
+
+
              },
              error: function(){
              console.log('error')
@@ -375,13 +468,27 @@ $( document ).ready(function() {
         $(document).on('click', '.my-org-events', function(){
         var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
         var data = {};
-        var url = $('#event-type').attr('url_get');
-        var info_filter = InfoEventFilter()
-        data.type = info_filter[0];
-        data.page = 1;
-        data.state = info_filter[2];
-        data.task_or_event = info_filter[1];
-        data.status_id = info_filter[3];
+        if( !$('#event-type').length ){
+            var url = "/typefilter/"
+            data.type = 'all'
+            data.state = 'organizer'
+            data.page = 1
+            data.task_or_event = "none"
+            data.status_id = "none"
+            data.add_filter = 1;
+
+        }
+        else{
+            $('#event-type').attr('state', 'organizer');
+            var url = $('#event-type').attr('url_get');
+            var info_filter = InfoEventFilter()
+            data.type = info_filter[0];
+            data.page = 1;
+            data.state = info_filter[2];
+            data.task_or_event = info_filter[1];
+            data.status_id = info_filter[3];
+        }
+
         console.log(data)
         $.ajax({
              url: url,
@@ -390,9 +497,24 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                  console.log('OK');
-                 if(!jQuery.isEmptyObject(data)){
-                        $(".events-block").html(data.html);
-                        $('#event-type').attr('state', 'organizer');
+                 if( 'filter_html' in data ){
+                     $(".dynamic-block").empty()
+                     $(".dynamic-block").html(data.filter_html);
+                     $(".dynamic-block").append(data.html);
+                      $('#event-type').attr('state', 'organizer');
+                 }
+                 else{
+                      if(!jQuery.isEmptyObject(data)){
+                        if(data.html != ""){
+                            $(".events-block").empty();
+                            console.log('not here')
+                            $(".events-block").html(data.html);
+                        }else{
+                            $(".events-block").empty();
+                            console.log('here')
+                            $('<h1>', { text: 'Ви не організували жодної події', }).appendTo($(".events-block"))
+                        }
+
 
                       }
                      else{
@@ -402,6 +524,8 @@ $( document ).ready(function() {
                             text: 'За заданими параметрами подій не знайдено',
                          }).appendTo($(".dynamic-block"))
                  }
+                 }
+
              },
              error: function(){
              console.log('error')
@@ -468,17 +592,6 @@ $(document).on('click', '.news', function(){
 })
 
 
-
-        $(document).on('click', '.my-events', function(){
-           $(this).parent().parent().next().removeClass('d-none');
-           $(this).parent().parent().next().next().removeClass('d-none');
-           $('.my-org-events, .my-volonter-events').click(function(){
-                $('.my-events').parent().parent().addClass('current-menu-item');
-                $('.my-events').parent().parent().next().addClass('d-none');
-                $('.my-events').parent().parent().next().next().addClass('d-none');
-           })
-
-        })
 
          $(document).on('click', '.setting-img', function(){
           var url = $(this).attr('get_url')
@@ -622,9 +735,16 @@ $(document).on('click', '.news', function(){
 
 
                      if(!jQuery.isEmptyObject(data)){
-                        $(".events-block").empty();
 
-                        $(".events-block").html(data.html);
+                        if(data.html != ""){
+                            $(".events-block").empty();
+                            console.log('not here')
+                            $(".events-block").html(data.html);
+                        }else{
+                            $(".events-block").empty();
+                            console.log('here')
+                            $('<h1>', { text: 'За заданими параметрами подій не знайдено', }).appendTo($(".events-block"))
+                        }
 
                       }
                      else{
@@ -642,47 +762,7 @@ $(document).on('click', '.news', function(){
              })
         })
 
-        $(document).on('change', '#event-status', function(){
-        data = {}
-        var url = $(this).attr('url_get');
-        filter_info = InfoEventFilter()
-        console.log(filter_info)
-        data.type = filter_info[0];
-        data.page = 1;
-        data.state = filter_info[2];
-        data.task_or_event = filter_info[1]
-        data.status_id = filter_info[3]
 
-         $.ajax({
-             url: url,
-             type :'GET',
-             data:data,
-             cache:true,
-             dataType:'json',
-             success: function(data){
-                 console.log('OK');
-
-
-                 if(!jQuery.isEmptyObject(data)){
-                    $(".events-block").empty();
-
-                    $(".events-block").html(data.html);
-
-                  }
-                 else{
-                        $(".events-block").empty();
-                        console.log('empty json')
-
-                     $('<h1>', {
-                        text: 'За заданими параметрами подій не знайдено',
-                     }).appendTo($(".events-block"))
-                 }
-             },
-             error: function(){
-             console.log('error')
-            }
-         })
-    })
 
 
 

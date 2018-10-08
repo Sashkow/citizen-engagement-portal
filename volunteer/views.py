@@ -291,7 +291,6 @@ def type_filter(request):
     print(data)
     parametrs = [data['type'], data['page'], data['state'], data['task_or_event'], data['status_id']]
     types_events = EventsType.objects.all()
-    print(parametrs)
     curr_category = {}
     for type_e in types_events:
         img = Currency.objects.get(type_event=type_e.id).image.url
