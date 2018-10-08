@@ -249,7 +249,7 @@ class Event(models.Model):
 
 
     def save(self, *args, **kwargs):
-        print("stoppp")
+
         if self.address:
             extent = settings.LEAFLET_CONFIG['SPATIAL_EXTENT']
             view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
@@ -264,6 +264,37 @@ class Event(models.Model):
             else:
                 print('coordinates for address not found')
 
+        # calendar part
+        if self.calendar_event:
+            self.calendar_event.delete()
+
+        if self.date_event:
+            calendar_name = 'volunteer_calendar'
+            calendar_slug = 'volunteer_calendar_slug'
+            if Calendar.objects.filter(name=calendar_name, slug='volunteer_calendar_slug').exists():
+                calendar = Calendar.objects.filter(name=calendar_name, slug='volunteer_calendar_slug')[0]
+            else:
+                calendar = Calendar.objects.create(name=calendar_name, slug=calendar_slug)
+
+            if self.time_event:
+                start = datetime.datetime.combine(self.date_event, self.time_event)
+            else:
+                start = self.date_event
+            data = {
+                'title': self.name,
+                'start': start ,
+                'end': datetime.datetime(self.date_event.year, self.date_event.month, self.date_event.day, 23,
+                                         59),
+                # 'end_recurring_period': datetime.datetime(today.year + 30, 6, 1, 0, 0),
+                # 'rule': rule,
+                'calendar': calendar,
+                'color_event': self.events_type.color_event,
+            }
+
+            new_calendar_event = CalendarEvent.objects.create(**data)
+            self.calendar_event = new_calendar_event
+            # end calendar_part
+
 
         is_new_event = False
         if self.pk is None:
@@ -274,32 +305,7 @@ class Event(models.Model):
             old_type = old_instance.events_type.id
             currency = Currency.objects.get(type_event__id=old_type)
 
-            # calendar part
-            if self.calendar_event:
-                self.calendar_event.delete()
 
-            if self.date_event:
-                calendar_name = 'volunteer_calendar'
-                calendar_slug = 'volunteer_calendar_slug'
-                if Calendar.objects.filter(name=calendar_name, slug='volunteer_calendar_slug').exists():
-                    calendar = Calendar.objects.filter(name=calendar_name, slug='volunteer_calendar_slug')[0]
-                else:
-                    calendar = Calendar.objects.create(name=calendar_name, slug=calendar_slug)
-
-
-                data = {
-                    'title': self.name,
-                    'start': self.date_event,
-                    'end': datetime.datetime(self.date_event.year, self.date_event.month, self.date_event.day, 23, 59),
-                    # 'end_recurring_period': datetime.datetime(today.year + 30, 6, 1, 0, 0),
-                    # 'rule': rule,
-                    'calendar': calendar,
-                    'color_event': self.events_type.color_event,
-                }
-
-                new_calendar_event = CalendarEvent.objects.create(**data)
-                self.calendar_event = new_calendar_event
-            # end calendar_part
 
         super(Event, self).save(*args, **kwargs)
 
@@ -368,6 +374,7 @@ class Event(models.Model):
 
         if is_new_event and self.status.id == 1: # потребує допомоги в підготовці
             notify_event_needs_help(self)
+
 
 
 
