@@ -9,7 +9,9 @@
                     <img class="ep_event_task" src="{% static 'volunteer/images/event.png' %}">
                 {% else %}
                     <img class="" src="{% static 'volunteer/images/task.png' %}">
-                    <button type="button" event_id ="{{event.id}}" class="get-executers-form" get_url="{% url 'task_executor' %}">Призначити виконавця</button>
+                    {% if zero_executor == True %}
+                        <button type="button" event_id ="{{event.id}}" class="get-executers-form" get_url="{% url 'task_executor' %}">Призначити виконавця</button>
+                    {% endif %}
                 {% endif%}
             </div>
             <div class="col-md-8">

@@ -65,7 +65,12 @@
         .photo-user{
            width: {{volunteer.league.img_user_width}};
            right: {{volunteer.league.img_user_height}};
+           height: {{volunteer.league.img_user_height_corr}};
         }
+
+        .notif-col{
+            color:{{volunteer.league.color_not_text}};
+        };
 
     </style>
 
@@ -141,18 +146,13 @@
                 {% csrf_token %}
                 <!--<h2>{{ volunteer.league }}</h2>-->
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 user-name">
                         <h3 get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}}</h3>
                         <h4 get_url="{% url 'profile_edit' %}" class="volunteer-name setting-img">{{volunteer.last_name}}</h4>
 
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="volunteer-name first-name"> </h3>
-                        <h4 class="volunteer-name"> </h4>
-                    </div>
-                </div>
+
 
                 <div class="row">
                     <div class="col-md-12">
@@ -184,7 +184,7 @@
                         <div class="own-progress-bar">
                             <div class="own-progress-league" style="width: {{achieve_quant|divide:league_user.quantity_achievement|multiply:100|to_int}}%">
                                 <div class="progress_state">
-                                    <p class="quant-ach">{{achieve_quant}}</p>
+                                    <p class="quant-ach notif-col">{{achieve_quant}}</p>
                                     <img class="img_progress_state" src="{% static 'volunteer/images/current_progress_state.png' %}">
                                 </div>
                             </div>
@@ -209,19 +209,17 @@
 
                <div class="row profile-menu-item text-left justify-content-md-center">
                     <div class="col-md-8">
-                        <p class="item-menu my-events">мої добрі справи</p>
+                        <p class="item-menu my-volonter-events">я волонтер</p>
                     </div>
                 </div>
-                <div class="row profile-menu-item text-left justify-content-md-center d-none">
+
+                <div class="row profile-menu-item text-left justify-content-md-center">
                     <div class="col-md-8">
-                        <p class="my-volonter-events ">я волонтер</p>
+                        <p class="item-menu my-org-events">я організатор</p>
                     </div>
                 </div>
-                <div class="row profile-menu-item text-left justify-content-md-center d-none">
-                    <div class="col-md-8">
-                        <p  class="my-org-events ">я організатор</p>
-                    </div>
-                </div>
+
+
                 <div class="row profile-menu-item text-left justify-content-md-center current-menu-item">
                     <div class="col-md-8">
                         <p class="news item-menu " url_get = "{% url 'type_filter' %}">новини</p>
@@ -240,7 +238,8 @@
                 <div class="row profile-menu-item text-left justify-content-md-center">
                     <div class="col-md-8">
                         <!--<a href="{% url 'notifications' %}" <p  class="item-menu"  >сповіщення</p>-->
-                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}">сповіщення {% notifications_unread %}</p>
+                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}">сповіщення</p>
+                        <div class="notif-quant text-center notif-col" > <p>{% notifications_unread %}</p></div>
                     </div>
                 </div>
 

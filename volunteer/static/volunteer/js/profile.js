@@ -791,8 +791,8 @@ $(document).on('click', '.news', function(){
              cache:true,
              success: function(data){
                  console.log('OK');
-                 $(".dynamic-block").append(data.html);
-                 $('#event_tasks').modal('show');
+                    $('#modal_executor').modal('hide');
+                    $('.get-executers-form').remove();
                  },
              error: function(){
                 console.log('error')
