@@ -117,8 +117,12 @@ admin.site.register(UserPoint, UserPointAdmin)
 
 
 class AchievementAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Achievement._meta.fields]
-    exclude = ['ID']
+    # list_display = [field.name for field in Achievement._meta.fields if not field.name=='ID']
+    # list_editable = [field.name for field in Achievement._meta.fields if not field.name=='ID']
+    list_display = [ 'achievement', 'league', 'description', 'image', 'background_achieve', 'color_text_achieve']
+    list_editable = ['background_achieve', 'color_text_achieve']
+    # print(list_editable)
+    # exclude = ['ID']
 admin.site.register(Achievement, AchievementAdmin)
 
 
