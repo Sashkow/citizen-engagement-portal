@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block enter_button%}
+    <button class="btn btn-sm align-middle ml-3 order-lg-last btn btn-enter open-login" type="button">вхід</button>
+{% endblock %}
+
 {% block menu_button %}
 
 
-<button href="#" class="btn btn-enter open-login">вхід</button>
 <button href="#" class="btn btn-enter open-register">реєстрація</button>
 
 {% endblock %}
@@ -21,12 +24,12 @@
 </div>
 
 <div class="row task-info ">
-    <div class="col-md-4">
+    <div class="col-md-4  d-none d-md-block">
 
         <img class="golden-cup" src="{% static 'volunteer/images/golden_cup.png' %}">
 
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-12">
         <div class="row">
             <div class="col-md-12 text-left mt10vh">
                 <h2 class=" slog make-task">виконуй завдання  —  <br> отримуй винагороди</h2>
@@ -36,7 +39,7 @@
 
         <div class="row text-left">
 
-            <div class="col-md-6">
+            <div class="col-6">
                 <ul>
                     <li class="first-li">Завдання</li>
                     <li>-прибирай</li>
@@ -49,7 +52,7 @@
 
             </div>
 
-            <div class="col-md-6">
+            <div class="col-6" >
                     <ul>
                     <li  class="first-li" >Винагороди</li>
                     <li>-знижки на комуналки</li>
@@ -66,32 +69,44 @@
     </div>
 </div>
 
+<div class="row"><div class="col-md-12 d-block d-md-none">
+        <img class="golden-cup float-right" src="{% static 'volunteer/images/golden_cup.png' %}">
+    </div>
+</div>
+
 
 <div class="row how-it-works my-auto align-items-center justify-content-center">
     <!--<div class="col-md-2"></div>-->
-    <div class="col-md-auto">
+    <div class="col-auto">
         <h4 class="mot-text">Бачиш проблему?</h4>
-        <img class="hiw-image" src="{% static 'volunteer/images/binocle.png' %}">
+        <img class="hiw-image d-none d-md-block" src="{% static 'volunteer/images/binocle.png' %}">
+        <img class="hiw-image d-block d-md-none" src="{% static 'volunteer/images/binoclesm.png' %}">
     </div>
-    <div class="col-md-auto">
+    <div class="col-auto">
         <h4 class="mot-text">Створюй завдання</h4>
-        <img class="hiw-image"  src="{% static 'volunteer/images/task_list.png' %}">
+        <img class="hiw-image d-none d-md-block"  src="{% static 'volunteer/images/task_list.png' %}">
+        <img class="hiw-image d-block d-md-none"  src="{% static 'volunteer/images/task_listsm.png' %}">
     </div>
-    <div class="col-md-auto">
+    <div class="col-auto">
         <h4 class="mot-text">Знаходь однодумців</h4>
-        <img class="hiw-image"  src="{% static 'volunteer/images/help.png' %}">
+        <img class="hiw-image d-none d-md-block"  src="{% static 'volunteer/images/help.png' %}">
+        <img class="hiw-image d-block d-md-none"  src="{% static 'volunteer/images/helpsm.png' %}">
     </div>
-    <div class="col-md-auto">
+    <div class="col-auto">
         <h4 class="mot-text">Допомагай місту</h4>
-        <img class="hiw-image"  src="{% static 'volunteer/images/wand.png' %}">
+        <img class="hiw-image d-none d-md-block"  src="{% static 'volunteer/images/wand.png' %}">
+        <img class="hiw-image d-block d-md-none"  src="{% static 'volunteer/images/wandsm.png' %}">
     </div>
 
 </div>
 
+
+<div class="d-none d-md-block">
+
+
 <div class="row superman">
     <div class="col-md-5th-3 justify-content-center d-flex align-items-start">
         <h1 class="my-flex-item slog mot-h">Хочеш бути супергероєм <br> міста?</h1>
-
     </div>
     <div class="col-md-5th-2 justify-content-center d-flex align-items-end">
         <img class=" my-flex-item"  src="{% static 'volunteer/images/superhero.png' %}">
@@ -155,13 +170,75 @@
             </div>
 
         </div>
+    </div>
+</div>
+
+</div>
+
+<div class="d-block d-md-none">
+    <div class="row">
+        <div class="col-12 justify-content-center d-flex align-items-start">
+            <h1 class="my-flex-item slog mot-h">Хочеш бути супергероєм <br> міста?</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <img class="small-superman"  src="{% static 'volunteer/images/superhero.png' %}">
+        </div>
+    </div>
+    <div class="row stairs">
+        <div class="col text-center">
+           <button class="btn btn-join open-register">приєднатися</button>
+        </div>
+    </div>
+
+</div>
 
         <div class="row my-auto align-items-end  d-flex justify-content-center wait-for-you">
 
 
-            <div class="col-md-3 text-center justify-content-center  align-items-center">
+            <div class="col-3 text-center justify-content-center  align-items-center">
 
                     <img class="cirle" src="{% static 'volunteer/images/team.png'%}">
+
+                <!--<p class="step-info">-->
+                    <!--дружня команда <br> волонтерів-->
+                <!--</p>-->
+
+            </div>
+
+            <div class="col-3 text-center">
+
+                     <img class="cirle" src="{% static 'volunteer/images/party.png' %}">
+
+                 <!--<p class="step-info d-none d-md-block">-->
+                    <!--яскраві події <br>та хороший настрій-->
+                <!--</p>-->
+
+                <!--<p class="step-info d-block d-md-none">-->
+                    <!--яскраві події-->
+                <!--</p>-->
+
+
+            </div>
+            <div class="col-3 text-center">
+
+                     <img class="cirle" src="{% static 'volunteer/images/gifts.png' %}">
+
+                 <!--<p class="step-info">-->
+                    <!--плюшки місцевого<br>виробництва-->
+                <!--</p>-->
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-3 text-center justify-content-center  align-items-center">
 
                 <p class="step-info">
                     дружня команда <br> волонтерів
@@ -169,39 +246,37 @@
 
             </div>
 
-            <div class="col-md-3 text-center">
+            <div class="col-3 text-center justify-content-center  align-items-center">
 
-                     <img class="cirle" src="{% static 'volunteer/images/party.png' %}">
-
-                 <p class="step-info">
+                 <p class="step-info d-none d-md-block">
                     яскраві події <br>та хороший настрій
                 </p>
 
+                <p class="step-info d-block d-md-none">
+                    яскраві події
+                </p>
 
             </div>
-            <div class="col-md-3 text-center">
 
-                     <img class="cirle" src="{% static 'volunteer/images/gifts.png' %}">
+            <div class="col-3 text-center justify-content-center  align-items-center">
 
-                 <p class="step-info">
+                <p class="step-info">
                     плюшки місцевого<br>виробництва
                 </p>
 
-
             </div>
-
-
 
         </div>
 
-        <!--<div class="row align-items-center text-center join">-->
-            <!--<div class="col-md-12">-->
-                <!--<img class="my-flex-item img-join open-register" src="{% static 'volunteer/images/dirizable.png' %}">-->
-            <!--</div>-->
 
-        <!--</div>-->
 
-        <div class="row align-items-center text-center join">
+        <div class="row align-items-center text-center join d-block d-md-none">
+            <div class="col-md-12">
+                <img class="my-flex-item img-join open-register" src="{% static 'volunteer/images/dirizable.png' %}">
+            </div>
+        </div>
+
+        <div class="row align-items-center text-center join d-none d-md-block">
             <div class="col-md-12">
 
                 {% include 'derizabl.html' %}
@@ -212,36 +287,37 @@
 
     </div>
 
-</div>
+
+
 
 <div class="row faq t">
-    <div class="col-md-4 text-right">
+    <div class="col-4 text-right">
     <h1 class="slog ">F.A.Q.</h1>
     </div>
-    <div class="col-md-6 padding-faq">
+    <div class="col-6 padding-faq">
         <h3 class="question" answer = "ans-1">Як організувати подію?</h3>
         <ul class="answer d-none ans-1">
-            <li>Обирай категорію події: екологія, урбанізм, благодійництво тощо</li>
-            <li>Додавай опис і фотографії</li>
-            <li>Визначай дату, місце розташування та кількість балів за участь</li>
-            <li>Попроси допомоги в організації (принести віники, столи, стільчики)</li>
-            <li>Слідкуй за статусом і коментарями до події</li>
+            <li class="li-ans">Обирай категорію події: екологія, урбанізм, благодійництво тощо</li>
+            <li class="li-ans">Додавай опис і фотографії</li>
+            <li class="li-ans">Визначай дату, місце розташування та кількість балів за участь</li>
+            <li class="li-ans">Попроси допомоги в організації (принести віники, столи, стільчики)</li>
+            <li class="li-ans">Слідкуй за статусом і коментарями до події</li>
         </ul>
         <h3 class="question " answer = "ans-2">Як приєднатися до івенту?</h3>
         <ul class="answer d-none ans-2">
-            <li>Знаходь подію або завдання за допомогою зручних фільтрів і пошуку</li>
-            <li>натискай приєднатися</li>
-            <li>бери участь, виконуй завдання, допомагай організатору</li>
-            <li>отримуй бали та оцінюй події</li>
+            <li class="li-ans">Знаходь подію або завдання за допомогою зручних фільтрів і пошуку</li>
+            <li class="li-ans">натискай приєднатися</li>
+            <li class="li-ans">бери участь, виконуй завдання, допомагай організатору</li>
+            <li class="li-ans">отримуй бали та оцінюй події</li>
         </ul>
         <h3 class="question" answer = "ans-3">За що саме дають бали?</h3>
         <ul class="answer d-none ans-3" >
-            <li>Фіксована кількість балів за участь в події, бонуси активним учасникам</li>
-            <li>Організаторам події дають бали за проведення, причому чим маштабніша подія, тим більше балів</li>
+            <li class="li-ans">Фіксована кількість балів за участь в події, бонуси активним учасникам</li>
+            <li class="li-ans">Організаторам події дають бали за проведення, причому чим маштабніша подія, тим більше балів</li>
         </ul>
         <h3 class="question" answer = "ans-4">Хто отримує плюшки?</h3>
         <ul class="answer d-none ans-4">
-            <li>Волонтер заробляє бали, просувається в рейтингу. Активні волонтери і організатори отримують винагороди.</li>
+            <li class="li-ans">Волонтер заробляє бали, просувається в рейтингу. Активні волонтери і організатори отримують винагороди.</li>
         </ul>
         <!--<h3 class="question" answer = "ans-5">Які саме завдання бувають?</h3>-->
         <!--<ul class="answer d-none ans-5">-->

@@ -198,8 +198,8 @@
                     {% for point in user_points %}
                         {% if forloop.first %} <div class="row justify-content-md-center"> {% endif %}
                             <div class="col-md-2">
-                                <img class="currency-image float-left" src="{{ point.currency.image.url }}" >
-                                <p class="curr_quat float-right">{{point.quantity}}</p>
+                                <img class="currency-image" src="{{ point.currency.image.url }}" >
+                                <p class="curr_quat">{{point.quantity}}</p>
                             </div>
                         {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-md-center"> {%endif%}
                          {% if forloop.last %}</div>{% endif %}
