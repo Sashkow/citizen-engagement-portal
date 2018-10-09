@@ -369,7 +369,7 @@ def get_achivments(request):
     if request.method == 'GET':
         django_user = request.user
         current_user = User.objects.get(django_user_id=django_user)
-        leagues = League.objects.all()
+        leagues = League.objects.all().order_by('id')
         current_league = current_user.league.id
         achivments = Achievement.objects.filter(league__id = current_league)
         user_achivements = list(UserAchievement.objects.filter(user = current_user).values_list('achievement_id', flat = True))
