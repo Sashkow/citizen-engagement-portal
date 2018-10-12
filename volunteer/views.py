@@ -131,6 +131,7 @@ def home(request):
 
 @login_required
 def profile(request):
+    page_title = "Профіль"
 
     session_key = request.session.session_key
     django_user = request.user
@@ -191,7 +192,8 @@ def profile(request):
                                                  'form': form,
                                                  'events_task_app':events_task_app,
                                                  'form_task':form_task,
-                                                 'form_org_task':form_org_task
+                                                 'form_org_task':form_org_task,
+                                                 'page_title': page_title
     })
 
 @login_required
