@@ -689,3 +689,5 @@ def change_photo(request):
     return_dict = {}
     return JsonResponse(return_dict)
 
+
+

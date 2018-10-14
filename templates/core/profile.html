@@ -126,136 +126,139 @@
     </script>
 {% endblock %}
 
+{% block enter_button%}
+            <img class="d-block d-md-none open-profile-menu" active = "1" src="{% static 'volunteer/images/menu_icon.png' %}">
+{% endblock %}
+
 {{achieve_quant|divide:league_user.quantity_achievement|to_int}}
 
-{% block menu_button %}
-    <form action="{% url 'logout' %}">
-        <button class="btn btn-enter" type="submit">вийти</button>
-    </form>
-{% endblock %}
+        {% block menu_button %}
+            <form action="{% url 'logout' %}">
+                <button class="btn btn-enter" type="submit">вийти</button>
+            </form>
+        {% endblock %}
 
 {% block container %}
 
+<div class="wrapper">
 
+    <nav id="sidebar" class="text-center profile-info" style="background-image:url({{volunteer.league.background_image.url}}); background-color:{{volunteer.league.background_color}}">
+         {% csrf_token %}
+        <div class="user-name">
+            <h3 get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}}</h3>
+            <h4 get_url="{% url 'profile_edit' %}" class="volunteer-name setting-img">{{volunteer.last_name}}</h4>
 
+        </div>
+        <div class="ribbon-div">
+             <p class="ribbon ">{{ volunteer.league }}</p>
+        </div>
 
+        <div class="profile-image">
+             <img class="user-league-info league-logo setting-img" get_url="{% url 'profile_edit' %}" src="{{league_user.league_image.url}}">
+                {% if volunteer.photo %}
+                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{{ volunteer.photo.url }}">
+                {% else %}
+                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{% static  'volunteer/images/user_profile_default.png' %}" >
+                {% endif %}
+             <!--{{league_user.user_frame.url}}-->
+             <img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}">
+        </div>
 
-        <div class="row align-self-center h-100">
-            <div class="profile_info col-md-3 text-center align-items-center justify-content-center" style="background-image:url({{volunteer.league.background_image.url}}); background-color:{{volunteer.league.background_color}}">
-                <div class="sidebar-nav-fixed affix">
-                {% csrf_token %}
-                <!--<h2>{{ volunteer.league }}</h2>-->
-                <div class="row">
-                    <div class="col-md-12 user-name">
-                        <h3 get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}}</h3>
-                        <h4 get_url="{% url 'profile_edit' %}" class="volunteer-name setting-img">{{volunteer.last_name}}</h4>
-
-                    </div>
+        <div class="own-progress-bar">
+            <div class="own-progress-league" style="width: {{achieve_quant|divide:league_user.quantity_achievement|multiply:100|to_int}}%">
+                <div class="progress_state">
+                    <p class="quant-ach notif-col">{{achieve_quant}}</p>
+                    <img class="img_progress_state" src="{% static 'volunteer/images/current_progress_state.png' %}">
                 </div>
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="ribbon-div">
-                         <p class="ribbon ">{{ volunteer.league }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 profile-image">
-                         <div>
-                             <img class="user-league-info league-logo setting-img" get_url="{% url 'profile_edit' %}" src="{{league_user.league_image.url}}">
-                                {% if volunteer.photo %}
-                                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{{ volunteer.photo.url }}">
-                                {% else %}
-                                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{% static  'volunteer/images/user_profile_default.png' %}" >
-                                {% endif %}
-                             <!--{{league_user.user_frame.url}}-->
-                             <img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}">
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="row justify-content-center">
-                    <div class="col-md-9">
-                        <div class="own-progress-bar">
-                            <div class="own-progress-league" style="width: {{achieve_quant|divide:league_user.quantity_achievement|multiply:100|to_int}}%">
-                                <div class="progress_state">
-                                    <p class="quant-ach notif-col">{{achieve_quant}}</p>
-                                    <img class="img_progress_state" src="{% static 'volunteer/images/current_progress_state.png' %}">
-                                </div>
-                            </div>
-                        <p class="text-right" style="margin-right: 0.7vh;">5</p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                    {% for point in user_points %}
-                        {% if forloop.first %} <div class="row justify-content-md-center"> {% endif %}
-                            <div class="col-md-2">
-                                <img class="currency-image" src="{{ point.currency.image.url }}" >
-                                <p class="curr_quat">{{point.quantity}}</p>
-                            </div>
-                        {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-md-center"> {%endif%}
-                         {% if forloop.last %}</div>{% endif %}
-                    {% endfor %}
-
-
-
-               <div class="row profile-menu-item text-left justify-content-md-center">
-                    <div class="col-md-8">
-                        <p class="item-menu my-volonter-events">я волонтер</p>
-                    </div>
-                </div>
-
-                <div class="row profile-menu-item text-left justify-content-md-center">
-                    <div class="col-md-8">
-                        <p class="item-menu my-org-events">я організатор</p>
-                    </div>
-                </div>
-
-
-                <div class="row profile-menu-item text-left justify-content-md-center current-menu-item">
-                    <div class="col-md-8">
-                        <p class="news item-menu " url_get = "{% url 'type_filter' %}">новини</p>
-                    </div>
-                </div>
-                <div class="row profile-menu-item text-left justify-content-md-center">
-                    <div class="col-md-8">
-                        <p class="get-achievements item-menu" get_url="{% url 'achivments' %}">мої досягнення</p>
-                    </div>
-                </div>
-                <div class="row profile-menu-item text-left justify-content-md-center">
-                    <div class="col-md-8">
-                        <p class="item-menu" id="open-reg-modal" post_url="{% url 'newevent' %}">організувати подію</p>
-                    </div>
-                </div>
-                <div class="row profile-menu-item text-left justify-content-md-center">
-                    <div class="col-md-8">
-                        <!--<a href="{% url 'notifications' %}" <p  class="item-menu"  >сповіщення</p>-->
-                        <p  class="item-menu notifications" get_url = "{% url 'notifications' %}">сповіщення</p>
-                        <div class="notif-quant text-center notif-col" > <p>{% notifications_unread %}</p></div>
-                    </div>
-                </div>
-
             </div>
+            <p class="text-right" style="margin-right: 0.7vh;">5</p>
+        </div>
+        <div class="currency-holder">
+
+            {% for point in user_points %}
+                {% if forloop.first %} <div class="row justify-content-center "> {% endif %}
+                    <div class="col-auto">
+                        <img class="currency-image" src="{{ point.currency.image.url }}" >
+                        <p class="curr_quat">{{point.quantity}}</p>
+                    </div>
+                {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-center"> {%endif%}
+                {% if forloop.last %}</div>{% endif %}
+            {% endfor %}
+        </div>
+
+
+
+        <div class="menu-profile">
+
+            <div class="text-left ">
+                <p class="item-menu my-volonter-events">я волонтер</p>
             </div>
-            <div class="col-md-9" style="background-color: #f9ffefff;
+
+            <div class="text-left">
+                <p class="item-menu my-org-events">я організатор</p>
+            </div>
+
+
+            <div class="text-left  current-menu-item">
+                <p class="news item-menu " url_get = "{% url 'type_filter' %}">новини</p>
+            </div>
+
+            <div class="text-left">
+                <p class="get-achievements item-menu" get_url="{% url 'achivments' %}">мої досягнення</p>
+            </div>
+
+
+            <div class="text-left">
+                <p class="item-menu" id="open-reg-modal" post_url="{% url 'newevent' %}">організувати подію</p>
+            </div>
+
+
+            <div class="text-left">
+                <div  class="item-menu notifications" get_url = "{% url 'notifications' %}"> сповіщення
+                        <div class="notif-quant text-center notif-col" >
+                            <p>{% notifications_unread %}</p>
+                        </div>
+                </div>
+            </div>
+
+            <div class="text-left d-block d-md-none">
+                <div class="item-menu">
+                   <a class="item-menu " href="{% url 'logout' %}">вийти </a>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    </nav>
+
+
+
+        <div class="container-fluid content-container">
+
+            <div  style="background-color: #f9ffefff;
                                          background-image:url({% static 'volunteer/images/bg_plastic1.png'%});">
 
-            <div class="dynamic-block">
-                    {% include 'events_filter.html' %}
-                   {% include 'events_result.html' %}
-            </div>
-            </div>
+                <div class="dynamic-block">
+                        {% include 'events_filter.html' %}
+                       {% include 'events_result.html' %}
+                </div>
             </div>
 
-        {% include 'modal_event_register.html' %}
+
+            {% include 'modal_event_register.html' %}
+
+
+        </div>
+
+    </div>
+
+
+
+
+
 
 {% endblock %}
 

@@ -207,6 +207,82 @@ font-size: 155%;
         padding-top: 9vh!important;
     }
 
+    #sidebar{
+        width:100vw!important;
+        display:none;
+        min-height:94vh;
+    }
+
+    .profile-image{
+        width:80%!important;
+        margin: 0 auto!important;
+        margin-bottom:2vh!important;
+
+    }
+
+    .ribbon{
+        width:58%!important;
+    }
+
+    .first-name{
+        margin-top:2vh !important;
+
+    }
+
+    .user-name{
+
+    margin-bottom:2vh!important;
+
+    }
+
+    .own-progress-bar{
+        margin-bottom:3vh!important;
+    }
+
+    .item-menu{
+        margin: 0 auto!important;
+        width:65%;
+    }
+
+
+    .inner{
+        bottom:11%!important;
+    }
+
+    .event-status-info{
+        font-size:2vh!important;
+        line-height:77%!important;
+    }
+
+    .category-icon{
+        height:13vh!important;
+    }
+
+    .event-item-info{
+        height:inherit!important;
+    }
+
+    .info{
+        margin:auto!important;
+        padding-left:7vw!important;
+    }
+
+    .event-button{
+
+        font-size:1.8vh!important;
+        margin-bottom:0.5vh!important;
+        min-width: 145px;
+        border-top-right-radius: 25px !important;
+        border-bottom-right-radius: 25px !important;
+        width:90%;
+    }
+
+    .pagination-list{
+        margin:0 auto;
+    }
+
+
+
 }
 
 .li-ans{
@@ -488,12 +564,14 @@ h4.volunteer-name{
 
 .profile-image{
     margin-bottom:2vh;
+    position:relative;
 }
 
 .item-menu{
     margin-bottom: 0.7vh;
     font-size: 110%;
     word-spacing: 4px;
+    margin-left: 3vw;
 }
 
 .item-menu:hover{
@@ -507,8 +585,9 @@ h4.volunteer-name{
 
 .own-progress-bar{
   height: 3vh;
-  width: 100%;
+  width: 75%;
   background-color:#fff;
+  margin:0 auto;
   margin-bottom: 4vh;
   border-radius: 7px;
 }
@@ -617,7 +696,7 @@ img.unlocked-achievement{
 
 .event-name{
     color: #000;
-    font-size: 130%;
+    font-size: 2.3vh;
     padding-top: 3%;
 }
 .event-name:hover{
@@ -765,9 +844,10 @@ img.unlocked-achievement{
  .page-item{
     border:3px dashed #00babaff;
     border-top:none;
+    border-left:none;
  }
  .page-item:first-child{
-    border-right:none;
+    border-left:3px dashed #00babaff;
  }
 
  .category_event{
@@ -911,10 +991,10 @@ img.unlocked-achievement{
     opacity: 0.6;
     float: right;
     font-weight:bold;
+    margin-right:3vw;
 }
 
 .notifications{
-    float: left;
 }
 
 .user-name{
@@ -969,4 +1049,45 @@ svg{
     border-bottom-right-radius: 25px !important;
     border-top-right-radius: 25px !important;
     padding-right: 7% !important;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+
+.currency-holder{
+    margin:0;
+    width:100%
+}
+
+.open-profile-menu{
+    height:4vh;
+}
+
+.open-profile-menu:hover{
+    cursor:pointer;
+}
+
+#sidebar{
+        position:sticky;
+        width: 27vw;
+        top: 6vh;
+        left: 0;
+        height:94vh;
+}
+
+.category-icon{
+    height:18vh;
+}
+
+.filter-image{
+    height:2vh;
+}
+
+.margin-0{
+    margin:0;
+    color:#ff7f1aff;
 }

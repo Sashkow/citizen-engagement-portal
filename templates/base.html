@@ -50,7 +50,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-md navbarset container-fluid nvb-style">
+    <nav class="navbar sticky-top  navbar-expand-md navbarset container-fluid nvb-style">
         <a href="{% url 'home' %}" class="navbar-left">
             <img src="{% static 'volunteer/images/hands.png' %}" class="logo">
         </a>
@@ -73,11 +73,11 @@
 
 
 
-    <div class="container-fluid">
+
 
 
         {% block container %}{% endblock %}
-    </div>
+
     <script type="text/javascript">
         function show(state){
             document.getElementById('window').style.display = state;
