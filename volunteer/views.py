@@ -131,6 +131,7 @@ def home(request):
 
 @login_required
 def profile(request):
+    page_title = "Профіль"
 
     session_key = request.session.session_key
     django_user = request.user
@@ -191,7 +192,8 @@ def profile(request):
                                                  'form': form,
                                                  'events_task_app':events_task_app,
                                                  'form_task':form_task,
-                                                 'form_org_task':form_org_task
+                                                 'form_org_task':form_org_task,
+                                                 'page_title': page_title
     })
 
 @login_required
@@ -637,8 +639,20 @@ def app_task(request):
         if form.is_valid():
             print('Hi')
             form.save()
+            # 5 Волонтер бажає виконати завдання
+            event = Event.objects.get(id=form.data['event'])
+            recipient = event.organizer.django_user_id
+            notify.send(
+                django_user,
+                recipient=recipient,
+                verb="applied",
+                target=event,
+                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+                data={'type': '5',},  # 5 Волонтер бажає виконати завдання
+            )
             redirect_url = reverse('profile')
             return redirect(redirect_url)
+
 
 def task_executor(request):
     if request.method == "GET":

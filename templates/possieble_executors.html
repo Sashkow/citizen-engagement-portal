@@ -14,7 +14,7 @@
 
                     {% for executor in executors %}
 
-                         <p><input name="execute" type="radio" value="{{executor.user.id}}">{{executor.user}}</p>
+                         <p><input name="execute" type="radio" value="{{executor.user.id}}">{{executor.user}} ({{executor.contact}})</p>
 
                     {% endfor %}
               </div>

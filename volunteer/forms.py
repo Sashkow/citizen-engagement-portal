@@ -20,7 +20,7 @@ class NewEventForm(ModelForm):
             'max_part': 'Мінімальна кількість учасників',
             'min_part': 'Максимальна кількість учасників',
             'recommended_points': 'Рекомендована кількість балів',
-            'contact':'Ваш контаактний e-mail',
+            'contact':'Ваш контактний e-mail',
             'events_type':'Категорія'
         }
         widgets = {

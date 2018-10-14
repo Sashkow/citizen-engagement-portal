@@ -443,6 +443,11 @@ class EventsSubscriber(models.Model):
     class Meta:
         unique_together = (("user", "event"),)
 
+    def save(self, *args, **kwargs):
+        super(Event, self).save(*args, **kwargs)
+
+
+
 
 class EventsParticipant(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

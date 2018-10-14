@@ -699,6 +699,12 @@ img.unlocked-achievement{
     font-size: 2.3vh;
     padding-top: 3%;
 }
+
+.notification-name{
+    color: #000;
+    font-size: 130%;
+    padding-top: 3%;
+}
 .event-name:hover{
     cursor:pointer;
 }
@@ -706,6 +712,8 @@ img.unlocked-achievement{
     font-size: 91%;
 
 }
+
+
 
 .full-row{
     height:100%
