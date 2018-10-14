@@ -129,6 +129,9 @@ def notification_image(notification):
             image = notification.target.events_type.image.url
             return image
 
+        if notifiation_type.id == 5:  # new volunteer for task
+            image = notification.target.events_type.image.url
+            return image
 
 
     return ""
