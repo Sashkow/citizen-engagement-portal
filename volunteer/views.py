@@ -639,8 +639,20 @@ def app_task(request):
         if form.is_valid():
             print('Hi')
             form.save()
+            # 5 Волонтер бажає виконати завдання
+            event = Event.objects.get(id=form.data['event'])
+            recipient = event.organizer.django_user_id
+            notify.send(
+                django_user,
+                recipient=recipient,
+                verb="applied",
+                target=event,
+                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+                data={'type': '5',},  # 5 Волонтер бажає виконати завдання
+            )
             redirect_url = reverse('profile')
             return redirect(redirect_url)
+
 
 def task_executor(request):
     if request.method == "GET":

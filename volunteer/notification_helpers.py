@@ -1,4 +1,4 @@
-from volunteer.models import NotificationsType, League
+from volunteer.models import NotificationsType, League, TaskApplication, User
 from django.shortcuts import reverse
 from notifications.models import Notification
 
@@ -67,6 +67,36 @@ def notification_description(notification):
             description = description.replace('{{монети}}', str(notification.data['currency_quantity']))
             description = description.replace('{{тип}}', str(notification.data['currency_type']))
             return description
+        elif notification_type.id == 5: # new volunteer to do task
+            # {{ім'я}} {{приізвище}} бажає виконати завдання <a class="event-name" get_url="{{лінк}}"> {{завдання}}</a>.
+            # Зв’яжіться за поштою {{пошта}} для з’ясування деталей та призначте {{лінк2}} цю людину, якщо ви дійшли згоди.
+            # Змінюйте статус події на "Проведено" після виконання завдання.
+            event = notification.target
+            recipient = notification.recipient
+            sender  = notification.actor
+            event_url = reverse('volunteer_event', args=(event.id,))
+            event_edit_url = reverse('form', args=(event.id,))
+            task_application = TaskApplication.objects.filter(user__django_user_id=sender, event=event)
+            if task_application.exists():
+                mail = task_application[0].contact
+            else:
+                mail = '"заявку скасовано"'
+
+            sender_user = User.objects.filter(django_user_id = sender)
+            if sender_user.exists():
+                sender_user = sender_user[0]
+            else:
+                sender_user=sender
+
+            description = str(notification_type.template)
+            description = description.replace("{{ім'я}}", str(sender_user.first_name))
+            description = description.replace("{{прізвище}}", str(sender_user.last_name))
+            description = description.replace("{{пошта}}", str(mail))
+            description = description.replace("{{лінк}}", str(event_url))
+            description = description.replace("{{завдання}}", str(event.name))
+            description = description.replace("{{лінк2}}", str(event_edit_url))
+            return description
+
 
     else:
         print("unknown notification type")
