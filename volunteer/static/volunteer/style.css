@@ -1106,7 +1106,7 @@ svg{
         width: 27vw;
         top: 6vh;
         left: 0;
-        height:94vh;
+        min-height:94vh;
 }
 
 .category-icon{

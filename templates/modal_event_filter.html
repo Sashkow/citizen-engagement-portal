@@ -1,0 +1,42 @@
+{% load static %}
+    <div class="modal fade" id="event_filter" tabindex="-1" role="dialog" aria-labelledby="event_register_modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="event_register_modal">Задати фільтр для подій</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+                <div class="dropdown open text-left category-filter">
+                    <select id="mob-event-type" class="text-left select" url_get = "{% url 'type_filter' %}" state = "news">
+                            <option type_id = "all_digest">Категорія</option>
+                        {% for type_ev in types_events %}
+                            <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
+                        {% endfor %}
+                            <option type_id = "all" >Всі</option>
+
+                    </select>
+                </div>
+                <hr>
+                <img class="align-self-center filter_event_task it_is_event " url_get = "{% url 'type_filter' %}"  src="{% static 'volunteer/images/event_fiter.png' %}">
+                <img class="align-self-center what-img" src="{% static 'volunteer/images/what.png' %}">
+                <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}"  src="{% static 'volunteer/images/filter_task.png' %}">
+                <hr>
+                <div class="dropdown open text-left category-filter">
+                    <select id="event-status" class="text-left select" url_get = "{% url 'type_filter' %}">
+                            <option status_id = "none" selected>статус</option>
+                        {% for status in status_events %}
+                            <option status_id = "{{status.id}}" >{{status.status}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-next" >Задати</button>
+          </div>
+        </div>
+      </div>
+    </div>
