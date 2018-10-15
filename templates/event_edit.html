@@ -2,9 +2,9 @@
 <form action="{% url 'form'  id=event.id  %}" method="post">
     {% csrf_token %}
 <div class="row">
-    <div class="col-md-8 ep-event-info">
+    <div class="col-8 ep-event-info">
         <div class="row">
-            <div class="col-md-auto text-left ">
+            <div class="col-auto text-left ">
                 {% if event.events_or_task == True %}
                     <img class="ep_event_task" src="{% static 'volunteer/images/event.png' %}">
                 {% else %}
@@ -14,7 +14,7 @@
                     {% endif %}
                 {% endif%}
             </div>
-            <div class="col-md-8">
+            <div class="col-8">
                     {{form.name.errors}}
                     {{form.name}}
                     <p> додано {{ event.publication_date }}</p>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {{form.description.errors}}
                 {{form.description}}
                 <br>
@@ -34,12 +34,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-5">
              <label for="{{ form.date_event.id_for_label }}">Дата:</label>
                 {{form.date_event.errors}}
                 {{form.date_event}}
             </div>
-            <div class="col-md-7">
+            <div class="col-7">
                 <label for="{{ form.min_part.id_for_label }}">Мінімальна кількість учасників:</label>
                 {{form.min_part.errors}}
                 {{form.min_part}}
@@ -53,7 +53,7 @@
 
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-5">
                  <label for="{{ form.contact.id_for_label }}">Введіть Ваш контактний e-mail:</label>
                 {{form.contact.errors}}
                 {{form.contact}}
@@ -65,7 +65,7 @@
 
 
     </div>
-    <div class="col-md-4 text-right">
+    <div class="col-4 text-right">
         нишпорять:{{subs}}
         приймають участь:{{part}}
         <img class="category_event " src="{{ event.events_type.image.url }}">
@@ -75,7 +75,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
         <button type="submit " class="edit-event-send" >Зберегти зміни</button>
     </div>
 </div>
@@ -89,7 +89,7 @@
     <h2> Додаткові завдання </h2>
     {% endif %}
 
-    <div class="col-md-9">
+    <div class="col-9">
         <form class="edit-adding-task" action="{% url 'changetask' id=task.instance.id %}" method="post" onsubmit="return false">
             {{task.canceled.value}}
             {{task.task_name.value}}
@@ -98,7 +98,7 @@
             <button type="submit " >Змінити організаційне завдання</button>
         </form>
     </div>
-    <div class="col-md-3">
+    <div class="col-3">
         <button class="cancel-task" post_url="{% url 'cancel_task' id=task.instance.id %}"> Відмінити </button>
     </div>
 

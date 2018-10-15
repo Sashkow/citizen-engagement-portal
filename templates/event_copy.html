@@ -25,16 +25,18 @@
     <!--</div>-->
 
     <div class="row">
-        <div class="col-md-8 ep-event-info">
+        <div class="col-md-8 col-12 ep-event-info">
             <div class="row">
-                <div class="col-md-auto text-left ">
+                <div class="col-md-auto col-4 text-left ">
                     {% if event.events_or_task == True %}
                         <img class="ep_event_task" src="{% static 'volunteer/images/event.png' %}">
                     {% else %}
-                        <img class="" src="{% static 'volunteer/images/task.png' %}">
+                        <img class="ep_event_task" src="{% static 'volunteer/images/task.png' %}">
                     {% endif%}
+
+
                 </div>
-                <div class="col-md-8">
+                <div class="col-8">
                     <h1 class="ep_event_name">{{event.name}}</h1>
                     <p> додано {{ event.publication_date }}</p>
 
@@ -47,7 +49,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <p class="ep-event-description">{{ event.description }}</p>
                     {% if org_user == 1 %}
                         <button class="btn-event-edit event-button" id_event = {{ event.id }} get_url = "{% url 'form' id=event.id %}">редагувати <img class="img-curr-in-button" src="{% static 'volunteer/images/edit.png' %}"</button>
@@ -73,7 +75,7 @@
             </div>
         </div>
 
-        <div class="col-md-4 text-right">
+        <div class="col-4 text-right d-none d-md-block">
             <img class="category_event " src="{{ event.events_type.image.url }}">
         </div>
 
@@ -82,7 +84,7 @@
 
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div id="disqus_thread"></div>
                 <script>
 

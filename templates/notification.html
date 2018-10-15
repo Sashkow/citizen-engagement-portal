@@ -7,21 +7,21 @@
     {% for notification in unread_read %}
 <div class="row event-block">
 
-        <div class="col-md-3 text-center text-center my-auto align-items-center ">
-            <img src= "{{notification.image}}" style="height:18vh">
+        <div class="col-3 text-center text-center my-auto align-items-center ">
+            <img class="notif-image" src= "{{notification.image}}">
         </div>
-        <div class="col-md-7 info">
+        <div class="col-7 info">
             <div class="event-item-info">
                 <h2  class="notification-name" >{{notification.title}}</h2>
                 <p class="event-description">{{notification.description|safe}}</p>
             </div>
         </div>
-        <div class="col-md-2 padding-0">
-            <p>{{notification.relative_time}}</p>
+        <div class="col-2 padding-0">
+            <p style="margin:auto!important">{{notification.relative_time}}</p>
             {% if notification.is_unread %}
-                <p>Непрочитане</p>
+                <p class="d-none d-md-block">Непрочитане</p>
             {% else %}
-                <p>Прочитане</p>
+                <p class="d-none d-md-block">Прочитане</p>
             {% endif %}
 
         </div>

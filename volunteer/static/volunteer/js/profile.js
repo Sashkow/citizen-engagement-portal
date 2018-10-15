@@ -36,13 +36,11 @@ $( document ).ready(function() {
         console.log($(this).attr('active') )
 
         if($(this).attr('active') == "1" ){
-            console.log('true')
             $('.content-container').toggleClass('d-none')
             $('#sidebar').css('display', 'block')
             $(this).attr('active', "0")
         }
         else{
-            console.log('false')
             $('.content-container').toggleClass('d-none')
             $('#sidebar').css('display', 'none')
             $(this).attr('active', "1")
@@ -579,6 +577,12 @@ $(document).on('click', '.item-menu', function(){
              $('.current-menu-item').removeClass('current-menu-item')
              $(this).parent().addClass('current-menu-item')
         }
+    if($(window).width()< 576){
+        console.log('in')
+        $('.content-container').toggleClass('d-none')
+        $('#sidebar').css('display', 'none')
+        $('.open-profile-menu').attr('active', "1")
+    }
 
 })
 
@@ -626,6 +630,15 @@ $(document).on('click', '.news', function(){
                      console.log('OK');
                      $(".dynamic-block").empty()
                      $(".dynamic-block").html(data.html);
+                     if($(window).width()< 576){
+                        console.log('in')
+                        $('.content-container').toggleClass('d-none')
+                        $('#sidebar').css('display', 'none')
+                        $('.open-profile-menu').attr('active', "1")
+                        $('.current-menu-item').removeClass('current-menu-item');
+                    }
+
+
                  },
                  error: function(){
                  console.log('error')
