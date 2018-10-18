@@ -26,8 +26,11 @@
     </div>
   </div>
 </div>
-
-<div class="modal fade" id="registration-usual" tabindex="-1" role="dialog" aria-labelledby="registrationUsualLabel" aria-hidden="true">
+{% if usual_signup %}
+    <div class="modal fade show" id="registration-usual" tabindex="-1" role="dialog" aria-labelledby="registrationUsualLabel" style="display: block;">
+{% else %}
+    <div class="modal fade" id="registration-usual" tabindex="-1" role="dialog" aria-labelledby="registrationUsualLabel" aria-hidden="true">
+{% endif %}
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

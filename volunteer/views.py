@@ -90,21 +90,33 @@ def mark_all_as_read(request):
 
 events_per_page = 6
 
+# user = authenticate(username=username, password=password)
+#     if user is not None:
+#         if user.is_active:
+#             login(request, user)
+#             # Redirect to a success page.
+#         else:
+#             # Return a 'disabled account' error message
+#     else:
+#         # Return an 'invalid login' error message.
 
-def signup(request):
+def usual_login(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             print('unbelieveble')
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
+            # form.save()
+
+            # username = form.cleaned_data.get('username')
+            # raw_password = form.cleaned_data.get('password')
+            # user = authenticate(username=username, password=raw_password)
+            user = form.get_user
+
             login(request, user)
             return redirect('home')
     else:
-        form = UserCreationForm()
-    return render(request, 'login.html', {'form': form})
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'login_form': form, 'usual_login':True })
 
 
 def signup(request):
@@ -121,7 +133,7 @@ def signup(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form, 'usual_signup':True})
 
 
 def home(request):
