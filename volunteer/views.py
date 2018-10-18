@@ -126,7 +126,7 @@ def home(request):
     if request.user.is_authenticated:
         return redirect(reverse('profile'))
     else:
-        return redirect(reverse('login'))
+        return redirect(reverse('intropage'))
 
 
 @login_required
@@ -700,6 +700,9 @@ def change_photo(request):
     print(request.FILES['userpic'])
     return_dict = {}
     return JsonResponse(return_dict)
+
+def intropage(request):
+    return render(request, 'registration/login.html')
 
 
 

@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^usual_login/$', auth_views.login, {'template_name': 'usual_login.html'}, name='usual_login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^signup/$', volunteer_views.signup, name='signup'),
+    url(r'^intropage/$', volunteer_views.intropage, name='intropage'),
+
 
     url(r'^oauth/', include('social_django.urls', namespace='social')),  # <--
     url(r'^success_oauth/$', volunteer_views.just_after_scuccess_auth, name='success_oauth'),
