@@ -54,6 +54,12 @@ $( document ).ready(function() {
         $('#registration-usual').modal('show');
     })
 
+    $(document).on('click', '.usual-log', function(){
+        console.log('loginn');
+        $('#login').modal('hide');
+        $('#login-usual').modal('show');
+    })
+
     $(document).on('change', '#event-status', function(){
         data = {}
         var url = $(this).attr('url_get');

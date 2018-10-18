@@ -12,7 +12,7 @@
 
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm, UserCreationForm
+from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm, UserCreationForm, AuthenticationForm
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.http import HttpResponseForbidden
 
@@ -103,11 +103,12 @@ def signup(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 
 def signup(request):
     if request.method == 'POST':
+
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
@@ -119,7 +120,7 @@ def signup(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form})
 
 
 def home(request):
@@ -703,7 +704,10 @@ def change_photo(request):
 
 def intropage(request):
     form = UserCreationForm()
-    return render(request, 'registration/login.html', {'form':form})
+    login_form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form':form, 'login_form':login_form})
+
+
 
 
 
