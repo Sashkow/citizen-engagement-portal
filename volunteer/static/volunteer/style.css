@@ -156,7 +156,7 @@ font-size: 155%;
     }
 
     .task-info{
-        height:inherit !important;
+        height:auto !important;
     }
 
     .hiw-image{
@@ -185,7 +185,7 @@ font-size: 155%;
     }
 
     .wait-for-you{
-        height:inherit!important;
+        height:auto!important;
     }
 
     .step-info{
@@ -201,7 +201,7 @@ font-size: 155%;
     }
 
     .join{
-    height:inherit!important;
+    height:auto!important;
     }
 
     .question{
@@ -301,6 +301,10 @@ font-size: 155%;
 
     .ep_event_name{
         font-size:2.5vh;
+    }
+
+    .faq{
+        height:auto!important;
     }
 
 
@@ -932,7 +936,7 @@ img.unlocked-achievement{
  }
 
  .reg-logo{
-    height: 45%;
+    height: 5.6vh;
     margin: 0 auto;
  }
 
@@ -1124,4 +1128,20 @@ svg{
 
 .notif-image{
     height:18vh;
+}
+
+.modal-enter-h{
+    height:8vh!important;
+}
+
+.usual-login{
+    margin:1vh;
+    font-family: 'Ubuntu',sans-serif !important;
+    height: 4vh;
+    background-color: #cb2054ff;
+    color: white;
+    font-size: 1.7vh;
+    font-weight: bold;
+    border-radius: 16px;
+    width: 21vw;
 }

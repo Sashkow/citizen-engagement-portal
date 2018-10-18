@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^$', volunteer_views.home, name='home'),
-    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^login/$', auth_views.login,  name='login'),
     url(r'^usual_login/$', auth_views.login, {'template_name': 'usual_login.html'}, name='usual_login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^signup/$', volunteer_views.signup, name='signup'),
@@ -50,7 +50,6 @@ urlpatterns = [
     url(r'^profile/edit', volunteer_views.profile_edit, name='profile_edit'),
     url(r'^achivments/$', volunteer_views.get_achivments, name='achivments'),
     url(r'^achivment_legaue/$', volunteer_views.achivments_legaue, name='achivments_legaue'),
-    url(r'^testerer/$', volunteer_views.test, name='test'),
     url(r'^form/(?P<id>\d+)/', volunteer_views.form, name='form'),
     url(r'^refresh/digest/$', volunteer_views.refresh_digest, name='refresh_digest'),
     url(r'^changeorgtask/(?P<id>\d+)/', volunteer_views.change_org_task, name='changetask'),

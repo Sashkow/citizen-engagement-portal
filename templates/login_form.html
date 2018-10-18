@@ -4,14 +4,16 @@
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="registrationLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header modal-enter-h">
            <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center">
            <form action="{% url 'dispatch_social_login' %}" name="f1">
-                <p><a href="{% url 'usual_login' %}">Введіть логін і пароль</a></p>
+
+                   <button class="usual-login btn-join">Ввести логін і пароль</button>
+
                 <p align="middle">або</p>
-                <p>увійдіть через соцмережі:</p>
+                <p>Увійти через соцмережі:</p>
                <div class="socal_logos text-center">
                    <a href="{% url 'social:begin' 'facebook' %}"><img class="soc-icon" type="submit" value="Реєстрація Facebook" name="sub_fb"  src="{% static 'volunteer/images/facebook.png' %}"></a>
                    <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="soc-icon" type="submit" value="Реєстрація Google" name="sub_gg" src="{% static 'volunteer/images/google.png' %}"></a>

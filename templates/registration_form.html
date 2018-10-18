@@ -7,8 +7,9 @@
       <div class="modal-header">
            <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
       </div>
-      <div class="modal-body">
-           <p><a href="{% url 'signup' %}">Звичайна реєстрація</a></p>
+      <div class="modal-body text-center">
+           <button class="usual-login">Звичайна реєстрація</button>
+           <!--<p><a href="{% url 'signup' %}">Звичайна реєстрація</a></p>-->
            <p align="middle">або</p>
            <p>через соцмережі:</p>
            <form action="{% url 'dispatch_social_login' %}" name="f1">
@@ -21,6 +22,38 @@
                    <input type="image" name="sub_fb" class="soc-icon" value="Реєстрація Google" src="{% static 'volunteer/images/google.png' %}" >
                </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="registration-usual" tabindex="-1" role="dialog" aria-labelledby="registrationUsualLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+           <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
+      </div>
+      <div class="modal-body text-center">
+           <button class="usual-login">Звичайна реєстрація</button>
+           <!--<p><a href="{% url 'signup' %}">Звичайна реєстрація</a></p>-->
+           <p align="middle">або</p>
+           <p>через соцмережі:</p>
+           <form action="{% url 'dispatch_social_login' %}" name="f1">
+                {% csrf_token %}
+                {% for field in form %}
+                  <p>
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.help_text %}
+                      <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </p>
+                {% endfor %}
+                <button type="submit">Зареєструватися</button>
+            </form>
       </div>
     </div>
   </div>

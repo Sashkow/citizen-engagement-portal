@@ -477,8 +477,6 @@ def achivments_legaue(request):
         return JsonResponse(return_dict)
 
 
-def test(request):
-    return render(request, 'home_copy.html')
 
 
 def just_after_scuccess_auth(request):

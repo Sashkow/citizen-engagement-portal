@@ -606,7 +606,7 @@ $(document).on('click', '.news', function(){
                  $(".dynamic-block").empty()
                  $(".dynamic-block").html(data.filter_html);
                  $(".dynamic-block").append(data.html);
-                 $('#event-type').attr('state', 'organizer');
+                 $('#event-type').attr('state', 'news');
              },
              error: function(){
              console.log('error')
