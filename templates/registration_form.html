@@ -8,7 +8,7 @@
            <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
       </div>
       <div class="modal-body text-center">
-           <button class="usual-login">Звичайна реєстрація</button>
+           <button class="usual-login-btn usual-reg">Звичайна реєстрація</button>
            <!--<p><a href="{% url 'signup' %}">Звичайна реєстрація</a></p>-->
            <p align="middle">або</p>
            <p>через соцмережі:</p>
@@ -34,25 +34,15 @@
            <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
       </div>
       <div class="modal-body text-center">
-           <button class="usual-login">Звичайна реєстрація</button>
-           <!--<p><a href="{% url 'signup' %}">Звичайна реєстрація</a></p>-->
-           <p align="middle">або</p>
-           <p>через соцмережі:</p>
-           <form action="{% url 'dispatch_social_login' %}" name="f1">
+           <form method="post" action="{% url 'signup' %}">
                 {% csrf_token %}
                 {% for field in form %}
-                  <p>
+                  <p class="fieldWrapper">
                     {{ field.label_tag }}<br>
                     {{ field }}
-                    {% if field.help_text %}
-                      <small style="color: grey">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% for error in field.errors %}
-                      <p style="color: red">{{ error }}</p>
-                    {% endfor %}
                   </p>
                 {% endfor %}
-                <button type="submit">Зареєструватися</button>
+                <button class="usual-login-btn" type="submit">Зареєструватися</button>
             </form>
       </div>
     </div>

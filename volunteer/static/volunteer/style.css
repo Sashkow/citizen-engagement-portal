@@ -1134,7 +1134,7 @@ svg{
     height:8vh!important;
 }
 
-.usual-login{
+.usual-login-btn{
     margin:1vh;
     font-family: 'Ubuntu',sans-serif !important;
     height: 4vh;
@@ -1144,4 +1144,9 @@ svg{
     font-weight: bold;
     border-radius: 16px;
     width: 21vw;
+}
+
+.fieldWrapper > input{
+    border:none;
+    border-bottom: 1px solid #999898ff;
 }

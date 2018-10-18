@@ -702,7 +702,8 @@ def change_photo(request):
     return JsonResponse(return_dict)
 
 def intropage(request):
-    return render(request, 'registration/login.html')
+    form = UserCreationForm()
+    return render(request, 'registration/login.html', {'form':form})
 
 
 

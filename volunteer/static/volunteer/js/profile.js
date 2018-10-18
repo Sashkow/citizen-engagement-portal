@@ -48,6 +48,12 @@ $( document ).ready(function() {
 
     })
 
+    $(document).on('click', '.usual-reg', function(){
+        console.log('registrationn');
+        $('#registration').modal('hide');
+        $('#registration-usual').modal('show');
+    })
+
     $(document).on('change', '#event-status', function(){
         data = {}
         var url = $(this).attr('url_get');
