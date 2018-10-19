@@ -500,6 +500,21 @@ font-size: 155%;
         height:auto!important;
     }
 
+   .menu-profile{
+    margin-top:2vh;
+   }
+
+   .item-menu{
+        font-size:3.2vw!important;
+        height:5vh!important;
+        margin-left:3vw!important;
+        padding-left:27vw;
+   }
+
+    .notif-quant{
+        height:5vw!important;
+        width:5vw!important;
+    }
 }
 
 

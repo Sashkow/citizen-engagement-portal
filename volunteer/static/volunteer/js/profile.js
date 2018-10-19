@@ -736,7 +736,7 @@ $(document).on('click', '.news', function(){
             var url = $(this).attr('get_url')
 
             history.pushState( {
-                url : $(this).attr('get_url'),
+                url : url,
                 data : {},
               }, null, "/wayback/notifications");
 
@@ -981,6 +981,31 @@ window.onpopstate = function (event) {
     data = event.state.data;
   }
 
+  $.ajax({
+     url: url,
+     type :'GET',
+     data:data,
+     cache:true,
+     success: function(data){
+         console.log('OK');
+            $(".dynamic-block").empty()
+            $(".dynamic-block").html(data.html)
+         },
+     error: function(){
+        console.log('error')
+     }
+  })
+}
+
+window.onpopstate = function (event) {
+  var url = "";
+  var data = {}
+  if(event.state) {
+    url = event.state.url;
+    data = event.state.data;
+  }
+   console.log(url)
+   console.log(data)
   $.ajax({
      url: url,
      type :'GET',
