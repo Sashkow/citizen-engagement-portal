@@ -1,4 +1,7 @@
+
+
 $( document ).ready(function() {
+
 
     function CheckEmptyField(selector){
         if(selector.val() == ''){
@@ -598,6 +601,16 @@ $(document).on('click', '.item-menu', function(){
 
 })
 
+
+
+news_success = function (data) {
+    $(".dynamic-block").empty()
+     $(".dynamic-block").html(data.filter_html);
+     $(".dynamic-block").append(data.html);
+     $('#event-type').attr('state', 'news');
+}
+
+
 $(document).on('click', '.news', function(){
     data = {}
     var url = $(this).attr('url_get')
@@ -614,21 +627,12 @@ $(document).on('click', '.news', function(){
       }, null, "/wayback/news");
 
 
-
-
-
-
     $.ajax({
              url: url,
              type :'GET',
              data:data,
              cache:true,
-             success: function(data){
-                 $(".dynamic-block").empty()
-                 $(".dynamic-block").html(data.filter_html);
-                 $(".dynamic-block").append(data.html);
-                 $('#event-type').attr('state', 'news');
-             },
+             success: news_success,
              error: function(){
              console.log('error')
              }
@@ -724,7 +728,10 @@ $(document).on('click', '.news', function(){
 
         })
 
-
+        notifications_success = function(data) {
+            $(".dynamic-block").empty()
+            $(".dynamic-block").html(data.html)
+        }
 
         $(document).on('click', '.notifications', function(){
 
@@ -746,11 +753,7 @@ $(document).on('click', '.news', function(){
              type :'GET',
              data:data,
              cache:true,
-             success: function(data){
-                 console.log('OK');
-                    $(".dynamic-block").empty()
-                    $(".dynamic-block").html(data.html)
-                 },
+             success: notifications_success,
              error: function(){
                 console.log('error')
              }
@@ -972,52 +975,82 @@ $(document).on('click', '.news', function(){
 
   })
 
+  window.onpopstate = function (event) {
+      var url = "";
+      var data = {}
+      var success_function = null;
+      if(event.state) {
+        url = event.state.url;
+        data = event.state.data;
+        if (data.state == 'news'){
+            success_function = news_success;
+        } else if (data.state == 'notifications'){
+            success_function = notifications_success;
+        } else {
+            success_function = null;
+        }
+      }
 
-window.onpopstate = function (event) {
-  var url = "";
-  var data = {}
-  if(event.state) {
-    url = event.state.url;
-    data = event.state.data;
-  }
+      $.ajax({
+         url: url,
+         type :'GET',
+         data:data,
+         cache:true,
+         success: success_function,
+         error: function(){
+            console.log('error')
+         }
+      })
 
-  $.ajax({
-     url: url,
-     type :'GET',
-     data:data,
-     cache:true,
-     success: function(data){
-         console.log('OK');
-            $(".dynamic-block").empty()
-            $(".dynamic-block").html(data.html)
-         },
-     error: function(){
-        console.log('error')
-     }
-  })
-}
+    }
 
-window.onpopstate = function (event) {
-  var url = "";
-  var data = {}
-  if(event.state) {
-    url = event.state.url;
-    data = event.state.data;
-  }
-   console.log(url)
-   console.log(data)
-  $.ajax({
-     url: url,
-     type :'GET',
-     data:data,
-     cache:true,
-     success: function(data){
-         console.log('OK');
-            $(".dynamic-block").empty()
-            $(".dynamic-block").html(data.html)
-         },
-     error: function(){
-        console.log('error')
-     }
-  })
-}
+
+//window.onpopstate = function (event) {
+//  var url = "";
+//  var data = {}
+//  if(event.state) {
+//    url = event.state.url;
+//    data = event.state.data;
+//  }
+//
+//  $.ajax({
+//     url: url,
+//     type :'GET',
+//     data:data,
+//     cache:true,
+//     success: function(data){
+//         console.log('OK');
+//            $(".dynamic-block").empty()
+//            $(".dynamic-block").html(data.html)
+//         },
+//     error: function(){
+//        console.log('error')
+//     }
+//  })
+//}
+//
+//window.onpopstate = function (event) {
+//  var url = "";
+//  var data = {}
+//  if(event.state) {
+//    url = event.state.url;
+//    data = event.state.data;
+//  }
+//   console.log(url)
+//   console.log(data)
+//  $.ajax({
+//     url: url,
+//     type :'GET',
+//     data:data,
+//     cache:true,
+//     success: function(data){
+//         console.log('OK');
+//            $(".dynamic-block").empty()
+//            $(".dynamic-block").html(data.html)
+//         },
+//     error: function(){
+//        console.log('error')
+//     }
+//  })
+//}
+
