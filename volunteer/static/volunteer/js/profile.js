@@ -622,7 +622,7 @@ $(document).on('click', '.news', function(){
     data.add_filter = 1;
 
     history.pushState( {
-        url : $(this).attr('get_url'),
+        url : url,
         data : data,
       }, null, "/wayback/news");
 
@@ -675,21 +675,27 @@ $(document).on('click', '.news', function(){
         $(document).on('click', '.btn-event-edit', function(){
             var url = $(this).attr('get_url');
             console.log(url);
-                $.ajax({
 
-                     url: url,
-                     type :'GET',
-                     cache:true,
-                     success: function(data){
-                         console.log('OK');
-                         $(".dynamic-block").empty()
-                         $(".dynamic-block").html(data.html);
-                     },
-                     error: function(){
-                     console.log('error')
-                     console.log(url)
-                     }
-                    })
+            history.pushState( {
+                url : url,
+                data : {},
+              }, null, "/wayback/event_edit");
+
+            $.ajax({
+
+                 url: url,
+                 type :'GET',
+                 cache:true,
+                 success: function(data){
+                     console.log('OK');
+                     $(".dynamic-block").empty()
+                     $(".dynamic-block").html(data.html);
+                 },
+                 error: function(){
+                 console.log('error')
+                 console.log(url)
+                 }
+                })
         })
 
 
@@ -711,6 +717,13 @@ $(document).on('click', '.news', function(){
             var url = $(this).attr('get_url');
             var data = {}
             console.log(url)
+
+            history.pushState( {
+                url : url,
+                data : {},
+              }, null, "/wayback/event");
+
+
             $.ajax({
              url: url,
              type :'GET',
@@ -743,7 +756,7 @@ $(document).on('click', '.news', function(){
             var url = $(this).attr('get_url')
 
             history.pushState( {
-                url : $(this).attr('get_url'),
+                url : url,
                 data : {},
               }, null, "/wayback/notifications");
 
@@ -969,29 +982,43 @@ $(document).on('click', '.news', function(){
              })
     })
 
+ })
 
-
-
-
-  })
-
-  window.onpopstate = function (event) {
+    window.onpopstate = function (event) {
       var url = "";
       var data = {}
       var success_function = null;
       if(event.state) {
         url = event.state.url;
         data = event.state.data;
-        if (data.state == 'news'){
+        if (url == '/typefilter/'){
             success_function = news_success;
-        } else if (data.state == 'notifications'){
+        } else if (url == '/notifications/'){
             success_function = notifications_success;
+
+        } else if ('event/' in url) {
+            success_function = function(data){
+                 console.log('OK');
+                 $(".dynamic-block").empty()
+                 $(".dynamic-block").html(data.html);
+            }
+        } else if ('form' in url){
+            success_function = function(data){
+                     console.log('OK');
+                     $(".dynamic-block").empty()
+                     $(".dynamic-block").html(data.html);
+            }
+
         } else {
             success_function = null;
         }
+      } else {
+        location.href = '/profile/'
+        return
       }
 
-      $.ajax({
+
+        $.ajax({
          url: url,
          type :'GET',
          data:data,
@@ -1000,8 +1027,19 @@ $(document).on('click', '.news', function(){
          error: function(){
             console.log('error')
          }
-      })
 
-    }
+        })
+     }
+
+
+
+
+
+
+
+
+
+
+
 
 
