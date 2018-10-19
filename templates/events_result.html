@@ -3,7 +3,7 @@
     {% for event in events %}
 
 
-        <div class="event-block row event-name" get_url="{% url 'volunteer_event' id=event.id %}" >
+        <div class="event-block row event-name"  >
         <div class="col-md-3 col-3 text-center text-center my-auto align-items-center event-image-holder">
 
 
@@ -15,7 +15,7 @@
             <!--<div class="row text-left full-row">-->
                     <div class="event-item-info">
                         <h2  class="event-name" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.name }}</h2>
-                        <p class="event-description d-none d-sm-block">{{ event.description }}</p>
+                        <p class="event-description d-none d-sm-block " get_url="{% url 'volunteer_event' id=event.id %}">{{ event.description }}</p>
                     </div>
                         <div class="btn-div align-self-end">
                              {% if events_org|get_item:event.id == 0 %}
