@@ -110,7 +110,7 @@ def usual_login(request):
             # username = form.cleaned_data.get('username')
             # raw_password = form.cleaned_data.get('password')
             # user = authenticate(username=username, password=raw_password)
-            user = form.get_user
+            user = form.get_user()
 
             login(request, user)
             return redirect('home')
