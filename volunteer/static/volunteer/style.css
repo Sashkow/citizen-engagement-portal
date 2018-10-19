@@ -515,6 +515,62 @@ font-size: 155%;
         height:5vw!important;
         width:5vw!important;
     }
+
+    .nav-add{
+        width:9vw!important;
+    }
+
+    .filter-setting{
+        font-size:3vw;
+    }
+
+    .img-status{
+        width:6vw!important;
+    }
+
+    .event-status-info{
+        font-size:2.4vw!important;
+    }
+
+    .task-or-event-image{
+        max-width:9vw!important;
+    }
+
+    .event-button{
+        width:30vw!important;
+    }
+
+    .category-image-ev{
+        width:21vw;
+        height:auto!important;
+        margin:3vh 0;
+    }
+
+    .event-block{
+        height:auto!important;
+    }
+
+    .event-item-info{
+        height:auto!important;
+    }
+
+    .info{
+        margin:auto!important;
+    }
+
+    .ach-container{
+        height:auto!important;
+        margin: 2vh 0;
+    }
+
+    .locked-achievement{
+        height:auto!important;
+        font-size:2.2vh!important;
+    }
+
+    div.achievement-item{
+        height:100%!important;
+    }
 }
 
 
@@ -608,6 +664,32 @@ font-size: 155%;
     .img-join{
         margin-top:15vh!important;
         margin-bottom:10vh!important;
+    }
+
+    #sidebar{
+        width:40vw!important;
+    }
+
+    .user-name{
+        font-size:1.5vw!important;
+    }
+
+    .ribbon{
+        font-size:2vw!important;
+    }
+
+    .curr-quant{
+        font-size:1.7vw!important;
+    }
+
+    .currency-image{
+        margin:0 0.6vw ;
+        height:auto!important;
+        width:4.5vw;
+    }
+
+    .item-menu{
+        font-size:1.7vw!important;
     }
 }
 
@@ -987,7 +1069,8 @@ img.unlocked-achievement{
 }
 
 .currency-image{
-    height:5.3vh;
+    width: 3.2vw;
+    margin: 0 0.3vw;
 
 }
 

@@ -179,7 +179,7 @@
 
             {% for point in user_points %}
                 {% if forloop.first %} <div class="row justify-content-center padding-0"> {% endif %}
-                    <div class="col-auto">
+                    <div class="col-auto padding-0">
                         <img class="currency-image" src="{{ point.currency.image.url }}" >
                         <p class="curr_quat">{{point.quantity}}</p>
                     </div>
@@ -224,8 +224,8 @@
             </div>
 
             <div class="text-left d-block d-md-none">
-                <div>
-                   <a class="item-menu " href="{% url 'logout' %}">вийти </a>
+                <div class="item-menu ">
+                   <a  href="{% url 'logout' %}" style="color:#ffff;">вийти </a>
                 </div>
             </div>
 
