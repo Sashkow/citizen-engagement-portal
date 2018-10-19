@@ -23,9 +23,10 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
     url(r'^$', volunteer_views.home, name='home'),
     url(r'^login/$', auth_views.login,  name='login'),
-    url(r'^usual_login/$', auth_views.login, {'template_name': 'usual_login.html'}, name='usual_login'),
+    # url(r'^usual_login/$', auth_views.login, {'template_name': 'usual_login.html'}, name='usual_login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^signup/$', volunteer_views.signup, name='signup'),
+    url(r'^usual_login/$', volunteer_views.usual_login, name='usual_login'),
     url(r'^intropage/$', volunteer_views.intropage, name='intropage'),
 
 

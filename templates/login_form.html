@@ -8,10 +8,8 @@
            <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
       </div>
       <div class="modal-body text-center">
+          <button class="usual-login-btn usual-log">Ввести логін і пароль</button>
            <form action="{% url 'dispatch_social_login' %}" name="f1">
-
-                   <button class="usual-login-btn">Ввести логін і пароль</button>
-
                 <p align="middle">або</p>
                 <p>Увійти через соцмережі:</p>
                <div class="socal_logos text-center">
@@ -19,6 +17,48 @@
                    <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="soc-icon" type="submit" value="Реєстрація Google" name="sub_gg" src="{% static 'volunteer/images/google.png' %}"></a>
                </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% if usual_login %}
+    <div class="modal fade show" id="login-usual" tabindex="-1" role="dialog" aria-labelledby="registrationUsualLabel" style="display: block;">
+{% else %}
+    <div class="modal fade" id="login-usual" tabindex="-1" role="dialog" aria-labelledby="registrationUsualLabel" aria-hidden="true">
+{% endif %}
+
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+           <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
+      </div>
+      <div class="modal-body text-center">
+           <form method="post" action="{% url 'usual_login' %}">
+                {% csrf_token %}
+                {% if login_form.errors %}
+                    {% for field in login_form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in login_form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% for field in login_form %}
+                  <p class="fieldWrapper">
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                  </p>
+                {% endfor %}
+                <button class="usual-login-btn" type="submit">Зареєструватися</button>
+            </form>
       </div>
     </div>
   </div>

@@ -25,14 +25,14 @@
                 <div class="col-md-3 text-center text-center my-auto align-items-center ">
 
 
-                        <img src= "{{ event.events_type.image.url }}" href="{% url 'event' id=event.id %}" style="height:18vh">
+                        <img src= "{{ event.events_type.image.url }}" href="{% url 'volunteer_event' id=event.id %}" style="height:18vh">
 
 
                 </div>
                 <div class="col-md-7 info">
                     <!--<div class="row text-left full-row">-->
                             <div class="event-item-info">
-                                <h2  class="event-name" get_url="{% url 'event' id=event.id %}">{{ event.name }}</h2>
+                                <h2  class="event-name" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.name }}</h2>
                                 <p class="event-description">{{ event.description }}</p>
                             </div>
 
