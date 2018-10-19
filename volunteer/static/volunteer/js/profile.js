@@ -592,7 +592,7 @@ $(document).on('click', '.item-menu', function(){
              $('.current-menu-item').removeClass('current-menu-item')
              $(this).parent().addClass('current-menu-item')
         }
-    if($(window).width()< 576){
+    if($(window).width()< 768){
         console.log('in')
         $('.content-container').toggleClass('d-none')
         $('#sidebar').css('display', 'none')
@@ -655,7 +655,7 @@ $(document).on('click', '.news', function(){
                      console.log('OK');
                      $(".dynamic-block").empty()
                      $(".dynamic-block").html(data.html);
-                     if($(window).width()< 576){
+                     if($(window).width()< 768){
                         console.log('in')
                         $('.content-container').toggleClass('d-none')
                         $('#sidebar').css('display', 'none')
@@ -988,6 +988,7 @@ $(document).on('click', '.news', function(){
       var url = "";
       var data = {}
       var success_function = null;
+      console.log(event.state)
       if(event.state) {
         url = event.state.url;
         data = event.state.data;
@@ -1030,6 +1031,8 @@ $(document).on('click', '.news', function(){
 
         })
      }
+
+
 
 
 

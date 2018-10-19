@@ -178,12 +178,12 @@
         <div class="currency-holder">
 
             {% for point in user_points %}
-                {% if forloop.first %} <div class="row justify-content-center "> {% endif %}
-                    <div class="col-auto">
+                {% if forloop.first %} <div class="row justify-content-center padding-0"> {% endif %}
+                    <div class="col-auto padding-0">
                         <img class="currency-image" src="{{ point.currency.image.url }}" >
                         <p class="curr_quat">{{point.quantity}}</p>
                     </div>
-                {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-center"> {%endif%}
+                {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-center padding-0"> {%endif%}
                 {% if forloop.last %}</div>{% endif %}
             {% endfor %}
         </div>
@@ -224,8 +224,8 @@
             </div>
 
             <div class="text-left d-block d-md-none">
-                <div class="item-menu">
-                   <a class="item-menu " href="{% url 'logout' %}">вийти </a>
+                <div class="item-menu ">
+                   <a  href="{% url 'logout' %}" style="color:#ffff;">вийти </a>
                 </div>
             </div>
 
