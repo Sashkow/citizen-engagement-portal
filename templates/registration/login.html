@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block enter_button%}
-    <button class="btn btn-sm align-middle ml-3 order-lg-last btn btn-enter open-login" type="button">вхід</button>
+    <button class="btn btn-sm align-middle ml-3 order-last btn btn-enter open-login" type="button">вхід</button>
 {% endblock %}
 
 {% block menu_button %}
@@ -24,14 +24,17 @@
 </div>
 
 <div class="row task-info ">
-    <div class="col-md-4  d-none d-md-block">
+    <div class="col-4  d-none d-sm-block">
 
         <img class="golden-cup" src="{% static 'volunteer/images/golden_cup.png' %}">
 
     </div>
+    <div class="col-sm-8 d-none d-sm-block d-md-none">
+        <h2 class=" slog make-task">виконуй завдання  —  <br> отримуй винагороди</h2>
+    </div>
     <div class="col-md-6 col-12">
         <div class="row">
-            <div class="col-md-12 text-left mt10vh">
+            <div class="col-md-12 text-left mt10vh  d-sm-none d-md-block">
                 <h2 class=" slog make-task">виконуй завдання  —  <br> отримуй винагороди</h2>
             </div>
 
@@ -39,7 +42,7 @@
 
         <div class="row text-left">
 
-            <div class="col-6">
+            <div class="col-6 padding-0">
                 <ul class="padd-mobile-left">
                     <li class="first-li">Завдання</li>
                     <li>-прибирай</li>
@@ -52,7 +55,7 @@
 
             </div>
 
-            <div class="col-6 " >
+            <div class="col-6" >
                     <ul class="padd-mobile-right">
                     <li  class="first-li" >Винагороди</li>
                     <li>-знижки на комуналки</li>
@@ -69,7 +72,7 @@
     </div>
 </div>
 
-<div class="row"><div class="col-12 d-block d-md-none">
+<div class="row"><div class="col-12 d-block d-sm-none">
         <img class="golden-cup float-right" src="{% static 'volunteer/images/golden_cup.png' %}">
     </div>
 </div>
@@ -79,34 +82,37 @@
     <!--<div class="col-md-2"></div>-->
     <div class="col-auto">
         <h4 class="mot-text">Бачиш проблему?</h4>
-        <img class="hiw-image d-none d-md-block" src="{% static 'volunteer/images/binocle.png' %}">
-        <img class="hiw-image d-block d-md-none" src="{% static 'volunteer/images/binoclesm.png' %}">
+        <img class="hiw-image d-none d-sm-block" src="{% static 'volunteer/images/binocle.png' %}">
+        <img class="hiw-image d-block d-sm-none" src="{% static 'volunteer/images/binoclesm.png' %}">
     </div>
     <div class="col-auto">
         <h4 class="mot-text">Створюй завдання</h4>
-        <img class="hiw-image d-none d-md-block"  src="{% static 'volunteer/images/task_list.png' %}">
-        <img class="hiw-image d-block d-md-none"  src="{% static 'volunteer/images/task_listsm.png' %}">
+        <img class="hiw-image d-none d-lg-block"  src="{% static 'volunteer/images/task_list.png' %}">
+        <img class="hiw-image d-block d-lg-none"  src="{% static 'volunteer/images/task_listsm.png' %}">
     </div>
     <div class="col-auto">
         <h4 class="mot-text">Знаходь однодумців</h4>
-        <img class="hiw-image d-none d-md-block"  src="{% static 'volunteer/images/help.png' %}">
-        <img class="hiw-image d-block d-md-none"  src="{% static 'volunteer/images/helpsm.png' %}">
+        <img class="hiw-image d-none d-sm-block"  src="{% static 'volunteer/images/help.png' %}">
+        <img class="hiw-image d-block d-sm-none"  src="{% static 'volunteer/images/helpsm.png' %}">
     </div>
     <div class="col-auto">
         <h4 class="mot-text">Допомагай місту</h4>
-        <img class="hiw-image d-none d-md-block"  src="{% static 'volunteer/images/wand.png' %}">
-        <img class="hiw-image d-block d-md-none"  src="{% static 'volunteer/images/wandsm.png' %}">
+        <img class="hiw-image d-none d-lg-block"  src="{% static 'volunteer/images/wand.png' %}">
+        <img class="hiw-image d-block d-lg-none"  src="{% static 'volunteer/images/wand.png' %}">
     </div>
 
 </div>
 
 
-<div class="d-none d-md-block">
+<div class="d-none d-sm-block">
 
 
 <div class="row superman">
     <div class="col-md-5th-3 justify-content-center d-flex align-items-start">
-        <h1 class="my-flex-item slog mot-h">Хочеш бути супергероєм <br> міста?</h1>
+        <h1 class="my-flex-item slog mot-h">Хочеш бути супергероєм <br> міста?
+        <button class="btn btn-join open-register d-none d-sm-block d-md-none">приєднатися</button>
+
+        </h1>
     </div>
     <div class="col-md-5th-2 justify-content-center d-flex align-items-end">
         <img class=" my-flex-item"  src="{% static 'volunteer/images/superhero.png' %}">
@@ -127,7 +133,7 @@
                 <img class="achievement-image my-flex-item"  src="{% static 'volunteer/images/achievement.png' %}">
             </div>
 
-            <div class="col-md-5th-1 justify-content-center d-flex align-items-center">
+            <div class="col-md-5th-1 justify-content-center d-flex align-items-center  d-sm-none d-md-block">
                 <button class="btn btn-block btn-join open-register">приєднатися</button>
             </div>
         </div>
@@ -139,7 +145,7 @@
                 <img class="achievement-image my-flex-item"  src="{% static 'volunteer/images/coins.png' %}">
             </div>
             <div class="col-md-5th-1 text-center step-info">
-                <p>Отримуй <br>прикольні ачівки</p>
+                <p class="p-step">Отримуй <br>прикольні ачівки</p>
 
             </div>
         </div>
@@ -151,7 +157,7 @@
                 <img class="achievement-image my-flex-item"  src="{% static 'volunteer/images/flag.png' %}">
             </div>
             <div class="col-md-5th-1 text-center step-info">
-                 <p>Заробляй <br>бали</p>
+                 <p class="p-step">Заробляй <br>бали</p>
             </div>
         </div>
         <div class="row my-auto align-items-center ">
@@ -159,14 +165,15 @@
                 <img class="achievement-image my-flex-item"  src="{% static 'volunteer/images/find.png' %}">
             </div>
             <div class="col-md-5th-1  text-center step-info">
-                <p>Бери участь <br>у подіях міста</p>
+                <p class="p-step">Бери участь <br>у подіях міста</p>
 
             </div>
 
         </div>
         <div class="row my-auto align-items-center">
             <div class="col-md-5th-1 text-center step-info">
-                <p>Обирай цікаві <br>тобі завдання</p>
+                <p class="p-step first-step d-sm-none d-md-block">Обирай цікаві <br>тобі завдання</p>
+                <p class="p-step d-none d-sm-block d-md-none first-step">Обирай цікаві завдання</p>
             </div>
 
         </div>
@@ -175,7 +182,7 @@
 
 </div>
 
-<div class="d-block d-md-none">
+<div class="d-block d-sm-none">
     <div class="row">
         <div class="col-12 justify-content-center d-flex align-items-start">
             <h1 class="my-flex-item slog mot-h">Хочеш бути супергероєм <br> міста?</h1>

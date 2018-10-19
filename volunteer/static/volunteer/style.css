@@ -20,7 +20,7 @@ strong { font-weight: bold; }
 li{
     list-style-type: none;
     font-weight: 100;
-    font-size: 155%;
+    font-size: 2.5vh;
 
 }
 
@@ -110,6 +110,8 @@ font-size: 155%;
     z-index: 100
 }
 
+/* for mobile */
+
 @media only screen and (max-width: 576px) and (min-height: 550px){
 
         .slog{
@@ -165,7 +167,7 @@ font-size: 155%;
     }
 
     li{
-        font-size:100% !important;
+        font-size:3.9vw!important;
     }
     .mt10vh {
         margin-top: 7vh !important;
@@ -226,6 +228,7 @@ font-size: 155%;
 
     .img-join{
         width: 57vw!important;
+        margin:10vh auto;
     }
 
     .join{
@@ -343,8 +346,204 @@ font-size: 155%;
         padding-right:3vw;
     }
 
+    .usual-login-btn{
+        width:59vw!important;
+    }
 
 
+
+}
+
+
+/* for tables*/
+
+@media only screen and (max-width: 768px) and  (min-width: 576px){
+
+    .slog{
+        font-size:7vw!important;
+        padding-left:2vw;
+        padding-right:2vw;
+        margin-top:6vh!important;
+    }
+    .p-slog{
+        font-size:4vw !important;
+        text-align: right;
+        padding-right:3vw;
+    }
+
+    .task-info{
+        height:auto!important;
+    }
+
+    .make-task{
+        font-size:6vw!important;
+        text-align:right!important;
+        padding-right: 5vw;
+        padding-top: 11vw;
+    }
+
+    .golden-cup{
+        height:auto!important;
+        width:120%;
+        margin-bottom:7vh;
+    }
+
+    .first-li{
+        font-size: 4vw!important;
+    }
+
+    li{
+        font-size:3vw!important;
+    }
+
+    .padd-mobile-left{
+        padding-left: 4vw;
+        margin-bottom: 5vh;
+    }
+
+    .padd-mobile-right{
+        padding-left: 7vw;
+        margin-bottom: 5vh;
+    }
+
+    .hiw-image{
+        height:12vh;
+        width:auto!important;
+    }
+    .mot-text{
+        font-size:4vw!important;
+    }
+
+    .p-step{
+        height:10vh;
+        font-size:3vw;
+        margin:0;
+    }
+
+    .first-step{
+        padding-left: 2vw;
+    }
+
+    .padding-faq{
+        margin-top: 6vh!important;
+        padding-top:0!important;
+
+    }
+
+    .padding-faq > h3{
+        font-size:3.5vw!important;
+    }
+
+    .wait-for-you{
+        height:20vh!important;
+    }
+
+    .faq{
+        height:auto!important;
+    }
+
+    .btn-join{
+        width: 42vw !important;
+        font-size: 4vw!important;
+        height: 6vh!important;
+        margin:0!important;
+        margin-top:2vh!important;
+    }
+
+}
+
+
+@media only screen and (max-width: 992px) and  (min-width: 768px){
+    .slog{
+        font-size: 5vw!important;
+        margin-top:6vh!important;
+        padding-left:2vw;
+    }
+
+    .p-slog{
+        font-size:3vw!important;
+        text-align:left;
+        padding-left:2vw;
+    }
+
+    .task-info{
+        height:auto!important;
+    }
+
+    .golden-cup{
+        height:auto!important;
+        width:100%;
+    }
+
+    .make-task{
+        font-size:3.5vw!important;
+    }
+
+    .first-li{
+        font-size:2.8vw!important;
+    }
+
+    li{
+        font-size: 2vw!important;
+    }
+
+    .mot-text{
+        font-size:3.5vw!important;
+    }
+
+    .padd-mobile-right{
+        margin-bottom:3vh!important;
+    }
+
+    .hiw-image{
+        width:auto!important;
+        height:14vh;
+    }
+
+    .btn-join{
+        font-size: 2vw !important;
+        margin: 0!important;
+        width: 100%;
+        height: 5vh!important;
+    }
+
+    .achievement-image{
+        height:11.3vh!important;
+    }
+
+    .how-it-works{
+        height:auto!important;
+        margin-bottom:6vh!important;
+    }
+
+    .mot-h{
+        margin:0!important;
+        font-size:5vw!important;
+    }
+
+    .p-step{
+        margin:0!important;
+        height:10vh!important;
+    }
+    .step-info{
+        font-size:2.2vw!important;
+    }
+
+    .wait-for-you{
+        height:auto!important;
+    }
+    .padding-faq{
+        padding-top:6vh!important;
+    }
+
+    .faq{
+        height:auto!important;
+    }
+
+    .img-join{
+        margin-top:15vh!important;
+        margin-bottom:10vh!important;
+    }
 }
 
 .li-ans{
@@ -373,19 +572,14 @@ font-size: 155%;
     text-transform: uppercase;
     font-weight: bold;
     color: #fe6900ff;
-    margin-top: 12vh;
+    margin-top: 11vh;
 
-    font-size: 120%;
-}
-
-
-@media (min-width: 544px) {
-  .slog {font-size: 235%;} /*1rem = 16px*/
+    font-size: 6vh;
 }
 
 .p-slog{
     font-family: 'Ubuntu',sans-serif!important;
-    font-size: 120%;
+    font-size: 3.4vh;
     font-weight: bold;
     color: #00bbbbff;
 }
@@ -410,7 +604,7 @@ font-size: 155%;
 
 .make-task{
     font-family: 'Ubuntu',sans-serif!important;
-
+    font-size:4vh;
     margin:0!important;
 }
 
@@ -423,7 +617,7 @@ media (min-width: 992px){
     font-family: 'Ubuntu',sans-serif!important;
     margin-top: 2vh;
     margin-bottom: 1.4vh;
-    font-size: 180%;
+    font-size: 3.2vh;
     font-weight: 100;
     text-transform: uppercase;
     color: #80b025ff;
@@ -440,7 +634,7 @@ media (min-width: 992px){
 }
 
 .how-it-works{
-    height: 40vh;
+    min-height: 40vh;
 }
 
 .stairs{
@@ -452,7 +646,7 @@ media (min-width: 992px){
 }
 
 .superman{
-    height:50vh;
+    min-height:50vh;
 }
 .step{
     height:10vh;
@@ -503,14 +697,14 @@ height:14vh;
 
 .mot-text{
     font-family: 'Ubuntu',sans-serif!important;
-    font-size: 185%;
+    font-size: 2.9vh;
     font-weight: bold;
     color: #fe6900dc;
 }
 
 .mot-h{
     font-family: 'Ubuntu',sans-serif!important;
-    font-size: 311%;
+    font-size: 5.8vh;
     padding-top: 11vh;
     padding-left: 8vh;
     color: #85d040ff;
@@ -1186,3 +1380,8 @@ svg{
     border:none;
     border-bottom: 1px solid #999898ff;
 }
+
+.p-step{
+        margin:0!important;
+        height:10vh!important;
+    }
