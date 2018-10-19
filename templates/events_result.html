@@ -1,21 +1,21 @@
 {% load static %}
-
-    {% for event in events %}
 <div class="events-block">
+    {% for event in events %}
+
 
         <div class="event-block row ">
-        <div class="col-md-3 text-center text-center my-auto align-items-center ">
+        <div class="col-md-3 col-3 text-center text-center my-auto align-items-center event-image-holder">
 
 
-                <img src= "{{ event.events_type.image.url }}" href="{% url 'volunteer_event' id=event.id %}" style="height:18vh">
+                <img class="category-image-ev" src= "{{ event.events_type.image.url }}" href="{% url 'volunteer_event' id=event.id %}" style="height:18vh">
 
 
         </div>
-        <div class="col-md-7 info">
+        <div class="col-md-7 col-5 info">
             <!--<div class="row text-left full-row">-->
                     <div class="event-item-info">
                         <h2  class="event-name" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.name }}</h2>
-                        <p class="event-description">{{ event.description }}</p>
+                        <p class="event-description d-none d-sm-block">{{ event.description }}</p>
                     </div>
                         <div class="btn-div align-self-end">
                              {% if events_org|get_item:event.id == 0 %}
@@ -49,14 +49,14 @@
                     <!--</div>-->
 
         </div>
-        <div class="col-md-2 padding-0 d-flex justify-content-end">
+        <div class="col-md-2 col-4 padding-0 d-flex justify-content-end ">
                         {% if event.events_or_task == True %}
-                            <img class="task-or-event-image align-self-end" src="{% static 'volunteer/images/event.png' %}">
+                            <img class="d-none d-sm-block task-or-event-image align-self-end" src="{% static 'volunteer/images/event.png' %}">
                         {% else %}
-                            <img class="task-or-event-image align-self-end" src="{% static 'volunteer/images/task.png' %}">
+                            <img class="d-none d-sm-block task-or-event-image align-self-end" src="{% static 'volunteer/images/task.png' %}">
                         {% endif%}
             <div class="outer flex-right" style="background-color: {{event.status.color_background}}">
-                <img class="img-status align-self-center" src="{{ event.status.image.url }}">
+                <img class="img-status align-self-center d-none d-sm-block  " src="{{ event.status.image.url }}">
                 <div class="inner rotate">
                     <p class="event-status-info">{{event.status.frontend_value}}</p>
                 </div>
