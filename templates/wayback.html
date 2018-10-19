@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ha</title>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+</head>
+<body>
+	<ul>
+    <li><a onclick="burger()">Burger</a></li>
+    <li><a onclick="sandwich()">Sandwich</a></li>
+    <li><a onclick="fries()">Fries</a></li>
+	</ul>
+	<div id="chosen_plate"></div>
+	<script type="text/javascript">
+		function burger() {
+		  // URL will change to /plate/burger
+		  history.pushState( {
+		    plate_id: 1,
+		    plate: "Burger"
+		  }, null, "/plate/burger");
+
+		  showPlate("Burger");
+		}
+
+		function sandwich() {
+		  // URL will change to /plate/sandwich
+		  history.pushState( {
+		    plate_id: 2,
+		    plate: "Sandwich"
+		  }, null, "/plate/sandwich");
+
+		  showPlate("Sandwich");
+		}
+
+		function fries() {
+		  // URL will change to /plate/fries
+		  history.pushState( {
+		    plate_id: 3,
+		    plate: "Fries"
+		  }, null, "/plate/fries");
+
+		  showPlate("Fries");
+		}
+
+		function showPlate(name) {
+		  document.getElementById("chosen_plate").innerHTML = name;
+		}
+
+		window.onpopstate = function (event) {
+		  var content = "";
+		  if(event.state) {
+		    content = event.state.plate;
+		  }
+		  showPlate(content);
+		}
+	</script>
+
+</body>
+</html>

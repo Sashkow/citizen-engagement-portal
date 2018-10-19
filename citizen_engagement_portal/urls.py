@@ -22,6 +22,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^$', volunteer_views.home, name='home'),
+    url(r'^wayback/', volunteer_views.home, name='home'),
     url(r'^login/$', auth_views.login,  name='login'),
     # url(r'^usual_login/$', auth_views.login, {'template_name': 'usual_login.html'}, name='usual_login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
@@ -70,6 +71,7 @@ urlpatterns = [
 
     url(r'^data.geojson$', GeoJSONLayerView.as_view( model=Event, properties=('name', 'description','events_type', 'get_events_type_url', 'get_events_type_marker_url', 'get_event_url')), name='event_geo_data'),
     url(r'^fullcalendar/', login_required(TemplateView.as_view(template_name="fullcalendar.html")), name='fullcalendar'),
+    # url(r'^wayback/$', login_required(TemplateView.as_view(template_name="wayback.html")), name='wayback'),
     url(r'^schedule/', include('schedule.urls')),
 
     url(r'^terms_of_use/$', TemplateView.as_view(template_name="terms_of_use.html"), name='terms_of_use'),

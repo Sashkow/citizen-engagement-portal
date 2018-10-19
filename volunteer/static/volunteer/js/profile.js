@@ -608,6 +608,15 @@ $(document).on('click', '.news', function(){
     data.status_id = 'none';
     data.add_filter = 1;
 
+    history.pushState( {
+        url : $(this).attr('get_url'),
+        data : data,
+      }, null, "/wayback/news");
+
+
+
+
+
 
     $.ajax({
              url: url,
@@ -718,10 +727,20 @@ $(document).on('click', '.news', function(){
 
 
         $(document).on('click', '.notifications', function(){
+
+
+
             data = {}
             console.log('notnotnot')
             console.log($(this).attr('get_url'))
             var url = $(this).attr('get_url')
+
+            history.pushState( {
+                url : $(this).attr('get_url'),
+                data : {},
+              }, null, "/wayback/notifications");
+
+
             $.ajax({
              url: url,
              type :'GET',
@@ -952,3 +971,28 @@ $(document).on('click', '.news', function(){
 
 
   })
+
+
+window.onpopstate = function (event) {
+  var url = "";
+  var data = {}
+  if(event.state) {
+    url = event.state.url;
+    data = event.state.data;
+  }
+
+  $.ajax({
+     url: url,
+     type :'GET',
+     data:data,
+     cache:true,
+     success: function(data){
+         console.log('OK');
+            $(".dynamic-block").empty()
+            $(".dynamic-block").html(data.html)
+         },
+     error: function(){
+        console.log('error')
+     }
+  })
+}
