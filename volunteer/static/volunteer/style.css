@@ -361,6 +361,7 @@ font-size: 155%;
 
     .event-block{
         height:auto!important;
+
     }
 
     .event-image-holder{
@@ -1096,6 +1097,7 @@ img.unlocked-achievement{
 .event-block{
     height: 22vh;
     border-bottom: 3px dashed #00babaff;
+    padding-top:0!important;
 }
 
 .event-name{
@@ -1533,3 +1535,11 @@ svg{
         margin:0!important;
         height:10vh!important;
     }
+
+#mob-event-type{
+        width: 62vw!important;
+        height: 5vh!important;
+        font-size: 4vw!important;
+}
+
+

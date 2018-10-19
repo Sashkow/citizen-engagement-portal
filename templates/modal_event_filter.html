@@ -10,8 +10,8 @@
           </div>
           <div class="modal-body">
 
-                <div class="dropdown open text-left category-filter">
-                    <select id="mob-event-type" class="text-left select" url_get = "{% url 'type_filter' %}" state = "news">
+                <div class="dropdown open text-center">
+                    <select id="mob-event-type" class="text-left select form-control" url_get = "{% url 'type_filter' %}" state = "news">
                             <option type_id = "all_digest">Категорія</option>
                         {% for type_ev in types_events %}
                             <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
@@ -21,9 +21,12 @@
                     </select>
                 </div>
                 <hr>
-                <img class="align-self-center filter_event_task it_is_event " url_get = "{% url 'type_filter' %}"  src="{% static 'volunteer/images/event_fiter.png' %}">
-                <img class="align-self-center what-img" src="{% static 'volunteer/images/what.png' %}">
-                <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}"  src="{% static 'volunteer/images/filter_task.png' %}">
+                <div class="text-center">
+                    <img class="align-self-center filter_event_task it_is_event " url_get = "{% url 'type_filter' %}"  src="{% static 'volunteer/images/event_fiter.png' %}">
+                    <img class="align-self-center what-img" src="{% static 'volunteer/images/what.png' %}">
+                    <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}"  src="{% static 'volunteer/images/filter_task.png' %}">
+                </div>
+
                 <hr>
                 <div class="dropdown open text-left category-filter">
                     <select id="event-status" class="text-left select" url_get = "{% url 'type_filter' %}">

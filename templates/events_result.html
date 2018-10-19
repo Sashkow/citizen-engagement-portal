@@ -3,11 +3,11 @@
     {% for event in events %}
 
 
-        <div class="event-block row ">
+        <div class="event-block row event-name" get_url="{% url 'volunteer_event' id=event.id %}" >
         <div class="col-md-3 col-3 text-center text-center my-auto align-items-center event-image-holder">
 
 
-                <img class="category-image-ev" src= "{{ event.events_type.image.url }}" href="{% url 'volunteer_event' id=event.id %}" style="height:18vh">
+                <img class="category-image-ev event-name" get_url="{% url 'volunteer_event' id=event.id %}"  src= "{{ event.events_type.image.url }}" href="{% url 'volunteer_event' id=event.id %}" style="height:18vh">
 
 
         </div>
