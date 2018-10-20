@@ -36,7 +36,6 @@ $( document ).ready(function() {
     }
 
     $(document).on('click', '.open-profile-menu', function(){
-        console.log($(this).attr('active') )
 
         if($(this).attr('active') == "1" ){
             $('.content-container').toggleClass('d-none')
@@ -52,13 +51,11 @@ $( document ).ready(function() {
     })
 
     $(document).on('click', '.usual-reg', function(){
-        console.log('registrationn');
         $('#registration').modal('hide');
         $('#registration-usual').modal('show');
     })
 
     $(document).on('click', '.usual-log', function(){
-        console.log('loginn');
         $('#login').modal('hide');
         $('#login-usual').modal('show');
     })
@@ -67,7 +64,6 @@ $( document ).ready(function() {
         data = {}
         var url = $(this).attr('url_get');
         filter_info = InfoEventFilter()
-        console.log(filter_info)
         data.type = filter_info[0];
         data.page = 1;
         data.state = filter_info[2];
@@ -81,7 +77,6 @@ $( document ).ready(function() {
              cache:true,
              dataType:'json',
              success: function(data){
-                 console.log(data)
                  console.log('OK');
 
 
@@ -89,11 +84,9 @@ $( document ).ready(function() {
 
                     if(data.html != ""){
                         $(".events-block").empty();
-                        console.log('not here')
                         $(".events-block").html(data.html);
                     }else{
                         $(".events-block").empty();
-                        console.log('here')
                         $('<h1>', { text: 'За заданими параметрами подій не знайдено', }).appendTo($(".events-block"))
                     }
 
@@ -656,7 +649,6 @@ $(document).on('click', '.news', function(){
                      $(".dynamic-block").empty()
                      $(".dynamic-block").html(data.html);
                      if($(window).width()< 768){
-                        console.log('in')
                         $('.content-container').toggleClass('d-none')
                         $('#sidebar').css('display', 'none')
                         $('.open-profile-menu').attr('active', "1")
@@ -713,15 +705,21 @@ $(document).on('click', '.news', function(){
             console.log(url);
         })
 
+
+
         $(document).on('click', '.event-name',  function(){
             var url = $(this).attr('get_url');
             var data = {}
             console.log(url)
+            console.log('click-event-name')
+            console.log($(this))
+            console.log(url)
+            console.log(data)
 
-            history.pushState( {
-                url : url,
-                data : {},
-              }, null, "/wayback/event");
+                    history.pushState( {
+                        url : url,
+                        data : {},
+                      }, null, "/wayback/event");
 
 
             $.ajax({
@@ -731,6 +729,7 @@ $(document).on('click', '.news', function(){
              cache:true,
              success: function(data){
                  console.log('OK');
+                 console.log('OK2');
                  $(".dynamic-block").empty()
                  $(".dynamic-block").html(data.html);
              },
@@ -741,10 +740,14 @@ $(document).on('click', '.news', function(){
 
         })
 
+
+
         notifications_success = function(data) {
             $(".dynamic-block").empty()
             $(".dynamic-block").html(data.html)
         }
+
+
 
         $(document).on('click', '.notifications', function(){
 

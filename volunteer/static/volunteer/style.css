@@ -1308,8 +1308,9 @@ img.unlocked-achievement{
  }
 
  .ep-event-description{
-        height: 20vh;
- }
+    min-height: 12vh;
+    margin: 4vh 0;
+    }
 
 
  .selected_event_task{
@@ -1543,6 +1544,10 @@ svg{
         width: 62vw!important;
         height: 5vh!important;
         font-size: 4vw!important;
+}
+
+#layout{
+    margin: 0 4vw;
 }
 
 
