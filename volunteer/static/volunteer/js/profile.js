@@ -177,32 +177,31 @@ $( document ).ready(function() {
 
 
      $(document).on('click', ".btn-follow", function() {
-        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+            var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
             var data = {};
             var event_id = $(this).attr('id_event');
-
             data.id_event = event_id;
             data['csrfmiddlewaretoken'] = csrf_token;
             data.add = 1;
             var url = $(this).attr('url_post');
 
-
-
+            console.log(data)
              $.ajax({
              url: url,
              type :'POST',
              data:data,
              cache:true,
              success: function(data){
-             console.log('OK')
+                console.log('OK')
+                $('.btn-follow[url_post ="' + url + '"]').html('відписатись');
+                $('.btn-follow[url_post ="' + url + '"]').toggleClass('btn-refollow');
+                $('.btn-follow[url_post ="' + url + '"]').toggleClass('btn-follow');
              },
              error: function(){
              console.log('error')
              }
              })
-             $(this).html('Відписатись');
-             $(this).toggleClass('btn-refollow');
-             $(this).toggleClass('btn-follow');
+
     });
 
 
@@ -214,7 +213,7 @@ $( document ).ready(function() {
 
 
     $(document).on('click', '.btn-refollow', function() {
-    var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+            var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
             var data = {};
             var event_id = $(this).attr('id_event');
 
@@ -231,21 +230,22 @@ $( document ).ready(function() {
              data:data,
              cache:true,
              success: function(data){
-             console.log('OK')
+                 console.log('OK')
+                 $('.btn-refollow[url_post ="' + url + '"]').html('підписатися');
+                 $('.btn-refollow[url_post ="' + url + '"]').toggleClass('btn-follow');
+                 $('.btn-refollow[url_post ="' + url + '"]').toggleClass('btn-refollow');
              },
              error: function(){
              console.log('error')
              }
              })
-             $(this).html('Слідкувати');
-             $(this).toggleClass('btn-refollow');
-             $(this).toggleClass('btn-follow');
+
         });
 
 
 
     $(document).on('click', ".btn-subscribe", function() {
-        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+            var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
             var data = {};
             var event_id = $(this).attr('id_event');
 
@@ -262,24 +262,27 @@ $( document ).ready(function() {
              data:data,
              cache:true,
              success: function(data){
-             console.log('OK')
+                console.log('OK')
+                 $('.btn-subscribe[url_post ="' + url + '"]').html("відлучитися");
+                 $('.btn-subscribe[url_post ="' + url + '"]').toggleClass('btn-resubscribe');
+                 $('.btn-subscribe[url_post ="' + url + '"]').prev().prop('disabled', true);
+                 $('.btn-subscribe[url_post ="' + url + '"]').prev().addClass('btn-follow');
+                 $('.btn-subscribe[url_post ="' + url + '"]').prev().removeClass('btn-refollow');
+                 $('.btn-subscribe[url_post ="' + url + '"]').prev().text('підписатися');
+                 $('.btn-subscribe[url_post ="' + url + '"]').toggleClass('btn-subscribe');
+
+
              },
              error: function(){
              console.log('error')
              }
              })
-             $(this).html("Від'єднатись");
-             $(this).toggleClass('btn-resubscribe');
-             $(this).toggleClass('btn-subscribe');
-             $(this).prev().prop('disabled', true);
-             $(this).prev().addClass('btn-follow');
-             $(this).prev().removeClass('btn-refollow');
-             $(this).prev().text('Слідкувати');
+
     });
 
 
     $(document).on('click', ".btn-resubscribe", function() {
-        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+            var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
             var data = {};
             var event_id = $(this).attr('id_event');
 
@@ -296,16 +299,17 @@ $( document ).ready(function() {
              data:data,
              cache:true,
              success: function(data){
-             console.log('OK')
-             },
-             error: function(){
-             console.log('error')
+                 console.log('OK')
+                 $('.btn-resubscribe[url_post ="' + url + '"]').html("Приєднатись  ");
+                 $('.btn-resubscribe[url_post ="' + url + '"]').toggleClass('btn-subscribe');
+                 $('.btn-resubscribe[url_post ="' + url + '"]').prev().prop('disabled', false);
+                 $('.btn-resubscribe[url_post ="' + url + '"]').toggleClass('btn-resubscribe');
+                 },
+                 error: function(){
+                 console.log('error')
              }
              })
-             $(this).html("Приєднатись  ");
-             $(this).toggleClass('btn-resubscribe');
-             $(this).toggleClass('btn-subscribe');
-             $('.btn-follow').prop('disabled', false);
+
     });
 
     $(document).on('change', '#event-type', function(){

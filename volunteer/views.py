@@ -278,9 +278,12 @@ def follow_event(request):
     return_dict = dict()
     data = request.POST
     result = int(data['id_event'].replace(',', '').replace(' ',''))
+    event = Event.objects.get(id = result)
+    print (event)
     user_db = User.objects.get(django_user_id = request.user)
+    print (user_db)
     if int(data['add']) == 1:
-        EventsSubscriber.objects.create(user = user_db, event = Event.objects.get(id = result))
+        EventsSubscriber.objects.create(user = user_db, event = event)
     else:
         EventsSubscriber.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
 
