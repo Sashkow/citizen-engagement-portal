@@ -679,7 +679,7 @@ $(document).on('click', '.news', function(){
             history.pushState( {
                 url : url,
                 data : {},
-              }, null, "/wayback/event_edit");
+              }, null, "/wayback" + url);
 
             $.ajax({
 
@@ -713,7 +713,8 @@ $(document).on('click', '.news', function(){
             console.log(url);
         })
 
-        $(document).on('click', '.event-name',  function(){
+        $(document).on('click', '.event-name',  function(ev){
+            ev.stopPropagation();
             var url = $(this).attr('get_url');
             var data = {}
             console.log(url)
@@ -721,7 +722,7 @@ $(document).on('click', '.news', function(){
             history.pushState( {
                 url : url,
                 data : {},
-              }, null, "/wayback/event");
+              }, null, "/wayback"+url);
 
 
             $.ajax({
