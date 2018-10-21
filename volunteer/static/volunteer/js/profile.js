@@ -18,6 +18,13 @@ $( document ).ready(function() {
        }
     }
 
+    $('.category-hint').hover(function(){
+        $('.category-tips').toggleClass('d-none');
+    })
+
+    $('.category-tips').hover(function(){
+        $(this).toggleClass('d-none');
+    })
 
 
     function readURL(input) {

@@ -1572,3 +1572,39 @@ button:disabled {
     filter: grayscale(50%);
  }
 
+ .category-tips{
+    position:absolute;
+    z-index:400;
+    width:50vw;
+    background-color:#c6e8b0;
+    left: 16vw;
+ }
+
+.img-cat-tip{
+    height: 12vh;
+}
+.img-tip-holder{
+    float:left;
+    width:33%;
+    overflow:hidden;
+    text-align:center;
+    padding:2vh 0;
+
+}
+
+.img-desc-holder{
+    float:left;
+    width:67%;
+    overflow:hidden;
+    text-align:center;
+    padding: 2vh 2vw;
+    text-align:left;
+    font-size:1.5vh;
+}
+
+.category-tip{
+
+    overflow:hidden;
+    width:100%;
+}
+
