@@ -44,7 +44,10 @@
                 </div>
 
                 <div class="col-md-2 col-5">
-                         <img class="align-self-center float-left nav-add show-map" src="{% static 'volunteer/images/map.png' %}">
+                        <a href="{% url 'map' %}">
+                         <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
+                        </a>
+                         <!--<img class="align-self-center float-left nav-add show-map" src="{% static 'volunteer/images/map.png' %}">-->
 
                     <a href="{% url 'fullcalendar' %}">
                         <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">
