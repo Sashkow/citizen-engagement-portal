@@ -210,6 +210,9 @@ def profile(request):
                                                  'page_title': page_title
     })
 
+
+
+
 @login_required
 def event(request, id):
     try:
@@ -267,10 +270,12 @@ def new_event(request):
         updated_data.update({'organizer': current_user.id})
         form = NewEventForm(data = updated_data)
         print(form)
-    if form.is_valid():
-        form.save()
-        redirect_url = reverse('profile')
-        return redirect(redirect_url)
+        if form.is_valid():
+            form.save()
+            redirect_url = reverse('profile')
+            return redirect(redirect_url)
+        # may return none: bad
+
 
 
 @login_required

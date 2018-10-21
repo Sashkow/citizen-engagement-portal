@@ -243,6 +243,7 @@ STATICFILES_DIRS = (
 
 DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
 
+# for khmelnitsky city
 LEAFLET_CONFIG = {
     'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
     'DEFAULT_CENTER': ( 49.4196404, 26.9793793),
@@ -250,3 +251,5 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM': 5,
     'MAX_ZOOM': 18,
 }
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

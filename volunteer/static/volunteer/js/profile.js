@@ -992,6 +992,10 @@ $(document).on('click', '.news', function(){
              })
     })
 
+
+
+
+
  })
 
     window.onpopstate = function (event) {

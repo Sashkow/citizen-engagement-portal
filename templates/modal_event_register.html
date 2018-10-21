@@ -57,7 +57,7 @@
                               <input type="text" class="form-control name_task" placeholder="Назва" >
                               <input type="number" class="form-control point_task" placeholder="Балів за виконання">
                           </div>
-                        <label>Описання</label><br>
+                        <label>Опис</label><br>
                         <textarea  rows="3" class="form-control descr_task" name="description_org_task"></textarea>
                     </div>
 
@@ -83,7 +83,7 @@
               <input type="email" name="user_email" class="input">
 
                <hr>
-              <label for="description">Описання:</label><br>
+              <label for="description">Опис:</label><br>
               <textarea  rows="3" class="form-control" id="description_e"></textarea>
 
 
@@ -115,7 +115,7 @@
               <input type="email" name="t_user_email" class="input" required>
 
                <hr>
-              <label for="description">Описання:</label><br>
+              <label for="description">Опис:</label><br>
               <textarea  rows="3" class="form-control" id="description" ></textarea>
 
 
@@ -167,8 +167,13 @@
 
 
 <!--Modal task-->
-<form action="{% url 'newevent'%}" method="post">
+<form  method="post"> <!--  -->
+
+ {% if show_new_event_form %}
+    <div class="modal fade show" id="event_register_main" tabindex="-1" role="dialog" aria-labelledby="event_register_modal" style="display: block;">
+ {% else %}
      <div class="modal fade" id="event_register_main" tabindex="-1" role="dialog" aria-labelledby="event_register_modal" aria-hidden="true">
+ {% endif %}
       <div class="modal-dialog " role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -230,8 +235,45 @@
 
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn" >Далі</button>
+            <button type="submit" id="new-event-submit" url_post="{% url 'newevent' %}" class="btn" >Далі</button>
+              <a class="btn new-event-submit" >Тест</a>
+
           </div>
+            <script language='javascript' type='text/javascript'>
+
+
+                  $(document).on('click', '#new-event-submit', function(){
+                    console.log('caught new-event-submit')
+                    var data = {};
+                    var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
+                    data['csrfmiddlewaretoken'] = csrf_token;
+                    var url = $(this).attr('url_post');
+
+
+                    var min_part = parseInt($('input#id_min_part').get(0).value);
+                    var max_part = parseInt($('input#id_max_part').get(0).value);
+                    var element = $('input#id_max_part').get(0);
+                    if(min_part>max_part){
+                        element.setCustomValidity('Мінімальне значення має бути не більшим за максимальне');
+                    }else{
+                        element.setCustomValidity('');
+                        $.ajax({
+                         url: url,
+                         type :'POST',
+                         data:data,
+                         cache:true,
+                         success: function(data){
+                            console.log('OK')
+
+                         },
+                         error: function(){
+                         console.log('error newevent submit')
+                         }
+                         })
+                    }
+                })
+
+            </script>
         </div>
       </div>
     </div>

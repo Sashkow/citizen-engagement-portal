@@ -28,6 +28,8 @@ from schedule.models import Event as CalendarEvent
 from schedule.models import Calendar
 
 
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 
 
@@ -121,6 +123,7 @@ class EventsType(models.Model):
         return self.type
 
 class Status(models.Model):
+    DEFAULT_STATUS = 1 # потребує допомоги в підготовці
     status = models.CharField(max_length=80)
     frontend_value = models.CharField(max_length=80, null=True, blank=True)
     color_background = models.CharField(max_length = 13, null=True, blank=True)
@@ -227,7 +230,7 @@ class Event(models.Model):
     time_event = models.TimeField(null=True, blank=True, verbose_name='Час')
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     address = models.CharField(max_length=300, null=True, blank=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE,  null=True, blank=True, verbose_name='Статус')
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='Статус', default=Status.DEFAULT_STATUS) # null=True, blank=True
     max_part = models.IntegerField(null=True, blank=True)
     min_part = models.IntegerField(null=True, blank=True)
     recommended_points = models.IntegerField()

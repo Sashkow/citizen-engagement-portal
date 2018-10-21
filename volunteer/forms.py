@@ -1,15 +1,32 @@
 # -*- coding: utf-8 -*-
-from django.forms import ModelForm
+from django.forms import ModelForm, IntegerField
 from volunteer.models import Event, EventsOrgTask, User, TaskApplication, OrgTaskApplication
-from django.forms import SelectDateWidget
+from django.forms import SelectDateWidget, IntegerField
 from django.forms.widgets import HiddenInput, TimeInput
 from django.contrib.admin import widgets
 
 
 class NewEventForm(ModelForm):
+    min_part = IntegerField(required=False, min_value=1,
+                            error_messages={
+                                'min_value': 'Переконайтеся, що це значення більше 0',
+                            },
+                            label='Мінімальна кількість учасників')
+    max_part = IntegerField(required=False, min_value=1,
+                            error_messages={
+                                'min_value': 'Переконайтеся, що це значення більше 0',
+                            },
+                            label='Максимальна кількість учасників')
+
+    recommended_points = IntegerField(required=True, min_value=0,
+                            error_messages={
+                                'min_value': 'Переконайтеся, що це значення не менше 0',
+                            },
+                            label='Рекомендована кількість балів')
+
     class Meta:
         model = Event
-        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'status',  'description', 'max_part', 'min_part', 'recommended_points', 'contact']
+        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'status',  'description',  'recommended_points', 'contact']
         labels = {
             'name': 'Назва',
             'date_event': 'Дата',
@@ -27,6 +44,7 @@ class NewEventForm(ModelForm):
             'date_event': SelectDateWidget(),
             'time_event': TimeInput(),
         }
+
 
 
 class TaskApplicationForm(ModelForm):
@@ -92,3 +110,4 @@ class UserForm(ModelForm):
             'last_name': 'Прізвище',
             'photo': 'Світлина'
         }
+
