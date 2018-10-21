@@ -193,9 +193,9 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                 console.log('OK')
-                $('.btn-follow[url_post ="' + url + '"]').html('відписатись');
-                $('.btn-follow[url_post ="' + url + '"]').toggleClass('btn-refollow');
-                $('.btn-follow[url_post ="' + url + '"]').toggleClass('btn-follow');
+                $('.btn-follow[id_event ="' + event_id + '"]').html('відписатись');
+                $('.btn-follow[id_event ="' + event_id + '"]').toggleClass('btn-refollow');
+                $('.btn-follow[id_event ="' + event_id + '"]').toggleClass('btn-follow');
              },
              error: function(){
              console.log('error')
@@ -231,9 +231,9 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                  console.log('OK')
-                 $('.btn-refollow[url_post ="' + url + '"]').html('підписатися');
-                 $('.btn-refollow[url_post ="' + url + '"]').toggleClass('btn-follow');
-                 $('.btn-refollow[url_post ="' + url + '"]').toggleClass('btn-refollow');
+                 $('.btn-refollow[id_event ="' + event_id + '"]').html('підписатися');
+                 $('.btn-refollow[id_event ="' + event_id + '"]').toggleClass('btn-follow');
+                 $('.btn-refollow[id_event ="' + event_id + '"]').toggleClass('btn-refollow');
              },
              error: function(){
              console.log('error')
@@ -263,13 +263,13 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                 console.log('OK')
-                 $('.btn-subscribe[url_post ="' + url + '"]').html("відлучитися");
-                 $('.btn-subscribe[url_post ="' + url + '"]').toggleClass('btn-resubscribe');
-                 $('.btn-subscribe[url_post ="' + url + '"]').prev().prop('disabled', true);
-                 $('.btn-subscribe[url_post ="' + url + '"]').prev().addClass('btn-follow');
-                 $('.btn-subscribe[url_post ="' + url + '"]').prev().removeClass('btn-refollow');
-                 $('.btn-subscribe[url_post ="' + url + '"]').prev().text('підписатися');
-                 $('.btn-subscribe[url_post ="' + url + '"]').toggleClass('btn-subscribe');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').html("відлучитися");
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().prop('disabled', true);
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().addClass('btn-follow');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().removeClass('btn-refollow');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().text('підписатися');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
 
 
              },
@@ -300,10 +300,10 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                  console.log('OK')
-                 $('.btn-resubscribe[url_post ="' + url + '"]').html("Приєднатись  ");
-                 $('.btn-resubscribe[url_post ="' + url + '"]').toggleClass('btn-subscribe');
-                 $('.btn-resubscribe[url_post ="' + url + '"]').prev().prop('disabled', false);
-                 $('.btn-resubscribe[url_post ="' + url + '"]').toggleClass('btn-resubscribe');
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').html("Приєднатись  ");
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').prev().prop('disabled', false);
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
                  },
                  error: function(){
                  console.log('error')
