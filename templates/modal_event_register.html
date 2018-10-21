@@ -167,7 +167,7 @@
 
 
 <!--Modal task-->
-<form  method="post"> <!--  -->
+<form action="{% url 'newevent' %}" method="post" id="new-event-form-id"> <!--  -->
 
  {% if show_new_event_form %}
     <div class="modal fade show" id="event_register_main" tabindex="-1" role="dialog" aria-labelledby="event_register_modal" style="display: block;">
@@ -235,43 +235,60 @@
 
           </div>
           <div class="modal-footer">
-            <button type="submit" id="new-event-submit" url_post="{% url 'newevent' %}" class="btn" >Далі</button>
-              <a class="btn new-event-submit" >Тест</a>
+            <button type="submit" id="new-event-submit" class="btn" >Далі</button>
 
           </div>
             <script language='javascript' type='text/javascript'>
-
-
-                  $(document).on('click', '#new-event-submit', function(){
-                    console.log('caught new-event-submit')
-                    var data = {};
-                    var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
-                    data['csrfmiddlewaretoken'] = csrf_token;
-                    var url = $(this).attr('url_post');
-
+                $( document ).ready(function() {
+                 $(document).on('input', 'input#id_max_part, input#id_min_part', function(e){
 
                     var min_part = parseInt($('input#id_min_part').get(0).value);
                     var max_part = parseInt($('input#id_max_part').get(0).value);
                     var element = $('input#id_max_part').get(0);
                     if(min_part>max_part){
                         element.setCustomValidity('Мінімальне значення має бути не більшим за максимальне');
-                    }else{
-                        element.setCustomValidity('');
-                        $.ajax({
-                         url: url,
-                         type :'POST',
-                         data:data,
-                         cache:true,
-                         success: function(data){
-                            console.log('OK')
 
-                         },
-                         error: function(){
-                         console.log('error newevent submit')
-                         }
-                         })
+                    } else {
+                        element.setCustomValidity('');
+
                     }
+                  });
+
+                  $(document).on('submit', '#new-event-form-id', function(e){
+
+                    console.log('caught new-event-submit')
+                    var data = $(this).serialize()
+
+                    /* var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
+                    data['csrfmiddlewaretoken'] = csrf_token; */
+                    var url = $(this).attr('action');
+
+
+                    /*var min_part = parseInt($('input#id_min_part').get(0).value);
+                    var max_part = parseInt($('input#id_max_part').get(0).value);
+                    var element = $('input#id_max_part').get(0);*/
+
+
+
+
+                    $.ajax({
+                     url: url,
+                     type :'POST',
+                     data:data,
+
+                     success: function(data){
+                        console.log('OK')
+                        console.log(data)
+
+                     },
+                     error: function(){
+                        console.log('error newevent submit')
+                     }
+                    })
+
                 })
+
+              })
 
             </script>
         </div>

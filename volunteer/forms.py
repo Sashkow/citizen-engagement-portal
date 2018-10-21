@@ -26,7 +26,7 @@ class NewEventForm(ModelForm):
 
     class Meta:
         model = Event
-        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'status',  'description',  'recommended_points', 'contact']
+        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'status',  'description', 'min_part', 'max_part',  'recommended_points', 'contact']
         labels = {
             'name': 'Назва',
             'date_event': 'Дата',
