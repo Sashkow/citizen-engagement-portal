@@ -66,6 +66,8 @@ urlpatterns = [
     url(r'^notifications/$', volunteer_views.notifications, name='notifications'),
     url(r'^notifications_count/$', volunteer_views.notifications_count, name='notifications_count'),
 
+    url(r'^map/$', volunteer_views.map_show, name = "map"),
+
 
     url(r'^canceledtask/(?P<id>\d+)$', volunteer_views.cancel_task, name = "cancel_task"),
 

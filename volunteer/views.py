@@ -726,7 +726,9 @@ def intropage(request):
     login_form = AuthenticationForm()
     return render(request, 'registration/login.html', {'form':form, 'login_form':login_form})
 
-
+@login_required
+def map_show(request):
+    return render(request, 'map.html')
 
 
 
