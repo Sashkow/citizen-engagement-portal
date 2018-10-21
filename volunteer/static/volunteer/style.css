@@ -1556,6 +1556,12 @@ svg{
         font-size: 4vw!important;
 }
 
+#mob-event-status{
+    width: 80vw!important;
+    height: 5vh!important;
+    font-size: 4vw!important;
+}
+
 #layout{
     margin: 0 4vw;
 }

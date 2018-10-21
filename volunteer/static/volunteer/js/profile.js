@@ -35,6 +35,13 @@ $( document ).ready(function() {
       }
     }
 
+
+    $(document).on('click', '.filter-setting', function(){
+
+        $('#event_filter').modal('show')
+
+    })
+
     $(document).on('click', '.open-profile-menu', function(){
 
         if($(this).attr('active') == "1" ){
@@ -175,6 +182,68 @@ $( document ).ready(function() {
 
      console.log( "ready!" );
 
+     $(document).on('click', '#mob-filter', function(){
+        var data = {}
+        var type_id = $('option:selected', '#mob-event-type').attr('type_id');
+        var status_id = $('option:selected', '#mob-event-status').attr('status_id');
+        if($('.selected_event_task').length){
+            if($('.selected_event_task').hasClass('it_is_event')){
+                var task_or_event = 'event'
+            }else{
+                var task_or_event = 'task'
+            }
+        }else{
+            var task_or_event = 'none'
+        }
+        var state = $('#event-type').attr('state');
+
+        data.type = type_id;
+        data.page = 1;
+        data.state = state;
+        data.task_or_event = task_or_event
+        data.status_id = status_id
+        var url = $('.filter_event_task').attr('url_get')
+
+        $.ajax({
+                 url: url,
+                 type :'GET',
+                 data:data,
+                 cache:true,
+                 dataType:'json',
+                 success: function(data){
+                     console.log('OK');
+                     $('#event_filter').modal('hide')
+
+                     if(!jQuery.isEmptyObject(data)){
+
+                        if(data.html != ""){
+                            $(".events-block").empty();
+                            console.log('not here')
+                            $(".events-block").html(data.html);
+                        }else{
+                            $(".events-block").empty();
+                            console.log('here')
+                            $('<h1>', { text: 'За заданими параметрами подій не знайдено', }).appendTo($(".events-block"))
+                        }
+
+                      }
+                     else{
+                            $(".events-block").empty();
+                            console.log('empty json')
+
+                         $('<h1>', {
+                            text: 'За заданими параметрами подій не знайдено',
+                         }).appendTo($(".events-block"))
+                     }
+                 },
+                 error: function(){
+                 console.log('error')
+                }
+             })
+
+
+     })
+
 
      $(document).on('click', ".btn-follow", function() {
             var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
@@ -193,9 +262,9 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                 console.log('OK')
-                $('.btn-follow[url_post ="' + url + '"]').html('відписатись');
-                $('.btn-follow[url_post ="' + url + '"]').toggleClass('btn-refollow');
-                $('.btn-follow[url_post ="' + url + '"]').toggleClass('btn-follow');
+                $('.btn-follow[id_event ="' + event_id + '"]').html('відписатись');
+                $('.btn-follow[id_event ="' + event_id + '"]').toggleClass('btn-refollow');
+                $('.btn-follow[id_event ="' + event_id + '"]').toggleClass('btn-follow');
              },
              error: function(){
              console.log('error')
@@ -231,9 +300,9 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                  console.log('OK')
-                 $('.btn-refollow[url_post ="' + url + '"]').html('підписатися');
-                 $('.btn-refollow[url_post ="' + url + '"]').toggleClass('btn-follow');
-                 $('.btn-refollow[url_post ="' + url + '"]').toggleClass('btn-refollow');
+                 $('.btn-refollow[id_event ="' + event_id + '"]').html('підписатися');
+                 $('.btn-refollow[id_event ="' + event_id + '"]').toggleClass('btn-follow');
+                 $('.btn-refollow[id_event ="' + event_id + '"]').toggleClass('btn-refollow');
              },
              error: function(){
              console.log('error')
@@ -263,13 +332,13 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                 console.log('OK')
-                 $('.btn-subscribe[url_post ="' + url + '"]').html("відлучитися");
-                 $('.btn-subscribe[url_post ="' + url + '"]').toggleClass('btn-resubscribe');
-                 $('.btn-subscribe[url_post ="' + url + '"]').prev().prop('disabled', true);
-                 $('.btn-subscribe[url_post ="' + url + '"]').prev().addClass('btn-follow');
-                 $('.btn-subscribe[url_post ="' + url + '"]').prev().removeClass('btn-refollow');
-                 $('.btn-subscribe[url_post ="' + url + '"]').prev().text('підписатися');
-                 $('.btn-subscribe[url_post ="' + url + '"]').toggleClass('btn-subscribe');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').html("відлучитися");
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().prop('disabled', true);
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().addClass('btn-follow');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().removeClass('btn-refollow');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().text('підписатися');
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
 
 
              },
@@ -300,10 +369,10 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                  console.log('OK')
-                 $('.btn-resubscribe[url_post ="' + url + '"]').html("Приєднатись  ");
-                 $('.btn-resubscribe[url_post ="' + url + '"]').toggleClass('btn-subscribe');
-                 $('.btn-resubscribe[url_post ="' + url + '"]').prev().prop('disabled', false);
-                 $('.btn-resubscribe[url_post ="' + url + '"]').toggleClass('btn-resubscribe');
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').html("Приєднатись  ");
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').prev().prop('disabled', false);
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
                  },
                  error: function(){
                  console.log('error')
