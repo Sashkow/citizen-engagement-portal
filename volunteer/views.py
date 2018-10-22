@@ -37,6 +37,7 @@ from .functionviews import *
 
 from datetime import timedelta, datetime
 from babel.dates import format_timedelta
+from django.core import serializers
 import json
 
 from django.template import RequestContext
@@ -457,14 +458,14 @@ def achivments_legaue(request):
     else:
         data = request.POST
         return_dict ={}
-
-
+        print ('ne smeshno')
+        hoho = League.objects.get(id = current_user.league.id)
+        hoho = hoho.__dict__
         achieve = AchievementValue.objects.filter(achievement = Achievement.objects.get(id = data['id']))
         for ach in achieve:
             user_balance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id)).quantity
             print(user_balance)
             if user_balance < ach.quantity:
-                # text_error = "Вам не вистачає " + str(ach.quantity - user_balance)+ ' ' + Currency.objects.get(id = ach.currency_id).currency
                 return_dict = {'error': ach.quantity - user_balance,
                                'url_currency': Currency.objects.get(id = ach.currency_id).image.url}
                 return JsonResponse(return_dict)
@@ -480,11 +481,8 @@ def achivments_legaue(request):
         if quant == League.objects.get(id = current_user.league.id).quantity_achievement:
             current_user.league =League.objects.get(id = current_user.league.id  + 1)
             current_user.save()
-            print('New league')
-            return_dict = {
-                'new_league' : League.objects.get(id = current_user.league.id).league
-            }
-            return redirect(reverse('profile'))
+            return_dict ['new_league']  = League.objects.get(id = current_user.league.id).league
+            return_dict ['all_info']  = serializers.serialize('json', [League.objects.get(id = current_user.league.id), ])
         achievement = Achievement.objects.get(id=data['id'])
 
         cont = {
@@ -494,7 +492,9 @@ def achivments_legaue(request):
         html = render_to_string('new_achievement.html', cont)
         return_dict['html'] = html
         return_dict['success'] = True
-        return JsonResponse(return_dict)
+        list_to_json = [return_dict]
+        print (list_to_json)
+        return JsonResponse(json.dumps(list_to_json), safe=False)
 
 
 

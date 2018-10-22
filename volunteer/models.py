@@ -383,24 +383,6 @@ class Event(models.Model):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     def __str__(self):
         return '%s %s %s' % (self.name, '|', self.date_event)
 

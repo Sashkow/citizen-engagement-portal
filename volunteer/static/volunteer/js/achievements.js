@@ -40,18 +40,21 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                 console.log('OK')
-                console.log(data)
-                if( 'error' in data){
+                console.log(typeof(data))
+                var new_data = data[0]
+                console.log(new_data)
+                if( 'error' in new_data){
                     $('#error-buying').modal()
-                    $('p.error-currency').text(data.error)
-                    $('img.error-currency').attr('src', data.url_currency)
-                    }else if('success' in data){
+                    $('p.error-currency').text(new_data.error)
+                    $('img.error-currency').attr('src', new_data.url_currency)
+                    }else if('success' in new_data){
                         var needed_object = $('.ach-container[achieve_id = '+ id_achieve +' ]')
                         needed_object.empty();
-                        needed_object.append(data.html);
-                        if('new_league' in data){
+                        needed_object.append(new_data.html);
+                        if('new_league' in new_data){
+                            console.log(new_data)
                             $('#new-league').modal()
-                            $('.new-league').text(data.new_league)
+                            $('.new-league').text(new_data.new_league)
                         }
                  }
 
