@@ -1608,3 +1608,7 @@ button:disabled {
     width:100%;
 }
 
+.news:hover{
+    cursor:pointer;
+}
+

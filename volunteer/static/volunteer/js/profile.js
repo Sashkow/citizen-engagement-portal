@@ -533,6 +533,7 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                  console.log('OK');
+                 console.log(data);
                  if( 'filter_html' in data ){
                      $(".dynamic-block").empty()
                      $(".dynamic-block").html(data.filter_html);
@@ -548,7 +549,7 @@ $( document ).ready(function() {
                             }else{
                                 $(".events-block").empty();
                                 console.log('here')
-                                $('<h1>', { text: 'Ви не приймаєте участь в подіях', }).appendTo($(".events-block"))
+                                $("<h1> Ви не берете участь у подіях, <a class = 'news' url_get='/typefilter/'>приєднатися </a> </h1>").appendTo($(".events-block"));
                             }
 
 
@@ -681,6 +682,8 @@ news_success = function (data) {
      $(".dynamic-block").html(data.filter_html);
      $(".dynamic-block").append(data.html);
      $('#event-type').attr('state', 'news');
+     $('.current-menu-item').removeClass('current-menu-item')
+     $('.news').parent().addClass('current-menu-item')
 }
 
 
