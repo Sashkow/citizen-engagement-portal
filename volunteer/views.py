@@ -38,6 +38,7 @@ from .functionviews import *
 from datetime import timedelta, datetime
 from babel.dates import format_timedelta
 from django.core import serializers
+from django.forms.models import model_to_dict
 import json
 
 from django.template import RequestContext
@@ -459,8 +460,7 @@ def achivments_legaue(request):
         data = request.POST
         return_dict ={}
         print ('ne smeshno')
-        hoho = League.objects.get(id = current_user.league.id)
-        hoho = hoho.__dict__
+
         achieve = AchievementValue.objects.filter(achievement = Achievement.objects.get(id = data['id']))
         for ach in achieve:
             user_balance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id)).quantity
@@ -482,7 +482,12 @@ def achivments_legaue(request):
             current_user.league =League.objects.get(id = current_user.league.id  + 1)
             current_user.save()
             return_dict ['new_league']  = League.objects.get(id = current_user.league.id).league
-            return_dict ['all_info']  = serializers.serialize('json', [League.objects.get(id = current_user.league.id), ])
+        league_new = League.objects.get(id=current_user.league.id)
+        league_dict = model_to_dict(league_new)
+        league_dict['league_image'] = league_new.league_image.url
+        league_dict['user_frame'] = league_new.user_frame.url
+        league_dict['background_image'] = league_new.background_image.url
+        return_dict ['all_info']  = league_dict
         achievement = Achievement.objects.get(id=data['id'])
 
         cont = {
@@ -492,9 +497,9 @@ def achivments_legaue(request):
         html = render_to_string('new_achievement.html', cont)
         return_dict['html'] = html
         return_dict['success'] = True
-        list_to_json = [return_dict]
+        list_to_json = return_dict
         print (list_to_json)
-        return JsonResponse(json.dumps(list_to_json), safe=False)
+        return JsonResponse(return_dict)
 
 
 
