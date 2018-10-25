@@ -4,7 +4,7 @@
 {% leaflet_css %}
 
             <div class="row text-center align-items-center event-navigation">
-                <div class="col-3 d-none d-md-block">
+                <div class="col-lg-3 col-md-4 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-type" class="text-left select" url_get = "{% url 'type_filter' %}" state = "news">
                                 <option type_id = "all_digest">Категорія</option>
@@ -119,13 +119,34 @@
                     </div>
 
                 </div>
-                <div class="col-2 d-none d-md-block padding-0">
+                <div class="col-lg-2 col-md-2 d-none d-md-block padding-0">
                     <img class="align-self-center filter_event_task it_is_event " url_get = "{% url 'type_filter' %}" data-toggle="tooltip" title="Подія"  src="{% static 'volunteer/images/event_fiter.png' %}">
-                    <img class="align-self-center what-img" src="{% static 'volunteer/images/what.png' %}">
+                    <img class="align-self-center task-event-hint what-img" src="{% static 'volunteer/images/what.png' %}">
+                    <div class="event-or-task-tips  d-none">
+                        <div class="text-center">
+                            <div class="float-left text-center">
+                                <img class="task-or-event-images event-select" src="{% static 'volunteer/images/event.png' %}">
+                                <p>Подія</p>
+                            </div>
+                            <div>
+                                <img class="task-or-event-images task-select" src="{% static 'volunteer/images/task.png' %}">
+                                <p>Завдання</p>
+                            </div>
+
+                       </div>
+
+                        <div>
+                            <p class="text-describe">
+                            Подія на відміну від завдання має мати чітку дату і адресу, а також передбачає зібрання людей для фізичного вирішення проблеми.
+                                <strong>Приклад події</strong>: суботник у міському парку, день донора. <strong>Приклад  завдання</strong>: віднести 5 іграшок у дитячий будинок, редизайн схеми руху міського транспорту.
+                            </p>
+                        </div>
+                    </div>
+
                     <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}" data-toggle="tooltip" title="Завдання"   src="{% static 'volunteer/images/filter_task.png' %}">
 
                 </div>
-                <div class="col-5 d-none d-md-block">
+                <div class="col-lg-5 col-md-4 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-status" class="text-left select" url_get = "{% url 'type_filter' %}">
                                 <option status_id = "none" selected>статус</option>
@@ -143,7 +164,7 @@
                         <p class="margin-0 filter-setting"> Налаштувати фільтр <img class="filter-image" src="{% static 'volunteer/images/filter.png' %}" style="color: #ff7f1aff;"> </p>
                 </div>
 
-                <div class="col-md-2 col-5">
+                <div class="col-lg-2 col-md-2 col-5">
                         <a href="{% url 'map' %}">
                          <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
                         </a>

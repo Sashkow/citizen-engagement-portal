@@ -26,6 +26,14 @@ $( document ).ready(function() {
         $(this).toggleClass('d-none');
     })
 
+     $('.task-event-hint').hover(function(){
+        $('.event-or-task-tips').toggleClass('d-none');
+    })
+
+    $('.event-or-task-tips').hover(function(){
+        $(this).toggleClass('d-none');
+    })
+
 
     function readURL(input) {
 
