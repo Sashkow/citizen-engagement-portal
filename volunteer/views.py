@@ -459,7 +459,6 @@ def achivments_legaue(request):
     else:
         data = request.POST
         return_dict ={}
-        print ('ne smeshno')
 
         achieve = AchievementValue.objects.filter(achievement = Achievement.objects.get(id = data['id']))
         for ach in achieve:
@@ -469,10 +468,12 @@ def achivments_legaue(request):
                 return_dict = {'error': ach.quantity - user_balance,
                                'url_currency': Currency.objects.get(id = ach.currency_id).image.url}
                 return JsonResponse(return_dict)
+        return_dict['curr_quant'] = {}
         for ach in achieve:
             instance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id))
             instance.quantity -= ach.quantity
             instance.save()
+            return_dict['curr_quant'][ach.currency_id] = ach.quantity
             pointslist = PointsList.objects.create(user = current_user,  currency = Currency.objects.get(id = ach.currency_id), increase = False, points_quantity = ach.quantity)
             DecreasePointsInfo.objects.create(decrease = pointslist, decrease_type = DecreasePointsType.objects.get(id = 1), achievement = Achievement.objects.get(id = data['id']))
         UserAchievement.objects.create(achievement = Achievement.objects.get(id = data['id']), user = current_user)
@@ -482,13 +483,17 @@ def achivments_legaue(request):
             current_user.league =League.objects.get(id = current_user.league.id  + 1)
             current_user.save()
             return_dict ['new_league']  = League.objects.get(id = current_user.league.id).league
-        league_new = League.objects.get(id=current_user.league.id)
-        league_dict = model_to_dict(league_new)
-        league_dict['league_image'] = league_new.league_image.url
-        league_dict['user_frame'] = league_new.user_frame.url
-        league_dict['background_image'] = league_new.background_image.url
-        return_dict ['all_info']  = league_dict
+            league_new = League.objects.get(id=current_user.league.id)
+            league_dict = model_to_dict(league_new)
+            league_dict['league_image'] = league_new.league_image.url
+            league_dict['user_frame'] = league_new.user_frame.url
+            league_dict['background_image'] = league_new.background_image.url
+            return_dict ['all_info']  = league_dict
+
+
         achievement = Achievement.objects.get(id=data['id'])
+        if achievement.league.id == current_user.league.id:
+            return_dict['ach_in_current'] = 1
 
         cont = {
             'request': request,

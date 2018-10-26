@@ -1,5 +1,20 @@
 $( document ).ready(function() {
 
+function animateValue(obj, start, end, duration) {
+    var range = end - start;
+    var current = start;
+    var increment = end > start? 1 : -1;
+    var stepTime = Math.abs(Math.floor(duration / range));
+    var timer = setInterval(function() {
+        current += increment;
+        obj.html(current)
+        if (current == end) {
+            clearInterval(timer);
+        }
+    }, stepTime);
+}
+
+
     $(document).on('click', '.change-league', function(){
         var data = {}
         data.id = $(this).attr('legaues_id')
@@ -40,14 +55,43 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                 console.log('OK')
+
                 if( 'error' in data){
                     $('#error-buying').modal()
                     $('p.error-currency').text(data.error)
                     $('img.error-currency').attr('src', data.url_currency)
                     }else if('success' in data){
+
                         var needed_object = $('.ach-container[achieve_id = '+ id_achieve +' ]')
                         needed_object.empty();
                         needed_object.append(data.html);
+                        if('ach_in_current' in data){
+                                var ach_in_league = parseInt(($('.own-progress-bar').children().first().next().html()))
+                                var per_one = 100/ach_in_league
+                                var progress_width = $(".own-progress-league").width() / $('.own-progress-league').parent().width() * 100;
+                                var new_progress_width = progress_width + per_one
+                                $('.progress_state').hide()
+                                $('.own-progress-league').animate({ width: new_progress_width + '%' }, 'slow', function(){
+                                    $('.progress_state').show()
+                                })
+
+                                $('.quant-ach').html(parseInt($('.quant-ach').html()) + 1)
+                        }
+
+                            $.each(data.curr_quant, function( k, v ) {
+                                console.log(typeof(k))
+                                var curr_obj = $('.curr_quat[id_curr = "'+ k+ '"')
+                                var start = parseInt(curr_obj.html())
+                                var end = start - parseInt(v)
+                                console.log(curr_obj);
+                                console.log(start);
+                                console.log(end);
+                                animateValue(curr_obj, start, end, 1000)
+                            });
+
+
+
+
                         if('new_league' in data){
                             console.log(data)
                             console.log(data.all_info.background_color)
@@ -79,6 +123,13 @@ $( document ).ready(function() {
 
                             $('#new-league').modal()
                             $('.new-league').text(data.new_league)
+                            $('.progress_state').hide()
+                            $('.own-progress-league').animate({ width: 0 }, 'slow', function(){
+                                    $('.progress_state').show()
+                            })
+
+                            $('.quant-ach').html(0)
+
                         }
                  }
 
