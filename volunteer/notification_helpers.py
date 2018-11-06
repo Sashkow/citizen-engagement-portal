@@ -119,24 +119,28 @@ def notification_image(notification):
     notifiation_type = get_notification_type(notification)
     if notifiation_type:
         if notifiation_type.id == 1: # Подію змінено
-            image = notification.target.events_type.image.url
-            return image
+            if notification.target:
+                image = notification.target.events_type.image.url
+                return image
 
         if notifiation_type.id == 2: # подія потребує допомоги
-            image = notification.target.events_type.image.url
-            return image
+            if notification.target:
+                image = notification.target.events_type.image.url
+                return image
 
         if notifiation_type.id == 3: # welcome
             image = League.objects.get(league="Пластикова ліга").league_image.url
             return image
 
         if notifiation_type.id == 4: # good job
-            image = notification.target.events_type.image.url
-            return image
+            if notification.target:
+                image = notification.target.events_type.image.url
+                return image
 
         if notifiation_type.id == 5:  # new volunteer for task
-            image = notification.target.events_type.image.url
-            return image
+            if notification.target:
+                image = notification.target.events_type.image.url
+                return image
 
 
     return ""
