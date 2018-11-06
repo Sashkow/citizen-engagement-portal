@@ -48,6 +48,9 @@ def notification_description(notification):
             return description
         elif notification_type.id == 2: # подія потребує допомоги
             event = notification.target
+            if not(event):
+                description = "Подію сповіщення було видалено"
+                return description
             event_url = reverse('volunteer_event', args=(event.id,))
             event_url2 = reverse('form', args=(event.id,))
             event_name = event.name
