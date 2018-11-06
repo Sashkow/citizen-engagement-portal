@@ -37,6 +37,8 @@ from .functionviews import *
 
 from datetime import timedelta, datetime
 from babel.dates import format_timedelta
+from django.core import serializers
+from django.forms.models import model_to_dict
 import json
 
 from django.template import RequestContext
@@ -458,20 +460,20 @@ def achivments_legaue(request):
         data = request.POST
         return_dict ={}
 
-
         achieve = AchievementValue.objects.filter(achievement = Achievement.objects.get(id = data['id']))
         for ach in achieve:
             user_balance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id)).quantity
             print(user_balance)
             if user_balance < ach.quantity:
-                # text_error = "Вам не вистачає " + str(ach.quantity - user_balance)+ ' ' + Currency.objects.get(id = ach.currency_id).currency
                 return_dict = {'error': ach.quantity - user_balance,
                                'url_currency': Currency.objects.get(id = ach.currency_id).image.url}
                 return JsonResponse(return_dict)
+        return_dict['curr_quant'] = {}
         for ach in achieve:
             instance = UserPoint.objects.get(user = current_user, currency = Currency.objects.get(id = ach.currency_id))
             instance.quantity -= ach.quantity
             instance.save()
+            return_dict['curr_quant'][ach.currency_id] = ach.quantity
             pointslist = PointsList.objects.create(user = current_user,  currency = Currency.objects.get(id = ach.currency_id), increase = False, points_quantity = ach.quantity)
             DecreasePointsInfo.objects.create(decrease = pointslist, decrease_type = DecreasePointsType.objects.get(id = 1), achievement = Achievement.objects.get(id = data['id']))
         UserAchievement.objects.create(achievement = Achievement.objects.get(id = data['id']), user = current_user)
@@ -480,12 +482,24 @@ def achivments_legaue(request):
         if quant == League.objects.get(id = current_user.league.id).quantity_achievement:
             current_user.league =League.objects.get(id = current_user.league.id  + 1)
             current_user.save()
-            print('New league')
-            return_dict = {
-                'new_league' : League.objects.get(id = current_user.league.id).league
-            }
-            returnь redirect(reverse('profile'))
+
+            # print('New league')
+            # return_dict = {
+            #     'new_league' : League.objects.get(id = current_user.league.id).league
+            # }
+            # returnь redirect(reverse('profile'))
+            return_dict['new_league']  = League.objects.get(id = current_user.league.id).league
+            league_new = League.objects.get(id=current_user.league.id)
+            league_dict = model_to_dict(league_new)
+            league_dict['league_image'] = league_new.league_image.url
+            league_dict['user_frame'] = league_new.user_frame.url
+            league_dict['background_image'] = league_new.background_image.url
+            return_dict['all_info']  = league_dict
+
+
         achievement = Achievement.objects.get(id=data['id'])
+        if achievement.league.id == current_user.league.id:
+            return_dict['ach_in_current'] = 1
 
         cont = {
             'request': request,
@@ -494,6 +508,8 @@ def achivments_legaue(request):
         html = render_to_string('new_achievement.html', cont)
         return_dict['html'] = html
         return_dict['success'] = True
+        list_to_json = return_dict
+        print (list_to_json)
         return JsonResponse(return_dict)
 
 

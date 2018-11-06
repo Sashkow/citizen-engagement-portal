@@ -163,7 +163,7 @@ font-size: 155%;
     }
 
     .first-li{
-        font-size:120% !important;
+        font-size: 6vw !important;
     }
 
     li{
@@ -212,6 +212,7 @@ font-size: 155%;
         margin-left: 0!important;
         margin-right: 0!important;
         margin-top: 0!important;
+        font-size:5vw!important;
     }
 
     .wait-for-you{
@@ -323,6 +324,7 @@ font-size: 155%;
 
     .buy-achieve{
         height:11%!important;
+        margin: 3vh 0!important;
     }
 
     .ep_event_task{
@@ -339,11 +341,11 @@ font-size: 155%;
     }
 
     .padd-mobile-left{
-        padding-left:3vw;
+        padding-left:9vw;
     }
 
     .padd-mobile-right{
-        padding-right:3vw;
+        padding-right:8vw;
     }
 
     .usual-login-btn{
@@ -376,8 +378,30 @@ font-size: 155%;
     .currency-image{
         width:13.2vw!important;
     }
+    .btn-enter{
+        height:4vh!important;
+        font-size:2.6vh!important;
+    }
 
+    .img-centerua{
+        width: 31vw !important;
+        margin-bottom: 6vh !important;
+        margin-top: 3vh;
+    }
 
+    .img-chesno{
+        width: 28vw !important;
+        margin-bottom: 6vh !important;
+        margin-top: 3vh;
+    }
+    div.achievement-item {
+        height:auto!important;
+        margin: 3vh 0!important;
+    }
+
+    img.unlocked-achievement{
+        width:40vw!important;
+    }
 
 
 }
@@ -385,7 +409,7 @@ font-size: 155%;
 
 /* for tables*/
 
-@media only screen and (max-width: 768px) and  (min-width: 576px){
+@media only screen and (max-width: 767px) and  (min-width: 576px){
 
     .slog{
         font-size:7vw!important;
@@ -693,7 +717,86 @@ font-size: 155%;
     }
 
     .item-menu{
-        font-size:1.7vw!important;
+        font-size:2.2vw!important;
+    }
+
+    #event-type{
+        font-size:1.7vw;
+    }
+
+    .filter_event_task{
+        max-width:none !important;
+        width:3.7vw;
+    }
+    #event-status{
+        font-size:1.7vw !important;
+        width:106% !important;
+    }
+    .category-filter{
+        padding-left:3%!important;
+    }
+    .what-img{
+        width:2.5vw!important;
+    }
+    .category-image-ev{
+        height:auto!important;
+        width: 14vw;
+    }
+
+    .select{
+        height:auto!important;
+        padding: 2% 5% !important;
+    }
+
+    .event-button{
+        height:auto!important;
+        font-size:2vw!important;
+        width:auto!important;
+    }
+    .btn-event-edit {
+        padding-right:12%!important;
+    }
+    .btn-subscribe{
+       padding-right:12%!important;
+    }
+    .task-or-event-image{
+        max-width:none!important;
+        width:6vw;
+    }
+
+    .outer{
+        width:7vw!important;
+    }
+
+    .ach-container{
+        padding:0!important;
+    }
+    div.achievement-item{
+        margin: 1vh 0;
+    }
+
+    .buy-achieve{
+        margin:3vh 0!important;
+        font-size:1.8vw;
+        height:auto!important;
+    }
+
+    img.unlocked-achievement {
+        height: 11vw!important;
+    }
+    h5.locked-achievement {
+        height: auto!important;
+        min-height:10vh;
+    }
+
+    .change-league{
+        font-size:1.65vw!important;
+    }
+    .unlock-ach-container {
+        padding:0!important;
+    }
+    .currency-image{
+        width:5vw!important;
     }
 }
 
@@ -760,8 +863,18 @@ font-size: 155%;
 }
 
 /* Portrait tablets and medium desktops */
-media (min-width: 992px){
-    font-size: 306%!important;
+@media (min-width: 992px){
+    .btn-subscribe {
+    padding-right:7%!important;
+    }
+}
+@media (max-width: 1300px){
+    .outer {
+    width: 40%!important;
+    }
+    .img-status {
+        width:3vw!important;
+    }
 }
 
 .first-li{
@@ -1065,11 +1178,11 @@ img.unlocked-achievement{
 }
 
 .buy-achieve{    width: 80%;
-    height: 8%;
     border-radius: 11px;
     border: 1px dashed #838383ff;
     margin-top: 3vh;
     color: #e9832eff;
+    padding: 0.2vh 0;
 }
 
 .currency-image{
@@ -1233,7 +1346,7 @@ img.unlocked-achievement{
     background-color:#ff7f1aff;
     border-bottom-right-radius: 25px!important;
     border-top-right-radius: 25px!important;
-    padding-right: 7%!important;
+    padding-right: 7%;
 }
 
 .btn-resubscribe{
@@ -1265,7 +1378,7 @@ img.unlocked-achievement{
         background-color:gray;
         border-bottom-right-radius: 25px!important;
         border-top-right-radius: 25px!important;
-        padding-right: 7%!important;
+        padding-right: 7%;
     }
 
  .page-item{
@@ -1483,6 +1596,7 @@ svg{
     display: flex;
     width: 100%;
     align-items: stretch;
+    overflow-x:hidden;
 }
 
 
@@ -1506,7 +1620,6 @@ svg{
 #sidebar{
         position:sticky;
         width: 27vw;
-        top: 6vh;
         left: 0;
         min-height:94vh;
 }
@@ -1575,4 +1688,71 @@ button:disabled {
     cursor:default;
     filter: grayscale(50%);
  }
+
+ .category-tips{
+    position:absolute;
+    z-index:400;
+    width:50vw;
+    background-color:#c6e8b0;
+    left: 16vw;
+ }
+
+.img-cat-tip{
+    height: 12vh;
+}
+.img-tip-holder{
+    float:left;
+    width:33%;
+    overflow:hidden;
+    text-align:center;
+    padding:2vh 0;
+
+}
+
+.img-desc-holder{
+    float:left;
+    width:67%;
+    overflow:hidden;
+    text-align:center;
+    padding: 2vh 2vw;
+    text-align:left;
+    font-size:1.5vh;
+}
+
+.category-tip{
+
+    overflow:hidden;
+    width:100%;
+}
+
+.news:hover{
+    cursor:pointer;
+}
+
+.img-chesno{
+    width:12vw;
+}
+
+.img-centerua{
+    width:17vw;
+    margin-bottom: 8vh;
+}
+
+.event-or-task-tips{
+    position: absolute;
+    z-index: 400;
+    width: 43vw;
+    background-color: #c6e8b0;
+    left: 6vw;
+    padding-top:3vh;
+
+}
+
+.superhero{
+    height:38vh;
+}
+
+#achiev-container{
+    padding:0 3vw!important;
+}
 

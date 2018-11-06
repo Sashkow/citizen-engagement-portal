@@ -18,8 +18,12 @@
                     {{form.name.errors}}
                     {{form.name}}
                     <p> додано {{ event.publication_date }}</p>
-                    {{form.status.errors}}
-                    {{form.status}}
+                    {% if event.status.id == 1 or event.status.id == 2 %}
+                        {{form.status.errors}}
+                        {{form.status}}
+                    {% else %}
+                    <p>{{event.status}} </p>
+                    {% endif %}
             </div>
         </div>
         <div class="row">

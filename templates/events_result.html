@@ -1,17 +1,16 @@
+{% if  events.count > 0 %}
 {% load static %}
 <div class="events-block">
     {% for event in events %}
 
 
         <div class="event-block row "  >
+
         <div class="col-md-3 col-3 text-center text-center my-auto align-items-center event-image-holder">
-
-
-
                 <img class="category-image-ev event-name" get_url="{% url 'volunteer_event' id=event.id %}"  src= "{{ event.events_type.image.url }}" style="height:18vh">
-
         </div>
-        <div class="col-md-7 col-5 info">
+
+        <div class="col-lg-7 col-md-6 col-5 info">
             <!--<div class="row text-left full-row">-->
                     <div class="event-item-info">
                         <h2  class="event-name" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.name }}</h2>
@@ -49,11 +48,11 @@
                     <!--</div>-->
 
         </div>
-        <div class="col-md-2 col-4 padding-0 d-flex justify-content-end ">
+        <div class="col-lg-2 col-md-3 col-4 padding-0 d-flex justify-content-end ">
                         {% if event.events_or_task == True %}
-                            <img class="d-none d-sm-block task-or-event-image align-self-end event-name" get_url="{% url 'volunteer_event' id=event.id %}" src="{% static 'volunteer/images/event.png' %}">
+                            <img class="d-none d-sm-block task-or-event-image align-self-end event-name" data-toggle="tooltip" title="Подія" get_url="{% url 'volunteer_event' id=event.id %}" src="{% static 'volunteer/images/event.png' %}">
                         {% else %}
-                            <img class="d-none d-sm-block task-or-event-image align-self-end event-name" get_url="{% url 'volunteer_event' id=event.id %}" src="{% static 'volunteer/images/task.png' %}">
+                            <img class="d-none d-sm-block task-or-event-image align-self-end event-name" data-toggle="tooltip" title="Завдання" get_url="{% url 'volunteer_event' id=event.id %}" src="{% static 'volunteer/images/task.png' %}">
                         {% endif%}
             <div class="outer flex-right" style="background-color: {{event.status.color_background}}">
                 <img class="img-status align-self-center d-none d-sm-block  " src="{{ event.status.image.url }}">
@@ -95,3 +94,5 @@
             </div>
 
 </div>
+
+{% endif %}
