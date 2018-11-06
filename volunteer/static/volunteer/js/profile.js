@@ -797,7 +797,6 @@ $(document).on('click', '.news', function(){
 
 
 
-
             $.ajax({
              url: url,
              type :'GET',
@@ -852,6 +851,33 @@ $(document).on('click', '.news', function(){
              })
 
         })
+
+
+        $(document).on('click', '.themap', function(){
+            data = {}
+            console.log('mapmap')
+            console.log($(this).attr('get_url'))
+            var url = $(this).attr('get_url')
+
+            history.pushState( {
+                url : url,
+                data : {},
+              }, null, "/wayback/map");
+
+
+            $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             success: notifications_success,
+             error: function(){
+                console.log('error')
+             }
+             })
+
+        })
+
 
 
 
@@ -1097,8 +1123,14 @@ $(document).on('click', '.news', function(){
             success_function = null;
         }
       } else {
-        location.href = '/profile/'
-        return
+        if (location.href.includes('/map/')) {
+            location.href = '/map/'
+            retrun
+        } else{
+            location.href = '/profile/'
+            return
+        }
+
       }
 
 

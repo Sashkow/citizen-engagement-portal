@@ -484,7 +484,7 @@ def achivments_legaue(request):
             return_dict = {
                 'new_league' : League.objects.get(id = current_user.league.id).league
             }
-            return redirect(reverse('profile'))
+            returnь redirect(reverse('profile'))
         achievement = Achievement.objects.get(id=data['id'])
 
         cont = {
@@ -728,7 +728,13 @@ def intropage(request):
 
 @login_required
 def map_show(request):
-    return render(request, 'map.html')
+    cont = {
+        'request': request,
+    }
+    html = render_to_string('map.html', cont)
+    return_dict = {'html': html}
+    return JsonResponse(return_dict)
+    # return render(request, 'map.html')
 
 
 

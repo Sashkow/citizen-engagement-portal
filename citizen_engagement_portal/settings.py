@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from citizen_engagement_portal.password import getpass, getdatabases
+from citizen_engagement_portal.password import getpass, getdatabases, SECRET_KEY, DISQUS_API_KEY,DISQUS_WEBSITE_SHORTNAME, \
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY, SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET, SOCIAL_AUTH_FACEBOOK_KEY, SOCIAL_AUTH_FACEBOOK_SECRET
 from citizen_engagement_portal.socialbackends import CustomFacebookOauth
 
 
@@ -22,8 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-7%yc)idb7m56wxee1@v4qh-q6aw-jutwq%%8@3%r@+o_)q#v!'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,8 +56,7 @@ INSTALLED_APPS = [
 
 ]
 
-DISQUS_API_KEY = 'HXEpZnRKJ0xtNiJUnY8Oau3jkERExk41z07gEDFmmtSHXdNZvEwYq7dpAn9s4mRd'
-DISQUS_WEBSITE_SHORTNAME = 'Changer'
+
 
 SITE_ID = 1
 
@@ -191,14 +190,7 @@ TEMPLATE_DIRS = (
 
 EL_PAGINATION_PER_PAGE = 3
 
-# # Add the google credentials
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '613230157576-6j46bo3jb1i2arb3fll50imcn102r04a.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'ER-U8rN8TorZUOCRydbvSeaJ'
-
-
-SOCIAL_AUTH_FACEBOOK_KEY = '2125271371046613'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = 'b3bf33810e413c2be7c53e78395c9431'  # App Secret
 
 
 

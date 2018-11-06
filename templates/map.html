@@ -1,15 +1,14 @@
+
+{% load static %}
 {% load leaflet_tags %}
-<html>
-  <head>
-    {% leaflet_js %}
-    {% leaflet_css %}
-    <style>
-      .leaflet-container { height: 100%; }
-    </style>
+
+
+{% leaflet_js %}
+{% leaflet_css %}
     <script type="text/javascript">
 
 
-function onEachFeature(feature, layer) {
+        function onEachFeature(feature, layer) {
               var props = feature.properties;
               if (!props.description){
                 props.description = "Немає опису";
@@ -56,9 +55,5 @@ function onEachFeature(feature, layer) {
             });
 
     </script>
-  </head>
-  <body>
-    <h1>Події</h1>
-    {% leaflet_map "not_main" %}
-  </body>
-</html>
+
+{% leaflet_map "not_main" %}

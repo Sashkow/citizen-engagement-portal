@@ -1499,6 +1499,10 @@ svg{
     cursor:pointer;
 }
 
+.themap:hover{
+    cursor:pointer;
+}
+
 #sidebar{
         position:sticky;
         width: 27vw;
