@@ -165,13 +165,14 @@
                 </div>
 
                 <div class="col-md-2 col-5">
-                        <!--<a href="{% url 'map' %}">-->
-                        <div class="themap" get_url="{% url 'map' %}">
-                            <img class="align-self-center float-left nav-add"  src="{% static 'volunteer/images/map.png' %}">
-                        </div>
 
-                        <!--</a>-->
-                         <!--<img class="align-self-center float-left nav-add show-map" src="{% static 'volunteer/images/map.png' %}">-->
+                        <!--<div class="themap" get_url="{% url 'map' %}">-->
+                            <!--<img class="align-self-center float-left nav-add"  src="{% static 'volunteer/images/map.png' %}">-->
+                        <!--</div>-->
+                        <a href="{% url 'map' %}">
+                            <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
+                        </a>
+
 
                     <a href="{% url 'fullcalendar' %}">
                         <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">

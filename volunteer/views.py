@@ -749,8 +749,8 @@ def map_show(request):
     }
     html = render_to_string('map.html', cont)
     return_dict = {'html': html}
-    return JsonResponse(return_dict)
-    # return render(request, 'map.html')
+    # return JsonResponse(return_dict)
+    return render(request, 'map.html')
 
 
 

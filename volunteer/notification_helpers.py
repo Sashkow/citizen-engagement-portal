@@ -30,6 +30,9 @@ def notification_description(notification):
         if notification_type.id == 1: #Подію змінено
             """{{властивість}} <a class="event-name" get_url="{{лінк}}">{{подія}}</a> змінено з {{було}} на {{стало}}"""
             event = notification.target
+            if not event:
+                return "Подію сповіщення було видалено."
+
             property_name = event.__class__._meta.get_field(notification.data['event_field']).verbose_name.title()
 
             event_url = reverse('volunteer_event',args=(event.id,))
@@ -46,6 +49,7 @@ def notification_description(notification):
             description = description.replace('{{було}}', was)
             description = description.replace('{{стало}}', became)
             return description
+
         elif notification_type.id == 2: # подія потребує допомоги
             event = notification.target
             if not(event):
