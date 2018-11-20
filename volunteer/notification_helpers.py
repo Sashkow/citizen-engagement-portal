@@ -106,6 +106,27 @@ def notification_description(notification):
             description = description.replace("{{лінк2}}", str(event_edit_url))
             return description
 
+        elif notification_type.id == 6:
+            event = notification.target
+            recipient = notification.recipient
+            sender = notification.actor
+            if sender == None:
+                return "Акаунт відправника сповіщення було видалено"
+            event_url = reverse('volunteer_event', args=(event.id,))
+
+
+            sender_user = User.objects.filter(django_user_id=sender)
+
+            if sender_user.exists():
+                sender_user = sender_user[0]
+            else:
+                sender_user = sender
+
+            description = str(notification_type.template)
+            description = description.replace("{{сповіщення}}", str(notification.data['message']))
+            return description
+
+
 
     else:
         print("unknown notification type")
@@ -142,6 +163,11 @@ def notification_image(notification):
                 return image
 
         if notifiation_type.id == 5:  # new volunteer for task
+            if notification.target:
+                image = notification.target.events_type.image.url
+                return image
+
+        if notifiation_type.id == 6:  # custom
             if notification.target:
                 image = notification.target.events_type.image.url
                 return image
