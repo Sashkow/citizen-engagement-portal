@@ -188,7 +188,9 @@ $( document ).ready(function() {
         })
 
         $('.event-select').click(function(){
+//            hide enent_or_tast menu
             $('#event_register_main').find('#id_events_or_task').addClass('d-none')
+//          show register envent menu
             $('#event_register_main').modal('show')
         })
     })

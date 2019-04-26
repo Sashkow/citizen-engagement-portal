@@ -27,6 +27,8 @@ class Command(BaseCommand):
         message = "Доброго дня! Мене звати Ксенія. Я організатор Різдвяного ярмарку. Дякуємо, що відгукнулися стати волонтером. Напишіть, будь ласка, на ksenia.kosyuk@gmail.com або зателефонуйте 0978933516."
 
 
+        users = EventsSubscriber.objects.filter
+
         notify.send(
             django_user,
             recipient=django_user,

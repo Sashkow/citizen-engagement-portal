@@ -52,11 +52,6 @@ import os
 from django.db.models.signals import pre_save, post_save, post_init
 from django.dispatch import receiver
 
-
-
-
-
-
 def notify_event_changes(event_instance, event_field, old_value):
     followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
     participants = list(EventsParticipant.objects.filter(event=event_instance).values_list('user', flat=True))
