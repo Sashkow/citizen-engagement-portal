@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm, IntegerField
 from volunteer.models import Event, EventsOrgTask, User, TaskApplication, OrgTaskApplication
-from django.forms import SelectDateWidget, IntegerField
+from django.forms import SelectDateWidget, IntegerField, TimeField
 from django.forms.widgets import HiddenInput, TimeInput
 from django.contrib.admin import widgets
-
+from volunteer.widgets import SelectTimeWidget
 
 class NewEventForm(ModelForm):
     min_part = IntegerField(required=False, min_value=1,
@@ -23,6 +23,10 @@ class NewEventForm(ModelForm):
                                 'min_value': 'Переконайтеся, що це значення не менше 0',
                             },
                             label='Рекомендована кількість балів')
+
+    time_event = TimeField(widget=SelectTimeWidget(minute_step=10, second_step=10))
+
+
 
     class Meta:
         model = Event

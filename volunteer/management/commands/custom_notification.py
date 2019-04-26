@@ -36,3 +36,21 @@ class Command(BaseCommand):
             )
 
 
+        django_user = User.objects.get(first_name = "Сашко", last_name="Виконавець").django_user_id
+
+        event_instance = Event.objects.get(name = "Різдвяний ярмарок")
+
+        message = "Доброго дня! Мене звати Ксенія. Я організатор Різдвяного ярмарку. Дякуємо, що відгукнулися стати волонтером. Напишіть, будь ласка, на ksenia.kosyuk@gmail.com або зателефонуйте 0978933516."
+
+
+        users = EventsSubscriber.objects.filter
+
+        notify.send(
+            django_user,
+            recipient=django_user,
+            verb="custom",
+            target=event_instance,
+            # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+            data={'type': '6', 'message': message},  # Власне сповіщення
+        )
+
