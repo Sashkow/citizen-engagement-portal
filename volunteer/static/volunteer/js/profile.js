@@ -342,27 +342,27 @@ $( document ).ready(function() {
 
 
 
-             $.ajax({
-             url: url,
-             type :'POST',
-             data:data,
-             cache:true,
-             success: function(data){
-                console.log('OK')
-                 $('.btn-subscribe[id_event ="' + event_id + '"]').html("відлучитися");
-                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
-                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().prop('disabled', true);
-                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().addClass('btn-follow');
-                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().removeClass('btn-refollow');
-                 $('.btn-subscribe[id_event ="' + event_id + '"]').prev().text('підписатися');
-                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
+            $.ajax({
+            url: url,
+            type :'POST',
+            data:data,
+            cache:true,
+            success: function(data){
+            console.log('OK')
+             $('.btn-subscribe[id_event ="' + event_id + '"]').html("відлучитися");
+             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
+             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().prop('disabled', true);
+             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().addClass('btn-follow');
+             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().removeClass('btn-refollow');
+             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().text('підписатися');
+             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
 
 
-             },
-             error: function(){
-             console.log('error')
-             }
-             })
+            },
+            error: function(){
+            console.log('error')
+            }
+            })
 
     });
 
