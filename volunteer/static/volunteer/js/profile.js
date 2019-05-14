@@ -291,13 +291,6 @@ $( document ).ready(function() {
     });
 
 
-    $(document).on('click', ".btn-app-task", function() {
-        $('#task_applicate').modal('show')
-        console.log($(this).attr('id_event'))
-        $('#task_applicate').find('#id_event').val($(this).attr('id_event')).addClass('d-none')
-    });
-
-
     $(document).on('click', '.btn-refollow', function() {
             var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
             var data = {};
@@ -326,12 +319,21 @@ $( document ).ready(function() {
              }
              })
 
-        });
+    });
+
+
+    $(document).on('click', ".btn-app-task", function() {
+        // mark test field id_event as hidden and fill it with value which is id_event attribute on the button itself
+        $('#task_applicate').modal('show')
+        //        console.log($(this).attr('id_event'))
+        $('#task_applicate').find('#id_event').val($(this).attr('id_event')).addClass('d-none')
+        document.getElementById("id_event").value = $(this).attr('id_event');
+    });
 
 
 
     $(document).on('click', ".btn-subscribe", function() {
-            var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
+            var csrf_token = $('input[name = "csrfmiddlewaretoken"]').last().val();
             var data = {};
             var event_id = $(this).attr('id_event');
 
@@ -339,8 +341,6 @@ $( document ).ready(function() {
             data['csrfmiddlewaretoken'] = csrf_token;
             data.add = 1;
             var url = $(this).attr('url_post');
-
-
 
             $.ajax({
             url: url,
@@ -355,7 +355,9 @@ $( document ).ready(function() {
              $('.btn-subscribe[id_event ="' + event_id + '"]').prev().addClass('btn-follow');
              $('.btn-subscribe[id_event ="' + event_id + '"]').prev().removeClass('btn-refollow');
              $('.btn-subscribe[id_event ="' + event_id + '"]').prev().text('підписатися');
+             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-app-task');
              $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
+
 
 
             },
@@ -377,8 +379,6 @@ $( document ).ready(function() {
             data.add = 0;
             var url = $(this).attr('url_post');
 
-
-
              $.ajax({
              url: url,
              type :'POST',
@@ -386,9 +386,10 @@ $( document ).ready(function() {
              cache:true,
              success: function(data){
                  console.log('OK')
-                 $('.btn-resubscribe[id_event ="' + event_id + '"]').html("Приєднатись  ");
+                 $('.btn-resubscribe[id_event ="' + event_id + '"]').html("долучитися");
                  $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
                  $('.btn-resubscribe[id_event ="' + event_id + '"]').prev().prop('disabled', false);
+                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-app-task');
                  $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
                  },
                  error: function(){

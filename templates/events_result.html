@@ -20,24 +20,24 @@
                              {% if events_org|get_item:event.id == 0 %}
                             {% if events_subs|get_item:event.id == 0 %}
                                 {% if events_part|get_item:event.id == 1  %}
-                                <button type="button" class="btn-follow    event-button" id="follow"  id_event = {{ event.id }}, eurl_post = "{% url 'follow_event' %}" disabled>підписатися</button>
+                                <button type="button" class="btn-follow    event-button" id="follow"  id_event = {{event.id}} eurl_post = "{% url 'follow_event' %}" disabled>підписатися</button>
                                 {% else %}
-                                <button type="button" class="btn-follow   event-button" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}" >підписатися</button>
+                                <button type="button" class="btn-follow   event-button" id="follow"  id_event = {{event.id}} url_post = "{% url 'follow_event' %}" >підписатися</button>
                                 {% endif %}
                             {% else %}
-                                <button type="button" class="btn-refollow    event-button" id="follow"  id_event = {{ event.id }}, url_post = "{% url 'follow_event' %}">відписатися</button>
+                                <button type="button" class="btn-refollow    event-button" id="follow"  id_event = {{event.id}} url_post = "{% url 'follow_event' %}">відписатися</button>
                             {%  endif %}
 
 
                             {% if events_part|get_item:event.id == 0 %}
-                                <button type="button" class="event-button btn-subscribe  " id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %} " >долучитися <img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
+                                <button type="button" class="event-button btn-subscribe btn-app-task" id_event = {{event.id}} url_post = "{% url 'subscribe_event' %} " >долучитися<img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
                             {% else %}
-                                <button type="button" class="btn-resubscribe  event-button" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">відлучитися</button>
+                                <button type="button" class="btn-resubscribe  event-button" id_event = {{event.id}} url_post = "{% url 'subscribe_event' %}">відлучитися</button>
                             {% endif %}
 
                         {% else %}
                             <!--<button class="btn btn-event-edit" id_event = {{ event.id }} > Редагувати</button>-->
-                        <button class="btn-event-edit event-button" id_event = {{ event.id }} get_url = "{% url 'form' id=event.id %}">редагувати <img class="img-curr-in-button" src="{% static 'volunteer/images/edit.png' %}"</button>
+                        <button class="btn-event-edit event-button" id_event = {{event.id}} get_url = "{% url 'form' id=event.id %}">редагувати <img class="img-curr-in-button" src="{% static 'volunteer/images/edit.png' %}"</button>
                         {% endif %}
 
                         </div>

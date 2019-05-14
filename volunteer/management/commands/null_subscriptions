@@ -1,0 +1,10 @@
+from django.core.management.base import BaseCommand, CommandError
+from volunteer.models import EventSubscriber
+from djgeojson.fields import  PointField
+from geopy.geocoders import Nominatim
+import random
+import time
+
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        from

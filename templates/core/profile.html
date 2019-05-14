@@ -152,7 +152,7 @@
 
         </div>
         <div class="ribbon-div">
-             <p class="ribbon ">{{ volunteer.league }}</p>
+             <p class="ribbon ">{{volunteer.league}}</p>
         </div>
 
         <div class="profile-image">
@@ -181,7 +181,7 @@
                 {% if forloop.first %} <div class="row justify-content-center padding-0"> {% endif %}
                     <div class="col-auto padding-0">
                         <img class="currency-image" src="{{ point.currency.image.url }}" >
-                        <p id_curr = "{{ point.currency.id}}" class="curr_quat">{{point.quantity}}</p>
+                        <p id_curr = "{{point.currency.id}}" class="curr_quat">{{point.quantity}}</p>
                     </div>
                 {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-center padding-0"> {%endif%}
                 {% if forloop.last %}</div>{% endif %}
@@ -231,9 +231,6 @@
 
         </div>
 
-
-
-
     </nav>
 
 
@@ -248,19 +245,13 @@
                        {% include 'events_result.html' %}
                 </div>
             </div>
-
-
-
-
-
         </div>
-
     </div>
 
-    {% include 'modal_event_register.html' %}
     {% include 'modal_event_filter.html' %}
+    {% include 'modal_event_register.html' %}
 
-
+    <!--look here-->
 
 
 {% endblock %}

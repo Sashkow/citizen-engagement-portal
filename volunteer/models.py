@@ -526,11 +526,13 @@ class PointsList(models.Model):
     increase = models.BooleanField(default = True)
     points_quantity = models.IntegerField()
 
+
 class IncreasePointsType(models.Model):
     increase_type = models.CharField(max_length = 100)
 
     def __str__(self):
         return self.increase_type
+
 
 class DecreasePointsType(models.Model):
     decrease_type = models.CharField(max_length = 100)
@@ -538,16 +540,18 @@ class DecreasePointsType(models.Model):
     def __str__(self):
         return self.decrease_type
 
+
 class IncreasePointsInfo(models.Model):
     increase = models.ForeignKey(PointsList, on_delete = models.CASCADE)
     increase_type = models.ForeignKey(IncreasePointsType, on_delete = models.CASCADE)
     event = models.ForeignKey(Event, on_delete = models.CASCADE)
 
+
 class TaskApplication(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE )
     event = models.ForeignKey(Event,  on_delete = models.CASCADE)
-    contact = models.EmailField()
-    executer = models.BooleanField(default = False)
+    contact = models.CharField(max_length=15)
+    executor = models.BooleanField(default = False)
 
     class Meta:
         unique_together = ('user', 'event',)

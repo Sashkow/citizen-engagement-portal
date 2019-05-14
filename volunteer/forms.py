@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm, IntegerField
 from volunteer.models import Event, EventsOrgTask, User, TaskApplication, OrgTaskApplication
-from django.forms import SelectDateWidget, IntegerField, TimeField
-from django.forms.widgets import HiddenInput, TimeInput
-from django.contrib.admin import widgets
+from django.forms import SelectDateWidget, IntegerField, TimeField, EmailField, ModelChoiceField
+from django.forms.widgets import HiddenInput, TimeInput, EmailInput, NumberInput
 from volunteer.widgets import SelectTimeWidget
+
 
 class NewEventForm(ModelForm):
     min_part = IntegerField(required=False, min_value=1,
@@ -50,14 +50,18 @@ class NewEventForm(ModelForm):
         }
 
 
-
 class TaskApplicationForm(ModelForm):
+    event = ModelChoiceField(queryset=Event.objects.all(), widget=NumberInput())
+
     class Meta:
         model = TaskApplication
         fields = ['user', 'event', 'contact']
         labels = {
-            'contact': 'Залиште Ваш контактний e-mail',
+            'contact': 'Залиште Ваш телефонний номер',
+            'user': 'user',
+            'event': 'event'
         }
+
 
 class OrgTaskApplicationForm(ModelForm):
     class Meta:
@@ -66,7 +70,6 @@ class OrgTaskApplicationForm(ModelForm):
         labels = {
             'contact': 'Залиште Ваш контактний e-mail',
         }
-
 
 
 class EditeEventForm(ModelForm):
@@ -115,4 +118,5 @@ class UserForm(ModelForm):
             'last_name': 'Прізвище',
             'photo': 'Світлина'
         }
+
 

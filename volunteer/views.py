@@ -279,7 +279,6 @@ def new_event(request):
         # may return none: bad
 
 
-
 @login_required
 def follow_event(request):
     return_dict = dict()
@@ -300,12 +299,45 @@ def subscribe_event(request):
     result = int(data['id_event'].replace(',', '').replace(' ',''))
     user_db = User.objects.get(django_user_id = request.user)
 
+    # if clicking participate
     if int(data['add']) == 1:
         EventsSubscriber.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
         EventsParticipant.objects.create(user = user_db, event = Event.objects.get(id = result))
+    # if clicking leave
     else:
         EventsParticipant.objects.filter(user = user_db, event = Event.objects.get(id = result)).delete()
     return JsonResponse(return_dict)
+
+
+def app_task(request):
+    return_dict = {}
+    if request.method == 'POST':
+        django_user = request.user
+        current_user = User.objects.get(django_user_id=django_user)
+        updated_data = request.POST.copy()
+        # print (updated_data)
+        updated_data.update({'user': current_user.id})
+        # print(updated_data)
+        form = TaskApplicationForm(data = updated_data)
+        print(form)
+        if form.is_valid():
+            print('Hi')
+            form.save()
+            # 5 Волонтер бажає виконати завдання
+            event = Event.objects.get(id=form.data['event'])
+            recipient = event.organizer.django_user_id
+            notify.send(
+                django_user,
+                recipient=recipient,
+                verb="applied",
+                target=event,
+                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
+                data={'type': '5',},  # 5 Волонтер бажає виконати завдання
+            )
+        else:
+            print("Error: subscripiton did not happen")
+        redirect_url = reverse('profile')
+        return redirect(redirect_url)
 
 
 def type_filter(request):
@@ -659,33 +691,8 @@ def refresh_digest(request):
                 DigestList.objects.filter(user=current_user, type=EventsType.objects.get(id=i)).delete()
         return JsonResponse(return_dict)
 
-def app_task(request):
-    return_dict = {}
-    if request.method == 'POST':
-        django_user = request.user
-        current_user = User.objects.get(django_user_id=django_user)
-        updated_data = request.POST.copy()
-        # print (updated_data)
-        updated_data.update({'user': current_user.id})
-        # print(updated_data)
-        form = TaskApplicationForm(data = updated_data)
-        print(form)
-        if form.is_valid():
-            print('Hi')
-            form.save()
-            # 5 Волонтер бажає виконати завдання
-            event = Event.objects.get(id=form.data['event'])
-            recipient = event.organizer.django_user_id
-            notify.send(
-                django_user,
-                recipient=recipient,
-                verb="applied",
-                target=event,
-                # timestamp = datetime.datetime.now().strftime("$d %B %Y %h:%m"),
-                data={'type': '5',},  # 5 Волонтер бажає виконати завдання
-            )
-            redirect_url = reverse('profile')
-            return redirect(redirect_url)
+
+
 
 
 def task_executor(request):
