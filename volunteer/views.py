@@ -185,7 +185,7 @@ def profile(request):
 
     form = NewEventForm()
     form_task = TaskApplicationForm()
-    form_org_task = OrgTaskApplicationForm()
+    # form_org_task = OrgTaskApplicationForm()
     return render(request, 'core/profile.html', {'volunteer':volunteer,
                                                  'league_user':league_user,
                                                  'name':name,
@@ -208,7 +208,7 @@ def profile(request):
                                                  'form': form,
                                                  'events_task_app':events_task_app,
                                                  'form_task':form_task,
-                                                 'form_org_task':form_org_task,
+                                                 # 'form_org_task':form_org_task,
                                                  'page_title': page_title
     })
 
@@ -264,6 +264,7 @@ def event(request, id):
 
 @login_required
 def new_event(request):
+
     if request.method == 'POST':
         django_user = request.user
         current_user = User.objects.get(django_user_id=django_user)

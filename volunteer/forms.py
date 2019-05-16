@@ -24,7 +24,7 @@ class NewEventForm(ModelForm):
                             },
                             label='Рекомендована кількість балів')
 
-    time_event = TimeField(widget=SelectTimeWidget(minute_step=10, second_step=10))
+    time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10))
 
 
 
