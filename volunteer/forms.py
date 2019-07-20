@@ -4,6 +4,7 @@ from volunteer.models import Event, EventsOrgTask, User, TaskApplication, OrgTas
 from django.forms import SelectDateWidget, IntegerField, TimeField, EmailField, ModelChoiceField
 from django.forms.widgets import HiddenInput, TimeInput, EmailInput, NumberInput
 from volunteer.widgets import SelectTimeWidget
+from volunteer.models import City
 
 
 class NewEventForm(ModelForm):
@@ -26,11 +27,13 @@ class NewEventForm(ModelForm):
 
     time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10))
 
+    city = ModelChoiceField(required=False, queryset=City.objects.all())
+
 
 
     class Meta:
         model = Event
-        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'status',  'description', 'min_part', 'max_part',  'recommended_points', 'contact']
+        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'city', 'status',  'description', 'min_part', 'max_part',  'recommended_points', 'contact']
         labels = {
             'name': 'Назва',
             'date_event': 'Дата',
@@ -42,7 +45,8 @@ class NewEventForm(ModelForm):
             'min_part': 'Максимальна кількість учасників',
             'recommended_points': 'Рекомендована кількість балів',
             'contact':'Ваш контактний e-mail',
-            'events_type':'Категорія'
+            'events_type':'Категорія',
+            'city': 'місто'
         }
         widgets = {
             'date_event': SelectDateWidget(),

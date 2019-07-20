@@ -81,6 +81,10 @@
                 {{ form.address.label_tag }}<br>
                 {{form.address}}<br>
 
+                {{form.city.errors}}
+                {{ form.city.label_tag }}<br>
+                {{form.city}}<br>
+
                 {{form.max_part.errors}}
                 {{ form.max_part.label_tag }}<br>
                 {{form.max_part}}<br>
@@ -143,7 +147,7 @@
 
 
 
-                    $.ajax({
+                    /* $.ajax({
                      url: url,
                      type :'POST',
                      data:data,
@@ -156,7 +160,7 @@
                      error: function(){
                         console.log('error newevent submit')
                      }
-                    })
+                    }) */
 
                 })
 

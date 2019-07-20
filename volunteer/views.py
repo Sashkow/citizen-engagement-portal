@@ -177,6 +177,8 @@ def profile(request):
 
     types_events = EventsType.objects.all()
     status_events = Status.objects.all()
+    cities = City.objects.all()
+
 
     curr_category = {}
     for type_e in types_events:
@@ -186,30 +188,32 @@ def profile(request):
     form = NewEventForm()
     form_task = TaskApplicationForm()
     # form_org_task = OrgTaskApplicationForm()
-    return render(request, 'core/profile.html', {'volunteer':volunteer,
-                                                 'league_user':league_user,
-                                                 'name':name,
-                                                 'events':events,
-                                                 'events_subs':events_subs,
-                                                 'events_part':events_part,
-                                                 'current':1,
-                                                 'pages':pages_range,
-                                                 'pages_max': pages,
-                                                 'status':status,
-                                                 'achieve_quant':achieve_quant,
-                                                'unread_count': request.user.notifications.unread().count(),
-                                                'notifications': request.user.notifications.all(),
-                                                'types_events':types_events,
-                                                 'events_org':events_org,
-                                                 'user_points':user_points,
-                                                 'max_points': max_user_point['quantity__max'],
-                                                 'curr_category':curr_category,
-                                                 'status_events': status_events,
-                                                 'form': form,
-                                                 'events_task_app':events_task_app,
-                                                 'form_task':form_task,
-                                                 # 'form_org_task':form_org_task,
-                                                 'page_title': page_title
+    return render(request, 'core/profile.html', {
+        'volunteer':volunteer,
+        'league_user':league_user,
+        'name':name,
+        'events':events,
+        'events_subs':events_subs,
+        'events_part':events_part,
+        'current':1,
+        'pages':pages_range,
+        'pages_max': pages,
+        'status':status,
+        'achieve_quant':achieve_quant,
+        'unread_count': request.user.notifications.unread().count(),
+        'notifications': request.user.notifications.all(),
+        'types_events':types_events,
+        'events_org':events_org,
+        'user_points':user_points,
+        'max_points': max_user_point['quantity__max'],
+        'curr_category':curr_category,
+        'status_events': status_events,
+        'cities': cities,
+        'form': form,
+        'events_task_app':events_task_app,
+        'form_task':form_task,
+        # 'form_org_task':form_org_task,
+        'page_title': page_title
     })
 
 

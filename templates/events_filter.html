@@ -146,12 +146,26 @@
                     <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}" data-toggle="tooltip" title="Завдання"   src="{% static 'volunteer/images/filter_task.png' %}">
 
                 </div>
-                <div class="col-lg-5 col-md-4 d-none d-md-block">
+                <div class="col-lg-2 col-md-2 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-status" class="text-left select" url_get = "{% url 'type_filter' %}">
                                 <option status_id = "none" selected>статус</option>
                             {% for status in status_events %}
                                 <option status_id = "{{status.id}}" >{{status.status}}</option>
+                            {% endfor %}
+                        </select>
+                            <div class="map-contailer">
+                                {% leaflet_map "not_main" %}
+                            </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-2 d-none d-md-block">
+                    <div class="dropdown open text-left category-filter">
+                        <select id="event-city" class="text-left select" url_get = "{% url 'type_filter' %}">
+                                <option city_id = "none" selected>місто</option>
+                            {% for city in cities %}
+                                <option city_id = "{{city.id}}" >{{city.city}}</option>
                             {% endfor %}
                         </select>
                             <div class="map-contailer">

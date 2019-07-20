@@ -30,16 +30,8 @@ from schedule.models import Calendar
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
-
-
-
-
 import datetime
-
 import locale
-
-
 
 
 #RETURN TO VERBOSE_NAME
@@ -51,7 +43,6 @@ import os
 
 from django.db.models.signals import pre_save, post_save, post_init
 from django.dispatch import receiver
-
 def notify_event_changes(event_instance, event_field, old_value):
     followers = list(EventsSubscriber.objects.filter(event=event_instance).values_list('user', flat=True))
     participants = list(EventsParticipant.objects.filter(event=event_instance).values_list('user', flat=True))
@@ -254,10 +245,6 @@ class Event(models.Model):
             extent = settings.LEAFLET_CONFIG['SPATIAL_EXTENT']
             view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
             nom = Nominatim(user_agent="changer.in.ua", view_box=view_box, bounded=True)
-            # if self.city:
-            #     city = self.city.city
-            # else:
-            #     city = City.DEFAULT_CITY
             point = nom.geocode(self.address)
             if point:
                 self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}
@@ -293,7 +280,7 @@ class Event(models.Model):
 
             new_calendar_event = CalendarEvent.objects.create(**data)
             self.calendar_event = new_calendar_event
-            # end calendar_part
+        # end calendar_part
 
 
         is_new_event = False
@@ -306,8 +293,8 @@ class Event(models.Model):
             currency = Currency.objects.get(type_event__id=old_type)
 
 
-
         super(Event, self).save(*args, **kwargs)
+
 
         if not is_new_event and self.status.id == 3 and old_status!=self.status.id:
             part = list(EventsParticipant.objects.filter(event = Event.objects.get(pk = self.pk)).values_list('user__id', flat = True))
@@ -376,7 +363,6 @@ class Event(models.Model):
             notify_event_needs_help(self)
 
 
-
     def __str__(self):
         return '%s %s %s' % (self.name, '|', self.date_event)
 
@@ -415,14 +401,13 @@ class EventsOrgTask(models.Model):
     canceled = models.BooleanField(default = False)
     recommended_points = models.IntegerField()
 
+
 class EventsSubscriber(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (("user", "event"),)
-
-
 
 
 
