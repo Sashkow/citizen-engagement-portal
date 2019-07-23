@@ -147,8 +147,8 @@
     <nav id="sidebar" class="text-center profile-info"  style="background-image:url({{volunteer.league.background_image.url}}); background-color:{{volunteer.league.background_color}}">
          {% csrf_token %}
         <div class="user-name">
-            <h3 get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}}</h3>
-            <h4 get_url="{% url 'profile_edit' %}" class="volunteer-name setting-img">{{volunteer.last_name}}</h4>
+            <p get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}} {{volunteer.last_name}}</p>
+
 
         </div>
         <div class="ribbon-div">
@@ -173,7 +173,7 @@
                     <img class="img_progress_state" src="{% static 'volunteer/images/current_progress_state.png' %}">
                 </div>
             </div>
-            <p class="text-right" style="margin-right: 0.7vh;">5</p>
+            <p class="text-right" style="margin-right: 10px;">5</p>
         </div>
         <div class="currency-holder">
 

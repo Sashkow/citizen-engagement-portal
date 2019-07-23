@@ -1,3 +1,6 @@
+from volunteer.models import City
+
+
 #return events, events_part, events_subs
 def make_filter(parameters, DigestList, EventsType, User, Status, django_user):
     filter = {}
@@ -12,7 +15,10 @@ def make_filter(parameters, DigestList, EventsType, User, Status, django_user):
         filter['events_or_task'] = bool_value
     if parameters[4] != 'none':
         filter['status'] = Status.objects.get(id=parameters[4])
+    if parameters[5] != 'none':
+        filter['city'] = City.objects.get(id=parameters[5])
     return filter
+
 
 def get_events(Event, TaskApplication, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType):
 

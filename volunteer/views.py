@@ -164,7 +164,7 @@ def profile(request):
     else:
         name = "Волонтер_ка"
 
-    parameters = ['all_digest', 1, 'news', 'none', 'none']
+    parameters = ['all_digest', 1, 'news', 'none', 'none', 'none']
     events, events_part, events_subs, events_quantity, events_org, events_task_app= get_events(Event, TaskApplication,  Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType)
 
     pages, pages_range = get_pages_number(events_quantity, events_per_page, 1)
@@ -350,7 +350,7 @@ def type_filter(request):
     django_user = request.user
     data = request.GET
     print(data)
-    parametrs = [data['type'], data['page'], data['state'], data['task_or_event'], data['status_id']]
+    parametrs = [data['type'], data['page'], data['state'], data['task_or_event'], data['status_id'], data['city_id']]
     types_events = EventsType.objects.all()
     curr_category = {}
     for type_e in types_events:
@@ -364,22 +364,22 @@ def type_filter(request):
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
         cont = {
-            'curr_category':curr_category,
+            'curr_category': curr_category,
             'events': events,
             'events_subs': events_subs,
             'events_part': events_part,
             'types_events': types_events,
             'pages': pages_range,
             'pages_max': pages,
-            'current':int(parametrs[1]),
+            'current': int(parametrs[1]),
             'request': request,
-            'selected':data['type'],
+            'selected': data['type'],
             'events_org': events_org,
-            'events_task_app':events_task_app
+            'events_task_app': events_task_app
         }
         html = render_to_string('events_result.html', cont)
         return_dict = {'html': html}
-        if 'add_filter' in  data.keys():
+        if 'add_filter' in data.keys():
             status_events = Status.objects.all()
             cont['status_events'] = status_events
             filter_html = render_to_string('events_filter.html', cont)
