@@ -136,6 +136,7 @@ $( document ).ready(function() {
         data.state = filter_info[2];
         data.task_or_event = filter_info[1]
         data.status_id = filter_info[3]
+        data.city_id = filter_info[4]
 
          $.ajax({
              url: url,
@@ -247,7 +248,8 @@ $( document ).ready(function() {
 
      $(document).on('click', '#mob-filter', function(){
         var data = {}
-        var type_id = $('option:selected', '#mob-event-type').attr('type_id');
+        var city_id = $('option:selected', '#mob-event-city').attr('city_id');
+        var category_id = $('option:selected', '#mob-event-type').attr('type_id');
         var status_id = $('option:selected', '#mob-event-status').attr('status_id');
         if($('.selected_event_task').length){
             if($('.selected_event_task').hasClass('it_is_event')){
@@ -258,14 +260,18 @@ $( document ).ready(function() {
         }else{
             var task_or_event = 'none'
         }
-        var state = $('#event-type').attr('state');
+        var state = $('#mob-event-type').attr('state');
 
-        data.type = type_id;
+
+
+
+        data.type = category_id;
         data.page = 1;
         data.state = state;
-        data.task_or_event = task_or_event
-        data.status_id = status_id
-        var url = $('.filter_event_task').attr('url_get')
+        data.task_or_event = task_or_event;
+        data.status_id = status_id;
+        data.city_id = city_id;
+        var url = $('.filter_event_task').attr('url_get');
 
         $.ajax({
                  url: url,
@@ -454,6 +460,7 @@ $( document ).ready(function() {
         data.state = filter_info[2];
         data.task_or_event = filter_info[1]
         data.status_id = filter_info[3]
+        data.city_id = filter_info[4]
 
          $.ajax({
              url: url,

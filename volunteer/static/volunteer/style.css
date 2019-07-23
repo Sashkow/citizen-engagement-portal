@@ -1687,16 +1687,16 @@ svg{
         height:10vh!important;
     }
 
-#mob-event-type{
-        width: 62vw!important;
-        height: 5vh!important;
-        font-size: 4vw!important;
+#mob-event-type, #mob-event-city{
+        width: 60%!important;
+        height: 20px!important;
+        font-size: 14px!important;
 }
 
 #mob-event-status{
-    width: 80vw!important;
-    height: 5vh!important;
-    font-size: 4vw!important;
+    width: 60%!important;
+    height: 20px!important;
+    font-size: 14px!important;
 }
 
 #layout{
