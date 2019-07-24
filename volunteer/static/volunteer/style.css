@@ -10,7 +10,9 @@ html,body{
     overflow-x:hidden;
 }
 
-
+.menu-profile{
+    margin-bottom: 30px;
+}
 .change-league{
     font-size:16px!important;
     z-index: 50;
@@ -88,12 +90,26 @@ font-size: 155%;
     font-size: 16px;
 
 }
+
+
+
 @media screen and (max-width: 930px) {
     .event-description{
         display: none !important;
 
     }
 }
+@media screen and (max-width: 355px) {
+    .nav-add{
+        width: 30px!important;
+
+    }
+    .filter-setting{
+        padding-left: 5px;
+    }
+
+}
+
 .form{
     width: 35vh;
     margin: 0px auto 20px auto;
@@ -315,8 +331,8 @@ font-size: 155%;
     }
 
     .item-menu{
-        margin: 0 auto!important;
-        width:65%;
+        margin-bottom: 0 !important;
+
     }
 
 
@@ -565,7 +581,7 @@ font-size: 155%;
     }
 
     .nav-add{
-        width:9vw!important;
+        width: 60px!important;
     }
 
     .filter-setting{
@@ -620,7 +636,7 @@ font-size: 155%;
 }
 
 
-@media only screen and (max-width: 992px) and  (min-width: 768px){
+@media only screen and (max-width: 1054px) and  (min-width: 768px){
     .slog{
         font-size: 5vw!important;
         margin-top:6vh!important;
@@ -705,7 +721,7 @@ font-size: 155%;
 
     .faq{
         height:auto!important;
-    }
+    }bt
 
     .img-join{
         margin-top:15vh!important;
@@ -713,7 +729,7 @@ font-size: 155%;
     }
 
     #sidebar{
-        width:40vw!important;
+
         box-shadow: 0px -6px 10px grey;
         z-index:100;
     }
@@ -733,18 +749,28 @@ font-size: 155%;
     .item-menu{
         font-size:2.2vw!important;
     }
+    .nav-add{
+        width: 35px;
+
+    }
 
     #event-type{
-        font-size:1.7vw;
+        font-size:14px;
+        width: 90px !important;
     }
 
     .filter_event_task{
-        max-width:none !important;
-        width:3.7vw;
+
+        width: 30px;
     }
     #event-status{
-        font-size:1.7vw !important;
-        width:106% !important;
+        padding-right: 10px !important;
+        font-size: 14px !important;
+        width: 70px!important;
+    }
+     #event-city{
+        font-size: 14px !important;
+        width:70px!important;
     }
     .category-filter{
         padding-left:3%!important;
@@ -764,7 +790,7 @@ font-size: 155%;
 
 
     .btn-event-edit {
-        padding-right:12%!important;
+        padding-right:50px!important;
     }
     .btn-subscribe{
        padding-right:12%!important;
@@ -874,10 +900,11 @@ font-size: 155%;
     margin:0!important;
 }
 
+
 /* Portrait tablets and medium desktops */
 @media (min-width: 992px){
     .btn-subscribe {
-    padding-right:7%!important;
+    padding-right: 50px!important;
     }
 }
 @media (max-width: 1300px){
@@ -1102,7 +1129,8 @@ h4.volunteer-name{
     margin-bottom: 0.7vh;
     font-size: 110%;
     word-spacing: 4px;
-    margin-left: 3vw;
+    margin-left: 50px;
+    line-height: 30px;
 }
 
 .item-menu:hover{
@@ -1118,7 +1146,7 @@ h4.volunteer-name{
   height: 25px;
   width: 75%;
   background-color:#fff;
-  margin: 27px auto;
+  margin: 35px auto !important;
 
   border-radius: 7px;
 }
@@ -1226,7 +1254,7 @@ img.unlocked-achievement{
 }
 
 .event-block{
-    height:200px;
+
     border-bottom: 2px dashed #00babaff;
     padding-top:0!important;
 }
@@ -1303,6 +1331,7 @@ img.unlocked-achievement{
 .event-navigation{
     box-shadow: 1px 1px 10px #c4c4c4;
     height: 85px;
+    z-index: 50;
 
     background-color: #fff;
 }
@@ -1328,15 +1357,15 @@ img.unlocked-achievement{
 }
 
 .filter_event_task{
-    max-width:20%;
+    max-width: 50px;
     height:auto;
 }
 
 
 .nav-add{
-    max-width:30%;
+    max-width: 50px ;
     height: auto;
-    margin-right: 10%;
+    margin-right: 15px;
 }
 
 .what-img{
@@ -1361,7 +1390,7 @@ img.unlocked-achievement{
     background-color:#ff7f1aff;
     border-bottom-right-radius: 25px!important;
     border-top-right-radius: 25px!important;
-    padding-right: 7%;
+    padding-right: 50px;
 }
 
 .btn-resubscribe{
@@ -1374,7 +1403,7 @@ img.unlocked-achievement{
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 0 4%;
+    padding: 0 30px;
     position:relative;
 }
 
@@ -1393,7 +1422,7 @@ img.unlocked-achievement{
         background-color:gray;
         border-bottom-right-radius: 25px!important;
         border-top-right-radius: 25px!important;
-        padding-right: 7%;
+        padding-right: 50px;
     }
 
  .page-item{
@@ -1528,16 +1557,16 @@ img.unlocked-achievement{
 }
 
 #event-type{
-    width: 85%;
+    width: 140px;
     height: auto;
 }
 
 #event-status{
-    width: 80%;
+    width: 120px;
     height: auto;
 }
 #event-city{
-    width: 80%;
+    width: 120px;
     height: auto;
 }
 .ribbon-div{
@@ -1552,7 +1581,7 @@ img.unlocked-achievement{
     opacity: 0.6;
     float: right;
     font-weight:bold;
-    margin-right:3vw;
+    margin-right:50px;
 }
 
 .notifications{
@@ -1600,14 +1629,14 @@ svg{
     background-color:#00bbbbff!important;
     border-bottom-right-radius: 25px !important;
     border-top-right-radius: 25px !important;
-    padding-right: 7% !important;
+    padding-right: 50px !important;
 }
 
 .re-btn-app-task{
     background-color:#00bbbbff!important;
     border-bottom-right-radius: 25px !important;
     border-top-right-radius: 25px !important;
-    padding-right: 7% !important;
+    padding-right: 50px !important;
 }
 
 .wrapper {
