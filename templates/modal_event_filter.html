@@ -37,8 +37,8 @@
                 </div>
                <div class="dropdown open text-center ">
                    <select id="mob-event-city" class="text-left select" url_get = "{% url 'type_filter' %}">
-                            <option city_id = "none" selected>статус</option>
-                        {% for status in status_events %}
+                            <option city_id = "none" selected>місто</option>
+                        {% for city in cities %}
                             <option city_id = "{{city.id}}" >{{city.city}}</option>
                         {% endfor %}
                     </select>

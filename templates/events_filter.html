@@ -4,7 +4,7 @@
 {% leaflet_css %}
 
             <div class="row text-center align-items-center event-navigation">
-                <div class="col-lg-3 col-md-4 d-none d-md-block">
+                <div class="col-lg-3 col-md-3 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-type" class="text-left select" url_get = "{% url 'type_filter' %}" state = "news">
                                 <option type_id = "all_digest">Категорія</option>
@@ -160,7 +160,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-2 d-none d-md-block">
+                <div class="col-lg-2 col-md-2 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-city" class="text-left select" url_get = "{% url 'type_filter' %}">
                                 <option city_id = "none" selected>місто</option>
@@ -178,11 +178,12 @@
                         <p class="margin-0 filter-setting"> Налаштувати фільтр <img class="filter-image" src="{% static 'volunteer/images/filter.png' %}" style="color: #ff7f1aff;"> </p>
                 </div>
 
-                <div class="col-md-2 col-5">
+                <div class="col-md-3 col-5">
 
                         <!--<div class="themap" get_url="{% url 'map' %}">-->
                             <!--<img class="align-self-center float-left nav-add"  src="{% static 'volunteer/images/map.png' %}">-->
                         <!--</div>-->
+                    <div class = "text-right float-right">
                         <a href="{% url 'map' %}">
                             <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
                         </a>
@@ -191,7 +192,7 @@
                     <a href="{% url 'fullcalendar' %}">
                         <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">
                     </a>
-                </div>
+                    </div></div>
             </div >
  <script type="text/javascript">
 

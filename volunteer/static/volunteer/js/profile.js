@@ -89,6 +89,7 @@ $( document ).ready(function() {
         data.task_or_event = filter_info[1]
         data.status_id = filter_info[3]
         data.city_id = filter_info[4]
+        data.add_filter = 1;
 
          $.ajax({
              url: url,
@@ -136,6 +137,8 @@ $( document ).ready(function() {
         data.state = filter_info[2];
         data.task_or_event = filter_info[1]
         data.status_id = filter_info[3]
+        data.city_id = filter_info[4]
+        data.add_filter = 1;
 
          $.ajax({
              url: url,
@@ -247,7 +250,8 @@ $( document ).ready(function() {
 
      $(document).on('click', '#mob-filter', function(){
         var data = {}
-        var type_id = $('option:selected', '#mob-event-type').attr('type_id');
+        var city_id = $('option:selected', '#mob-event-city').attr('city_id');
+        var category_id = $('option:selected', '#mob-event-type').attr('type_id');
         var status_id = $('option:selected', '#mob-event-status').attr('status_id');
         if($('.selected_event_task').length){
             if($('.selected_event_task').hasClass('it_is_event')){
@@ -258,14 +262,19 @@ $( document ).ready(function() {
         }else{
             var task_or_event = 'none'
         }
-        var state = $('#event-type').attr('state');
+        var state = $('#mob-event-type').attr('state');
 
-        data.type = type_id;
+
+
+
+        data.type = category_id;
         data.page = 1;
         data.state = state;
-        data.task_or_event = task_or_event
-        data.status_id = status_id
-        var url = $('.filter_event_task').attr('url_get')
+        data.task_or_event = task_or_event;
+        data.status_id = status_id;
+        data.city_id = city_id;
+        data.add_filter = 1;
+        var url = $('.filter_event_task').attr('url_get');
 
         $.ajax({
                  url: url,
@@ -454,7 +463,8 @@ $( document ).ready(function() {
         data.state = filter_info[2];
         data.task_or_event = filter_info[1]
         data.status_id = filter_info[3]
-
+        data.city_id = filter_info[4]
+        data.add_filter = 1;
          $.ajax({
              url: url,
              data:data,
@@ -568,6 +578,7 @@ $( document ).ready(function() {
             data.page = 1
             data.task_or_event = "none"
             data.status_id = "none"
+            data.city_id = "none"
             data.add_filter = 1;
 
         }else{
@@ -579,6 +590,8 @@ $( document ).ready(function() {
             data.state = info_filter[2];
             data.task_or_event = info_filter[1];
             data.status_id = info_filter[3];
+            data.city_id = info_filter[4];
+            data.add_filter = 1;
         }
 
         console.log(data)
@@ -634,11 +647,12 @@ $( document ).ready(function() {
         var data = {};
         if( !$('#event-type').length ){
             var url = "/typefilter/"
-            data.type = 'all'
-            data.state = 'organizer'
-            data.page = 1
-            data.task_or_event = "none"
-            data.status_id = "none"
+            data.type = 'all';
+            data.state = 'organizer';
+            data.page = 1;
+            data.task_or_event = "none";
+            data.status_id = "none";
+            data.city_id = "none";
             data.add_filter = 1;
 
         }
@@ -651,6 +665,9 @@ $( document ).ready(function() {
             data.state = info_filter[2];
             data.task_or_event = info_filter[1];
             data.status_id = info_filter[3];
+            data.city_id = info_filter[4];
+            data.add_filter = 1;
+
         }
 
         console.log(data)
@@ -752,6 +769,7 @@ $(document).on('click', '.news', function(){
     data.state = 'news';
     data.task_or_event = 'none';
     data.status_id = 'none';
+    data.city_id = 'none';
     data.add_filter = 1;
 
     history.pushState( {
@@ -976,6 +994,8 @@ $(document).on('click', '.news', function(){
             data.state = info_filter[2];
             data.task_or_event = info_filter[1]
             data.status_id = info_filter[3]
+            data.city_id = info_filter[4]
+            data.add_filter = 1;
              $.ajax({
                  url: url,
                  type :'GET',
