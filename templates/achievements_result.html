@@ -31,7 +31,7 @@
 
 
             {% if ach.id in user_achivements %}
-                <div class="col-md-4 text-center justify-content-center d-flex align-items-center unlock-ach-container "  ">
+                <div class="col-md-4 text-center justify-content-center d-flex align-items-center unlock-ach-container "  >
 
                     <div class="achievement-item my-flex-item unlocked-achievement" style="background-color:{{ach.background_achieve}}; ">
                             <h5 class="unlocked-achievement" style="color:{{ach.color_text_achieve}}">{{ach.achievement}}</h5>
@@ -80,14 +80,14 @@
 
 
             {% if ach.id in user_achivements %}
-                <div class="col-md-5th-1 text-center justify-content-center d-flex align-items-center" style="height: 45vh; ">
+                <div class="col-md-5th-1 text-center justify-content-center d-flex align-items-center">
 
                     <div class="achievement-item my-flex-item unlocked-achievement" style="background-color:{{ach.background_achieve}}; ">
                             <h5 class="unlocked-achievement" style="color:{{ach.color_text_achieve}}">{{ach.achievement}}</h5>
                             <img class="unlocked-achievement" src="{{ach.image.url}}">
                         <p class="unlocked-achievement" style="color:{{ach.color_text_achieve}}">{{ach.description}}</p>
             {% else %}
-                <div class="col-md-5th-1 text-center justify-content-center d-flex align-items-center ach-container" achieve_id = "{{ ach.id}}" style="height: 45vh;">
+                <div class="col-md-5th-1 text-center justify-content-center d-flex align-items-center ach-container" achieve_id = "{{ ach.id}}" >
                     <div class="achievement-item  locked-achievement">
                             <h5 class="locked-achievement">{{ach.achievement}}</h5>
                             <img class="locked-achievement" src="{% static 'volunteer/images/locked_achieve.png' %}"  achieve_id = "{{ ach.id}}">

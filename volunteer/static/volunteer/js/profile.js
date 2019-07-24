@@ -79,6 +79,53 @@ $( document ).ready(function() {
         $('#login').modal('hide');
         $('#login-usual').modal('show');
     })
+    $(document).on('change', '#event-city', function(){
+        data = {}
+        var url = $(this).attr('url_get');
+        filter_info = InfoEventFilter()
+        data.type = filter_info[0];
+        data.page = 1;
+        data.state = filter_info[2];
+        data.task_or_event = filter_info[1]
+        data.status_id = filter_info[3]
+        data.city_id = filter_info[4]
+
+         $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             dataType:'json',
+             success: function(data){
+                 console.log('OK');
+
+
+                 if(!jQuery.isEmptyObject(data)){
+
+                    if(data.html != ""){
+                        $(".events-block").empty();
+                        $(".events-block").html(data.html);
+                    }else{
+                        $(".events-block").empty();
+                        $('<h1>', { text: 'За заданими параметрами подій не знайдено', }).appendTo($(".events-block"))
+                    }
+
+
+                  }
+                 else{
+                        $(".events-block").empty();
+                        console.log('empty json')
+
+                     $('<h1>', {
+                        text: 'За заданими параметрами подій не знайдено',
+                     }).appendTo($(".events-block"))
+                 }
+             },
+             error: function(){
+             console.log('error')
+            }
+         })
+    })
 
     $(document).on('change', '#event-status', function(){
         data = {}
@@ -139,6 +186,7 @@ $( document ).ready(function() {
 
 
     function InfoEventFilter(){
+        var city_id = $('option:selected', '#event-city').attr('city_id');
         var category_id = $('option:selected', '#event-type').attr('type_id');
         var status_id = $('option:selected', '#event-status').attr('status_id');
         if($('.selected_event_task').length){
@@ -151,7 +199,7 @@ $( document ).ready(function() {
             var task_or_event = 'none'
         }
         var state = $('#event-type').attr('state');
-        return [category_id, task_or_event, state, status_id]
+        return [category_id, task_or_event, state, status_id, city_id]
     }
 
 

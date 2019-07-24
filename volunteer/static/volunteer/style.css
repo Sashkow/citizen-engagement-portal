@@ -1,5 +1,5 @@
 *{
-font-family: 'Ubuntu',sans-serif!important;
+font-family: 'Ubuntu',sans-serif !important;
 }
 
 html,body{
@@ -10,11 +10,33 @@ html,body{
     overflow-x:hidden;
 }
 
+
+.change-league{
+    font-size:16px!important;
+    z-index: 50;
+}
 body{
- font-family: 'Ubuntu',sans-serif!important;
+font-family: 'Ubuntu',sans-serif !important;
 
 
 }
+
+.form-check-label{
+    font-size: 16px;
+    padding: 5px;
+}
+
+.category-image-ev{
+    width:150px;
+    height:auto!important;
+    margin: 20px;
+}
+
+.user-name{
+
+    margin: 20px !important;
+}
+
 
 strong { font-weight: bold; }
 li{
@@ -35,7 +57,7 @@ ul{
 
 
 .aboutus{
-    font-family: 'Ubuntu',sans-serif!important;
+    font-family: 'Ubuntu',sans-serif !important;
     background-image:url('./images/league_volunteer.png');
     background-position:center;
 
@@ -61,7 +83,17 @@ font-size: 155%;
         top: 0;
         bottom: 0;
     }
+.event-description{
+    height: 70px;
+    font-size: 16px;
 
+}
+@media screen and (max-width: 930px) {
+    .event-description{
+        display: none !important;
+
+    }
+}
 .form{
     width: 35vh;
     margin: 0px auto 20px auto;
@@ -97,17 +129,18 @@ font-size: 155%;
 }
 
 .nvb-style{
-    font-family: 'Ubuntu',sans-serif!important;
+
     background-color: #00bbbbff;
-    height: 6vh;
+    height: 50px;
+
 }
 
 .logo{
-    height: 6.5vh;
+    height: 52px;
     position: absolute;
-    top: 1.1vh;
+    top: 10px;
     left: 6vw;
-    z-index: 100
+    z-index: 100;
 }
 
 /* for mobile */
@@ -141,8 +174,11 @@ font-size: 155%;
 
 @media only screen and (max-width: 576px) {
     .logo{
-        height: 5.7vh;
-        top:1.5vh;
+        height: 36px;
+        position: absolute;
+        top: 10px;
+        left: 6vw;
+        z-index: 100
     }
 
     .slog{
@@ -252,6 +288,8 @@ font-size: 155%;
         width:100vw!important;
         display:none;
         min-height:94vh;
+        box-shadow: 0px -6px 10px grey;
+        z-index:100;
     }
 
     .profile-image{
@@ -266,15 +304,11 @@ font-size: 155%;
     }
 
     .first-name{
-        margin-top:2vh !important;
+        margin-top: 20px !important;
 
     }
 
-    .user-name{
 
-    margin-bottom:2vh!important;
-
-    }
 
     .own-progress-bar{
         margin-bottom:3vh!important;
@@ -353,18 +387,16 @@ font-size: 155%;
     }
 
     .category-image-ev{
-        width:26vw!important;
+        width:100px;
         height:auto!important;
+        margin: 20px;
     }
 
     .event-name{
-        font-size:4.3vw!important;
+        font-size: 20px!important;
     }
 
-    .event-block{
-        height:auto!important;
 
-    }
 
     .event-image-holder{
         text-align:left!important;
@@ -502,11 +534,7 @@ font-size: 155%;
         margin-top:2vh!important;
     }
 
-    #sidebar{
-        width:100vw!important;
-        display:none;
-        min-height:94vh;
-    }
+
 
     .profile-image{
         width:55%!important;
@@ -514,10 +542,7 @@ font-size: 155%;
         margin-bottom:5vh!important;
     }
 
-    .ribbon{
-        width:38%!important;
-        font-size:2.6vw!important;
-    }
+
 
     .own-progress-bar{
         width:56%!important;
@@ -532,16 +557,11 @@ font-size: 155%;
     margin-top:2vh;
    }
 
-   .item-menu{
-        font-size:3.2vw!important;
-        height:5vh!important;
-        margin-left:3vw!important;
-        padding-left:27vw;
-   }
+
 
     .notif-quant{
-        height:5vw!important;
-        width:5vw!important;
+        height:30px important;
+        width: 30px important;
     }
 
     .nav-add{
@@ -569,14 +589,12 @@ font-size: 155%;
     }
 
     .category-image-ev{
-        width:21vw;
+        width:100px;;
         height:auto!important;
-        margin:3vh 0;
+        margin: 20px;
     }
 
-    .event-block{
-        height:auto!important;
-    }
+
 
     .event-item-info{
         height:auto!important;
@@ -593,7 +611,7 @@ font-size: 155%;
 
     .locked-achievement{
         height:auto!important;
-        font-size:2.2vh!important;
+        font-size:16px!important;
     }
 
     div.achievement-item{
@@ -696,15 +714,11 @@ font-size: 155%;
 
     #sidebar{
         width:40vw!important;
+        box-shadow: 0px -6px 10px grey;
+        z-index:100;
     }
 
-    .user-name{
-        font-size:1.5vw!important;
-    }
 
-    .ribbon{
-        font-size:2vw!important;
-    }
 
     .curr-quant{
         font-size:1.7vw!important;
@@ -736,11 +750,11 @@ font-size: 155%;
         padding-left:3%!important;
     }
     .what-img{
-        width:2.5vw!important;
+        width: 20px!important;
     }
     .category-image-ev{
         height:auto!important;
-        width: 14vw;
+        width: 140px;
     }
 
     .select{
@@ -748,11 +762,7 @@ font-size: 155%;
         padding: 2% 5% !important;
     }
 
-    .event-button{
-        height:auto!important;
-        font-size:2vw!important;
-        width:auto!important;
-    }
+
     .btn-event-edit {
         padding-right:12%!important;
     }
@@ -786,11 +796,13 @@ font-size: 155%;
     }
     h5.locked-achievement {
         height: auto!important;
-        min-height:10vh;
+
+        margin-bottom: 10px;
     }
 
     .change-league{
-        font-size:1.65vw!important;
+        font-size:16px!important;
+        z-index: 50;
     }
     .unlock-ach-container {
         padding:0!important;
@@ -810,7 +822,7 @@ font-size: 155%;
 }
 
 .btn-enter{
-    font-family: 'Ubuntu',sans-serif!important;
+
     background-color: rgba(255, 255, 255, .0);
     color: white;
     border-radius: 7px;
@@ -822,7 +834,7 @@ font-size: 155%;
     border: 1px solid #fff;
 }
 .slog{
-    font-family: 'Ubuntu',sans-serif!important;
+    font-family: Open Sans;
     text-transform: uppercase;
     font-weight: bold;
     color: #fe6900ff;
@@ -832,7 +844,7 @@ font-size: 155%;
 }
 
 .p-slog{
-    font-family: 'Ubuntu',sans-serif!important;
+    font-family: Open Sans;
     font-size: 3.4vh;
     font-weight: bold;
     color: #00bbbbff;
@@ -857,7 +869,7 @@ font-size: 155%;
 }
 
 .make-task{
-    font-family: 'Ubuntu',sans-serif!important;
+    font-family: Open Sans;
     font-size:4vh;
     margin:0!important;
 }
@@ -878,7 +890,7 @@ font-size: 155%;
 }
 
 .first-li{
-    font-family: 'Ubuntu',sans-serif!important;
+    font-family: Open Sans;
     margin-top: 2vh;
     margin-bottom: 1.4vh;
     font-size: 3.2vh;
@@ -947,7 +959,7 @@ height:14vh;
 }
 
 .btn-join{
-    font-family: 'Ubuntu',sans-serif!important;
+    font-family: Open Sans;
     height: 7vh;
     background-color: #cb2054ff;
     color: white;
@@ -960,14 +972,14 @@ height:14vh;
 }
 
 .mot-text{
-    font-family: 'Ubuntu',sans-serif!important;
+    font-family: Open Sans;
     font-size: 2.9vh;
     font-weight: bold;
     color: #fe6900dc;
 }
 
 .mot-h{
-    font-family: 'Ubuntu',sans-serif!important;
+    font-family: Open Sans;
     font-size: 5.8vh;
     padding-top: 11vh;
     padding-left: 8vh;
@@ -979,10 +991,8 @@ height:14vh;
 }
 
 .volunteer-name{
-    font-family: 'Ubuntu',sans-serif!important;
-    font-size: 191%;
-    font-weight: bold;
-    margin:0;
+    font-size: 26px !important;
+    font-weight: 900;
 }
 h4.volunteer-name{
     position: relative;
@@ -998,7 +1008,7 @@ h4.volunteer-name{
 }
 
 .first-name{
-    margin-top:5vh;
+    margin-top: 50px;
 }
 
 .ribbon{
@@ -1008,31 +1018,32 @@ h4.volunteer-name{
     margin:auto;
     position:relative;
     border-radius: 4px;
-    height:100%;
+    height:30px;
     font-size: larger;
 }
 
 .ribbon:after{
+
     content: '';
     position:absolute;
-    top:1.5vh;
-    right:-2.3vh;
-    border-left: 1.8vh solid #fff;
-    border-right: 1.8vh solid transparent;
-    border-top: 1.8vh solid #fff;
-    border-bottom: 1.8vh solid #fff;
+    top: 10px;
+    right:-20px;
+    border-left: 14px solid #fff;
+    border-right: 14px solid transparent;
+    border-top: 14px solid #fff;
+    border-bottom: 14px solid #fff;
 }
 
 
 .ribbon:before{
     content: '';
     position:absolute;
-    top:1.5vh;
-    left:-2.3vh;
-    border-left: 1.8vh solid transparent;
-    border-right: 1.8vh solid #fff;
-    border-top: 1.8vh solid #fff;
-    border-bottom: 1.8vh solid #fff;
+    top: 10px;
+    left:-20px;
+    border-left: 14px solid transparent;
+    border-right: 14px solid #fff;
+    border-top: 14px solid #fff;
+    border-bottom: 14px solid #fff;
 }
 
 .user-league-info{
@@ -1104,17 +1115,17 @@ h4.volunteer-name{
 }
 
 .own-progress-bar{
-  height: 3vh;
+  height: 25px;
   width: 75%;
   background-color:#fff;
-  margin:0 auto;
-  margin-bottom: 4vh;
+  margin: 27px auto;
+
   border-radius: 7px;
 }
 
 .own-progress-league{
     background-color: #65f0fb;
-    height: 3vh;
+    height: 25px;
     float: left;
     position:relative;
     border-radius: 7px;
@@ -1123,9 +1134,9 @@ h4.volunteer-name{
 .progress_state{
   float:left;
   position:absolute;
-  right: -2vh;
-  top: -0.2vh;
-  height:138%;
+  right: -15px;
+  top: -5px;
+
 }
 
 .img_progress_state{
@@ -1133,13 +1144,15 @@ h4.volunteer-name{
 }
 .quant-ach{
     position: absolute;
-    left: 1.5vh;
-    top: 0.8vh;
+    left: 13px;
+    top: 5px;
 }
 
 div.achievement-item{
     border-radius: 14px;
-    height:90%;
+    height:350px;
+    margin-top: 30px;
+
     width:90%;
 }
 
@@ -1149,8 +1162,9 @@ div.unlocked-achievement{
 }
 h5.unlocked-achievement{
     padding: 10%;
-    font-size: 110%;
+
     margin:0;
+    margin-bottom: 10px;
 
 }
 
@@ -1162,9 +1176,10 @@ p.unlocked-achievement{
 h5.locked-achievement{
     color: #006363ff;
     padding: 10%;
-    font-size: 105%;
+
     margin:0;
-    height:10vh
+    margin-bottom: 10px;
+
 }
 
 div.locked-achievement{
@@ -1186,8 +1201,8 @@ img.unlocked-achievement{
 }
 
 .currency-image{
-    width: 3.2vw;
-    margin: 0 0.3vw;
+    width: 55px;
+    margin: 0 2px;
 
 }
 
@@ -1211,15 +1226,16 @@ img.unlocked-achievement{
 }
 
 .event-block{
-    height: 22vh;
-    border-bottom: 3px dashed #00babaff;
+    height:200px;
+    border-bottom: 2px dashed #00babaff;
     padding-top:0!important;
 }
 
 .event-name{
     color: #000;
-    font-size: 2.3vh;
-    padding-top: 3%;
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding-top: 20px;
 }
 
 .notification-name{
@@ -1230,10 +1246,7 @@ img.unlocked-achievement{
 .event-name:hover{
     cursor:pointer;
 }
-.event-description{
-    font-size: 91%;
 
-}
 
 
 
@@ -1259,7 +1272,7 @@ img.unlocked-achievement{
     width: 30%;
     position: relative;
     display: inline-block;
-    height:100%;
+    height:200px;
 }
 
 .padding-0{
@@ -1288,8 +1301,9 @@ img.unlocked-achievement{
 }
 
 .event-navigation{
-    height:10vh;
-    border-bottom: 2px solid #00babaff;
+    box-shadow: 1px 1px 10px #c4c4c4;
+    height: 85px;
+
     background-color: #fff;
 }
 
@@ -1326,7 +1340,7 @@ img.unlocked-achievement{
 }
 
 .what-img{
-    width: 2.5vh;
+    width: 20px;
     height:auto;
 }
 
@@ -1355,8 +1369,8 @@ img.unlocked-achievement{
     opacity:0.7;
 }
 .event-button{
-    height: 3.7vh;
-    font-size: 110%;
+    height: 32px;
+
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -1383,12 +1397,12 @@ img.unlocked-achievement{
     }
 
  .page-item{
-    border:3px dashed #00babaff;
+    border:2px dashed #00babaff;
     border-top:none;
     border-left:none;
  }
  .page-item:first-child{
-    border-left:3px dashed #00babaff;
+    border-left:2px dashed #00babaff;
  }
 
  .category_event{
@@ -1515,19 +1529,24 @@ img.unlocked-achievement{
 
 #event-type{
     width: 85%;
+    height: auto;
 }
 
 #event-status{
     width: 80%;
+    height: auto;
 }
-
+#event-city{
+    width: 80%;
+    height: auto;
+}
 .ribbon-div{
-    height:4vh;
+    height:30px;
 }
 
 .notif-quant{
-    height: 3vh;
-    width: 3vh;
+    height: 30px;
+    width: 30px;
     background-color: #fff;
     border-radius: 50%;
     opacity: 0.6;
@@ -1539,9 +1558,7 @@ img.unlocked-achievement{
 .notifications{
 }
 
-.user-name{
-    margin-bottom:3vh;
-}
+
 
 
 
@@ -1620,9 +1637,11 @@ svg{
 
 #sidebar{
         position:sticky;
-        width: 27vw;
+        width: 450px;
         left: 0;
         min-height:94vh;
+        box-shadow: 0px -6px 10px grey;
+        z-index: 100;
 }
 
 .category-icon{
@@ -1648,7 +1667,7 @@ svg{
 
 .usual-login-btn{
     margin:1vh;
-    font-family: 'Ubuntu',sans-serif !important;
+    font-family: Open Sans;
     height: 4vh;
     background-color: #cb2054ff;
     color: white;
