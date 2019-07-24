@@ -123,7 +123,6 @@ def usual_login(request):
 
 def signup(request):
     if request.method == 'POST':
-
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()

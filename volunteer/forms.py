@@ -115,12 +115,13 @@ class EventOrgTaskForm(ModelForm):
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'photo']
+        fields = ['first_name', 'last_name', 'photo', 'city']
         localized_fields = ('task_name', 'task_description', 'done',  'recommended_points', 'event', 'canceled')
         labels = {
             'first_name': "Ім'я",
             'last_name': 'Прізвище',
-            'photo': 'Світлина'
+            'photo': 'Світлина',
+            'city': 'Місто'
         }
 
 
