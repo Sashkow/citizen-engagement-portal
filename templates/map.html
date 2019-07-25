@@ -58,7 +58,8 @@ function onEachFeature(feature, layer) {
     </script>
   </head>
   <body>
-    
-    {% leaflet_map "not_main" %}
+    {% leaflet_map "not_main" settings_overrides=boundaries %}
+
+
   </body>
 </html>

@@ -71,7 +71,10 @@ urlpatterns = [
 
     url(r'^canceledtask/(?P<id>\d+)$', volunteer_views.cancel_task, name = "cancel_task"),
 
-    url(r'^data.geojson$', GeoJSONLayerView.as_view( model=Event, properties=('name', 'description','events_type', 'get_events_type_url', 'get_events_type_marker_url', 'get_event_url')), name='event_geo_data'),
+    url(r'^data.geojson$', GeoJSONLayerView.as_view(
+        model=Event,
+        properties=('name', 'description','events_type', 'get_events_type_url', 'get_events_type_marker_url', 'get_event_url')
+    ), name='event_geo_data'),
     url(r'^fullcalendar/', login_required(TemplateView.as_view(template_name="fullcalendar.html")), name='fullcalendar'),
     # url(r'^wayback/$', login_required(TemplateView.as_view(template_name="wayback.html")), name='wayback'),
     url(r'^schedule/', include('schedule.urls')),

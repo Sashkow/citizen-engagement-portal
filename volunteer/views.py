@@ -56,6 +56,7 @@ from notifications.signals import notify
 from django.template import RequestContext
 
 from volunteer.notification_helpers import notification_description, notification_title, notification_image
+from volunteer.models import User as VolunteerUser
 
 
 
@@ -755,13 +756,26 @@ def intropage(request):
 
 @login_required
 def map_show(request):
-    cont = {
-        'request': request,
+    volunteer = VolunteerUser.objects.filter(django_user_id=request.user).first()
+    if volunteer:
+        if volunteer.city:
+            if volunteer.city.city == "Вінниця":
+                boundaries = {
+                    'SPATIAL_EXTENT': (25.3079, 28.6219, 49.072, 49.3921),
+                    'DEFAULT_CENTER': ( 49.23205, 28.4649),
+                }
+                return render(request, 'map.html', context={'boundaries': boundaries})
+
+    boundaries = {
+        'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
+        'DEFAULT_CENTER': (49.4196404, 26.9793793),
     }
-    html = render_to_string('map.html', cont)
-    return_dict = {'html': html}
+    return render(request, 'map.html', context={'boundaries':boundaries})
+
+    # html = render_to_string('map.html', cont)
+    # return_dict = {'html': html}
     # return JsonResponse(return_dict)
-    return render(request, 'map.html')
+
 
 
 
