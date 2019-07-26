@@ -246,13 +246,13 @@ class Event(models.Model):
     def save(self, *args, **kwargs):
 
         if self.address:
-            # extent = settings.LEAFLET_CONFIG['SPATIAL_EXTENT']
-            view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
-            view_box = [(49.3921, 28.3079), (49.072, 28.6219)]  # vinnicya city
-
-
-
-
+            if self.city:
+                if self.city.city == "Вінниця":
+                    view_box = [(49.3921, 28.3079), (49.072, 28.6219)]
+                elif self.city.city == "Житомир":
+                    view_box = [(52.276012, 25.605223), (50.23924, 28.715773)]
+            else: #khmel
+                view_box = [(49.4770, 26.9048), (49.3631, 27.0995)]
 
             nom = Nominatim(user_agent="changer.in.ua", view_box=view_box, bounded=True)
             point = nom.geocode(self.address)

@@ -765,6 +765,12 @@ def map_show(request):
                     'DEFAULT_CENTER': ( 49.23205, 28.4649),
                 }
                 return render(request, 'map.html', context={'boundaries': boundaries})
+            elif volunteer.city.city == "Житомир":
+                boundaries = {
+                    'SPATIAL_EXTENT': (25.605223, 28.715773, 50.23924, 52.276012),
+                    'DEFAULT_CENTER': (50.257632, 28.660498),
+                }
+                return render(request, 'map.html', context={'boundaries': boundaries})
 
     boundaries = {
         'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
