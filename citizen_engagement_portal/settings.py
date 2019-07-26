@@ -236,6 +236,8 @@ STATICFILES_DIRS = (
 DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
 
 # for khmelnitsky city
+# view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
+# view_box = [(49.3921, 28.3079), (49.072, 28.6219)]  # vinnicya city
 LEAFLET_CONFIG = {
     'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
     'DEFAULT_CENTER': ( 49.4196404, 26.9793793),

@@ -124,6 +124,10 @@ class City(models.Model):
 
     city = models.CharField(max_length=100)
 
+    @classmethod
+    def get_default(cls):
+        return cls.objects.get(city=cls.DEFAULT_CITY)
+
     def __str__(self):
         return self.city
 
@@ -158,7 +162,7 @@ class User(models.Model):
     date_of_registration = models.DateField(auto_now_add=True)
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
     league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True, default=League.DEFAULT_PK)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True)
     blocked = models.BooleanField(default=False)
     django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
 
@@ -242,8 +246,14 @@ class Event(models.Model):
     def save(self, *args, **kwargs):
 
         if self.address:
-            extent = settings.LEAFLET_CONFIG['SPATIAL_EXTENT']
+            # extent = settings.LEAFLET_CONFIG['SPATIAL_EXTENT']
             view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
+            view_box = [(49.3921, 28.3079), (49.072, 28.6219)]  # vinnicya city
+
+
+
+
+
             nom = Nominatim(user_agent="changer.in.ua", view_box=view_box, bounded=True)
             point = nom.geocode(self.address)
             if point:
@@ -603,8 +613,11 @@ class NotificaationType(models.Model):
     image_field_name = models.CharField(max_length = 100)
 
 
-def user_post_save(sender, instance, **kwargs):
+def user_pre_save(sender, instance, **kwargs):
+    pass
 
+
+def user_post_save(sender, instance, **kwargs):
     if kwargs['created']:
         django_user = instance
         volunteer = User.objects.create(django_user_id=django_user)
@@ -615,7 +628,9 @@ def user_post_save(sender, instance, **kwargs):
 
         volunteer.save()
 
+models.signals.pre_save.connect(user_pre_save, sender=DjangoUser)
 models.signals.post_save.connect(user_post_save, sender=DjangoUser)
+
 
 
 

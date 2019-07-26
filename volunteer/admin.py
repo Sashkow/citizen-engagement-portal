@@ -8,6 +8,7 @@ admin.site.empty_value_display = '(None)'
 
 from django import forms
 from schedule.widgets import ColorInput
+from volunteer.models import User
 
 
 class EventAdminForm(forms.ModelForm):
@@ -58,25 +59,59 @@ admin.site.register(DigestList, DigestListAdmin)
 
 class StatusAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Status._meta.fields]
-
 admin.site.register(Status, StatusAdmin)
 
+
 class EventAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = super(EventAdmin, self).get_queryset(request)
+        user = User.objects.filter(django_user_id=request.user).first()
+        if user:
+            city = user.city
+            qs = qs.filter(city=city)
+        return qs
+
     list_display = [field.name for field in Event._meta.fields]
     exclude = ['ID']
     list_filter = ['events_type']
     search_fields = ['name']
 
+
+
+        # if request.session.get('company_goggles'):
+        #     return qs.filter(**{ getattr(self, 'company_field', 'company') :
+        #                   request.session['company_goggles'] })
+
 admin.site.register(Event, EventAdmin)
+
+
+
 
 class EventsSubscribrsAdmin(admin.ModelAdmin):
     list_display = [field.name for field in EventsSubscriber._meta.fields]
     exclude = ['ID']
+    def get_queryset(self, request):
+        qs = super(EventsSubscribrsAdmin, self).get_queryset(request)
+        user = User.objects.filter(django_user_id=request.user).first()
+        if user:
+            city = user.city
+            qs = qs.filter(event__city=city)
+        return qs
+
 admin.site.register(EventsSubscriber, EventsSubscribrsAdmin)
 
 class EventsPartcipiantAdmin(admin.ModelAdmin):
     list_display = [field.name for field in EventsParticipant._meta.fields]
     exclude = ['ID']
+
+    def get_queryset(self, request):
+        qs = super(EventsPartcipiantAdmin, self).get_queryset(request)
+        user = User.objects.filter(django_user_id=request.user).first()
+        if user:
+            city = user.city
+            qs = qs.filter(event__city=city)
+        return qs
+
 admin.site.register(EventsParticipant, EventsPartcipiantAdmin)
 
 class CommentAdmin(admin.ModelAdmin):
@@ -92,6 +127,14 @@ admin.site.register(Report, ReportAdmin)
 class EventsPhotoAdmin(admin.ModelAdmin):
     list_display = [field.name for field in EventsPhoto._meta.fields]
     exclude = ['ID']
+
+    def get_queryset(self, request):
+        qs = super(EventsSubscribrsAdmin, self).get_queryset(request)
+        user = User.objects.filter(django_user_id=request.user).first()
+        if user:
+            city = user.city
+            qs = qs.filter(event__city=city)
+        return qs
 admin.site.register(EventsPhoto, EventsPhotoAdmin)
 
 class EventsOrgTaskAdmin(admin.ModelAdmin):
@@ -178,11 +221,26 @@ admin.site.register(IncreasePointsType, IncreasePointsTypeAdmin)
 class IncreasePointsInfoAdmin(admin.ModelAdmin):
     list_display = [field.name for field in IncreasePointsInfo._meta.fields]
     exclude = ['ID']
+    def get_queryset(self, request):
+        qs = super(IncreasePointsInfoAdmin, self).get_queryset(request)
+        user = User.objects.filter(django_user_id=request.user).first()
+        if user:
+            city = user.city
+            qs = qs.filter(event__city=city)
+        return qs
 admin.site.register(IncreasePointsInfo, IncreasePointsInfoAdmin)
 
 class TaskApplicationAdmin(admin.ModelAdmin):
     list_display = [field.name for field in TaskApplication._meta.fields]
     exclude = ['ID']
+    def get_queryset(self, request):
+        qs = super(TaskApplicationAdmin, self).get_queryset(request)
+        user = User.objects.filter(django_user_id=request.user).first()
+        if user:
+            city = user.city
+            qs = qs.filter(event__city=city)
+        return qs
+
 admin.site.register(TaskApplication, TaskApplicationAdmin)
 
 
