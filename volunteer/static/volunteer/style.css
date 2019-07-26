@@ -9,7 +9,14 @@ html,body{
     padding:0;
     overflow-x:hidden;
 }
+.row{
+    margin: 0 !important;
 
+}
+
+.btn-div{
+    margin-bottom: 30px;
+}
 .menu-profile{
     margin-bottom: 30px;
 }
@@ -87,7 +94,7 @@ font-size: 155%;
     }
 .event-description{
     height: 70px;
-    font-size: 16px;
+    font-size: 14px;
 
 }
 
@@ -105,7 +112,7 @@ font-size: 155%;
 
     }
     .filter-setting{
-        padding-left: 5px;
+        padding-left: 10px;
     }
 
 }
@@ -360,7 +367,7 @@ font-size: 155%;
 
     .event-button{
 
-        font-size:1.8vh!important;
+        font-size:12px !important;
         margin-bottom:0.5vh!important;
         min-width: 145px;
         border-top-right-radius: 25px !important;
@@ -420,9 +427,7 @@ font-size: 155%;
         margin:3.5vh 0!important;
     }
 
-    .outer{
-        width:14vw!important;
-    }
+    .
     .currency-image{
         width:13.2vw!important;
     }
@@ -553,16 +558,13 @@ font-size: 155%;
 
 
     .profile-image{
-        width:55%!important;
         margin:0 auto!important;
         margin-bottom:5vh!important;
     }
 
 
 
-    .own-progress-bar{
-        width:56%!important;
-    }
+
 
     .currency-image{
         width:8vw!important;
@@ -593,21 +595,18 @@ font-size: 155%;
     }
 
     .event-status-info{
-        font-size:2.4vw!important;
+        font-size: 14px!important;
     }
 
     .task-or-event-image{
         max-width:9vw!important;
     }
 
-    .event-button{
-        width:30vw!important;
-    }
 
     .category-image-ev{
-        width:100px;;
+        width:100%;
         height:auto!important;
-        margin: 20px;
+        padding: 10px;
     }
 
 
@@ -756,7 +755,7 @@ font-size: 155%;
 
     #event-type{
         font-size:14px;
-        width: 90px !important;
+        width: 100px !important;
     }
 
     .filter_event_task{
@@ -780,7 +779,7 @@ font-size: 155%;
     }
     .category-image-ev{
         height:auto!important;
-        width: 140px;
+        width: 100%;
     }
 
     .select{
@@ -800,9 +799,7 @@ font-size: 155%;
         width:6vw;
     }
 
-    .outer{
-        width:7vw!important;
-    }
+
 
     .ach-container{
         padding:0!important;
@@ -1297,10 +1294,10 @@ img.unlocked-achievement{
 
 
 .outer{
-    width: 30%;
+    width: 80px;
     position: relative;
     display: inline-block;
-    height:200px;
+    height: 100%;
 }
 
 .padding-0{
@@ -1318,8 +1315,7 @@ img.unlocked-achievement{
 .inner {
   position: absolute;
   bottom: 5%;
-  left: 50%;
-
+  left: 60%;
 }
 
 .rotate {
@@ -1363,7 +1359,7 @@ img.unlocked-achievement{
 
 
 .nav-add{
-    max-width: 50px ;
+    max-width: 40px ;
     height: auto;
     margin-right: 15px;
 }
@@ -1408,7 +1404,7 @@ img.unlocked-achievement{
 }
 
 .event-item-info{
-    height:75%
+
 }
 
 .img-curr-in-button{
@@ -1557,7 +1553,7 @@ img.unlocked-achievement{
 }
 
 #event-type{
-    width: 140px;
+    width: 130px;
     height: auto;
 }
 
@@ -1678,7 +1674,7 @@ svg{
 }
 
 .filter-image{
-    height:2vh;
+    height:12px;
 }
 
 .margin-0{

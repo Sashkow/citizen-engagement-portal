@@ -4,7 +4,7 @@
 {% leaflet_css %}
 
             <div class="row text-center align-items-center event-navigation">
-                <div class="col-lg-3 col-md-3 d-none d-md-block">
+                <div class="col-lg-3 col-md-4 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-type" class="text-left select" url_get = "{% url 'type_filter' %}" state = "news">
                                 <option type_id = "all_digest">Категорія</option>
@@ -119,7 +119,7 @@
                     </div>
 
                 </div>
-                <div class="col-lg-2 col-md-2 d-none d-md-block padding-0">
+                <div class="col-lg-2 d-none d-lg-block padding-0">
                     <img class="align-self-center filter_event_task it_is_event " url_get = "{% url 'type_filter' %}" data-toggle="tooltip" title="Подія"  src="{% static 'volunteer/images/event_fiter.png' %}">
                     <img class="align-self-center task-event-hint what-img" src="{% static 'volunteer/images/what.png' %}">
                     <div class="event-or-task-tips  d-none">
@@ -178,7 +178,7 @@
                         <p class="margin-0 filter-setting"> Налаштувати фільтр <img class="filter-image" src="{% static 'volunteer/images/filter.png' %}" style="color: #ff7f1aff;"> </p>
                 </div>
 
-                <div class="col-md-3 col-5">
+                <div class="col-lg-3 col-md-4 col-5">
 
                         <!--<div class="themap" get_url="{% url 'map' %}">-->
                             <!--<img class="align-self-center float-left nav-add"  src="{% static 'volunteer/images/map.png' %}">-->
