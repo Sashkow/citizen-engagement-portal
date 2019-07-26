@@ -4,7 +4,7 @@ from volunteer.models import Event, EventsOrgTask, User, TaskApplication, OrgTas
 from django.forms import SelectDateWidget, IntegerField, TimeField, EmailField, ModelChoiceField
 from django.forms.widgets import HiddenInput, TimeInput, EmailInput, NumberInput
 from volunteer.widgets import SelectTimeWidget
-from volunteer.models import City
+from volunteer.models import City, DjangoUser
 
 
 class NewEventForm(ModelForm):
@@ -123,5 +123,23 @@ class UserForm(ModelForm):
             'photo': 'Світлина',
             'city': 'Місто'
         }
+
+
+class ProfileCreationForm(ModelForm):
+    """
+    Form for user profile used together with auth.UserCreationForm
+    """
+    city = ModelChoiceField(
+        queryset=City.objects.all(),
+    )
+
+    class Meta:
+        model = DjangoUser
+        fields = ("city",)
+        field_classes = {'city': City,}
+        labels = {
+            'city':'Місто',
+        }
+
 
 

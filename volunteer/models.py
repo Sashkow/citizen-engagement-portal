@@ -164,7 +164,7 @@ class User(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True, default=League.DEFAULT_PK)
     city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True)
     blocked = models.BooleanField(default=False)
-    django_user_id = models.ForeignKey(DjangoUser, on_delete=models.CASCADE)
+    django_user_id = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         is_new_user = False
@@ -613,12 +613,28 @@ class NotificaationType(models.Model):
     image_field_name = models.CharField(max_length = 100)
 
 
-def user_pre_save(sender, instance, **kwargs):
-    pass
+# def user_pre_save(sender, instance, **kwargs):
+#     pass
+#
+#
+# def user_post_save(sender, instance, **kwargs):
+#     if kwargs['created']:
+#         django_user = instance
+#         volunteer = User.objects.create(django_user_id=django_user)
+#
+#         if django_user.first_name or django_user.last_name:
+#             volunteer.first_name = django_user.first_name
+#             volunteer.last_name = django_user.last_name
+#
+#         volunteer.save()
+#
+# models.signals.pre_save.connect(user_pre_save, sender=DjangoUser)
+# models.signals.post_save.connect(user_post_save, sender=DjangoUser)
 
 
-def user_post_save(sender, instance, **kwargs):
-    if kwargs['created']:
+@receiver(post_save, sender=DjangoUser)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
         django_user = instance
         volunteer = User.objects.create(django_user_id=django_user)
 
@@ -628,8 +644,9 @@ def user_post_save(sender, instance, **kwargs):
 
         volunteer.save()
 
-models.signals.pre_save.connect(user_pre_save, sender=DjangoUser)
-models.signals.post_save.connect(user_post_save, sender=DjangoUser)
+@receiver(post_save, sender=DjangoUser)
+def save_user_profile(sender, instance, **kwargs):
+    instance.user.save()
 
 
 

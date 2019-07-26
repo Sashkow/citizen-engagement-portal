@@ -57,6 +57,7 @@ from django.template import RequestContext
 
 from volunteer.notification_helpers import notification_description, notification_title, notification_image
 from volunteer.models import User as VolunteerUser
+from volunteer.forms import ProfileCreationForm
 
 
 
@@ -124,18 +125,30 @@ def usual_login(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+
+        user_form = UserCreationForm(request.POST)
+
+        if user_form.is_valid():
+            user_form.save()
             user = authenticate(
-                username=form.cleaned_data.get('username'),
-                password=form.cleaned_data.get('password1')
+                username=user_form.cleaned_data.get('username'),
+                password=user_form.cleaned_data.get('password1')
             )
             login(request, user)
+
+            profile_form = ProfileCreationForm(request.POST, instance=user.user)
+            if profile_form.is_valid():
+                profile_form.save()
+
             return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/login.html', {'form': form, 'usual_signup':True})
+
+    user_form = UserCreationForm(request.GET)
+    profile_form = ProfileCreationForm(request.GET)
+    return render(request, 'registration/login.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'usual_signup': True,
+    })
 
 
 def home(request):
@@ -143,7 +156,6 @@ def home(request):
         return redirect(reverse('profile'))
     else:
         return redirect(reverse('intropage'))
-
 
 @login_required
 def profile(request):
@@ -217,8 +229,6 @@ def profile(request):
     })
 
 
-
-
 @login_required
 def event(request, id):
     try:
@@ -282,6 +292,9 @@ def new_event(request):
             redirect_url = reverse('profile')
             return redirect(redirect_url)
         # may return none: bad
+
+
+
 
 
 @login_required
@@ -750,9 +763,14 @@ def change_photo(request):
     return JsonResponse(return_dict)
 
 def intropage(request):
-    form = UserCreationForm()
+    user_form = UserCreationForm()
+    profile_form = ProfileCreationForm()
     login_form = AuthenticationForm()
-    return render(request, 'registration/login.html', {'form':form, 'login_form':login_form})
+    return render(request, 'registration/login.html', {
+        'user_form':user_form,
+        'profile_form':profile_form,
+        'login_form':login_form,
+    })
 
 @login_required
 def map_show(request):
