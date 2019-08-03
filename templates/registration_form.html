@@ -16,6 +16,7 @@
                 <div class="center-personal">
                     <input type="text" placeholder="Ім'я" name="first_name" class="input input-reg">
                    <input type="text" placeholder="Прізвище" name="second_name" class="input input-reg">
+                    {{ profile_form.as_p }}
                 </div>
                <div class="socal_logos text-center">
                    <input type="image" name="sub_fb" class="soc-icon" value="Реєстрація Facebook" src="{% static 'volunteer/images/facebook.png' %}" >
@@ -40,27 +41,30 @@
            <form method="post" action="{% url 'signup' %}">
                 {% csrf_token %}
 
-                {% if form.errors %}
-                    {% for field in form %}
+                {% if user_form.errors %}
+                    {% for field in user_form %}
                         {% for error in field.errors %}
                             <div class="alert alert-danger">
                                 <strong>{{ error|escape }}</strong>
                             </div>
                         {% endfor %}
                     {% endfor %}
-                    {% for error in form.non_field_errors %}
+                    {% for error in user_form.non_field_errors %}
                         <div class="alert alert-danger">
                             <strong>{{ error|escape }}</strong>
                         </div>
                     {% endfor %}
                 {% endif %}
 
-                {% for field in form %}
+                {% for field in user_form %}
                   <p class="fieldWrapper">
                     {{ field.label_tag }}<br>
                     {{ field }}
                   </p>
                 {% endfor %}
+
+                {{ profile_form.as_p }}
+
                 <button class="usual-login-btn" type="submit">Зареєструватися</button>
             </form>
       </div>
