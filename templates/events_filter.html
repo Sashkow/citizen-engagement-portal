@@ -15,135 +15,122 @@
                                 <option type_id = "all" >Всі</option>
 
                         </select>
+
                         <img class="align-self-center what-img category-hint" src="{% static 'volunteer/images/what.png' %}">
-                        <div class="category-tips d-none">
+                        <div id = "category-tips" class="category-tips" style = 'visibility: hidden;'>
 
+
+                            <div id="fullpage">
+                            <div class="section active">
+                                <div class="slide">
                             <div class="category-tip ">
-                                <div class="img-tip-holder">
-                                    <img class="img-cat-tip" src="{% static 'volunteer/images/urbanism.png' %}">
-                                </div>
-                                <div class="img-desc-holder">
-                                    <p class="desc-cat-tip">
-                                    До цієї категорії належать завдання, що безпосередньо пов'язані із модернізацією міста.<br> Приклади завдань:
-                                    намалювати мурал, розробити прикольний дизайн, мапи транспортного руху, нові таблички з назвами вулиць,
-                                    реконструкція будівель, будівництво прикольних дитячих майданчиків, музикальні інструменти на вулиці.
-                                </p>
-                                </div>
-                            </div>
 
-                             <div class="category-tip">
-                                <div class="img-tip-holder">
-                                    <img class="img-cat-tip" src="{% static 'volunteer/images/toloka.png' %}">
+                                    <img class="img-cat-tip" src="{% static 'volunteer/images/urbanism.png' %}">
+
+
+                                    <p class="desc-cat-tip">
+                                    До цієї категорії належать завдання, що пов'язані із модернізацією міста.<br> <b>Приклади завдань</b>:
+                                    намалювати мурал, розробити дизайн мапи транспортного руху,
+                                    будівництво прикольних дитячих майданчиків, музикальні інструменти на вулиці.
+                                </p>
+                            </div>
                                 </div>
-                                <div class="img-desc-holder">
+                                <div class="slide">
+                                    <div class="category-tip ">
+                                    <img class="img-cat-tip" src="{% static 'volunteer/images/toloka.png' %}">
                                     <p class="desc-cat-tip">
                                     Бажаєш зробити місто зразком чистоти і порядку?<br>
                                     Тоді обирай категорію толока.<br>
                                     Приклади завдань: прибирання, організація проектів з сортування сміття, висадка дерев.
-                                </p>
-                                </div >
-                            </div >
-
-                            <div class="category-tip">
-                                <div class="img-tip-holder">
-                                    <img class="img-cat-tip" src="{% static 'volunteer/images/donor.png' %}">
+                                    </p></div>
                                 </div>
-                                <div class="img-desc-holder">
+                                <div class="slide">
+                                    <div class="category-tip ">
+                                    <img class="img-cat-tip" src="{% static 'volunteer/images/donor.png' %}">
                                     <p class="desc-cat-tip">
                                     Долучайся до донорського руху, безкорисливого надання крові хворим.
-                                </p>
+                                    </p></div>
                                 </div>
-                            </div>
-
-                            <div class="category-tip">
-                                <div class="img-tip-holder">
-                                    <img class="img-cat-tip" src="{% static 'volunteer/images/blago.png' %}">
-                                </div>
-                                <div class="img-desc-holder">
+                                <div class="slide">
+                                    <div class="category-tip ">
+                                     <img class="img-cat-tip" src="{% static 'volunteer/images/blago.png' %}">
                                     <p class="desc-cat-tip">
                                      Категорія благодійництво передбачає допомогу людям, які її потребують.<br>
-                                        Приклади завдань: організація таборів з безкоштовною їжею, збирання грошей та іграшок в дитячий будинок.
-                                </div>
-                            </div>
-
-                            <div class="category-tip">
-                                <div class="img-tip-holder">
+                                        Приклади завдань: організація таборів з безкоштовною їжею, збирання грошей та іграшок в дитячий будинок.</p>
+                                    </div></div>
+                                <div class="slide">
+                                    <div class="category-tip ">
                                     <img class="img-cat-tip" src="{% static 'volunteer/images/osvita.png' %}">
-                                </div>
-                                <div class="img-desc-holder">
                                     <p class="desc-cat-tip">
                                      Не скупіться ділитися знаннями! Обмін інформацією - це сучасне життя!<br>
                                     Приклади завдань: проведення лекцій, класів під відкритим небом, організація гуртків для дітей, заходів
                                     "Розкажи дітям про свою професію"
-                                </p>
+                                    </p></div>
                                 </div>
-                            </div>
-
-                            <div class="category-tip">
-                                <div class="img-tip-holder">
+                                <div class="slide">
+                                    <div class="category-tip ">
                                     <img class="img-cat-tip" src="{% static 'volunteer/images/prozoro.png' %}">
-                                </div>
-                                <div class="img-desc-holder">
                                     <p class="desc-cat-tip">
                                      Хто як не жителі міста мають слідкувати на що витрачаються громадські кошти. Ця категорія для тих, хто проводить
                                         розслідування та добивається прозорості у справах міста.
-                                </p>
+                                    </p></div>
                                 </div>
-                            </div>
-
-                            <div class="category-tip">
-                                <div class="img-tip-holder">
+                                <div class="slide">
+                                    <div class="category-tip ">
                                     <img class="img-cat-tip" src="{% static 'volunteer/images/varta.png' %}">
-                                </div>
-                                <div class="img-desc-holder">
                                     <p class="desc-cat-tip">
                                         Категорія "Варта" для хоробрих людей, що в силах обороняти свій дім. Українські бой-скаути вперед!<br>
                                         Приклади завданнь: організація уроків з надання першої медичної допомоги, патрулювання району у вечірній час,
-                                        територіальна оборона.
-                                </p>
-                                </div>
-                            </div>
-
-                            <div class="category-tip">
-                                <div class="img-tip-holder">
+                                        територіальна оборона.</p>
+                                    </p>
+                                    </div></div>
+                                <div class="slide">
+                                    <div class="category-tip ">
                                     <img class="img-cat-tip" src="{% static 'volunteer/images/kotyky.png' %}">
-                                </div>
-                                <div class="img-desc-holder">
                                     <p class="desc-cat-tip">
                                     Якщо ти борець за права тварин, або просто небайдужий до всіх мешканців міста, тобі сюди.
-                                </p>
-                                </div>
-                            </div>
+                                    </p>
+                                    </div></div>
+                            </div></div>
+
 
                         </div>
                     </div>
 
                 </div>
                 <div class="col-lg-2 d-none d-lg-block padding-0">
-                    <img class="align-self-center filter_event_task it_is_event " url_get = "{% url 'type_filter' %}" data-toggle="tooltip" title="Подія"  src="{% static 'volunteer/images/event_fiter.png' %}">
+                    <img class="align-self-center filter_event_task it_is_event " url_get = "{% url 'type_filter' %}"  src="{% static 'volunteer/images/event_fiter.png' %}">
                     <img class="align-self-center task-event-hint what-img" src="{% static 'volunteer/images/what.png' %}">
-                    <div class="event-or-task-tips  d-none">
-                        <div class="text-center">
-                            <div class="float-left text-center">
-                                <img class="task-or-event-images event-select" src="{% static 'volunteer/images/event.png' %}">
-                                <p>Подія</p>
-                            </div>
-                            <div>
-                                <img class="task-or-event-images task-select" src="{% static 'volunteer/images/task.png' %}">
-                                <p>Завдання</p>
-                            </div>
 
-                       </div>
+                    <!--<div class="event-or-task-tips  d-none">-->
+                        <!--<div class="row">-->
+                            <!--<br>-->
+                            <!--<div class="col-6 " align="center">-->
+                                <!--<img class="task-or-event-images event-select" src="{% static 'volunteer/images/event.png' %}">-->
 
-                        <div>
-                            <p class="text-describe">
-                            Подія на відміну від завдання має мати чітку дату і адресу, а також передбачає зібрання людей для фізичного вирішення проблеми.
-                                <strong>Приклад події</strong>: суботник у міському парку, день донора. <strong>Приклад  завдання</strong>: віднести 5 іграшок у дитячий будинок, редизайн схеми руху міського транспорту.
-                            </p>
-                        </div>
-                    </div>
+                            <!--</div>-->
+                            <!--<div class="col-6" align="center">-->
+                                <!--<img class="task-or-event-images task-select" src="{% static 'volunteer/images/task.png' %}">-->
 
-                    <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}" data-toggle="tooltip" title="Завдання"   src="{% static 'volunteer/images/filter_task.png' %}">
+                            <!--</div>-->
+                             <!--<div class="col-6 " align="center">-->
+                                <!--<p>Подія</p>-->
+                            <!--</div>-->
+                            <!--<div class="col-6" align="center">-->
+                                <!--<p>Завдання</p>-->
+                            <!--</div>-->
+
+                       <!--</div>-->
+
+                        <!--<div>-->
+                            <!--<p class="text-describe">-->
+                            <!--Подія на відміну від завдання має мати чітку дату і адресу, а також передбачає зібрання людей для фізичного вирішення проблеми.-->
+                                <!--<strong>Приклад події</strong>: суботник у міському парку, день донора. <strong>Приклад  завдання</strong>: віднести 5 іграшок у дитячий будинок, редизайн схеми руху міського транспорту.-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}"    src="{% static 'volunteer/images/filter_task.png' %}">
 
                 </div>
                 <div class="col-lg-2 col-md-2 d-none d-md-block">
@@ -195,6 +182,32 @@
                     </div></div>
             </div >
  <script type="text/javascript">
+            tippy('.task-event-hint', {
+              content: 'Подія на відміну від завдання має чітку дату і адресу',
+              animation:'perspective',
+              placement:'bottom',
+            })
+            tippy('.it_is_event', {
+              content: 'Подія (суботник, день донора)',
+              animation:'perspective',
+              placement:'left-start',
+            })
+            tippy('.it_is_task', {
+              content: 'Завдання (намалювати мурал, віднести іграшки в дит. будинок)',
+              animation:'perspective',
+              placement:'right-end',
+            })
+            tippy('.category-hint', {
+              content: 'Натисніть, щоб дізнатися про категорії',
+              animation:'perspective',
+              placement:'right-end',
+            })
+
+
+
+
+
+
 
 
             function onEachFeature(feature, layer) {

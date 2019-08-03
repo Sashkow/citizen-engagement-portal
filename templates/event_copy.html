@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-8">
                     <h1 class="ep_event_name">{{event.name}}</h1>
-                    <p> додано {{ event.publication_date }}</p>
+                    <p class = "ep_event_reg_date"> додано {{ event.publication_date }}</p>
 
                     {% if event.status.id == 1%}
                     <button class="event-button status-button get-org-tasks" get_url = "{% url 'get_event_org_tasks' %}"style="background-color: {{event.status.color_background}}" event_id = "{{event.id}}"> <img class="img-status-btn" src="{{ event.status.image.url }}" > {{event.status.frontend_value}} </button>
@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <div class="col-4 text-right d-none d-md-block">
+        <div class="col-4  d-none d-md-block" style = "padding-top:20px">
             <img class="category_event " src="{{ event.events_type.image.url }}">
         </div>
 
@@ -85,7 +85,7 @@
 
     <div class="row justify-content-md-center">
         <div class="col-11">
-            <div id="disqus_thread"></div>
+            <!--<div id="disqus_thread"></div>-->
                 <script>
 
                 /**

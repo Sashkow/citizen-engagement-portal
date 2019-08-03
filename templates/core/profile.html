@@ -25,6 +25,9 @@
     <style>
         p.ribbon{
             color: {{volunteer.league.color_league_txt}};
+            font-size: 16px;
+            padding-top: 3px;
+
         }
 
         .volunteer-name{
@@ -33,6 +36,7 @@
 
         .curr_quat{
             color: {{volunteer.league.color_menu_item}};
+            font-size: 12px;
 
         }
 
@@ -156,7 +160,7 @@
              <p class="ribbon ">{{volunteer.league}}</p>
         </div>
 
-        <div class="profile-image">
+        <div class="profile-image" >
              <img class="user-league-info league-logo setting-img" get_url="{% url 'profile_edit' %}" src="{{league_user.league_image.url}}">
                 {% if volunteer.photo %}
                     <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{{ volunteer.photo.url }}">
@@ -164,7 +168,7 @@
                     <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{% static  'volunteer/images/user_profile_default.png' %}" >
                 {% endif %}
              <!--{{league_user.user_frame.url}}-->
-             <img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}">
+             <img class="user-league-info photo-frame" get_url="{% url 'profile_edit' %}" src="{{league_user.user_frame.url}}">
         </div>
 
         <div class="own-progress-bar">
@@ -239,7 +243,7 @@
         <div class="container-fluid content-container padding-0">
 
             <div class="padding-0"  style="background-color: #f9ffefff;
-                                         background-image:url({% static 'volunteer/images/bg_plastic1.png'%}); min-height:97vh;">
+                                         background-image:url({% static 'volunteer/images/bg_plastic1.png'%}); min-height:100%;">
 
                 <div class="dynamic-block">
                         {% include 'events_filter.html' %}
@@ -254,7 +258,21 @@
 
     <!--look here-->
 
+    <script type="text/javascript">
 
+
+        tippy('.league-logo', {
+          content: 'Відредагуйте свій профіль!',
+          animation:'perspective',
+        })
+      tippy('.own-progress-bar', {
+          content: 'Відкрий 5 досягень для переходу у наступну лігу!',
+          animation:'perspective',
+          placement:'right-end',
+        })
+
+
+    </script>
 {% endblock %}
 
 
