@@ -209,7 +209,7 @@ LOGOUT_REDIRECT_URL = 'intropage'
 
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
-SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['first_name', 'second_name']
+SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['first_name', 'second_name', 'city']
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

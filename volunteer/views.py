@@ -127,6 +127,7 @@ def signup(request):
     if request.method == 'POST':
 
         user_form = UserCreationForm(request.POST)
+        profile_form = ProfileCreationForm(request.POST)
 
         if user_form.is_valid():
             user_form.save()
@@ -139,8 +140,19 @@ def signup(request):
             profile_form = ProfileCreationForm(request.POST, instance=user.user)
             if profile_form.is_valid():
                 profile_form.save()
-
+            else:
+                return render(request, 'registration/login.html', {
+                    'user_form': user_form,
+                    'profile_form': profile_form,
+                    'usual_signup': True,
+                })
             return redirect('home')
+        else:
+            return render(request, 'registration/login.html', {
+                'user_form': user_form,
+                'profile_form': profile_form,
+                'usual_signup': True,
+            })
 
     user_form = UserCreationForm(request.GET)
     profile_form = ProfileCreationForm(request.GET)
@@ -587,6 +599,7 @@ def just_after_scuccess_auth(request):
 def dispatch_social_login(request):
     first_name = request.GET['first_name']
     second_name = request.GET['second_name']
+    city_id = request.GET['city']
 
     if 'sub_fb.x' in request.GET:
         provider = 'facebook'
@@ -596,8 +609,7 @@ def dispatch_social_login(request):
         print('Niether fb no gg')
         return None
     return redirect(
-        reverse('social:begin', args=[provider, ]) + '?first_name={}&second_name={}'.format(first_name, second_name))
-
+        reverse('social:begin', args=[provider, ]) + '?first_name={}&second_name={}&city={}'.format(first_name, second_name, city_id))
 
 
 def form(request, id = None):
