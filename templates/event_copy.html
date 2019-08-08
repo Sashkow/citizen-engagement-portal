@@ -51,6 +51,8 @@
             <div class="row">
                 <div class="col-12">
                     <p class="ep-event-description">{{ event.description }}</p>
+                    <p class="ep-event-description">Місто: {{ event.city }}</p>
+                    <p class="ep-event-description">{{ event.description }}</p>
                     {% if org_user == 1 %}
                         <button class="btn-event-edit event-button" id_event = {{ event.id }} get_url = "{% url 'form' id=event.id %}">редагувати <img class="img-curr-in-button" src="{% static 'volunteer/images/edit.png' %}"</button>
                     {% else %}

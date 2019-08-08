@@ -73,6 +73,9 @@
         нишпорять:{{subs}}
         приймають участь:{{part}}
         <img class="category_event " src="{{ event.events_type.image.url }}">
+        {% for executor in executors %}
+            <p>{{executor.contact}}</p>
+        {% endfor %}
     </div>
 
 

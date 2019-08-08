@@ -76,7 +76,7 @@ class OrgTaskApplicationForm(ModelForm):
         }
 
 
-class EditeEventForm(ModelForm):
+class EditEventForm(ModelForm):
     class Meta:
 
         model = Event
