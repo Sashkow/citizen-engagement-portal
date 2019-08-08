@@ -14,6 +14,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"  crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="https://unpkg.com/popper.js@1"></script>
+    <script src="https://unpkg.com/tippy.js@4"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link  href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
@@ -23,9 +27,11 @@
     <link rel="stylesheet" type="text/css" href = "{% static 'volunteer/palette.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'volunteer/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'volunteer/fivecolumns.css' %}" />
-
+    <link rel="stylesheet" type="text/css" href="{% static 'volunteer/fullpage.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static '/croppie/croppie.css' %}" />
     <script src="{% static '/croppie/croppie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'volunteer/js/fullpage.js' %}"></script>
+
     <script src="{% static '/blob/index.js' %}"></script>
     <script src="{% static '/b64-to-blob/b64toBlob.js' %}"></script>
 
@@ -83,6 +89,11 @@
             document.getElementById('window').style.display = state;
             document.getElementById('gray').style.display = state;
         }
+
+        tippy('.league-logo', {
+          content: 'Tooltip',
+          animation:'perspective',
+        })
     </script>
 </body>
 </html>

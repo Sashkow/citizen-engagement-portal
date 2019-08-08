@@ -36,7 +36,8 @@ font-family: 'Ubuntu',sans-serif !important;
 }
 
 .category-image-ev{
-    width:150px;
+    max-width: 150px;
+    width:100%;
     height:auto!important;
     margin: 20px;
 }
@@ -310,7 +311,7 @@ font-size: 155%;
     #sidebar{
         width:100vw!important;
         display:none;
-        min-height:94vh;
+        min-height:100%;
         box-shadow: 0px -6px 10px grey;
         z-index:100;
     }
@@ -344,12 +345,12 @@ font-size: 155%;
 
 
     .inner{
-        bottom:11%!important;
+
     }
 
     .event-status-info{
-        font-size:4vw!important;
-        line-height:77%!important;
+        font-size:14px!important;
+        line-height:1!important;
     }
 
     .category-icon{
@@ -361,18 +362,19 @@ font-size: 155%;
     }
 
     .info{
-        margin:auto!important;
+        margin:0px 10px important;
         padding-left:7vw!important;
     }
 
     .event-button{
 
         font-size:12px !important;
-        margin-bottom:0.5vh!important;
+
         min-width: 145px;
         border-top-right-radius: 25px !important;
         border-bottom-right-radius: 25px !important;
         width:90%;
+        height: 24px!important;
     }
 
     .pagination-list{
@@ -385,12 +387,12 @@ font-size: 155%;
     }
 
     .ep_event_task{
-        width:24vw!important;
+        width:100px!important;
         height:auto!important;
     }
 
     .ep_event_name{
-        font-size:2.5vh;
+        font-size:16px;
     }
 
     .faq{
@@ -410,13 +412,13 @@ font-size: 155%;
     }
 
     .category-image-ev{
-        width:100px;
+        width:100%;
         height:auto!important;
         margin: 20px;
     }
 
     .event-name{
-        font-size: 20px!important;
+        font-size: 16px!important;
     }
 
 
@@ -424,7 +426,7 @@ font-size: 155%;
     .event-image-holder{
         text-align:left!important;
         padding:0;
-        margin:3.5vh 0!important;
+
     }
 
     .
@@ -463,6 +465,10 @@ font-size: 155%;
 /* for tables*/
 
 @media only screen and (max-width: 767px) and  (min-width: 576px){
+
+    .task-or-event-image{
+        display: none !important;
+    }
 
     .slog{
         font-size:7vw!important;
@@ -596,9 +602,11 @@ font-size: 155%;
 
     .event-status-info{
         font-size: 14px!important;
+        line-height:1!important;
     }
 
     .task-or-event-image{
+
         max-width:9vw!important;
     }
 
@@ -606,7 +614,11 @@ font-size: 155%;
     .category-image-ev{
         width:100%;
         height:auto!important;
-        padding: 10px;
+
+    }
+
+    .event-name{
+        font-size: 16px
     }
 
 
@@ -636,10 +648,22 @@ font-size: 155%;
 
 
 @media only screen and (max-width: 1054px) and  (min-width: 768px){
+    .list-group-item {
+          columns: 2;
+          -webkit-columns: 2;
+          -moz-columns: 2;
+        }
     .slog{
         font-size: 5vw!important;
         margin-top:6vh!important;
         padding-left:2vw;
+    }
+    .section{
+       
+
+    }
+    .fp-slidesNav ul {
+        display: none;
     }
 
     .p-slog{
@@ -736,7 +760,7 @@ font-size: 155%;
 
 
     .curr-quant{
-        font-size:1.7vw!important;
+        font-size:12p!important;
     }
 
     .currency-image{
@@ -776,6 +800,7 @@ font-size: 155%;
     }
     .what-img{
         width: 20px!important;
+        cursor: pointer;
     }
     .category-image-ev{
         height:auto!important;
@@ -903,10 +928,15 @@ font-size: 155%;
     .btn-subscribe {
     padding-right: 50px!important;
     }
+    .list-group-item {
+      columns: 2;
+      -webkit-columns: 2;
+      -moz-columns: 2;
+    }
 }
 @media (max-width: 1300px){
     .outer {
-    width: 40%!important;
+    width: 40px!important;
     }
     .img-status {
         width:3vw!important;
@@ -1169,8 +1199,8 @@ h4.volunteer-name{
 }
 .quant-ach{
     position: absolute;
-    left: 13px;
-    top: 5px;
+    left: 13.5px;
+    top: 6px;
 }
 
 div.achievement-item{
@@ -1288,13 +1318,16 @@ img.unlocked-achievement{
 }
 
 .event-status-info{
+    font-size: 14px;
     font-weight:bold;
     color:#fff;
+    line-height:1!important;
 }
 
 
+
 .outer{
-    width: 80px;
+    width: 60px;
     position: relative;
     display: inline-block;
     height: 100%;
@@ -1314,7 +1347,7 @@ img.unlocked-achievement{
 
 .inner {
   position: absolute;
-  bottom: 5%;
+  top: 60%;
   left: 60%;
 }
 
@@ -1367,6 +1400,7 @@ img.unlocked-achievement{
 .what-img{
     width: 20px;
     height:auto;
+    cursor: pointer;
 }
 
 .category-filter{
@@ -1386,7 +1420,7 @@ img.unlocked-achievement{
     background-color:#ff7f1aff;
     border-bottom-right-radius: 25px!important;
     border-top-right-radius: 25px!important;
-    padding-right: 50px;
+    padding-right: 50px!important;
 }
 
 .btn-resubscribe{
@@ -1431,10 +1465,10 @@ img.unlocked-achievement{
  }
 
  .category_event{
+    width: 190px;
     max-width:75%;
     height:auto;
-    margin-top:8%;
-    margin-right:8%;
+
  }
 
  .photo-user{
@@ -1445,34 +1479,45 @@ img.unlocked-achievement{
  }
 
  .ep_event_task{
-    max-height: 86%;
+    width: 100%;
+    max-width: 110px;
+
  }
 
  .ep_event_name{
+    font-size: 24px;
+ }
+
+ .ep_event_reg_date{
+    font-size: 14px;
+    color: gray;
+    padding-left: 4px;
  }
 
  .status-button{
-    height:22%;
+    height: 28px;
     border-bottom-left-radius: 25px!important;
     border-top-left-radius: 25px!important;
-    padding: 0 8%;
+    padding:0 15px 0 35px;
+    font-weight: 600;
+    width: max-content;
  }
 
  .img-status-btn{
-    height: 80%;
+    height: 23px;
     position: absolute;
-    left: 1%;
-    top: 11%;
+    left: 2px;
+    top: 2.3px;
  }
 
  .ep-event-info{
-    padding-top: 5%;
-    padding-left:6%;
+    padding-top: 30px;
+    padding-left: 30px;
  }
 
  .ep-event-description{
-    min-height: 12vh;
-    margin: 4vh 0;
+
+    margin: 20px 0;
     }
 
 
@@ -1553,7 +1598,7 @@ img.unlocked-achievement{
 }
 
 #event-type{
-    width: 130px;
+    width: 150px;
     height: auto;
 }
 
@@ -1562,7 +1607,7 @@ img.unlocked-achievement{
     height: auto;
 }
 #event-city{
-    width: 120px;
+    width: 170px;
     height: auto;
 }
 .ribbon-div{
@@ -1638,6 +1683,7 @@ svg{
 .wrapper {
     display: flex;
     width: 100%;
+    min-height: 100%;
     align-items: stretch;
     overflow-x:hidden;
 }
@@ -1664,7 +1710,7 @@ svg{
         position:sticky;
         width: 450px;
         left: 0;
-        min-height:94vh;
+        min-height:100%;
         box-shadow: 0px -6px 10px grey;
         z-index: 100;
 }
@@ -1683,7 +1729,8 @@ svg{
 }
 
 .notif-image{
-    height:18vh;
+    height: 130px;
+    margin: 20px;
 }
 
 .modal-enter-h{
@@ -1713,15 +1760,17 @@ svg{
     }
 
 #mob-event-type, #mob-event-city{
-        width: 60%!important;
-        height: 20px!important;
+        width: 150px!important;
+        height: 25px!important;
         font-size: 14px!important;
+        margin: 15px;
 }
 
 #mob-event-status{
-    width: 60%!important;
-    height: 20px!important;
+    width: 150px!important;
+    height: 25px!important;
     font-size: 14px!important;
+    margin: 20px 0px 0px 0px;
 }
 
 #layout{
@@ -1738,36 +1787,37 @@ button:disabled {
     position:absolute;
     z-index:400;
     width:50vw;
+    border-radius: 5px;
     background-color:#c6e8b0;
-    left: 16vw;
+    left: 60px;
+    top: 40px;
  }
 
 .img-cat-tip{
-    height: 12vh;
-}
-.img-tip-holder{
-    float:left;
-    width:33%;
-    overflow:hidden;
-    text-align:center;
-    padding:2vh 0;
+    height: 150px;
+    margin: 10px;
+
+    display: inline-block;
 
 }
 
-.img-desc-holder{
-    float:left;
-    width:67%;
-    overflow:hidden;
-    text-align:center;
-    padding: 2vh 2vw;
-    text-align:left;
-    font-size:1.5vh;
+.desc-cat-tip{
+    display: inline-block;
+    font-size: 16px;
+    text-align: left;
+    margin: 10px;
+    color: white;
+}
+
+
+
+.tippy-tooltip {
+    width: auto;
+    max-width: 550px !important;
 }
 
 .category-tip{
-
-    overflow:hidden;
-    width:100%;
+    display: flex;
 }
 
 .news:hover{
@@ -1786,7 +1836,7 @@ button:disabled {
 .event-or-task-tips{
     position: absolute;
     z-index: 400;
-    width: 43vw;
+    width: 450px;
     background-color: #c6e8b0;
     left: 6vw;
     padding-top:3vh;
@@ -1801,3 +1851,102 @@ button:disabled {
     padding:0 3vw!important;
 }
 
+
+.edit-profile-send input[type=text]{
+    padding: 3px 10px;
+    border: none;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    width: 200px;
+
+}
+::-webkit-file-upload-button {
+  background: #00BBBB;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+::-webkit-file-upload-button:hover {
+  background: #087f7f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition-duration: 0.5s;
+}
+
+.digest-text {
+    padding-top: 15px;
+}
+
+.profile-edit-submit {
+    font-size: 16px;
+}
+
+
+
+.list-group {
+  max-width: 400px;
+  padding-bottom: 45px;
+}
+
+.form-check {
+    padding-left: 0px;
+    padding-top: 20px;
+}
+
+.form-check-input {
+     margin: 0 !important;
+     position: initial !important;
+     color: #ccc;
+
+}
+
+
+
+.section {
+    height: 250px !important;
+    background: #333333 !important;
+    padding: 10px 65px;
+    border-radius: 5px;
+}
+.form-check-input:checked + label {
+    color: black;
+}
+
+.fp-slidesNav ul li a span{
+    background-color: white !important;
+}
+
+.fp-slidesNav ul {
+    text-align: center;
+}
+
+@media(min-width:1300px){
+    .event-status-info{
+        font-size: 18px;
+        font-weight:bold;
+        color:#fff;
+        line-height:1.2!important;
+    }
+    .event-name{
+        font-size: 22px;
+    }
+    .event-description{
+        font-size: 16px;
+    }
+    .task-or-event-image{
+        width: 70px;
+        max-width: 40%;
+    }
+
+    .list-group-item {
+          columns: 2;
+          -webkit-columns: 2;
+          -moz-columns: 2;
+        }
+
+
+
+}

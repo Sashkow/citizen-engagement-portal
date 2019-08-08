@@ -789,10 +789,10 @@ def map_show(request):
     volunteer = VolunteerUser.objects.filter(django_user_id=request.user).first()
     if volunteer:
         if volunteer.city:
-            if volunteer.city.city == "Вінниця":
+            if volunteer.city.city == "Житомир":
                 boundaries = {
-                    'SPATIAL_EXTENT': (25.3079, 28.6219, 49.072, 49.3921),
-                    'DEFAULT_CENTER': ( 49.23205, 28.4649),
+                    'SPATIAL_EXTENT': (25.605223, 28.715773, 50.23924, 52.276012),
+                    'DEFAULT_CENTER': (50.257632, 28.660498),
                 }
                 return render(request, 'map.html', context={'boundaries': boundaries})
             elif volunteer.city.city == "Житомир":

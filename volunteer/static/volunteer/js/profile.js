@@ -16,21 +16,44 @@ $( document ).ready(function() {
        }
     }
 
-    $('.category-hint').hover(function(){
-        $('.category-tips').toggleClass('d-none');
-    })
+//    $('.category-hint').click(function(){
+//        alert('fy');
+//        $('.category-tips').removeClass('d-none');
+//    })
 
-    $('.category-tips').hover(function(){
-        $(this).toggleClass('d-none');
-    })
+let tipVisibility = 0;
+    $(document).on("click", function(){
+        if (tipVisibility!=1){
+        $('.fp-slidesNav ul').css('visibility', 'hidden');
+        $('.category-tip').css('visibility', 'hidden');
+        $('.category-tips').css('visibility', 'hidden');
+        }
+        tipVisibility++;
+    });
 
-     $('.task-event-hint').hover(function(){
-        $('.event-or-task-tips').toggleClass('d-none');
-    })
+ $('.category-hint').on("click" ,function(){
+        $('.fp-slidesNav ul').css('visibility', 'visible');
+        $('.category-tip').css('visibility', 'visible');
+        $('.category-tips').css('visibility', 'visible');
+        tipVisibility=1;
+    });
 
-    $('.event-or-task-tips').hover(function(){
-        $(this).toggleClass('d-none');
-    })
+$('.category-tips').on("click" ,function(){
+
+        tipVisibility=1;
+    });
+
+
+
+
+
+//     $('.task-event-hint').hover(function(){
+//        $('.event-or-task-tips').toggleClass('d-none');
+//    })
+
+//    $('.event-or-task-tips').hover(function(){
+//        $(this).toggleClass('d-none');
+//    })
 
 
     function readURL(input) {
@@ -55,6 +78,20 @@ $( document ).ready(function() {
 
     })
 
+
+
+
+              var myFullpage = new fullpage('#fullpage', {
+
+                sectionsColor: ['#491c65', '#fff', '#f5ec9bff', '#cad893ff', '#7bd5b4ff','#bee6d2ff'],
+
+	            menu: '#myMenu',
+                slidesNavigation: true,
+                <!--&lt;!&ndash;scrollBar: true&ndash;&gt;-->
+
+            });
+
+
     $(document).on('click', '.open-profile-menu', function(){
 
         if($(this).attr('active') == "1" ){
@@ -62,7 +99,7 @@ $( document ).ready(function() {
             $('#sidebar').css('display', 'block')
             $(this).attr('active', "0")
         }
-        else{
+        else{_
             $('.content-container').toggleClass('d-none')
             $('#sidebar').css('display', 'none')
             $(this).attr('active', "1")
