@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm, IntegerField
 from volunteer.models import Event, EventsOrgTask, User, TaskApplication, OrgTaskApplication
-from django.forms import SelectDateWidget, IntegerField, TimeField, EmailField, ModelChoiceField
+from django.forms import SelectDateWidget, IntegerField, TimeField, EmailField, ModelChoiceField, CharField
 from django.forms.widgets import HiddenInput, TimeInput, EmailInput, NumberInput
 from volunteer.widgets import SelectTimeWidget
 from volunteer.models import City, DjangoUser
@@ -129,17 +129,22 @@ class ProfileCreationForm(ModelForm):
     """
     Form for user profile used together with auth.UserCreationForm
     """
+    # first_name = CharField()
+    # last_name = CharField()
     city = ModelChoiceField(
         queryset=City.objects.all(),
     )
 
+
     class Meta:
         model = DjangoUser
-        fields = ("city",)
+        fields = ('city',)
         field_classes = {'city': City,}
         labels = {
             'city':'Місто',
         }
+
+
 
 
 

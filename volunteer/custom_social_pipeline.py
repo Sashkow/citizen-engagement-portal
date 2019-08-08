@@ -1,10 +1,12 @@
 
 from django.contrib.auth.models import User as DjangoUser
-from volunteer.models import User as VolunteerUser
+from volunteer.models import User as VolunteerUser, City
 
 def save_user_name(backend, user, response, *args, **kwargs):
     first_name = backend.strategy.session_get('first_name')
     second_name = backend.strategy.session_get('second_name')
+    city_id = backend.strategy.session_get('city')
+    city = City.objects.get(id=city_id)
 
     django_user = user
     if not VolunteerUser.objects.filter(django_user_id=django_user).exists():
@@ -16,6 +18,9 @@ def save_user_name(backend, user, response, *args, **kwargs):
     else:
         volunteer = VolunteerUser.objects.get(django_user_id=django_user)
 
+    if city:
+        volunteer.city = city
+
     if first_name or second_name:
         volunteer.first_name = first_name
         volunteer.last_name = second_name
@@ -24,5 +29,7 @@ def save_user_name(backend, user, response, *args, **kwargs):
         if django_user.first_name or django_user.last_name:
             volunteer.first_name = django_user.first_name
             volunteer.last_name = django_user.last_name
+        else:
+            volunteer.first_name = "Волонтер(ка)"
 
     volunteer.save()
