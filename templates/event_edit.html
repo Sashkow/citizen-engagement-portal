@@ -1,80 +1,76 @@
 {% load static %}
-<form action="{% url 'form'  id=event.id  %}" method="post">
+<form class="" action="{% url 'form'  id=event.id  %}" method="post">
     {% csrf_token %}
 <div class="row">
-    <div class="col-8 ep-event-info">
+    <div class="col-sm-12 col-lg-8 ep-event-info">
         <div class="row">
-            <div class="col-auto text-left ">
+            <div class="col-auto text-left padding-0">
                 {% if event.events_or_task == True %}
-                    <img class="ep_event_task" src="{% static 'volunteer/images/event.png' %}">
+                    <img class="category_event_edit " src="{{ event.events_type.image.url }}">
                 {% else %}
-                    <img class="" src="{% static 'volunteer/images/task.png' %}">
+                     <img class="category_event_edit " src="{{ event.events_type.image.url }}">
                     {% if zero_executor == True %}
                         <button type="button" event_id ="{{event.id}}" class="get-executers-form" get_url="{% url 'task_executor' %}">Призначити виконавця</button>
                     {% endif %}
                 {% endif%}
             </div>
-            <div class="col-8">
+            <div class="col-8 edit-event-form">
                     {{form.name.errors}}
                     {{form.name}}
-                    <p> додано {{ event.publication_date }}</p>
+                    <p class="ep_event_reg_date"> додано {{ event.publication_date }}</p>
                     {% if event.status.id == 1 or event.status.id == 2 %}
                         {{form.status.errors}}
                         {{form.status}}
                     {% else %}
                     <p>{{event.status}} </p>
                     {% endif %}
+                    <p class="ep_event_reg_date"> Не забудьте змінити статус на Проведено, щоб учасники отримати монети!</p>
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 edit-event-form">
                 {{form.description.errors}}
                 {{form.description}}
                 <br>
-
                  <label for="{{ form.address.id_for_label }}">Адреса:</label>
                 {{form.address.errors}}
                 {{form.address}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-5">
-             <label for="{{ form.date_event.id_for_label }}">Дата:</label>
+                <br>
+                <label for="{{ form.date_event.id_for_label }}">Дата:</label>
                 {{form.date_event.errors}}
                 {{form.date_event}}
-            </div>
-            <div class="col-7">
-                <label for="{{ form.min_part.id_for_label }}">Мінімальна кількість учасників:</label>
-                {{form.min_part.errors}}
-                {{form.min_part}}
-                <br/>
-                    <label for="{{ form.max_part.id_for_label }}">Максимальна кількість учасників:</label>
-                {{form.max_part.errors}}
-                {{form.max_part}}
-
-
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-5">
-                 <label for="{{ form.contact.id_for_label }}">Введіть Ваш контактний e-mail:</label>
+                <br>
+                <label for="{{ form.time_event.id_for_label }}">Час:</label>
+                {{form.time_event.errors}}
+                {{form.time_event}}
+                <!--<br>-->
+                <!--<label for="{{ form.min_part.id_for_label }}">Мінімальна кількість учасників:</label>-->
+                <!--{{form.min_part.errors}}-->
+                <!--{{form.min_part}}-->
+                <!--<br>-->
+                    <!--<label for="{{ form.max_part.id_for_label }}">Максимальна кількість учасників:</label>-->
+                <!--{{form.max_part.errors}}-->
+                <!--{{form.max_part}}-->
+                <br>
+                <label for="{{ form.contact.id_for_label }}">Введіть Ваш контактний e-mail:</label>
                 {{form.contact.errors}}
                 {{form.contact}}
-
+                <br><br>
+                <button type="submit " class="edit-event-send btn btn-success" >Зберегти зміни</button>
             </div>
-
         </div>
+
 
 
 
     </div>
-    <div class="col-4" style = "padding-top:2px">
-        нишпорять:{{subs}}
-        приймають участь:{{part}}
-        <img class="category_event " src="{{ event.events_type.image.url }}">
+    <div class="col-sm-12 col-lg-4" style = "padding-top:30px">
+        <p class="subs"> Нишпорять: {{subs}} &nbsp;&nbsp; Беруть участь: {{part}}</p>
+
+
+
         {% for executor in executors %}
-            <p>{{executor.contact}}</p>
+        <p class="part">{{executor.user}}: &nbsp; <b>{{executor.contact}}</b></p>
         {% endfor %}
     </div>
 
@@ -83,7 +79,7 @@
 
 <div class="row">
     <div class="col-12">
-        <button type="submit " class="edit-event-send" >Зберегти зміни</button>
+
     </div>
 </div>
 

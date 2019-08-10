@@ -102,6 +102,14 @@ font-size: 155%;
 
 
 @media screen and (max-width: 930px) {
+    .category_event_edit {
+        display: none !important;
+    }
+    .edit-event-form #id_name {
+        padding: 5px 10px !important;
+        font-size: 18px !important;
+        width: 300px !important;
+    }
     .event-description{
         display: none !important;
 
@@ -204,7 +212,9 @@ font-size: 155%;
         left: 6vw;
         z-index: 100
     }
-
+    .category_event_edit {
+        display: none;
+    }
     .slog{
         text-align:left;
         font-size: 8vw !important;
@@ -465,6 +475,9 @@ font-size: 155%;
 /* for tables*/
 
 @media only screen and (max-width: 767px) and  (min-width: 576px){
+    .category_event_edit {
+        display: none;
+    }
 
     .task-or-event-image{
         display: none !important;
@@ -1471,6 +1484,12 @@ img.unlocked-achievement{
 
  }
 
+  .category_event_edit{
+    width: 150px;
+    height:auto;
+
+ }
+
  .photo-user{
     -webkit-clip-path: polygon(2% 1%, 2% 62%, 9% 78%, 23% 89%, 36% 95%, 50% 100%, 63% 95%, 79% 89%, 91% 78%, 97% 64%, 98% 2%);
     clip-path: polygon(2% 1%, 2% 62%, 9% 78%, 23% 89%, 36% 95%, 50% 100%, 63% 95%, 79% 89%, 91% 78%, 97% 64%, 98% 2%);
@@ -1480,7 +1499,7 @@ img.unlocked-achievement{
 
  .ep_event_task{
     width: 100%;
-    max-width: 110px;
+    max-width: 80px;
 
  }
 
@@ -1517,9 +1536,12 @@ img.unlocked-achievement{
 
  .ep-event-description{
 
-    margin: 20px 0;
+    margin: 20px 0 ;
     }
+ .ep-event-addition-info{
 
+    margin: 10px 0 ;
+    }
 
  .selected_event_task{
     filter: gray; /* IE6-9 */
@@ -1561,13 +1583,16 @@ img.unlocked-achievement{
 }
 
 .task-or-event-images{
-    height:9vh;
-    margin-right: 2vw;
-    margin-left: 3vw;
+    height: 60px;
+    margin-bottom: 10px;
 }
-.task-or-event-images{
+.task-or-event-images:hover{
+    transform: scale(1.1);
+    transition: all .2s ease-in-out;
     cursor:pointer;
 }
+
+
 .text-describe{
     padding: 0 3vw;
     margin-top: 5vh;
@@ -1855,7 +1880,7 @@ button:disabled {
 }
 
 
-.edit-profile-send input[type=text]{
+input[type=text]{
     padding: 3px 10px;
     border: none;
     border: solid 1px #ccc;
@@ -1930,7 +1955,135 @@ button:disabled {
     all: none;
     overflow: scroll !important;
 }
+.edit-event-form label{
+    font-size: 16px;
+    margin: 10px 0px;
+}
+#id_description{
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 20px;
 
+}
+.edit-event-form #id_min_part, .edit-event-form #id_max_part{
+    width: 60px;
+}
+#id_contact{
+    padding: 3px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#event_register_main #id_min_part{
+    margin-left: 0px;
+}
+
+.edit-event-form input{
+    margin-left: 10px;
+}
+
+.edit-event-form select {
+    margin: 5px;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #ccc;
+    padding: 2px 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    background-image: url('./images/select.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: auto 30%;
+    background-origin: content-box;
+    width: 80px;
+
+}
+
+#id_date_event_month{
+    width: 150px;
+}
+
+
+
+
+
+#id_status, #id_events_type, #id_city{
+
+    padding: 5px 10px;
+    font-size: 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #ccc;
+
+    border-radius: 5px;
+    background-color: #fff;
+    background-image: url('./images/select.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: auto 30%;
+    background-origin: content-box;
+    width: 300px;
+    }
+
+.edit-event-form #id_name{
+
+    padding: 5px 10px;
+    font-size: 24px;
+    width: 400px;
+
+    }
+/*#event_register_main label{
+    margin-top: 10px !important;
+}
+
+#event_register_main select, input, label{
+    margin: 0px !important;
+
+}
+
+#event_register_main #id_name{
+    width: 300px;
+}*/
+
+.subs{
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: darkgreen;
+}
+
+
+.part{
+    font-size: 16px;
+    margin-bottom: 10px;
+
+}
+
+.bold{
+    font-weight: 600;
+}
+
+#id_name{
+    width: 300px;
+}
+.modal-open .modal{
+    overflow:hidden !important;
+}
+.edit-event-send{
+    font-size: 18px;
+}
+.modal-open .modal{
+    overflow: scroll !important;
+}
 @media(min-width:1300px){
     .event-status-info{
         font-size: 18px;
