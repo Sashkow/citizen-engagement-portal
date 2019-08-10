@@ -21,7 +21,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max
-from .forms import EditeEventForm, EventOrgTaskForm, UserForm, NewEventForm, TaskApplicationForm, OrgTaskApplicationForm
+from .forms import EditEventForm, EventOrgTaskForm, UserForm, NewEventForm, TaskApplicationForm, OrgTaskApplicationForm
 import datetime
 from django.contrib.auth.models import User as DjangoUser
 from volunteer.models import User as VolunteerUser
@@ -611,13 +611,12 @@ def dispatch_social_login(request):
     return redirect(
         reverse('social:begin', args=[provider, ]) + '?first_name={}&second_name={}&city={}'.format(first_name, second_name, city_id))
 
-
-def form(request, id = None):
+def event_edit(request, id = None):
     if id:
         event = get_object_or_404(Event, pk=id)
         event = Event.objects.get(id=id)
 
-    form = EditeEventForm(request.POST or None, instance=event)
+    form = EditEventForm(request.POST or None, instance=event)
     if request.POST and form.is_valid():
         form.save()
         redirect_url = reverse('profile')
@@ -625,6 +624,7 @@ def form(request, id = None):
     return_dict = {}
     subs = EventsSubscriber.objects.filter(event = event).count()
     part = EventsParticipant.objects.filter(event = event).count()
+    executors = TaskApplication.objects.filter(event = event)
     cont = {
         'id': id,
         'event': event,
@@ -632,7 +632,8 @@ def form(request, id = None):
         'subs': subs,
         'part': part,
         'request': request,
-        'zero_executor':False
+        'zero_executor': False,
+        'executors': executors,
     }
     if event.events_or_task == True and event.status.id == 1:
         tasks = EventsOrgTask.objects.filter(event = event)

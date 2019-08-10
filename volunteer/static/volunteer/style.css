@@ -1628,6 +1628,9 @@ img.unlocked-achievement{
 .notifications{
 }
 
+label[for=id_city]{
+
+}
 
 
 
@@ -1921,6 +1924,11 @@ button:disabled {
 
 .fp-slidesNav ul {
     text-align: center;
+}
+
+.fp-viewing-0-0{
+    all: none;
+    overflow: scroll !important;
 }
 
 @media(min-width:1300px){

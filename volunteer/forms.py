@@ -76,7 +76,7 @@ class OrgTaskApplicationForm(ModelForm):
         }
 
 
-class EditeEventForm(ModelForm):
+class EditEventForm(ModelForm):
     class Meta:
         model = Event
         fields = ['name', 'date_event', 'address', 'status', 'max_part', 'min_part', 'contact', 'description']
