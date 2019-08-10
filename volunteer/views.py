@@ -598,7 +598,7 @@ def just_after_scuccess_auth(request):
 
 def dispatch_social_login(request):
     first_name = request.GET['first_name']
-    second_name = request.GET['second_name']
+    second_name = request.GET['last_name']
     city_id = request.GET['city']
 
     if 'sub_fb.x' in request.GET:

@@ -14,9 +14,16 @@
            <p>через соцмережі:</p>
            <form action="{% url 'dispatch_social_login' %}" name="f1">
                 <div class="center-personal">
-                    <input type="text" placeholder="Ім'я" name="first_name" class="input input-reg">
-                   <input type="text" placeholder="Прізвище" name="second_name" class="input input-reg">
-                    {{ profile_form.as_p }}
+                    <!--<input type="text" placeholder="Ім'я" name="first_name" class="input input-reg">-->
+                   <!--<input type="text" placeholder="Прізвище" name="second_name" class="input input-reg">-->
+                    {% for field in profile_form %}
+                      <div class="row">
+                        <div class="form-group">
+                          {{ field.errors }}
+                          {{ field }}
+                        </div>
+                      </div>
+                    {% endfor %}
                 </div>
                <div class="socal_logos text-center">
                    <input type="image" name="sub_fb" class="soc-icon" value="Реєстрація Facebook" src="{% static 'volunteer/images/facebook.png' %}" >
