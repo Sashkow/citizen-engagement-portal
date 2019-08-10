@@ -2,7 +2,7 @@
 from django.forms import ModelForm, IntegerField
 from volunteer.models import Event, EventsOrgTask, User, TaskApplication, OrgTaskApplication
 from django.forms import SelectDateWidget, IntegerField, TimeField, EmailField, ModelChoiceField, CharField
-from django.forms.widgets import HiddenInput, TimeInput, EmailInput, NumberInput
+from django.forms.widgets import HiddenInput, TimeInput, EmailInput, NumberInput, TextInput, Select
 from volunteer.widgets import SelectTimeWidget
 from volunteer.models import City, DjangoUser
 
@@ -25,9 +25,9 @@ class NewEventForm(ModelForm):
                             },
                             label='Рекомендована кількість балів')
 
-    time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10))
+    time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10),label='Час події')
 
-    city = ModelChoiceField(required=False, queryset=City.objects.all())
+    city = ModelChoiceField(required=False, queryset=City.objects.all(), label="Місто", empty_label='Обери місто')
 
 
 
@@ -46,7 +46,7 @@ class NewEventForm(ModelForm):
             'recommended_points': 'Рекомендована кількість балів',
             'contact':'Ваш контактний e-mail',
             'events_type':'Категорія',
-            'city': 'місто'
+
         }
         widgets = {
             'date_event': SelectDateWidget(),
@@ -78,7 +78,6 @@ class OrgTaskApplicationForm(ModelForm):
 
 class EditeEventForm(ModelForm):
     class Meta:
-
         model = Event
         fields = ['name', 'date_event', 'address', 'status', 'max_part', 'min_part', 'contact', 'description']
         localized_fields = ('name', 'date_event', 'address', 'status', 'max_part', 'min_part', 'contact', 'description')
@@ -129,20 +128,29 @@ class ProfileCreationForm(ModelForm):
     """
     Form for user profile used together with auth.UserCreationForm
     """
-    # first_name = CharField()
-    # last_name = CharField()
+    first_name = CharField(label="Ім'я", widget=TextInput(attrs={
+        'placeholder': "Ім'я",
+        'class': 'input-reg'
+    }))
+    last_name = CharField(label='Прізвище', widget=TextInput(attrs={
+        'placeholder': "Прізвище",
+        'class': 'input-reg'
+    }))
     city = ModelChoiceField(
         queryset=City.objects.all(),
+        label='Місто', widget=Select(attrs={
+            'placeholder': "Місто",
+            'class': 'input-reg'
+        }),
+        empty_label='Обери місто'
     )
 
 
     class Meta:
         model = DjangoUser
-        fields = ('city',)
+        fields = ('city','first_name', 'last_name')
         field_classes = {'city': City,}
-        labels = {
-            'city':'Місто',
-        }
+
 
 
 

@@ -157,12 +157,12 @@ class League(models.Model):
 
 
 class User(models.Model):
-    first_name = models.CharField(max_length=80)
-    last_name = models.CharField(max_length=80)
+    first_name = models.CharField(max_length=80, verbose_name="Ім'я")
+    last_name = models.CharField(max_length=80, verbose_name='Прізвище')
     date_of_registration = models.DateField(auto_now_add=True)
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
     league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True, default=League.DEFAULT_PK)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Місто')
     blocked = models.BooleanField(default=False)
     django_user_id = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
 
