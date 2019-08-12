@@ -10,26 +10,31 @@
             <h5 class="modal-title">Організувати подію або завдання</h5>
       </div>
       <div class="modal-body">
+          <div class="row">
+              <div class="col-6" align="center">
 
-       <div class="text-center">
-            <div class="float-left">
+
                 <img class="task-or-event-images event-select" src="{% static 'volunteer/images/event.png' %}">
-                <p>Подія</p>
+                <p style="color:darkcyan"><b>Подія</b></p>
             </div>
-            <div>
+            <div class="col-6" align="center">
                 <img class="task-or-event-images task-select" src="{% static 'volunteer/images/task.png' %}">
-                <p>Завдання</p>
+                <p style="color:darkcyan"><b>Завдання</b></p>
             </div>
 
        </div>
 
-        <div>
-            <p class="text-describe">
-            Подія на відміну від завдання має мати чітку дату і адресу, а також передбачає зібрання людей для фізичного вирішення проблеми.
-                <strong>Приклад події</strong>: суботник у міському парку, день донора. <strong>Приклад  завдання</strong>: віднести 5 іграшок у дитячий будинок, редизайн схеми руху міського транспорту.
-            </p>
-        </div>
+        <div class="row">
+            <div class="col-12">
+            <p class="text-center">
+                Подія на відміну від завдання має чітку дату і адресу.</p></div>
+            <div class="col-6">
+                <p class="text-center"><strong>Приклад події</strong>: суботник у міському парку, день донора.</p></div>
+            <div class="col-6">
+                <p class="text-center"><strong>Приклад  завдання</strong>: віднести 5 іграшок у дитячий будинок.</p></div>
 
+        </div>
+          </div>
       </div>
     </div>
   </div>
@@ -85,13 +90,13 @@
                 {{ form.city.label_tag }}<br>
                 {{form.city}}<br>
 
-                {{form.max_part.errors}}
-                {{ form.max_part.label_tag }}<br>
-                {{form.max_part}}<br>
+                <!--{{form.max_part.errors}}-->
+                <!--{{ form.max_part.label_tag }}<br>-->
+                <!--{{form.max_part}}<br>-->
 
-                {{form.min_part.errors}}
-                {{ form.min_part.label_tag }}<br>
-                {{form.min_part}}<br>
+                <!--{{form.min_part.errors}}-->
+                <!--{{ form.min_part.label_tag }}<br>-->
+                <!--{{form.min_part}}<br>-->
 
                 {{form.recommended_points.errors}}
                 {{ form.recommended_points.label_tag }}<br>

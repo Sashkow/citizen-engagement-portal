@@ -8,22 +8,23 @@ from volunteer.models import City, DjangoUser
 
 
 class NewEventForm(ModelForm):
-    min_part = IntegerField(required=False, min_value=1,
-                            error_messages={
-                                'min_value': 'Переконайтеся, що це значення більше 0',
-                            },
-                            label='Мінімальна кількість учасників')
-    max_part = IntegerField(required=False, min_value=1,
-                            error_messages={
-                                'min_value': 'Переконайтеся, що це значення більше 0',
-                            },
-                            label='Максимальна кількість учасників')
+    # min_part = IntegerField(required=False, min_value=1,
+    #                         error_messages={
+    #                             'min_value': 'Переконайтеся, що це значення більше 0',
+    #                         },
+    #                         label='Мінімальна кількість учасників')
+    # max_part = IntegerField(required=False, min_value=1,
+    #                         error_messages={
+    #                             'min_value': 'Переконайтеся, що це значення більше 0',
+    #                         },
+    #                         label='Максимальна кількість учасників')
 
     recommended_points = IntegerField(required=True, min_value=0,
                             error_messages={
                                 'min_value': 'Переконайтеся, що це значення не менше 0',
                             },
                             label='Рекомендована кількість балів')
+
 
     time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10),label='Час події')
 
@@ -33,7 +34,8 @@ class NewEventForm(ModelForm):
 
     class Meta:
         model = Event
-        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'city', 'status',  'description', 'min_part', 'max_part',  'recommended_points', 'contact']
+
+        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'city', 'status',  'description',  'recommended_points', 'contact']
         labels = {
             'name': 'Назва',
             'date_event': 'Дата',
@@ -41,11 +43,15 @@ class NewEventForm(ModelForm):
             'address': 'Адреса',
             'description': 'Опис',
             'status': 'Статус',
-            'max_part': 'Мінімальна кількість учасників',
-            'min_part': 'Максимальна кількість учасників',
+            # 'max_part': 'Мінімальна кількість учасників',
+            # 'min_part': 'Максимальна кількість учасників',
             'recommended_points': 'Рекомендована кількість балів',
             'contact':'Ваш контактний e-mail',
             'events_type':'Категорія',
+
+            'city': 'Місто'
+
+
 
         }
         widgets = {
@@ -77,21 +83,27 @@ class OrgTaskApplicationForm(ModelForm):
 
 
 class EditEventForm(ModelForm):
+    time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10),
+                           label='Час')
     class Meta:
         model = Event
-        fields = ['name', 'date_event', 'address', 'status', 'max_part', 'min_part', 'contact', 'description']
-        localized_fields = ('name', 'date_event', 'address', 'status', 'max_part', 'min_part', 'contact', 'description')
+        fields = ['name', 'date_event', 'time_event', 'address', 'status', 'contact', 'description']
+        localized_fields = ('name', 'date_event', 'time_event', 'address', 'status', 'contact', 'description')
         labels = {
             'name': 'Назва',
-            'date_event': 'Дата та час',
+            'date_event': 'Дата',
+            'time_event': 'Час',
             'address': 'Адреса',
             'status': 'Статус',
-            'max_part' : 'Максимальна кількість учасників',
-            'min_part': 'Мінімальна кількість учасників',
+            # 'max_part' : 'Максимальна кількість учасників',
+            # 'min_part': 'Мінімальна кількість учасників',
             'description': 'Опис',
         }
         widgets = {
             'date_event': SelectDateWidget(),
+            'time_event': TimeInput(),
+
+
         }
 
 
