@@ -175,11 +175,14 @@ def profile(request):
 
     session_key = request.session.session_key
     django_user = request.user
-    volunteer = User.objects.filter(django_user_id = django_user)
-
+    volunteer = User.objects.filter(django_user_id = django_user).first()
+    if volunteer:
+        city = volunteer.city
+    else:
+        city = None
     status = Status.objects.filter(id__range = (1, 2))
 
-    volunteer = volunteer.first()
+
 
     if django_user.first_name:
         name = django_user.first_name
@@ -210,6 +213,7 @@ def profile(request):
         curr_category[type_e.id] = img
 
     form = NewEventForm()
+
     form_task = TaskApplicationForm()
     # form_org_task = OrgTaskApplicationForm()
     return render(request, 'core/profile.html', {
@@ -237,7 +241,8 @@ def profile(request):
         'events_task_app':events_task_app,
         'form_task':form_task,
         # 'form_org_task':form_org_task,
-        'page_title': page_title
+        'page_title': page_title,
+        'city':city,
     })
 
 
@@ -278,8 +283,8 @@ def event(request, id):
             'going': going,
             'photos': photos,
             'absolute_url': absolute_url,
-            'subscribe':subscribe,
-            'part':part
+            'subscribe': subscribe,
+            'part': part
             }
         html = render_to_string('event_copy.html', cont)
         return_dict = {'html': html}
@@ -419,7 +424,7 @@ def profile_edit(request):
 
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES, instance = current_user)
-        print (form)
+        print(form)
 
         # for i in types:
             # print(data[str(i)])
@@ -443,9 +448,10 @@ def profile_edit(request):
             else:
                 dict_digest[i.id] = 0
         cont = {'user':current_user,
-                 'type_events': type_events,
+                'type_events': type_events,
                 'form':form,
-                 'dict_digest':dict_digest}
+                'dict_digest':dict_digest
+        }
         html = render_to_string('edit_profile.html', cont, request=request)
         return_dict = {'html': html}
         return JsonResponse(return_dict)
@@ -785,15 +791,20 @@ def intropage(request):
         'login_form':login_form,
     })
 
+
+def replace_coordinates(one, two, three, four):
+    return (one,three,two,four)
+
 @login_required
 def map_show(request):
     volunteer = VolunteerUser.objects.filter(django_user_id=request.user).first()
     if volunteer:
         if volunteer.city:
-            if volunteer.city.city == "Житомир":
+            if volunteer.city.city == "Вінниця":
                 boundaries = {
-                    'SPATIAL_EXTENT': (25.605223, 28.715773, 50.23924, 52.276012),
-                    'DEFAULT_CENTER': (50.257632, 28.660498),
+
+                    'SPATIAL_EXTENT': replace_coordinates(28.216839,49.216027,28.544369,49.322549),
+                    'DEFAULT_CENTER': (49.269317,28.380604)
                 }
                 return render(request, 'map.html', context={'boundaries': boundaries})
             elif volunteer.city.city == "Житомир":
