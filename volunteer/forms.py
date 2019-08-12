@@ -112,6 +112,14 @@ class EventOrgTaskForm(ModelForm):
 
 
 class UserForm(ModelForm):
+    city = ModelChoiceField(
+        queryset=City.objects.all(),
+        label='Місто', widget=Select(attrs={
+            'placeholder': "Місто",
+        }),
+        empty_label='Обери місто'
+    )
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'photo', 'city']
