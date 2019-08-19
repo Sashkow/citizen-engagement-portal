@@ -132,6 +132,7 @@ class City(models.Model):
         return self.city
 
 
+
 class League(models.Model):
     DEFAULT_PK = 1
     league = models.CharField(max_length = 80)
@@ -154,6 +155,17 @@ class League(models.Model):
 
     def __str__(self):
         return self.league
+
+
+class CityLeagueDesign(models.Model):
+    background = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'profile_backgrounds'), null=True,
+                                           blank=True)
+    background_color = models.CharField(max_length=20, null=True, blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Місто')
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.background)
 
 
 class User(models.Model):

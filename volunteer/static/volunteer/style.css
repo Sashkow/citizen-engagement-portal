@@ -9,6 +9,14 @@ html,body{
     padding:0;
     overflow-x:hidden;
 }
+
+body{
+    overflow-y: scroll !important;
+}
+.wrapper{
+    overflow: hidden !important;
+
+}
 .row{
     margin: 0 !important;
 
@@ -52,7 +60,7 @@ strong { font-weight: bold; }
 li{
     list-style-type: none;
     font-weight: 100;
-    font-size: 2.5vh;
+    font-size: 12px;
 
 }
 

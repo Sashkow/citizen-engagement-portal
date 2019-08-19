@@ -148,6 +148,11 @@ class LeagueAdmin(admin.ModelAdmin):
     exclude = ['ID']
 admin.site.register(League, LeagueAdmin)
 
+class CityLeagueDesignAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in CityLeagueDesign._meta.fields]
+    exclude = ['ID']
+admin.site.register(CityLeagueDesign, CityLeagueDesignAdmin)
+
 class CurrencyAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Currency._meta.fields]
     exclude = ['ID']

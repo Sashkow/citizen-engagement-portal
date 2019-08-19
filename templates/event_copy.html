@@ -62,6 +62,12 @@
                         {% if event.date_event  %}
                             <p class="ep-event-addition-info">Дата: &nbsp; <b>{{ event.date_event }}</b></p>
                         {% endif %}
+                        {% if event.contact  %}
+                            <p class="ep-event-addition-info">Зв'яжіться з організатором: &nbsp; <b>{{ event.contact }}</b></p>
+                        {% endif %}
+
+
+
                     {% endif %}
                     <br>
                     {% if org_user == 1 %}

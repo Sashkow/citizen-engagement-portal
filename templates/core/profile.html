@@ -149,7 +149,7 @@
 
 <div class="wrapper">
 
-    <nav id="sidebar" class="text-center profile-info"  style="background-image:url({{volunteer.league.background_image.url}}); background-color:{{volunteer.league.background_color}}">
+    <nav id="sidebar" class="text-center profile-info"  style="background-image:url({{design.background.url}}); background-color:{{design.background_color}}">
          {% csrf_token %}
         <div class="user-name">
             <p get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}} {{volunteer.last_name}}</p>

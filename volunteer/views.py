@@ -180,7 +180,11 @@ def profile(request):
     status = Status.objects.filter(id__range = (1, 2))
 
     volunteer = volunteer.first()
-
+    if CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league).exists():
+        print(CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0])
+        design = CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0]
+    else:
+        design = CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0]
     if django_user.first_name:
         name = django_user.first_name
     elif django_user.username:
@@ -216,6 +220,7 @@ def profile(request):
         'volunteer':volunteer,
         'league_user':league_user,
         'name':name,
+        'design':design,
         'events':events,
         'events_subs':events_subs,
         'events_part':events_part,
