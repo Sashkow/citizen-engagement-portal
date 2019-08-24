@@ -15,7 +15,7 @@ def save_user_name(backend, user, response, *args, **kwargs):
     if not VolunteerUser.objects.filter(django_user_id=django_user).exists():
         volunteer = VolunteerUser.objects.create(django_user_id = django_user)
         
-    elif len(VolunteerUser.objects.filter(django_user_id=django_user))> 1:
+    elif len(VolunteerUser.objects.filter(django_user_id=django_user)) > 1:
         print("User Duplicates!")
         return None #404
     else:

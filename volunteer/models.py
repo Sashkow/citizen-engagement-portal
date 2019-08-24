@@ -637,11 +637,6 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         django_user = instance
         volunteer = User.objects.create(django_user_id=django_user)
-
-        if django_user.first_name or django_user.last_name:
-            volunteer.first_name = django_user.first_name
-            volunteer.last_name = django_user.last_name
-
         volunteer.save()
 
 @receiver(post_save, sender=DjangoUser)
