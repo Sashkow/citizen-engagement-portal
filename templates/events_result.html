@@ -14,7 +14,7 @@
             <!--<div class="row text-left full-row">-->
                     <div class="event-item-info">
                         <p  class="event-name" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.name }}</p>
-                        <p class="event-description d-none d-sm-block " get_url="{% url 'volunteer_event' id=event.id %}">{{ event.description|truncatechars:200 }}</p>
+                        <p class="event-description d-none d-sm-block " get_url="{% url 'volunteer_event' id=event.id %}">{{ event.description|truncatechars:150 }}</p>
                     </div>
                         <div class="btn-div align-self-end">
                              {% if events_org|get_item:event.id == 0 %}
@@ -30,9 +30,12 @@
 
 
                             {% if events_part|get_item:event.id == 0 %}
-                                <button type="button" class="event-button btn-subscribe btn-app-task" id_event = {{event.id}} url_post = "{% url 'subscribe_event' %} " >долучитися<img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
+                            <button type="button" class="event-button btn-subscribe btn-app-task" id_event = {{event.id}}
+                                    url_post = "{% url 'subscribe_event' %} " >долучитися
+                                <img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" >
+                            </button><p class="task_price">{{event.recommended_points}}</p>
                             {% else %}
-                                <button type="button" class="btn-resubscribe  event-button" id_event = {{event.id}} url_post = "{% url 'subscribe_event' %}">відлучитися</button>
+                                <button type="button" class="btn-resubscribe  event-button" id_event = {{event.id}} url_post = "{% url 'subscribe_event' %}">скасувати участь</button>
                             {% endif %}
 
                         {% else %}

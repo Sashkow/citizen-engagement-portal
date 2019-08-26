@@ -151,25 +151,38 @@
 
     <nav id="sidebar" class="text-center profile-info"  style="background-image:url({{design.background.url}}); background-color:{{design.background_color}}">
          {% csrf_token %}
+        <img class = "shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
         <div class="user-name">
             <p get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}} {{volunteer.last_name}}</p>
+        </div>
+        <!--<div class="ribbon-div">-->
+             <!--<p class="ribbon ">{{volunteer.league}}</p>-->
+        <!--</div>-->
+        <div class="shield">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="profile-image" >
+                  <img class="img-legue" src="{% static  'volunteer/images/фронт1.png' %}" ></div>
+                 <!--<img class="user-league-info league-logo setting-img"  src="{{league_user.league_image.url}}">-->
+                    <!--{% if volunteer.photo %}-->
+                        <!--<img class="photo-user setting-img"  src="{{ volunteer.photo.url }}">-->
+                    <!--{% else %}-->
+                        <!--<img class="photo-user setting-img" src="{% static  'volunteer/images/user_profile_default.png' %}" >-->
+                    <!--{% endif %}-->
+                 <!--&lt;!&ndash;{{league_user.user_frame.url}}&ndash;&gt;-->
+                 <!--<img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}">-->
+            </div>
+
+            <div class="flip-card-back">
+                <div class="profile-image-1" >
+                    <img class="img-legue" src="{% static  'volunteer/images/фронт.png' %}" >
+                </div>
+            </div>
+          </div>
+        </div></div>
 
 
-        </div>
-        <div class="ribbon-div">
-             <p class="ribbon ">{{volunteer.league}}</p>
-        </div>
-
-        <div class="profile-image" >
-             <img class="user-league-info league-logo setting-img" get_url="{% url 'profile_edit' %}" src="{{league_user.league_image.url}}">
-                {% if volunteer.photo %}
-                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{{ volunteer.photo.url }}">
-                {% else %}
-                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{% static  'volunteer/images/user_profile_default.png' %}" >
-                {% endif %}
-             <!--{{league_user.user_frame.url}}-->
-             <img class="user-league-info photo-frame" get_url="{% url 'profile_edit' %}" src="{{league_user.user_frame.url}}">
-        </div>
 
         <div class="own-progress-bar">
             <div class="own-progress-league" style="width: {{achieve_quant|divide:league_user.quantity_achievement|multiply:100|to_int}}%">
@@ -259,17 +272,26 @@
     <!--look here-->
 
     <script type="text/javascript">
+            tippy('.shar', {
+              content: 'Щорічний парад повітряних куль!',
+              animation:'perspective',
 
+            })
+            tippy('.currency-image', {
+              content:'Бери участь у подіях і заробляй монети',
+              animation:'perspective',
+            })
+              tippy('.first-name', {
+              content: 'Відредагуйте свій профіль!',
+              animation:'perspective',
+              placement:'right-end',
+            })
+            tippy('.own-progress-bar', {
+              content: 'Відкрий 5 досягень для переходу у наступну лігу!',
+              animation:'perspective',
+              placement:'right-end',
+            })
 
-        tippy('.league-logo', {
-          content: 'Відредагуйте свій профіль!',
-          animation:'perspective',
-        })
-      tippy('.own-progress-bar', {
-          content: 'Відкрий 5 досягень для переходу у наступну лігу!',
-          animation:'perspective',
-          placement:'right-end',
-        })
 
 
     </script>

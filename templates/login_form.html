@@ -2,20 +2,21 @@
 
 
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="registrationLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog " role="document">
     <div class="modal-content">
-      <div class="modal-header modal-enter-h">
+      <div class="modal-header">
            <img class = "reg-logo" src="{% static 'volunteer/images/reg_logo.png' %}">
       </div>
       <div class="modal-body text-center">
           <button class="usual-login-btn usual-log">Ввести логін і пароль</button>
            <form action="{% url 'dispatch_social_login' %}" name="f1">
-                <p align="middle">або</p>
-                <p>Увійти через соцмережі:</p>
+               <div>
+                <p class = "form-text" align="middle">або</p>
+                <p class = "form-text">Увійти через соцмережі:</p>
                <div class="socal_logos text-center">
                    <a href="{% url 'social:begin' 'facebook' %}"><img class="soc-icon" type="submit" value="Реєстрація Facebook" name="sub_fb"  src="{% static 'volunteer/images/facebook.png' %}"></a>
                    <a href="{% url 'social:begin' 'google-oauth2' %}"><img class="soc-icon" type="submit" value="Реєстрація Google" name="sub_gg" src="{% static 'volunteer/images/google.png' %}"></a>
-               </div>
+               </div></div>
         </form>
       </div>
     </div>
@@ -57,7 +58,7 @@
                     {{ field }}
                   </p>
                 {% endfor %}
-                <button class="usual-login-btn" type="submit">Зареєструватися</button>
+                <button class="usual-login-btn" type="submit">Увійти</button>
             </form>
       </div>
     </div>

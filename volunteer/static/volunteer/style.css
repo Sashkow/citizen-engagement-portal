@@ -51,10 +51,17 @@ font-family: 'Ubuntu',sans-serif !important;
 }
 
 .user-name{
-
-    margin: 20px !important;
+    display: inline-block;
+    cursor: default !important;
+    margin: 5px !important;
 }
 
+.task_price{
+    display: inline-block;
+    padding-left: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    color: goldenrod;}
 
 strong { font-weight: bold; }
 li{
@@ -334,12 +341,7 @@ font-size: 155%;
         z-index:100;
     }
 
-    .profile-image{
-        width:80%!important;
-        margin: 0 auto!important;
-        margin-bottom:2vh!important;
 
-    }
 
     .ribbon{
         width:58%!important;
@@ -347,7 +349,7 @@ font-size: 155%;
 
     .first-name{
         margin-top: 20px !important;
-
+        margin-bottom: 0;
     }
 
 
@@ -425,9 +427,6 @@ font-size: 155%;
         padding-right:8vw;
     }
 
-    .usual-login-btn{
-        width:59vw!important;
-    }
 
     .category-image-ev{
         width:100%;
@@ -584,10 +583,7 @@ font-size: 155%;
 
 
 
-    .profile-image{
-        margin:0 auto!important;
-        margin-bottom:5vh!important;
-    }
+
 
 
 
@@ -1084,6 +1080,7 @@ h4.volunteer-name{
 
 .first-name{
     margin-top: 50px;
+    margin-bottom: 0;
 }
 
 .ribbon{
@@ -1168,10 +1165,7 @@ h4.volunteer-name{
     margin-bottom: 2vh;
 }
 
-.profile-image{
-    margin-bottom:2vh;
-    position:relative;
-}
+
 
 .item-menu{
     margin-bottom: 0.7vh;
@@ -1236,26 +1230,32 @@ div.achievement-item{
 div.unlocked-achievement{
     color: #00d6ffff;
 }
-h5.unlocked-achievement{
-    padding: 10%;
 
+p.unlocked-achievement{
+    font-size: 16px;
+    padding: 14px 10px;
     margin:0;
     margin-bottom: 10px;
 
 }
 
-p.unlocked-achievement{
+p.unlocked-achievement-text{
     font-size: 93%;
     padding-left: 10%;
     padding-right: 10%;
 }
-h5.locked-achievement{
+p.locked-achievement{
+    font-size: 16px;
     color: #006363ff;
-    padding: 10%;
-
+    padding: 14px 10px;
+    height: 60px;
     margin:0;
     margin-bottom: 10px;
 
+}
+
+img.locked-achievement{
+    width: 80px;
 }
 
 div.locked-achievement{
@@ -1263,9 +1263,10 @@ div.locked-achievement{
 }
 
 
-img.unlocked-achievement{
-    margin-bottom: 9%;
-    height:33%;
+img.unlocked-achievement {
+    width: 90%;
+
+    height: auto;
 }
 
 .buy-achieve{    width: 80%;
@@ -1277,10 +1278,15 @@ img.unlocked-achievement{
 }
 
 .currency-image{
-    width: 55px;
+    width: 5 0px;
     margin: 0 2px;
 
 }
+.curr_quat {
+    margin-bottom: 10px;
+}
+
+
 
 .currency-value{
     vertical-align: bottom;
@@ -1403,7 +1409,7 @@ img.unlocked-achievement{
     text-transform: lowercase;
     height: 3.5vh;
     width: 11vw;
-    font-size:large;
+
 }
 
 .filter_event_task{
@@ -1525,7 +1531,7 @@ img.unlocked-achievement{
     height: 28px;
     border-bottom-left-radius: 25px!important;
     border-top-left-radius: 25px!important;
-    padding:0 15px 0 35px;
+    padding:0 15px 0 35px !important;
     font-weight: 600;
     width: max-content;
  }
@@ -1558,7 +1564,7 @@ img.unlocked-achievement{
  }
 
  .reg-logo{
-    height: 5.6vh;
+    height: 40px;
     margin: 0 auto;
  }
 
@@ -1587,7 +1593,8 @@ img.unlocked-achievement{
 }
 
 .soc-icon{
-    height:6vh;
+    height:50px;
+    margin: 20px 10px;
 }
 
 .task-or-event-images{
@@ -1774,15 +1781,20 @@ svg{
 }
 
 .usual-login-btn{
-    margin:1vh;
+    margin: 5px;
     font-family: Open Sans;
-    height: 4vh;
+    height: 36px;
     background-color: #cb2054ff;
     color: white;
-    font-size: 1.7vh;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 600;
     border-radius: 16px;
-    width: 21vw;
+    width: 250px;
+}
+
+.form-text{
+    font-size: 14px;
+    margin: 5px;
 }
 
 .fieldWrapper > input{
@@ -1896,6 +1908,17 @@ input[type=text]{
     width: 200px;
 
 }
+
+input[type=password]{
+    padding: 3px 10px;
+    border: none;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    width: 200px;
+
+}
+
+
 ::-webkit-file-upload-button {
   background: #00BBBB;
   color: white;
@@ -2092,6 +2115,47 @@ select {
 .modal-open .modal{
     overflow: scroll !important;
 }
+
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 170px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: rgba(0, 0, 0, 0);
+  color: black;
+}
+
+.flip-card-back {
+
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  transform: rotateY(180deg);
+}
+
 @media(min-width:1300px){
     .event-status-info{
         font-size: 18px;
@@ -2119,3 +2183,238 @@ select {
 
 
 }
+@media(min-width:930px) and (max-width: 1500px){
+    .logo{
+        height: 40px;
+        top: 17px;
+    }
+
+    .volunteer-name {
+        font-size: 20px !important;
+        }
+    .user-league-info {
+        width: 30%;
+        }
+    .photo-user {
+        width: 30% !important;
+        right: 22% !important;
+        height: 99% !important;
+    }
+    .own-progress-league {
+        background-color: #75f0fb;
+        height: 17px;
+        float: left;
+        position: relative;
+        border-radius: 10px;
+    }
+    .own-progress-bar {
+        height: 17px;
+        width: 180px;
+        background-color: #fff;
+        margin: 10px auto !important;
+        border-radius: 16px;
+        }
+    .own-progress-bar p {
+        margin-right: 10px;
+        font-size: 14px;
+    }
+    .progress_state {
+        float: left;
+        position: absolute;
+        right: -15px;
+        top: -5px;
+    }
+    .quant-ach notif-col {
+        font-size: 14px;
+    }
+    .img_progress_state {
+        height: 40px;
+    }
+    .currency-holder {
+        margin: 0;
+        margin-top: 25px;
+        margin-bottom: 0;
+        width: 100%;
+    }
+    .currency-image {
+        width: 40px;
+        margin: 0 2px;
+    }
+    .item-menu {
+        color: #000;
+        font-size: 14px !important;
+        margin-bottom: 0 !important;
+        margin-left: 40px;
+        line-height: 28px;
+    }
+    .notif-quant {
+        height: 28px;
+    }
+    .event-navigation {
+        box-shadow: 1px 1px 10px #c4c4c4;
+        height: 75px;
+    }
+    .filter_event_task {
+        max-width: 40px;
+        height: auto;
+    }
+    .event-name {
+        padding-top: 15px;
+        font-size: 18px;
+    }
+    .event-description {
+        font-size: 14px !important;
+        height: 60px;
+        margin-bottom: 0;
+    }
+    .event-button {
+        height: 28px;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 0 20px;
+        position: relative;
+        font-size: 14px;
+    }
+    .task_price {
+        display: inline-block;
+        padding-left: 7px;
+        font-size: 14px;
+        margin-bottom: 0 !important;
+    }
+    .task-or-event-image {
+        width: 55px;
+        margin-bottom: 27%;
+        margin-right: 15%;
+    }
+
+    .category-image-ev {
+        max-width: 133px;
+        width: 100%;
+        height: auto!important;
+        margin: 10px;
+    }
+
+    .btn-div {
+        margin-bottom: 20px;
+    }
+    .img-status {
+        width: 30px;
+        margin: 0 auto;
+        position: absolute;
+        left: 15%;
+        top: 5%;
+    }
+
+    .event-status-info {
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 1.2!important;
+    }
+    .inner {
+        position: absolute;
+        top: 60%;
+        left: 65%;
+    }
+    .outer {
+        width: 45px;
+        position: relative;
+        display: inline-block;
+        height: 100%;
+    }
+    .quant-ach {
+        position: absolute;
+        left: 10px;
+        top: 5px;
+    }
+
+    .first-name {
+        margin-top: 30px;
+        margin-bottom: 0;
+    }
+
+    #sidebar {
+        position: sticky;
+        width: 400px;
+        background-size: 75px auto;
+    }
+    .change-league {
+        font-size: 14px!important;
+    }
+    div.achievement-item {
+        border-radius: 14px;
+        height: 280px;
+    }
+    img.locked-achievement {
+        width: 60px;
+        margin-bottom: 10px;
+    }
+    .section {
+    height: 180px !important;
+    }
+    .category-tips {
+    position: absolute;
+    z-index: 400;
+    width: 550px;
+    }
+    .img-cat-tip {
+    height: 100px !important;
+    }
+    .desc-cat-tip {
+    display: inline-block;
+    font-size: 12px;}
+}
+
+.helptext{
+    display: block;
+    font-size: 12px;
+    color: gray;
+    }
+
+form ul li{
+    font-size: 12px !important;
+    color: gray !important;
+}
+
+.info {
+    padding-left: 0px;
+}
+
+.img-legue{
+    height: 100%;
+}
+
+.profile-image{
+    height: 170px;
+
+}
+
+.profile-image {
+    background: rgba(0,0,0,0);
+
+
+}
+.profile-image-1 {
+    background: rgba(0,0,0,0);
+    height: 170px;
+
+}
+
+.shar {
+    position: absolute;
+    width: 33px;
+    top: 40px;
+    right: 6px;
+    opacity:0;
+}
+
+.shar:hover{
+    opacity:0.5;
+    transition-duration: 0.5s;
+}
+
+.shield {
+
+    width: 245px;
+    display: inline-block;}

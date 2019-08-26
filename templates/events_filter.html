@@ -150,9 +150,17 @@
                 <div class="col-lg-2 col-md-2 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-city" class="text-left select" url_get = "{% url 'type_filter' %}">
-                                <option city_id = "none" selected>місто</option>
-                            {% for city in cities %}
-                                <option city_id = "{{city.id}}" >{{city.city}}</option>
+                                {% if city %}
+                                    <option city_id = "none">місто</option>
+                                {% else %}
+                                    <option city_id = "none" selected>місто</option>
+                                {% endif %}
+                            {% for current_city in cities %}
+                                {% if current_city.id == city.id %}
+                                    <option city_id = "{{current_city.id}}" selected>{{current_city.city}}</option>
+                                {% else %}
+                                    <option city_id = "{{current_city.id}}">{{current_city.city}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                             <div class="map-contailer">
@@ -171,12 +179,12 @@
                             <!--<img class="align-self-center float-left nav-add"  src="{% static 'volunteer/images/map.png' %}">-->
                         <!--</div>-->
                     <div class = "text-right float-right">
-                        <a href="{% url 'map' %}">
+                        <a href="{% url 'map' %}" target="_blank">
                             <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
                         </a>
 
 
-                    <a href="{% url 'fullcalendar' %}">
+                    <a href="{% url 'fullcalendar' %}" target="_blank">
                         <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">
                     </a>
                     </div></div>

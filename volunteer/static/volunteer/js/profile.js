@@ -441,7 +441,7 @@ $('.category-tips').on("click" ,function(){
             cache:true,
             success: function(data){
             console.log('OK')
-             $('.btn-subscribe[id_event ="' + event_id + '"]').html("відлучитися");
+             $('.btn-subscribe[id_event ="' + event_id + '"]').html("скасувати участь");
              $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
              $('.btn-subscribe[id_event ="' + event_id + '"]').prev().prop('disabled', true);
              $('.btn-subscribe[id_event ="' + event_id + '"]').prev().addClass('btn-follow');
@@ -641,7 +641,16 @@ $('.category-tips').on("click" ,function(){
              success: function(data){
                  console.log('OK');
                  console.log(data);
-                 if( 'filter_html' in data ){
+                 var myFullpage = new fullpage('#fullpage', {
+
+                    sectionsColor: ['#491c65', '#fff', '#f5ec9bff', '#cad893ff', '#7bd5b4ff','#bee6d2ff'],
+
+                    menu: '#myMenu',
+                    slidesNavigation: true,
+                    <!--&lt;!&ndash;scrollBar: true&ndash;&gt;-->
+
+                });
+                     if( 'filter_html' in data ){
                      $(".dynamic-block").empty()
                      $(".dynamic-block").html(data.filter_html);
                      $(".dynamic-block").append(data.html);

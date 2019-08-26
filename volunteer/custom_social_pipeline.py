@@ -6,7 +6,11 @@ def save_user_name(backend, user, response, *args, **kwargs):
     first_name = backend.strategy.session_get('first_name')
     second_name = backend.strategy.session_get('second_name')
     city_id = backend.strategy.session_get('city')
-    city = City.objects.get(id=city_id)
+    if city_id:
+        print("I am in")
+        city = City.objects.get(id=city_id)
+    else:
+        city = None
 
     django_user = user
     if not VolunteerUser.objects.filter(django_user_id=django_user).exists():
@@ -22,6 +26,7 @@ def save_user_name(backend, user, response, *args, **kwargs):
         volunteer.city = city
 
     if first_name or second_name:
+        print("I am in")
         volunteer.first_name = first_name
         volunteer.last_name = second_name
 

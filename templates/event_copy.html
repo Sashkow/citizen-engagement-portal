@@ -84,9 +84,9 @@
                         {% endif %}
 
                         {% if part == 1 %}
-                            <button type="button" class="btn-resubscribe  event-button" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">відлучитися</button>
+                            <button type="button" class="btn-resubscribe  event-button" id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %}">скасувати участь</button>
                         {% else %}
-                            <button type="button" class="event-button btn-subscribe  " id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %} " >долучитися <img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button>
+                            <button type="button" class="event-button btn-subscribe  " id_event = {{ event.id }}, url_post = "{% url 'subscribe_event' %} " >долучитися <img class="img-curr-in-button" src="{{curr_category|get_item:event.events_type.id}}" ></button><p class="task_price">{{event.recommended_points}}</p>
                         {% endif %}
 
                     {% endif %}
