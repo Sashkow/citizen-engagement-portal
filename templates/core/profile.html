@@ -163,7 +163,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="profile-image" >
-                  <img class="img-legue" src="{% static  'volunteer/images/фронт1.png' %}" ></div>
+                  <img class="img-legue" src="{% static  'volunteer/images/житомир.png' %}" ></div>
                  <!--<img class="user-league-info league-logo setting-img"  src="{{league_user.league_image.url}}">-->
                     <!--{% if volunteer.photo %}-->
                         <!--<img class="photo-user setting-img"  src="{{ volunteer.photo.url }}">-->
@@ -176,7 +176,7 @@
 
             <div class="flip-card-back">
                 <div class="profile-image-1" >
-                    <img class="img-legue" src="{% static  'volunteer/images/фронт.png' %}" >
+                    <img class="img-legue" src="{% static  'volunteer/images/правильная форма объекта бэк.png' %}" >
                 </div>
             </div>
           </div>
@@ -258,8 +258,9 @@
             <div class="padding-0"  style="background-color: #f9ffefff;
                                          background-image:url({% static 'volunteer/images/bg_plastic1.png'%}); min-height:100%;">
 
+                 {% include 'events_filter.html' %}
                 <div class="dynamic-block">
-                        {% include 'events_filter.html' %}
+
                        {% include 'events_result.html' %}
                 </div>
             </div>

@@ -1479,7 +1479,7 @@ img.unlocked-achievement {
         background-color:gray;
         border-bottom-right-radius: 25px!important;
         border-top-right-radius: 25px!important;
-        padding-right: 50px;
+        padding-right: 40px!important;
     }
 
  .page-item{
