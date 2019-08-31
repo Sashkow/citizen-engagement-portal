@@ -1,4 +1,7 @@
 from django.db import models
+
+
+from osm_field.fields import LatitudeField, LongitudeField, OSMField
 from django.contrib.auth.models import User as DjangoUser
 from django.forms.models import model_to_dict
 from notifications.models import Notification
@@ -161,7 +164,7 @@ class CityLeagueDesign(models.Model):
     background = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'profile_backgrounds'), null=True,
                                            blank=True)
     background_color = models.CharField(max_length=20, null=True, blank=True)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Місто')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Область')
     league = models.ForeignKey(League, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -174,7 +177,7 @@ class User(models.Model):
     date_of_registration = models.DateField(auto_now_add=True)
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
     league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True, default=League.DEFAULT_PK)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Місто')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Область')
     blocked = models.BooleanField(default=False)
     django_user_id = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
 
@@ -241,6 +244,9 @@ class Event(models.Model):
     description = models.TextField(null=True, blank=True)
     geom = PointField(null=True, blank=True)
     calendar_event = models.ForeignKey(CalendarEvent, on_delete=models.SET_NULL, null=True, blank=True)
+    location = OSMField(lat_field='latitude', lon_field='longitude',null=True, blank=True)
+    latitude = LatitudeField(null=True, blank=True)
+    longitude = LongitudeField(null=True, blank=True)
 
     @property
     def get_events_type_url(self):
@@ -623,6 +629,8 @@ class NotificaationType(models.Model):
     template = models.TextField(null=True, blank=True)
     model_name = models.CharField(max_length = 100)
     image_field_name = models.CharField(max_length = 100)
+
+
 
 
 # def user_pre_save(sender, instance, **kwargs):

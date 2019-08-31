@@ -69,11 +69,11 @@
                              }
         }
 
-        .photo-user{
-           width: {{volunteer.league.img_user_width}};
-           right: {{volunteer.league.img_user_height}};
-           height: {{volunteer.league.img_user_height_corr}};
-        }
+        <!--.photo-user{-->
+           <!--width: {{volunteer.league.img_user_width}};-->
+           <!--right: {{volunteer.league.img_user_height}};-->
+           <!--height: {{volunteer.league.img_user_height_corr}};-->
+        <!--}-->
 
         .notif-col{
             color:{{volunteer.league.color_not_text}};
@@ -163,20 +163,24 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="profile-image" >
-                  <img class="img-legue" src="{% static  'volunteer/images/житомир.png' %}" ></div>
+                  <img class="img-legue" src="{% static  'volunteer/images/волк.png' %}" >
+                  {% if volunteer.photo %}
+                     <img class="photo-user setting-img"  src="{{ volunteer.photo.url }}">
+                   {% endif %}
+              </div>
                  <!--<img class="user-league-info league-logo setting-img"  src="{{league_user.league_image.url}}">-->
                     <!--{% if volunteer.photo %}-->
                         <!--<img class="photo-user setting-img"  src="{{ volunteer.photo.url }}">-->
                     <!--{% else %}-->
                         <!--<img class="photo-user setting-img" src="{% static  'volunteer/images/user_profile_default.png' %}" >-->
                     <!--{% endif %}-->
-                 <!--&lt;!&ndash;{{league_user.user_frame.url}}&ndash;&gt;-->
+                 <!--{{league_user.user_frame.url}}-->
                  <!--<img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}">-->
             </div>
 
             <div class="flip-card-back">
                 <div class="profile-image-1" >
-                    <img class="img-legue" src="{% static  'volunteer/images/правильная форма объекта бэк.png' %}" >
+                    <img class="img-legue" src="{% static  'volunteer/images/орел.png' %}" >
                 </div>
             </div>
           </div>

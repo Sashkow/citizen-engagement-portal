@@ -768,11 +768,6 @@ font-size: 155%;
         margin-bottom:10vh!important;
     }
 
-    #sidebar{
-
-        box-shadow: 0px -6px 10px grey;
-        z-index:100;
-    }
 
 
 
@@ -1278,7 +1273,7 @@ img.unlocked-achievement {
 }
 
 .currency-image{
-    width: 5 0px;
+    width: 50px;
     margin: 0 2px;
 
 }
@@ -1406,7 +1401,7 @@ img.unlocked-achievement {
     background-size: auto 30%;
     background-origin: content-box;
     padding-left: 5%;
-    text-transform: lowercase;
+
     height: 3.5vh;
     width: 11vw;
 
@@ -1505,11 +1500,18 @@ img.unlocked-achievement {
  }
 
  .photo-user{
-    -webkit-clip-path: polygon(2% 1%, 2% 62%, 9% 78%, 23% 89%, 36% 95%, 50% 100%, 63% 95%, 79% 89%, 91% 78%, 97% 64%, 98% 2%);
-    clip-path: polygon(2% 1%, 2% 62%, 9% 78%, 23% 89%, 36% 95%, 50% 100%, 63% 95%, 79% 89%, 91% 78%, 97% 64%, 98% 2%);
+    -webkit-clip-path: polygon(3% 2%, 5% 42%, 8% 55%,13% 66%, 18% 75%, 27% 85%, 40% 95%, 50% 100%,60% 95%, 73% 85%,82% 75%, 87% 66%,92% 55%, 95% 42%, 98% 2%);
+    clip-path: polygon(3% 2%, 5% 42%, 8% 55%,13% 66%, 18% 75%, 27% 85%, 40% 95%, 50% 100%,60% 95%, 73% 85%,82% 75%, 87% 66%,92% 55%, 95% 42%, 98% 2%);
     position: absolute;
 
  }
+
+     .photo-user {
+        width: 125px !important;
+        left: 60px !important;
+        height: 115px !important;
+        top: 45px;
+    }
 
  .ep_event_task{
     width: 100%;
@@ -2184,22 +2186,74 @@ select {
 
 }
 @media(min-width:930px) and (max-width: 1500px){
+    p.locked-achievement{
+        font-size: 14px;
+
+    }
+    p.unlocked-achievement {
+        font-size: 14px;
+    }
     .logo{
+
         height: 40px;
         top: 17px;
     }
+    label{
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    .digest-text {
+        padding-top: 5px;
+        font-size: 14px;
+    }
+    .form-check-label {
+        font-size: 14px;
+        padding: 3px;
+    }
+    .form-check {
+        padding-left: 0px;
+        padding-top: 5px !important;
+    }
+    .list-group {
+        max-width: 400px;
+        padding-bottom: 15px;
+    }
+    .edit-profile-send{
+        font-size: 14px;
+    }
+    #task_register_main input{
+    font-size: 14px;
+        margin-bottom: 3px;
+    }
+    #task_register_main select{
+        font-size: 14px !important;
+        margin-bottom: 3px;
+        padding: 3px 5px !important;
+    }
+    #event_register_main input{
+        font-size: 14px;
+        margin-bottom: 3px;}
+    #event_register_main select{
+        font-size: 14px !important;
+        margin-bottom: 3px;
+        padding: 3px 5px !important;}
 
+    .edit-profile-send input{
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .edit-profile-send select{
+        font-size: 14px !important;
+        margin-bottom: 15px;
+        padding: 3px 5px !important;
+    }
     .volunteer-name {
         font-size: 20px !important;
         }
     .user-league-info {
         width: 30%;
         }
-    .photo-user {
-        width: 30% !important;
-        right: 22% !important;
-        height: 99% !important;
-    }
+
     .own-progress-league {
         background-color: #75f0fb;
         height: 17px;
@@ -2383,6 +2437,7 @@ form ul li{
 
 .img-legue{
     height: 100%;
+    width: 100%;
 }
 
 .profile-image{
@@ -2418,3 +2473,14 @@ form ul li{
 
     width: 245px;
     display: inline-block;}
+
+.events-block h1{
+    padding: 40px 15px;
+    font-size: 20px;
+    text-align: center;
+    color: darkcyan;
+}
+
+.edit-profile{
+    padding: 30px 30px;
+    }

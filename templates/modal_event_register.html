@@ -89,6 +89,12 @@
                 {{form.city.errors}}
                 {{ form.city.label_tag }}<br>
                 {{form.city}}<br>
+                {{ form.media }}
+                <form action="" method="post">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <input type="submit" value="Save" />
+                </form>
 
                 <!--{{form.max_part.errors}}-->
                 <!--{{ form.max_part.label_tag }}<br>-->

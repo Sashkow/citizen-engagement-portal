@@ -136,7 +136,7 @@
                 <div class="col-lg-2 col-md-2 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-status" class="text-left select" url_get = "{% url 'type_filter' %}">
-                                <option status_id = "none" selected>статус</option>
+                                <option status_id = "none" selected>Cтатус</option>
                             {% for status in status_events %}
                                 <option status_id = "{{status.id}}" >{{status.status}}</option>
                             {% endfor %}
@@ -150,17 +150,13 @@
                 <div class="col-lg-2 col-md-2 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-city" class="text-left select" url_get = "{% url 'type_filter' %}">
-                                {% if city %}
-                                    <option city_id = "none">місто</option>
-                                {% else %}
-                                    <option city_id = "none" selected>місто</option>
-                                {% endif %}
+
+                                <option city_id = "none" selected>Область</option>
+
                             {% for current_city in cities %}
-                                {% if current_city.id == city.id %}
-                                    <option city_id = "{{current_city.id}}" selected>{{current_city.city}}</option>
-                                {% else %}
-                                    <option city_id = "{{current_city.id}}">{{current_city.city}}</option>
-                                {% endif %}
+
+                                <option city_id = "{{current_city.id}}">{{current_city.city}}</option>
+
                             {% endfor %}
                         </select>
                             <div class="map-contailer">

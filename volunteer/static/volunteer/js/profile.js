@@ -806,6 +806,7 @@ $(document).on('click', '.news', function(){
                  cache:true,
                  success: function(data){
                      console.log('OK');
+                     document.getElementsByClassName("event-navigation")[0].style.display = "none";
                      $(".dynamic-block").empty()
                      $(".dynamic-block").html(data.html);
                      if($(window).width()< 768){
@@ -1248,7 +1249,7 @@ function filterEvents(data, url, state){
              success: function(data){
                  console.log('OK');
                  console.log(data);
-                 if( 'filter_html' in data ){
+                 if( 'filter_html' in data & data.html != "" ){
                      $(".dynamic-block").empty()
                      //$(".dynamic-block").html(data.filter_html);
                      $(".dynamic-block").append(data.html);
@@ -1263,7 +1264,7 @@ function filterEvents(data, url, state){
                         }else{
                             $(".events-block").empty();
                             console.log('here')
-                            $('<h1>', { text: 'Ви не організували жодної події', }).appendTo($(".events-block"))
+                            $('<h1>', { text: 'За заданими параметрами подій не знайдено :(', }).appendTo($(".events-block"))
                         }
 
 
@@ -1272,7 +1273,7 @@ function filterEvents(data, url, state){
                             console.log('empty json')
 
                          $('<h1>', {
-                            text: 'За заданими параметрами подій не знайдено',
+                            text: 'За заданими параметрами подій не знайдено :(',
                          }).appendTo($(".dynamic-block"))
                  }
                  }

@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'leaflet',
     'djgeojson',
     'schedule',
-
+    'osm_field'
 
 ]
 

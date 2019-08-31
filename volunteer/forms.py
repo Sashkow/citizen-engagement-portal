@@ -28,14 +28,15 @@ class NewEventForm(ModelForm):
 
     time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10),label='Час події')
 
-    city = ModelChoiceField(required=False, queryset=City.objects.all(), label="Місто", empty_label='Обери місто')
+    city = ModelChoiceField(required=False, queryset=City.objects.all(), label="Область", empty_label='Обери область')
 
 
 
     class Meta:
         model = Event
 
-        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'city', 'status',  'description',  'recommended_points', 'contact']
+        fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'address', 'city', \
+                  'status',  'description',  'recommended_points', 'contact',]
         labels = {
             'name': 'Назва',
             'date_event': 'Дата',
@@ -49,7 +50,7 @@ class NewEventForm(ModelForm):
             'contact':'Ваш контактний e-mail',
             'events_type':'Категорія',
 
-            'city': 'Місто'
+            'city': 'Область'
 
 
 
@@ -126,10 +127,10 @@ class EventOrgTaskForm(ModelForm):
 class UserForm(ModelForm):
     city = ModelChoiceField(
         queryset=City.objects.all(),
-        label='Місто', widget=Select(attrs={
-            'placeholder': "Місто",
+        label='Область', widget=Select(attrs={
+            'placeholder': "Область",
         }),
-        empty_label='Обери місто'
+        empty_label='Обери область'
     )
 
     class Meta:
@@ -140,7 +141,7 @@ class UserForm(ModelForm):
             'first_name': "Ім'я",
             'last_name': 'Прізвище',
             'photo': 'Світлина',
-            'city': 'Місто'
+            'city': 'Область'
         }
 
 
@@ -158,11 +159,11 @@ class ProfileCreationForm(ModelForm):
     }))
     city = ModelChoiceField(
         queryset=City.objects.all(),
-        label='Місто', widget=Select(attrs={
-            'placeholder': "Місто",
+        label='Область', widget=Select(attrs={
+            'placeholder': "Область",
             'class': 'input-reg'
         }),
-        empty_label='Обери місто'
+        empty_label='Обери область'
     )
 
 
