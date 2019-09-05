@@ -16,12 +16,12 @@
                 <p class="event-description">{{notification.description|safe}}</p>
             </div>
         </div>
-        <div class="col-2 padding-0">
-            <p style="margin:auto!important">{{notification.relative_time}}</p>
+        <div class="col-2 padding-0 read">
+            <p  style="margin:auto!important">{{notification.relative_time}}</p>
             {% if notification.is_unread %}
-                <p class="d-none d-md-block">Непрочитане</p>
+                <p class="d-none d-md-block ">Непрочитане</p>
             {% else %}
-                <p class="d-none d-md-block">Прочитане</p>
+                <p class="d-none d-md-block ">Прочитане</p>
             {% endif %}
 
         </div>

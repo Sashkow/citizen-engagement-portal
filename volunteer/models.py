@@ -140,18 +140,18 @@ class League(models.Model):
     DEFAULT_PK = 1
     league = models.CharField(max_length = 80)
     quantity_achievement  =models.IntegerField()
-    league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    # league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
     user_frame = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
     background_color = models.CharField(max_length =20, null=True, blank=True)
     background_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'profile_backgrounds'), null=True, blank=True)
-    color_league_txt = models.CharField(max_length =20, null=True, blank=True)
-    color_volunteer_name = models.CharField(max_length =20, null=True, blank=True)
-    color_menu_item = models.CharField(max_length =20, null=True, blank=True)
-    color_current_grad1 = models.CharField(max_length =20, null=True, blank=True)
-    color_current_grad2 = models.CharField(max_length =20, null=True, blank=True)
-    color_current_text = models.CharField(max_length =20, null=True, blank=True)
-    color_current_border = models.CharField(max_length =20, null=True, blank=True)
-    color_not_text = models.CharField(max_length =20, null=True, blank=True)
+    # color_league_txt = models.CharField(max_length =20, null=True, blank=True)
+    # color_volunteer_name = models.CharField(max_length =20, null=True, blank=True)
+    # color_menu_item = models.CharField(max_length =20, null=True, blank=True)
+    # color_current_grad1 = models.CharField(max_length =20, null=True, blank=True)
+    # color_current_grad2 = models.CharField(max_length =20, null=True, blank=True)
+    # color_current_text = models.CharField(max_length =20, null=True, blank=True)
+    # color_current_border = models.CharField(max_length =20, null=True, blank=True)
+    # color_not_text = models.CharField(max_length =20, null=True, blank=True)
     img_user_width = models.CharField(max_length =4, null=True, blank=True)
     img_user_height = models.CharField(max_length =4, null=True, blank=True)
     img_user_height_corr = models.CharField(max_length =4, null=True, blank=True)
@@ -166,6 +166,14 @@ class CityLeagueDesign(models.Model):
     background_color = models.CharField(max_length=20, null=True, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Область')
     league = models.ForeignKey(League, on_delete=models.CASCADE)
+    color_league_txt = models.CharField(max_length=20, null=True, blank=True)
+    color_volunteer_name = models.CharField(max_length=20, null=True, blank=True)
+    color_menu_item = models.CharField(max_length=20, null=True, blank=True)
+    color_current_grad1 = models.CharField(max_length=20, null=True, blank=True)
+    color_current_grad2 = models.CharField(max_length=20, null=True, blank=True)
+    color_current_text = models.CharField(max_length=20, null=True, blank=True)
+    color_current_border = models.CharField(max_length=20, null=True, blank=True)
+    color_not_text = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         return str(self.background)
@@ -248,6 +256,7 @@ class Event(models.Model):
     latitude = LatitudeField(null=True, blank=True)
     longitude = LongitudeField(null=True, blank=True)
 
+
     @property
     def get_events_type_url(self):
         return self.events_type.image.url
@@ -272,7 +281,7 @@ class Event(models.Model):
             else: #khmel
                 view_box = [(49.4770, 26.9048), (49.3631, 27.0995)]
 
-            nom = Nominatim(user_agent="changer.in.ua", view_box=view_box, bounded=True)
+            nom = Nominatim(user_agent="changer.in.ua", view_box= [(49.4770, 26.9048), (49.3631, 27.0995)], bounded=True)
             point = nom.geocode(self.address)
             if point:
                 self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}

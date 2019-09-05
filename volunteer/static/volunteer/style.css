@@ -476,6 +476,7 @@ font-size: 155%;
     }
 
 
+
 }
 
 
@@ -1649,7 +1650,7 @@ img.unlocked-achievement {
     height: auto;
 }
 #event-city{
-    width: 170px;
+    width: 130px;
     height: auto;
 }
 .ribbon-div{
@@ -2270,7 +2271,7 @@ select {
         }
     .own-progress-bar p {
         margin-right: 10px;
-        font-size: 14px;
+        font-size: 13px;
     }
     .progress_state {
         float: left;
@@ -2380,7 +2381,7 @@ select {
     .quant-ach {
         position: absolute;
         left: 10px;
-        top: 5px;
+        top: 3px;
     }
 
     .first-name {
@@ -2418,7 +2419,42 @@ select {
     .desc-cat-tip {
     display: inline-block;
     font-size: 12px;}
+
+    .edit-event-form label {
+        font-size: 14px;
+        margin: 5px 0px;}
+    .edit-event-form input {
+        font-size: 14px;
+        }
+    .edit-event-form select {
+        font-size: 14px;
+        }
+    .edit-event-form #id_name {
+        padding: 5px 10px;
+        font-size: 18px;
+     margin-left:0!important;}
+    #id_status, #id_events_type, #id_city {
+        padding: 5px 10px;
+        font-size: 14px;}
+    .subs {
+        font-size: 14px;}
+    .edit-event-send {
+        font-size: 16px;
+    }
+    .part {
+        font-size: 14px;}
+    .notif-image {
+        height: 90px;
+        margin: 15px;
+    }
+    .read{
+        font-size: 14px;
+        color: grey;
+        margin-top: 30px;
+        padding-left: 10px;
+    }
 }
+
 
 .helptext{
     display: block;
@@ -2484,3 +2520,10 @@ form ul li{
 .edit-profile{
     padding: 30px 30px;
     }
+
+
+.ep-event-description{
+        font-size: 14px;}
+.ep-event-addition-info{
+    font-size: 14px;
+    margin: 5px 0}

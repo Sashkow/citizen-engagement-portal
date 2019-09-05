@@ -805,27 +805,34 @@ def replace_coordinates(one, two, three, four):
 @login_required
 def map_show(request):
     volunteer = VolunteerUser.objects.filter(django_user_id=request.user).first()
-    if volunteer:
-        if volunteer.city:
-            if volunteer.city.city == "Вінниця":
-                boundaries = {
+    cities = City.objects.all()
+    # if volunteer:
+    #     if volunteer.city:
+    #         if volunteer.city.city == "Вінницька":
+    #             boundaries = {
+    #
+    #                 'SPATIAL_EXTENT': replace_coordinates(28.216839,49.216027,28.544369,49.322549),
+    #                 'DEFAULT_CENTER': (49.269317,28.380604)
+    #             }
+    #             return render(request, 'map.html', context={'boundaries': boundaries, "cities":cities})
+    #         elif volunteer.city.city == "Житомирська":
+    #             boundaries = {
+    #                 'SPATIAL_EXTENT': (25.605223, 28.715773, 50.23924, 52.276012),
+    #                 'DEFAULT_CENTER': (50.257632, 28.660498),
+    #             }
+    #             return render(request, 'map.html', context={'boundaries': boundaries, "cities":cities})
+    #
+    # boundaries = {
+    #     'SPATIAL_EXTENT': (11.163889, 42.387222, 50.198056, 59.34444),
+    #     'DEFAULT_CENTER': (49.4196404, 26.9793793),
+    # }
+    # boundaries = {
+    #     'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
+    #     'DEFAULT_CENTER': (49.4196404, 26.9793793),
+    # }
+    #
 
-                    'SPATIAL_EXTENT': replace_coordinates(28.216839,49.216027,28.544369,49.322549),
-                    'DEFAULT_CENTER': (49.269317,28.380604)
-                }
-                return render(request, 'map.html', context={'boundaries': boundaries})
-            elif volunteer.city.city == "Житомир":
-                boundaries = {
-                    'SPATIAL_EXTENT': (25.605223, 28.715773, 50.23924, 52.276012),
-                    'DEFAULT_CENTER': (50.257632, 28.660498),
-                }
-                return render(request, 'map.html', context={'boundaries': boundaries})
-
-    boundaries = {
-        'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
-        'DEFAULT_CENTER': (49.4196404, 26.9793793),
-    }
-    return render(request, 'map.html', context={'boundaries':boundaries})
+    return render(request, 'map.html', context={"cities":cities})
 
     # html = render_to_string('map.html', cont)
     # return_dict = {'html': html}

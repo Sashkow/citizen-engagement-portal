@@ -24,13 +24,14 @@
                     {% else %}
                     <p>{{event.status}} </p>
                     {% endif %}
-                    <p class="ep_event_reg_date"> Не забудьте змінити статус на Проведено, щоб учасники отримати монети!</p>
+                    <p class="ep_event_reg_date"> Не забудьте змінити статус на Проведено, щоб учасники отримали монети!</p>
             </div>
         </div>
         <div class="row">
             <div class="col-12 edit-event-form">
                 {{form.description.errors}}
                 {{form.description}}
+
                 <br>
                  <label for="{{ form.address.id_for_label }}">Адреса:</label>
                 {{form.address.errors}}

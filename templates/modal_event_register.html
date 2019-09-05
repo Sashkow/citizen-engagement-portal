@@ -82,19 +82,22 @@
                 {{ form.time_event.label_tag }}<br>
                 {{form.time_event}}<br>
 
-                {{form.address.errors}}
-                {{ form.address.label_tag }}<br>
-                {{form.address}}<br>
-
                 {{form.city.errors}}
                 {{ form.city.label_tag }}<br>
                 {{form.city}}<br>
+
+                {{form.address.errors}}
+                {{ form.address.label_tag }}<br>
+                {{form.address}}<br>
                 {{ form.media }}
-                <form action="" method="post">
-                  {% csrf_token %}
-                  {{ form.as_p }}
-                  <input type="submit" value="Save" />
-                </form>
+                {{ form.location.label_tag }}<br>
+                {{ form.location }}<br>
+                {{ form.longitude }}<br>
+                {{ form.latitude }}<br>
+
+
+
+
 
                 <!--{{form.max_part.errors}}-->
                 <!--{{ form.max_part.label_tag }}<br>-->
