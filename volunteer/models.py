@@ -236,7 +236,6 @@ class DigestList(models.Model):
     type = models.ForeignKey(EventsType, on_delete=models.CASCADE)
 
 
-
 class Event(models.Model):
     name = models.CharField(max_length=300)
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
