@@ -123,7 +123,7 @@ class Status(models.Model):
         return self.status
 
 class City(models.Model):
-    DEFAULT_CITY = 'Хмельницький'
+    DEFAULT_CITY = 'Хмельницька'
 
     city = models.CharField(max_length=100)
 
@@ -141,7 +141,7 @@ class League(models.Model):
     league = models.CharField(max_length = 80)
     quantity_achievement  =models.IntegerField()
     # league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
-    user_frame = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'achievements'), null=True, blank=True)
     background_color = models.CharField(max_length =20, null=True, blank=True)
     background_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'profile_backgrounds'), null=True, blank=True)
     # color_league_txt = models.CharField(max_length =20, null=True, blank=True)
@@ -161,8 +161,11 @@ class League(models.Model):
 
 
 class CityLeagueDesign(models.Model):
+    DEFAULT_CITY_LEAGUE = 1
     background = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'profile_backgrounds'), null=True,
                                            blank=True)
+    photo_frame = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'profile_backgrounds'), null=True,
+                                  blank=True)
     background_color = models.CharField(max_length=20, null=True, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Область')
     league = models.ForeignKey(League, on_delete=models.CASCADE)
@@ -255,6 +258,7 @@ class Event(models.Model):
     location = OSMField(lat_field='latitude', lon_field='longitude',null=True, blank=True)
     latitude = LatitudeField(null=True, blank=True)
     longitude = LongitudeField(null=True, blank=True)
+    fb_page = models.CharField(max_length=500, null=True, blank=True)
 
 
     @property

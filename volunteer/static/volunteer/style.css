@@ -21,9 +21,28 @@ body{
     margin: 0 !important;
 
 }
+.btn-subscribe{
+    background-color:#ff7f1aff;
+    border-bottom-right-radius: 25px!important;
+    border-top-right-radius: 25px!important;
+    padding-right: 50px!important;
+}
+.btn-app-task{
+    background-color:#00bbbbff!important;
+    border-bottom-right-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    padding-right: 50px !important;
+}
+
+.re-btn-app-task{
+    background-color:#00bbbbff!important;
+    border-bottom-right-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    padding-right: 50px !important;
+}
 
 .btn-div{
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 .menu-profile{
     margin-bottom: 30px;
@@ -47,7 +66,7 @@ font-family: 'Ubuntu',sans-serif !important;
     max-width: 150px;
     width:100%;
     height:auto!important;
-    margin: 20px;
+
 }
 
 .user-name{
@@ -201,7 +220,33 @@ font-size: 155%;
             padding-top:5vh;
 
         }
+        .event-name{
+            font-size: 14px;
 
+        }
+        .event-button {
+            height: 32px;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0px !important;
+            position: relative;
+        }
+        .btn-app-task {
+            background-color: #00bbbbff!important;
+            border-bottom-right-radius: 25px !important;
+            border-top-right-radius: 25px !important;
+            padding-right: 10px !important;
+        }
+        .btn-resubscribe{
+            padding: 0;
+        }
+        .btn-follow{
+            display: none;
+        }
+        .btn-refollow{
+            display: none;
+        }
 
 
 }
@@ -334,6 +379,7 @@ font-size: 155%;
     }
 
     #sidebar{
+        background-size: 75px auto;
         width:100vw!important;
         display:none;
         min-height:100%;
@@ -389,11 +435,11 @@ font-size: 155%;
     .event-button{
 
         font-size:12px !important;
-
-        min-width: 145px;
+        padding-left: 10px;
+        min-width: 125px;
         border-top-right-radius: 25px !important;
         border-bottom-right-radius: 25px !important;
-        width:90%;
+        width:60%;
         height: 24px!important;
     }
 
@@ -946,6 +992,7 @@ font-size: 155%;
       -webkit-columns: 2;
       -moz-columns: 2;
     }
+
 }
 @media (max-width: 1300px){
     .outer {
@@ -1180,39 +1227,6 @@ h4.volunteer-name{
     padding:0;
 }
 
-.own-progress-bar{
-  height: 25px;
-  width: 75%;
-  background-color:#fff;
-  margin: 35px auto !important;
-
-  border-radius: 7px;
-}
-
-.own-progress-league{
-    background-color: #65f0fb;
-    height: 25px;
-    float: left;
-    position:relative;
-    border-radius: 7px;
-
-}
-.progress_state{
-  float:left;
-  position:absolute;
-  right: -15px;
-  top: -5px;
-
-}
-
-.img_progress_state{
-    height:inherit;
-}
-.quant-ach{
-    position: absolute;
-    left: 13.5px;
-    top: 6px;
-}
 
 div.achievement-item{
     border-radius: 14px;
@@ -1439,12 +1453,7 @@ img.unlocked-achievement {
     opacity:0.7;
 }
 
-.btn-subscribe{
-    background-color:#ff7f1aff;
-    border-bottom-right-radius: 25px!important;
-    border-top-right-radius: 25px!important;
-    padding-right: 50px!important;
-}
+
 
 .btn-resubscribe{
     background-color:#ff7f1aff;
@@ -1712,19 +1721,7 @@ svg{
 
 }
 
-.btn-app-task{
-    background-color:#00bbbbff!important;
-    border-bottom-right-radius: 25px !important;
-    border-top-right-radius: 25px !important;
-    padding-right: 50px !important;
-}
 
-.re-btn-app-task{
-    background-color:#00bbbbff!important;
-    border-bottom-right-radius: 25px !important;
-    border-top-right-radius: 25px !important;
-    padding-right: 50px !important;
-}
 
 .wrapper {
     display: flex;
@@ -1753,6 +1750,7 @@ svg{
 }
 
 #sidebar{
+        background-size: 75px auto;
         position:sticky;
         width: 450px;
         left: 0;
@@ -1761,6 +1759,40 @@ svg{
         z-index: 100;
 }
 
+.own-progress-bar{
+  height: 20px;
+  width: 65%;
+  background-color:#fff;
+  margin: 20px auto 30px auto !important;
+
+  border-radius: 7px;
+}
+
+.own-progress-league{
+    background-color: #65f0fb;
+    height: 20px;
+    float: left;
+    position:relative;
+    border-radius: 7px;
+
+}
+.progress_state{
+  float:left;
+  position:absolute;
+  right: -15px;
+  top: -5px;
+
+}
+
+.img_progress_state{
+    height:inherit;
+}
+.quant-ach{
+    position: absolute;
+    margin: 0;
+    right: 35%;
+    top: 10%;
+}
 .category-icon{
     height:18vh;
 }
@@ -2122,7 +2154,7 @@ select {
 .flip-card {
   background-color: transparent;
   width: 100%;
-  height: 170px;
+  height: 190px;
   perspective: 1000px;
 }
 
@@ -2171,6 +2203,7 @@ select {
     }
     .event-description{
         font-size: 16px;
+        margin:0;
     }
     .task-or-event-image{
         width: 70px;
@@ -2270,7 +2303,6 @@ select {
         border-radius: 16px;
         }
     .own-progress-bar p {
-        margin-right: 10px;
         font-size: 13px;
     }
     .progress_state {
@@ -2380,8 +2412,9 @@ select {
     }
     .quant-ach {
         position: absolute;
-        left: 10px;
-        top: 3px;
+        margin: 0;
+        right: 36%;
+        top: 10%;
     }
 
     .first-name {
@@ -2453,6 +2486,25 @@ select {
         margin-top: 30px;
         padding-left: 10px;
     }
+    .shield {
+
+    width: 245px!important;
+    display: inline-block;}
+    .profile-image{
+        height: 170px !important;
+
+    }
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 170px;
+      perspective: 1000px;
+    }
+    .profile-image-1 {
+        background: rgba(0,0,0,0);
+        height: 170px !important;
+
+    }
 }
 
 
@@ -2477,7 +2529,7 @@ form ul li{
 }
 
 .profile-image{
-    height: 170px;
+    height: 190px;
 
 }
 
@@ -2488,7 +2540,7 @@ form ul li{
 }
 .profile-image-1 {
     background: rgba(0,0,0,0);
-    height: 170px;
+    height: 190px;
 
 }
 
@@ -2507,7 +2559,7 @@ form ul li{
 
 .shield {
 
-    width: 245px;
+    width: 275px;
     display: inline-block;}
 
 .events-block h1{

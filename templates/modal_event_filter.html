@@ -29,7 +29,7 @@
 
                 <div class="dropdown open text-center ">
                     <select id="mob-event-status" class="text-left select" url_get = "{% url 'type_filter' %}">
-                            <option status_id = "none" selected>статус</option>
+                            <option status_id = "none" selected>Статус</option>
                         {% for status in status_events %}
                             <option status_id = "{{status.id}}" >{{status.status}}</option>
                         {% endfor %}

@@ -10,22 +10,22 @@
                 <img class="category-image-ev" get_url="{% url 'volunteer_event' id=event.id %}"  src= "{{ event.events_type.image.url }}"  >
         </div>
 
-        <div class="col-lg-7 col-md-6 col-5 info">
+        <div class="col-lg-7 col-md-6 col-7 info">
             <!--<div class="row text-left full-row">-->
                     <div class="event-item-info">
                         <p  class="event-name" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.name }}</p>
-                        <p class="event-description d-none d-sm-block " get_url="{% url 'volunteer_event' id=event.id %}">{{ event.description|truncatechars:150 }}</p>
+                        <p class="event-description  d-none d-sm-block" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.description|truncatechars:150 }}</p>
                     </div>
-                        <div class="btn-div align-self-end">
+                        <div class="btn-div align-self-end ">
                              {% if events_org|get_item:event.id == 0 %}
                             {% if events_subs|get_item:event.id == 0 %}
                                 {% if events_part|get_item:event.id == 1  %}
-                                <button type="button" class="btn-follow    evevent-button" id="follow"  id_event = {{event.id}} eurl_post = "{% url 'follow_event' %}" disabled>підписатися</button>
+                                <button type="button" class="btn-follow     event-button" id="follow"  id_event = {{event.id}} eurl_post = "{% url 'follow_event' %}" disabled>підписатися</button>
                                 {% else %}
-                                <button type="button" class="btn-follow   event-button" id="follow"  id_event = {{event.id}} url_post = "{% url 'follow_event' %}" >підписатися</button>
+                                <button type="button" class="btn-follow    event-button" id="follow"  id_event = {{event.id}} url_post = "{% url 'follow_event' %}" >підписатися</button>
                                 {% endif %}
                             {% else %}
-                                <button type="button" class="btn-refollow    event-button" id="follow"  id_event = {{event.id}} url_post = "{% url 'follow_event' %}">відписатися</button>
+                                <button type="button" class="btn-refollow     event-button" id="follow"  id_event = {{event.id}} url_post = "{% url 'follow_event' %}">відписатися</button>
                             {%  endif %}
 
 
@@ -51,7 +51,7 @@
                     <!--</div>-->
 
         </div>
-        <div class="col-lg-2 col-md-3 col-4 padding-0 d-flex justify-content-end ">
+        <div class="col-lg-2 col-md-3 col-2 padding-0 d-flex justify-content-end ">
                         {% if event.events_or_task == True %}
                             <img class="d-none d-sm-block task-or-event-image align-self-end event-name" data-toggle="tooltip" title="Подія" get_url="{% url 'volunteer_event' id=event.id %}" src="{% static 'volunteer/images/event.png' %}">
                         {% else %}

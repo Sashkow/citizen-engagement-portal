@@ -154,7 +154,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="profile-image" >
-                  <img class="img-legue" src="{% static  'volunteer/images/иконка 1.png' %}" >
+                  <img class="img-legue" src="{{ design.photo_frame.url }}" >
                   {% if volunteer.photo %}
                      <img class="photo-user setting-img"  src="{{ volunteer.photo.url }}">
                    {% endif %}
@@ -171,7 +171,7 @@
 
             <div class="flip-card-back">
                 <div class="profile-image-1" >
-                    <img class="img-legue" src="{{league_user.user_frame.url}}" >
+                    <img class="img-legue" src="{{league_user.league_image.url}}" >
                 </div>
             </div>
           </div>

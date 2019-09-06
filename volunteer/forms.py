@@ -38,7 +38,8 @@ class NewEventForm(ModelForm):
         model = Event
 
         fields = ['organizer', 'name', 'events_or_task', 'events_type', 'date_event','time_event', 'city', \
-                  'status',  'description',  'recommended_points', 'contact','location', 'latitude', 'longitude', ]
+                  'status',  'description',  'recommended_points', 'contact','location', 'latitude', 'longitude', \
+                  'fb_page']
         labels = {
             'name': 'Назва',
             'date_event': 'Дата',
@@ -47,6 +48,7 @@ class NewEventForm(ModelForm):
             'location': 'Адреса',
             'description': 'Опис',
             'status': 'Статус',
+            'fb_page': 'Facebook-сторінка',
             # 'max_part': 'Мінімальна кількість учасників',
             # 'min_part': 'Максимальна кількість учасників',
             'recommended_points': 'Рекомендована кількість балів',
