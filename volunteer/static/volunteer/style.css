@@ -17,6 +17,10 @@ body{
     overflow: hidden !important;
 
 }
+.inline{
+    display:inline-block !important;
+    margin-right: 15px;
+}
 .row{
     margin: 0 !important;
 
@@ -135,7 +139,14 @@ font-size: 155%;
 
 
 
-@media screen and (max-width: 930px) {
+@media screen and (max-width: 970px) {
+    .inline{
+        display:none !important;
+    }
+    .small-filter{
+        display:inline-block !important;
+
+    }
     .category_event_edit {
         display: none !important;
     }
@@ -1802,7 +1813,7 @@ svg{
 }
 
 .margin-0{
-    margin:0;
+    margin: 1em 0;
     color:#ff7f1aff;
 }
 
@@ -2579,3 +2590,23 @@ form ul li{
 .ep-event-addition-info{
     font-size: 14px;
     margin: 5px 0}
+
+
+
+.flex{
+    display:flex;
+}
+
+#event-search{
+    font-size: 14px;
+    padding: 2px 10px !important;
+    width: 150px !important;
+}
+
+.event-navigation{
+    font-size: 14px;
+}
+
+.small-filter{
+    display: none;
+}

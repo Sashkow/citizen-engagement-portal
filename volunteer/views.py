@@ -208,7 +208,7 @@ def profile(request):
     max_user_point = user_points.aggregate(Max('quantity'))
 
     types_events = EventsType.objects.all()
-    status_events = Status.objects.all()
+    status_events = Status.objects.all()[:2]
     cities = City.objects.all()
 
 
