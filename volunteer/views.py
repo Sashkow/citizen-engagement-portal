@@ -9,7 +9,6 @@
 # def index(request):
 #     return render(request, 'index.html')
 #     # return HttpResponse('ok, Google')
-
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm, UserCreationForm, AuthenticationForm
@@ -388,6 +387,11 @@ def type_filter(request):
     data = request.GET
     print(data)
     parametrs = [data['type'], data['page'], data['state'], data['task_or_event'], data['status_id'], data['city_id']]
+    if 'search' in data:
+        search = data['search']
+    else:
+        search = None
+
     types_events = EventsType.objects.all()
     curr_category = {}
     for type_e in types_events:
@@ -396,8 +400,20 @@ def type_filter(request):
     if data['type'] not in ['all', 'all_digest'] and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
         return JsonResponse(return_dict)
     else:
-        events, events_part, events_subs, events_quantity, events_org, events_task_app = get_events(Event, TaskApplication,  Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
-        print(events)
+        events, events_part, events_subs, events_quantity, events_org, events_task_app = get_events(
+            Event,
+            TaskApplication,
+            Status,
+            User,
+            DigestList,
+            EventsSubscriber,
+            EventsParticipant,
+            EventsPhoto,
+            django_user,
+            events_per_page,
+            parametrs,
+            EventsType,
+            search)
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
         cont = {
@@ -422,6 +438,7 @@ def type_filter(request):
             filter_html = render_to_string('events_filter.html', cont)
             return_dict['filter_html'] = filter_html
         return JsonResponse(return_dict)
+
 
 
 def profile_edit(request):

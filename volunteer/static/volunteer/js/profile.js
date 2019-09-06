@@ -141,6 +141,62 @@ var tipVisibility = 0;
         $('#login').modal('hide');
         $('#login-usual').modal('show');
     })
+
+    // event search
+
+
+    $(document).on('keyup', '#event-search', function () {
+        data = {}
+        var url = $(this).attr('url_get');
+        filter_info = InfoEventFilter()
+        data.type = filter_info[0];
+        data.page = 1;
+        data.state = filter_info[2];
+        data.task_or_event = filter_info[1]
+        data.status_id = filter_info[3]
+        data.city_id = filter_info[4]
+        data.add_filter = 1;
+        data.search = $(this).val()
+        console.log(data);
+
+         $.ajax({
+             url: url,
+             type :'GET',
+             data:data,
+             cache:true,
+             dataType:'json',
+             success: function(data){
+                 console.log('OK');
+                 console.log(url);
+                 console.log(data);
+
+                 if(!jQuery.isEmptyObject(data)){
+
+                    if(data.html != ""){
+                        $(".events-block").empty();
+                        $(".events-block").html(data.html);
+                    }else{
+                        $(".events-block").empty();
+                        $('<h1>', { text: 'За заданими параметрами подій не знайдено', }).appendTo($(".events-block"))
+                    }
+                  }
+                 else{
+                        $(".events-block").empty();
+                        console.log('empty json')
+
+                     $('<h1>', {
+                        text: 'За заданими параметрами подій не знайдено',
+                     }).appendTo($(".events-block"))
+                 }
+             },
+             error: function(){
+             console.log('error')
+            }
+         })
+    })
+
+    // end event search
+
     $(document).on('change', '#event-city', function(){
         data = {}
         var url = $(this).attr('url_get');
@@ -1285,28 +1341,3 @@ function filterEvents(data, url, state){
              }
         })
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

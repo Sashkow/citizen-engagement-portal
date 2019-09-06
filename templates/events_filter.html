@@ -133,7 +133,7 @@
                     <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}"    src="{% static 'volunteer/images/filter_task.png' %}">
 
                 </div>
-                <div class="col-lg-2 col-md-2 d-none d-md-block">
+                <div class="col-lg-1 col-md-1 d-none d-md-block">
                     <div class="dropdown open text-left category-filter">
                         <select id="event-status" class="text-left select" url_get = "{% url 'type_filter' %}">
                                 <option status_id = "none" selected>Cтатус</option>
@@ -159,10 +159,19 @@
 
                             {% endfor %}
                         </select>
+
                             <div class="map-contailer">
                                 {% leaflet_map "not_main" %}
                             </div>
+                        <!--here is search-->
+
+
                     </div>
+                </div>
+                <div class="col-lg-2 col-md-2 d-none d-md-block">
+                    <form class="form-inline">
+                        <input id="event-search" url_get="{% url 'type_filter' %}" type="text" placeholder="Пошук">
+                    </form>
                 </div>
 
                 <div class="col-7 d-block d-md-none">
