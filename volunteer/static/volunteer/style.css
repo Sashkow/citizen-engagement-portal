@@ -140,6 +140,9 @@ font-size: 155%;
 
 
 @media screen and (max-width: 970px) {
+    .event-search{
+        display: none;
+    }
     .inline{
         display:none !important;
     }
@@ -1661,7 +1664,7 @@ img.unlocked-achievement {
 }
 
 #event-type{
-    width: 150px;
+    width: 100px;
     height: auto;
 }
 
