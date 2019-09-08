@@ -56,7 +56,7 @@
             border-left: 1.3vh solid {{design.color_current_border}} ;
         }
 
-        div.current-menu-item p.item-menu{
+        div.current-menu-item .item-menu{
             color: {{design.color_current_text}}!important;
 
         .leaflet-container {
@@ -140,7 +140,8 @@
 
 <div class="wrapper">
 
-    <nav id="sidebar" class="text-center profile-info"  style="background-image:url({{design.background.url}}); background-color:{{design.background_color}}">
+    <nav id="sidebar" class="text-center profile-info"  style=" background-color:{{design.background_color}}">
+        <div class = "side-background" style="background-image:url({{design.background.url}}); opacity:{{design.background_opacity}}"></div>
          {% csrf_token %}
         <img class = "shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
         <div class="user-name">

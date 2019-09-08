@@ -2576,7 +2576,7 @@ form ul li{
     width: 275px;
     display: inline-block;}
 
-.events-block h1{
+.dynamic-block h1{
     padding: 40px 15px;
     font-size: 20px;
     text-align: center;
@@ -2612,4 +2612,25 @@ form ul li{
 
 .small-filter{
     display: none;
+}
+
+#id_longitude{
+    display: none;
+}
+
+#id_latitude{
+    display: none;
+}
+
+.side-background{
+    position: absolute;
+    width: 100%;
+    opacity: 0.5;
+    height: 100%;
+    background-size: 75px auto;
+    z-index: -1;
+}
+
+.notification-name{
+    margin-bottom: 0!important;
 }

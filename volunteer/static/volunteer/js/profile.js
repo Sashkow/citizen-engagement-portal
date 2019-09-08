@@ -524,14 +524,17 @@ var tipVisibility = 0;
             cache:true,
             success: function(data){
             console.log('OK')
-             $('.btn-subscribe[id_event ="' + event_id + '"]').html("скасувати участь");
-             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
-             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().prop('disabled', true);
-             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().addClass('btn-follow');
-             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().removeClass('btn-refollow');
-             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().text('підписатися');
-             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-app-task');
-             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
+//             $('.btn-subscribe[id_event ="' + event_id + '"]').html("скасувати участь");
+//             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
+//             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().prop('disabled', true);
+//             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().addClass('btn-follow');
+//             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().removeClass('btn-refollow');
+//             $('.btn-subscribe[id_event ="' + event_id + '"]').prev().text('підписатися');
+//             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-app-task');
+//             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
+             $('.btn-resubscribe[id_event ="' + event_id + '"]').show();
+             $('.btn-subscribe[id_event ="' + event_id + '"]').hide();
+             $('.task_price').hide();
 
 
 
@@ -561,11 +564,16 @@ var tipVisibility = 0;
              cache:true,
              success: function(data){
                  console.log('OK')
-                 $('.btn-resubscribe[id_event ="' + event_id + '"]').html("долучитися");
-                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
-                 $('.btn-resubscribe[id_event ="' + event_id + '"]').prev().prop('disabled', false);
-                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-app-task');
-                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
+//                 $('.btn-resubscribe[id_event ="' + event_id + '"]').html("долучитися");
+//                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
+//                 $('.btn-resubscribe[id_event ="' + event_id + '"]').prev().prop('disabled', false);
+//                 $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-app-task');
+//                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
+                   $('.btn-resubscribe[id_event ="' + event_id + '"]').hide();
+                   $('.btn-subscribe[id_event ="' + event_id + '"]').show();
+                   $('.task_price').show();
+
+
                  },
                  error: function(){
                  console.log('error')
@@ -1318,9 +1326,9 @@ function filterEvents(data, url, state){
                             console.log('not here')
                             $(".events-block").html(data.html);
                         }else{
-                            $(".events-block").empty();
+                            $(".dynamic-block").empty()
                             console.log('here')
-                            $('<h1>', { text: 'За заданими параметрами подій не знайдено :(', }).appendTo($(".events-block"))
+                            $('<h1>', { text: 'За заданими параметрами подій не знайдено :(', }).appendTo($(".dynamic-block"))
                         }
 
 
