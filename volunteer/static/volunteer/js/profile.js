@@ -329,7 +329,7 @@ var tipVisibility = 0;
      function processForm() {
       var data = $('#the_form').serializeArray();
       var url = $('#the_form').attr('post_url');
-      var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+       var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
       console.log('url')
 
       data.push(
@@ -701,7 +701,7 @@ var tipVisibility = 0;
 
     $(document).on('click', '.my-volonter-events', function(){
         console.log('.my-volonter-events')
-        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+        var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
         var data = {};
         if( !$('#event-type').length ){
             var url = "/typefilter/"
@@ -733,7 +733,7 @@ var tipVisibility = 0;
     });
 
         $(document).on('click', '.my-org-events', function(){
-        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+        var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
         var data = {};
 
         if( !$('#event-type').length ){
@@ -927,6 +927,7 @@ $(document).on('click', '.news', function(){
             var name = $('.event-edit-name').val()
             var date = $('#date_event').val()
             var time = $('#time_event').val()
+            var address = $('input[name="address"]').val()
             var address = $('input[name="address"]').val()
             console.log(event_id);
             console.log(name);
@@ -1203,7 +1204,7 @@ $(document).on('click', '.news', function(){
         var user_id = $('input[name = "execute"]:checked').val()
         var event_id = $(this).attr('event_id')
         var url = $(this).attr('post_url');
-        var csrf_token = $('.profile_info [name = "csrfmiddlewaretoken"]').val();
+        var csrf_token = $(' input[name = "csrfmiddlewaretoken"]').last().val();
         var data = {};
         data['csrfmiddlewaretoken'] = csrf_token;
         data.user_id = user_id
@@ -1231,6 +1232,7 @@ $(document).on('click', '.news', function(){
         var event_id  =  $(this).attr('event_id');
         var data = {};
         data.event_id = event_id;
+        console.log(event_id)
         $.ajax({
              url: url,
              type :'GET',
