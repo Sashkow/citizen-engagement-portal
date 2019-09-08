@@ -1208,6 +1208,7 @@ $(document).on('click', '.news', function(){
         data['csrfmiddlewaretoken'] = csrf_token;
         data.user_id = user_id
         data.event_id = event_id
+        console.log(event_id);
          $.ajax({
              url: url,
              type :'POST',

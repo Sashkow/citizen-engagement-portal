@@ -187,7 +187,7 @@ def profile(request):
         print(CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0])
         design = CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0]
     else:
-        design = CityLeagueDesign.objects.filter(pk=CityLeagueDesign.DEFAULT_CITY_LEAGUE)
+        design = CityLeagueDesign.objects.filter(city=None, league=volunteer.league)[0]
 
     if django_user.first_name:
         name = django_user.first_name
@@ -672,7 +672,7 @@ def event_edit(request, id = None):
             tasks_form_list.append(EventOrgTaskForm(instance=task))
             cont['tasks_form_list'] = tasks_form_list
 
-    if event.events_or_task == False and TaskApplication.objects.filter(event = event).exists() and not TaskApplication.objects.filter(event = event, executer = True).exists():
+    if event.events_or_task == False and TaskApplication.objects.filter(event = event).exists() and not TaskApplication.objects.filter(event = event, executor = True).exists():
         zero_executor = True
         cont['zero_executor'] = zero_executor
     html = render_to_string('event_edit.html', cont, request=request)

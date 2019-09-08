@@ -1264,6 +1264,7 @@ p.unlocked-achievement{
 }
 
 p.unlocked-achievement-text{
+    display: none;
     font-size: 93%;
     padding-left: 10%;
     padding-right: 10%;
@@ -2633,4 +2634,18 @@ form ul li{
 
 .notification-name{
     margin-bottom: 0!important;
+}
+
+.left-event-navigation{
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+#new-event-form-id #id_status option[value="3"]{
+    display:none;
+}
+
+#new-event-form-id #id_status option[value="4"]{
+    display:none;
 }

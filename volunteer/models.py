@@ -170,7 +170,7 @@ class CityLeagueDesign(models.Model):
                                   blank=True)
     background_color = models.CharField(max_length=20, null=True, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Область')
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True)
     color_league_txt = models.CharField(max_length=20, null=True, blank=True)
     color_volunteer_name = models.CharField(max_length=20, null=True, blank=True)
     color_menu_item = models.CharField(max_length=20, null=True, blank=True)
@@ -259,7 +259,7 @@ class Event(models.Model):
     location = OSMField(lat_field='latitude', lon_field='longitude',null=True, blank=True)
     latitude = LatitudeField(null=True, blank=True)
     longitude = LongitudeField(null=True, blank=True)
-    fb_page = models.CharField(max_length=500, null=True, blank=True)
+    fb_page = models.URLField(null=True, blank=True)
 
 
     @property
