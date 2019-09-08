@@ -161,7 +161,7 @@ class League(models.Model):
 
 
 class CityLeagueDesign(models.Model):
-    DEFAULT_CITY_LEAGUE = 1
+    DEFAULT_CITY_LEAGUE = 5
     background = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'profile_backgrounds'), null=True,
                                            blank=True)
     background_opacity = models.CharField(max_length=20, null=True, blank=True)

@@ -187,7 +187,7 @@ def profile(request):
         print(CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0])
         design = CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0]
     else:
-        design = CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0]
+        design = CityLeagueDesign.objects.filter(pk=CityLeagueDesign.DEFAULT_CITY_LEAGUE)
 
     if django_user.first_name:
         name = django_user.first_name

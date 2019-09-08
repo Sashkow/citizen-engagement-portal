@@ -534,7 +534,8 @@ var tipVisibility = 0;
 //             $('.btn-subscribe[id_event ="' + event_id + '"]').toggleClass('btn-subscribe');
              $('.btn-resubscribe[id_event ="' + event_id + '"]').show();
              $('.btn-subscribe[id_event ="' + event_id + '"]').hide();
-             $('.task_price').hide();
+             $('.task_price[id_event ="' + event_id + '"]').hide();
+
 
 
 
@@ -571,7 +572,7 @@ var tipVisibility = 0;
 //                 $('.btn-resubscribe[id_event ="' + event_id + '"]').toggleClass('btn-resubscribe');
                    $('.btn-resubscribe[id_event ="' + event_id + '"]').hide();
                    $('.btn-subscribe[id_event ="' + event_id + '"]').show();
-                   $('.task_price').show();
+                   $('.task_price[id_event ="' + event_id + '"]').show();
 
 
                  },
@@ -653,6 +654,9 @@ var tipVisibility = 0;
         data.state = filter_info[2];
         data.task_or_event = filter_info[1]
         data.status_id = filter_info[3]
+        data.city_id = filter_info[4]
+        data.add_filter = 1;
+        data.search = $(this).val()
 
 
         data.page = page;
