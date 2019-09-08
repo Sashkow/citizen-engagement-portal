@@ -356,7 +356,7 @@ class Event(models.Model):
                                     currency_quantity=self.recommended_points,
                                     currency_type=currency.currency)
             else:
-                user = TaskApplication.objects.get(event__id = self.id, executer = True).user
+                user = TaskApplication.objects.get(event__id = self.id, executor = True).user
                 points_list = PointsList.objects.create(user=user, currency=currency, points_quantity=self.recommended_points)
                 IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=1, event_id=self.id)
                 user_points = UserPoint.objects.get(user=user, currency=currency)

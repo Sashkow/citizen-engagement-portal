@@ -772,7 +772,7 @@ def task_executor(request):
     elif request.method == 'POST':
         data = request.POST
         return_dict = {}
-        if TaskApplication.objects.filter(event__id = data['event_id'], executer = True).count() == 0:
+        if TaskApplication.objects.filter(event__id = data['event_id'], executor = True).count() == 0:
             executor = TaskApplication.objects.get(event__id = data['event_id'], user__id = data['user_id'])
             executor.executer = True
             executor.save()
