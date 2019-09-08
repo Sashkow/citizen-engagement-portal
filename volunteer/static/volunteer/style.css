@@ -25,6 +25,13 @@ body{
     margin: 0 !important;
 
 }
+
+.photo-user {
+    width: 140px !important;
+    left: 68px !important;
+    height: 130px !important;
+    top: 50px;
+}
 .btn-subscribe{
     background-color:#ff7f1aff;
     border-bottom-right-radius: 25px!important;
@@ -1531,12 +1538,7 @@ img.unlocked-achievement {
 
  }
 
-     .photo-user {
-        width: 125px !important;
-        left: 60px !important;
-        height: 115px !important;
-        top: 45px;
-    }
+
 
  .ep_event_task{
     width: 100%;
@@ -2505,6 +2507,12 @@ select {
 
     width: 245px!important;
     display: inline-block;}
+    .photo-user {
+        width: 125px !important;
+        left: 60px !important;
+        height: 115px !important;
+        top: 45px;
+    }
     .profile-image{
         height: 170px !important;
 
@@ -2542,6 +2550,7 @@ form ul li{
     height: 100%;
     width: 100%;
 }
+
 
 .profile-image{
     height: 190px;
