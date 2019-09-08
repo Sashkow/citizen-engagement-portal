@@ -276,22 +276,30 @@ class Event(models.Model):
 
 
     def save(self, *args, **kwargs):
-
+        if self.city:
+            if self.city.city == "Вінниця":
+                view_box = [(49.3921, 28.3079), (49.072, 28.6219)]
+            elif self.city.city == "Житомир":
+                view_box = [(52.276012, 25.605223), (50.23924, 28.715773)]
+        else:  # khmel
+            view_box = [(49.4770, 26.9048), (49.3631, 27.0995)]
+        nom = Nominatim(user_agent="changer.in.ua", view_box=[(49.4770, 26.9048), (49.3631, 27.0995)], bounded=True)
         if self.address:
-            if self.city:
-                if self.city.city == "Вінниця":
-                    view_box = [(49.3921, 28.3079), (49.072, 28.6219)]
-                elif self.city.city == "Житомир":
-                    view_box = [(52.276012, 25.605223), (50.23924, 28.715773)]
-            else: #khmel
-                view_box = [(49.4770, 26.9048), (49.3631, 27.0995)]
-
-            nom = Nominatim(user_agent="changer.in.ua", view_box= [(49.4770, 26.9048), (49.3631, 27.0995)], bounded=True)
             point = nom.geocode(self.address)
             if point:
                 self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}
             else:
                 print('coordinates for address not found')
+        elif self.location:
+            point = nom.geocode(self.location)
+            if point:
+                self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}
+            else:
+                print('coordinates for address not found')
+        elif self.longitude and self.latitude:
+            self.geom = {'coordinates': [self.longitude, self.latitude], 'type': 'Point'}
+        else:
+            print('coordinates for address not found')
 
         # calendar part
         if self.calendar_event:

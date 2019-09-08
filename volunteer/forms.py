@@ -6,7 +6,7 @@ from django.forms import SelectDateWidget, IntegerField, TimeField, EmailField, 
 from django.forms.widgets import HiddenInput, TimeInput, EmailInput, NumberInput, TextInput, Select
 from volunteer.widgets import SelectTimeWidget
 from volunteer.models import City, DjangoUser
-#from osm_field.fields import OSMWidget
+# from osm_field.fields import OSMWidget
 
 
 
@@ -93,13 +93,13 @@ class EditEventForm(ModelForm):
                            label='Час')
     class Meta:
         model = Event
-        fields = ['name', 'date_event', 'time_event', 'address', 'city', 'status', 'contact', 'fb_page', 'description']
-        localized_fields = ('name', 'date_event', 'time_event', 'address', 'city', 'status', 'contact', 'description')
+        fields = ['name', 'date_event', 'time_event', 'location', 'city', 'status', 'contact', 'fb_page', 'description']
+        localized_fields = ('name', 'date_event', 'time_event', 'location', 'city', 'status', 'contact', 'description')
         labels = {
             'name': 'Назва',
             'date_event': 'Дата',
             'time_event': 'Час',
-            'address': 'Адреса',
+            'location': 'Адреса',
             'status': 'Статус',
             'city': 'Область',
             'fb_page': 'Facebook-сторінка',
