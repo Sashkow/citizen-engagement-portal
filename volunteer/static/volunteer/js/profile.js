@@ -944,6 +944,8 @@ $(document).on('click', '.news', function(){
             console.log('click-event-name')
             console.log($(this))
             console.log(url)
+            document.getElementsByClassName("event-navigation")[0].style.display = "none";
+
             console.log(data)
 
 
@@ -962,8 +964,10 @@ $(document).on('click', '.news', function(){
              success: function(data){
                  console.log('OK');
                  console.log('OK2');
+                 document.getElementsByClassName("event-navigation")[0].style.display = "none";
                  $(".dynamic-block").empty()
                  $(".dynamic-block").html(data.html);
+
              },
              error: function(){
              console.log('error')
