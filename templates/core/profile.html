@@ -143,7 +143,20 @@
     <nav id="sidebar" class="text-center profile-info"  style=" background-color:{{design.background_color}}">
         <div class = "side-background" style="background-image:url({{design.background.url}}); opacity:{{design.background_opacity}}"></div>
          {% csrf_token %}
-        <img class = "shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
+        {% ifequal volunteer.city|stringformat:'s' "Хмельницька" %}
+            <img class = "elem_anim shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
+            <img class = "elem_hov shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
+            <img class = "elem_anim shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">
+            <img class = "elem_hov shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">
+        {% endifequal %}
+        {% ifequal volunteer.city|stringformat:'s' "Житомирська" %}
+            <img class = "elem_anim tree" src="{% static 'volunteer/images/zhytomyr_anim/дерево(житомир).png'%} ">
+            <img class = "elem_hov tree" src="{% static 'volunteer/images/zhytomyr_anim/дерево(житомир).png'%} ">
+            <img class = "elem_anim ice-cream" src="{% static 'volunteer/images/zhytomyr_anim/мороженое(житомир).png'%} ">
+            <img class = "elem_hov ice-cream" src="{% static 'volunteer/images/zhytomyr_anim/мороженое(житомир).png'%} ">
+            <img class = "elem_anim sock" src="{% static 'volunteer/images/zhytomyr_anim/носок(житомир).png'%} ">
+            <img class = "elem_hov sock" src="{% static 'volunteer/images/zhytomyr_anim/носок(житомир).png'%} ">
+        {% endifequal %}
         <div class="user-name">
             <p get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}} {{volunteer.last_name}}</p>
         </div>
@@ -155,7 +168,7 @@
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <div class="profile-image" >
-                  <img class="img-legue" src="{{ design.photo_frame.url }}" >
+                  <img class="img-legue" id="front-image" src="{{ design.photo_frame.url }}" >
                   {% if volunteer.photo %}
                      <img class="photo-user setting-img"  src="{{ volunteer.photo.url }}">
                    {% endif %}
@@ -172,7 +185,7 @@
 
             <div class="flip-card-back">
                 <div class="profile-image-1" >
-                    <img class="img-legue" src="{{league_user.league_image.url}}" >
+                    <img class="img-legue" id="back-image" src="{{league_user.league_image.url}}" >
                 </div>
             </div>
           </div>
@@ -274,6 +287,24 @@
               animation:'perspective',
 
             })
+            tippy('.tree', {
+              content: 'Найбільші запаси лісових ресурсів!',
+              animation:'perspective',
+
+            })
+            tippy('.ice-cream', {
+              content: 'Кожна третя пачка морозива з Житомира!',
+              animation:'perspective',
+
+            })
+            tippy('.sock', {
+              content: 'На кожен вік і смак:)',
+              animation:'perspective',
+
+            })
+
+
+
             tippy('.currency-image')
             tippy('.map-icon', {
               content:'Шукай події на мапі',

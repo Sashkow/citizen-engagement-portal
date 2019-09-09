@@ -2572,13 +2572,19 @@ form ul li{
     position: absolute;
     width: 33px;
     top: 40px;
-    right: 6px;
+    left: 266px;
     opacity:0;
 }
-
-.shar:hover{
-    opacity:0.5;
-    transition-duration: 0.5s;
+.shar2{
+    position: absolute;
+    width: 33px;
+    top: 461px;
+    left: 190px;
+    opacity:0;
+}
+.elem_hov:hover{
+    opacity:0.8;
+    -webkit-animation: 0
 }
 
 .shield {
@@ -2657,4 +2663,83 @@ form ul li{
 
 #new-event-form-id #id_status option[value="4"]{
     display:none;
+}
+
+.tree {
+    position: absolute;
+    width: 65px;
+    top: 20px;
+    left: 250px;
+    opacity: 0;
+}
+
+.ice-cream {
+    position: absolute;
+    width: 65px;
+    top: 248px;
+    left: 215px;
+    opacity: 0;
+}
+
+
+.sock {
+    position: absolute;
+    width: 65px;
+    top: -11px;
+    left: 20px;
+    opacity: 0;
+}
+
+
+
+
+.shar, .tree{
+
+    animation: city_elem 10s infinite;
+}
+
+@keyframes city_elem{
+    10%{
+        opacity:0.5;
+    }
+    30%{
+        opacity:0;
+    }
+
+}
+
+.sock{
+
+    animation: sock_anim 10s infinite;
+}
+
+@keyframes sock_anim{
+    20%{
+        opacity:0;
+    }
+    30%{
+        opacity:0.5;
+    }
+    50%{
+        opacity:0;
+    }
+
+}
+
+.ice-cream, shar2{
+
+    animation: ice_cream_anim 10s infinite;
+}
+
+@keyframes ice_cream_anim{
+    50%{
+        opacity:0;
+    }
+    60%{
+        opacity:0.5;
+    }
+    80%{
+        opacity:0;
+    }
+
 }

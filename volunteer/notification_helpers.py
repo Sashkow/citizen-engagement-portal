@@ -83,6 +83,8 @@ def notification_description(notification):
             sender  = notification.actor
             if sender == None:
                 return "Акаунт відправника сповіщення було видалено"
+            if event == None:
+                return "Подію було видалено"
             event_url = reverse('volunteer_event', args=(event.id,))
             event_edit_url = reverse('form', args=(event.id,))
             task_application = TaskApplication.objects.filter(user__django_user_id=sender, event=event)

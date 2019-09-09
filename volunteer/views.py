@@ -582,11 +582,26 @@ def achivments_legaue(request):
             # returnь redirect(reverse('profile'))
             return_dict['new_league']  = League.objects.get(id = current_user.league.id).league
             league_new = League.objects.get(id=current_user.league.id)
+
+            if CityLeagueDesign.objects.filter(city=current_user.city, league=league_new).exists():
+                print(CityLeagueDesign.objects.filter(city=current_user.city, league=league_new)[0])
+                design_new = CityLeagueDesign.objects.filter(city=current_user.city, league=league_new)[0]
+            else:
+                design_new = CityLeagueDesign.objects.filter(city=None, league=league_new)[0]
+
             league_dict = model_to_dict(league_new)
+
             league_dict['league_image'] = league_new.league_image.url
-            league_dict['user_frame'] = league_new.user_frame.url
-            league_dict['background_image'] = league_new.background_image.url
+            #league_dict['user_frame'] = league_new.user_frame.url
+            league_dict['background_image'] = design_new.background.url
+            league_dict['background_color'] = design_new.background_color
+            design_dict = model_to_dict(design_new)
+            design_dict['background']= design_new.background.url
+            design_dict['photo_frame']= design_new.photo_frame.url
+
+            print(design_dict)
             return_dict['all_info']  = league_dict
+            return_dict['design_info'] = design_dict
 
 
         achievement = Achievement.objects.get(id=data['id'])
