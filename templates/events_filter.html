@@ -4,15 +4,15 @@
 {% leaflet_css %}
 
             <div class="row text-center align-items-center event-navigation">
-                <div class="col-lg-3 col-md-4 d-none d-md-block">
-                    <div class="dropdown open text-left category-filter">
+                <div class="col text-left left-event-navigation">
+                    <div class="dropdown open inline">
                         <select id="event-type" class="text-left select" url_get = "{% url 'type_filter' %}" state = "news">
                                 <option type_id = "all_digest">Категорія</option>
                            {% for type_ev in types_events %}
                                 <option type_id = "{{type_ev.id}}">{{ type_ev.type }}</option>
                             {% endfor %}
 
-                                <option type_id = "all" >Всі</option>
+
 
                         </select>
 
@@ -96,47 +96,20 @@
 
                         </div>
                     </div>
+                <div class="inline">
 
-                </div>
-                <div class="col-lg-2 d-none d-lg-block padding-0">
+
                     <img class="align-self-center filter_event_task it_is_event " url_get = "{% url 'type_filter' %}"  src="{% static 'volunteer/images/event_fiter.png' %}">
                     <img class="align-self-center task-event-hint what-img" src="{% static 'volunteer/images/what.png' %}">
 
-                    <!--<div class="event-or-task-tips  d-none">-->
-                        <!--<div class="row">-->
-                            <!--<br>-->
-                            <!--<div class="col-6 " align="center">-->
-                                <!--<img class="task-or-event-images event-select" src="{% static 'volunteer/images/event.png' %}">-->
 
-                            <!--</div>-->
-                            <!--<div class="col-6" align="center">-->
-                                <!--<img class="task-or-event-images task-select" src="{% static 'volunteer/images/task.png' %}">-->
-
-                            <!--</div>-->
-                             <!--<div class="col-6 " align="center">-->
-                                <!--<p>Подія</p>-->
-                            <!--</div>-->
-                            <!--<div class="col-6" align="center">-->
-                                <!--<p>Завдання</p>-->
-                            <!--</div>-->
-
-                       <!--</div>-->
-
-                        <!--<div>-->
-                            <!--<p class="text-describe">-->
-                            <!--Подія на відміну від завдання має мати чітку дату і адресу, а також передбачає зібрання людей для фізичного вирішення проблеми.-->
-                                <!--<strong>Приклад події</strong>: суботник у міському парку, день донора. <strong>Приклад  завдання</strong>: віднести 5 іграшок у дитячий будинок, редизайн схеми руху міського транспорту.-->
-                            <!--</p>-->
-                        <!--</div>-->
-                    <!--</div>-->
 
                     <img class="align-self-center filter_event_task it_is_task" url_get = "{% url 'type_filter' %}"    src="{% static 'volunteer/images/filter_task.png' %}">
-
                 </div>
-                <div class="col-lg-2 col-md-2 d-none d-md-block">
-                    <div class="dropdown open text-left category-filter">
+
+                    <div class="dropdown open inline">
                         <select id="event-status" class="text-left select" url_get = "{% url 'type_filter' %}">
-                                <option status_id = "none" selected>статус</option>
+                                <option status_id = "none" selected>Cтатус</option>
                             {% for status in status_events %}
                                 <option status_id = "{{status.id}}" >{{status.status}}</option>
                             {% endfor %}
@@ -145,47 +118,49 @@
                                 {% leaflet_map "not_main" %}
                             </div>
                     </div>
-                </div>
 
-                <div class="col-lg-2 col-md-2 d-none d-md-block">
-                    <div class="dropdown open text-left category-filter">
+                    <div class="dropdown open  inline">
                         <select id="event-city" class="text-left select" url_get = "{% url 'type_filter' %}">
-                                {% if city %}
-                                    <option city_id = "none">місто</option>
-                                {% else %}
-                                    <option city_id = "none" selected>місто</option>
-                                {% endif %}
+
+                                <option city_id = "none" selected>Область</option>
+
                             {% for current_city in cities %}
-                                {% if current_city.id == city.id %}
-                                    <option city_id = "{{current_city.id}}" selected>{{current_city.city}}</option>
-                                {% else %}
-                                    <option city_id = "{{current_city.id}}">{{current_city.city}}</option>
-                                {% endif %}
+
+                                <option city_id = "{{current_city.id}}">{{current_city.city}}</option>
+
                             {% endfor %}
                         </select>
+
                             <div class="map-contailer">
                                 {% leaflet_map "not_main" %}
                             </div>
-                    </div>
-                </div>
+                        <!--here is search-->
 
-                <div class="col-7 d-block d-md-none">
+
+                    </div>
+                    <div class="inline">
+                    <form class="form-inline ">
+                        <input id="event-search" url_get="{% url 'type_filter' %}" type="text" placeholder="Пошук">
+                    </form></div>
+
+
+                <div class="small-filter">
                         <p class="margin-0 filter-setting"> Налаштувати фільтр <img class="filter-image" src="{% static 'volunteer/images/filter.png' %}" style="color: #ff7f1aff;"> </p>
                 </div>
 
-                <div class="col-lg-3 col-md-4 col-5">
+
 
                         <!--<div class="themap" get_url="{% url 'map' %}">-->
                             <!--<img class="align-self-center float-left nav-add"  src="{% static 'volunteer/images/map.png' %}">-->
                         <!--</div>-->
-                    <div class = "text-right float-right">
-                        <a href="{% url 'map' %}">
-                            <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/map.png' %}">
+                    <div class = "text-right float-right ">
+                        <a href="{% url 'map' %}" target="_blank">
+                            <img class="align-self-center float-left nav-add map-icon" src="{% static 'volunteer/images/map.png' %}">
                         </a>
 
 
-                    <a href="{% url 'fullcalendar' %}">
-                        <img class="align-self-center float-left nav-add" src="{% static 'volunteer/images/calendar.png' %}">
+                    <a href="{% url 'fullcalendar' %}" target="_blank" >
+                        <img class="align-self-center float-left nav-add calendar-icon" src="{% static 'volunteer/images/calendar.png' %}">
                     </a>
                     </div></div>
             </div >

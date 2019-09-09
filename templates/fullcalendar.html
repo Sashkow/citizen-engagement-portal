@@ -20,9 +20,39 @@
 <script type='text/javascript' src="{% static 'volunteer/calendar/fullcalendar/dist/locale-all.js' %}"></script>
     </head>
 
+
     <body>
-    <h3 id="demo">Календар</h3>
-    <p style="clear:both">
+         <style>
+.fc th, .fc td {
+    background: white;
+}
+*{
+font-family: 'Ubuntu',sans-serif !important;
+}
+
+.fc-day-number {
+    padding: 2px 5px!important;
+}
+body{
+    padding-top: 50px;
+    text-align: center;
+    background: #4DBCBC;
+    height: 100%;
+}
+
+#calendar{
+    margin: 15px;
+    max-width: 800px;
+    display: inline-block;
+}
+
+.fc-left h2 {
+    font-size: 22px;
+    color: lightcyan;
+}
+
+    </style>
+
 
         <div id="body">
 

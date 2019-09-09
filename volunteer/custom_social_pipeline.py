@@ -7,6 +7,7 @@ def save_user_name(backend, user, response, *args, **kwargs):
     second_name = backend.strategy.session_get('second_name')
     city_id = backend.strategy.session_get('city')
     if city_id:
+        print("I am in")
         city = City.objects.get(id=city_id)
     else:
         city = None
@@ -15,7 +16,7 @@ def save_user_name(backend, user, response, *args, **kwargs):
     if not VolunteerUser.objects.filter(django_user_id=django_user).exists():
         volunteer = VolunteerUser.objects.create(django_user_id = django_user)
         
-    elif len(VolunteerUser.objects.filter(django_user_id=django_user))> 1:
+    elif len(VolunteerUser.objects.filter(django_user_id=django_user)) > 1:
         print("User Duplicates!")
         return None #404
     else:
@@ -25,6 +26,7 @@ def save_user_name(backend, user, response, *args, **kwargs):
         volunteer.city = city
 
     if first_name or second_name:
+        print("I am in")
         volunteer.first_name = first_name
         volunteer.last_name = second_name
 

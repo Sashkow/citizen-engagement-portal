@@ -66,9 +66,9 @@ class EventAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(EventAdmin, self).get_queryset(request)
         user = User.objects.filter(django_user_id=request.user).first()
-        if user:
-            city = user.city
-            qs = qs.filter(city=city)
+        # if user:
+        #     city = user.city
+        #     qs = qs.filter(city=city)
         return qs
 
     list_display = [field.name for field in Event._meta.fields]
@@ -147,6 +147,11 @@ class LeagueAdmin(admin.ModelAdmin):
     list_display = [field.name for field in League._meta.fields]
     exclude = ['ID']
 admin.site.register(League, LeagueAdmin)
+
+class CityLeagueDesignAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in CityLeagueDesign._meta.fields]
+    exclude = ['ID']
+admin.site.register(CityLeagueDesign, CityLeagueDesignAdmin)
 
 class CurrencyAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Currency._meta.fields]

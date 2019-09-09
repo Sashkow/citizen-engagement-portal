@@ -9,7 +9,6 @@
 # def index(request):
 #     return render(request, 'index.html')
 #     # return HttpResponse('ok, Google')
-
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm, UserCreationForm, AuthenticationForm
@@ -184,6 +183,12 @@ def profile(request):
 
 
 
+    if CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league).exists():
+        print(CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0])
+        design = CityLeagueDesign.objects.filter(city=volunteer.city, league=volunteer.league)[0]
+    else:
+        design = CityLeagueDesign.objects.filter(city=None, league=volunteer.league)[0]
+
     if django_user.first_name:
         name = django_user.first_name
     elif django_user.username:
@@ -220,6 +225,7 @@ def profile(request):
         'volunteer':volunteer,
         'league_user':league_user,
         'name':name,
+        'design':design,
         'events':events,
         'events_subs':events_subs,
         'events_part':events_part,
@@ -381,6 +387,11 @@ def type_filter(request):
     data = request.GET
     print(data)
     parametrs = [data['type'], data['page'], data['state'], data['task_or_event'], data['status_id'], data['city_id']]
+    if 'search' in data:
+        search = data['search']
+    else:
+        search = None
+
     types_events = EventsType.objects.all()
     curr_category = {}
     for type_e in types_events:
@@ -389,8 +400,20 @@ def type_filter(request):
     if data['type'] not in ['all', 'all_digest'] and  not Event.objects.filter(events_type=EventsType.objects.get(id=data['type'])).exists():
         return JsonResponse(return_dict)
     else:
-        events, events_part, events_subs, events_quantity, events_org, events_task_app = get_events(Event, TaskApplication,  Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parametrs, EventsType)
-        print(events)
+        events, events_part, events_subs, events_quantity, events_org, events_task_app = get_events(
+            Event,
+            TaskApplication,
+            Status,
+            User,
+            DigestList,
+            EventsSubscriber,
+            EventsParticipant,
+            EventsPhoto,
+            django_user,
+            events_per_page,
+            parametrs,
+            EventsType,
+            search)
         types_events = EventsType.objects.all()
         pages, pages_range = get_pages_number(events_quantity, events_per_page, parametrs[1])
         cont = {
@@ -415,6 +438,7 @@ def type_filter(request):
             filter_html = render_to_string('events_filter.html', cont)
             return_dict['filter_html'] = filter_html
         return JsonResponse(return_dict)
+
 
 
 def profile_edit(request):
@@ -558,11 +582,26 @@ def achivments_legaue(request):
             # returnь redirect(reverse('profile'))
             return_dict['new_league']  = League.objects.get(id = current_user.league.id).league
             league_new = League.objects.get(id=current_user.league.id)
+
+            if CityLeagueDesign.objects.filter(city=current_user.city, league=league_new).exists():
+                print(CityLeagueDesign.objects.filter(city=current_user.city, league=league_new)[0])
+                design_new = CityLeagueDesign.objects.filter(city=current_user.city, league=league_new)[0]
+            else:
+                design_new = CityLeagueDesign.objects.filter(city=None, league=league_new)[0]
+
             league_dict = model_to_dict(league_new)
+
             league_dict['league_image'] = league_new.league_image.url
-            league_dict['user_frame'] = league_new.user_frame.url
-            league_dict['background_image'] = league_new.background_image.url
+            #league_dict['user_frame'] = league_new.user_frame.url
+            league_dict['background_image'] = design_new.background.url
+            league_dict['background_color'] = design_new.background_color
+            design_dict = model_to_dict(design_new)
+            design_dict['background']= design_new.background.url
+            design_dict['photo_frame']= design_new.photo_frame.url
+
+            print(design_dict)
             return_dict['all_info']  = league_dict
+            return_dict['design_info'] = design_dict
 
 
         achievement = Achievement.objects.get(id=data['id'])
@@ -648,7 +687,7 @@ def event_edit(request, id = None):
             tasks_form_list.append(EventOrgTaskForm(instance=task))
             cont['tasks_form_list'] = tasks_form_list
 
-    if event.events_or_task == False and TaskApplication.objects.filter(event = event).exists() and not TaskApplication.objects.filter(event = event, executer = True).exists():
+    if event.events_or_task == False and TaskApplication.objects.filter(event = event).exists() and not TaskApplication.objects.filter(event = event, executor = True).exists():
         zero_executor = True
         cont['zero_executor'] = zero_executor
     html = render_to_string('event_edit.html', cont, request=request)
@@ -748,7 +787,7 @@ def task_executor(request):
     elif request.method == 'POST':
         data = request.POST
         return_dict = {}
-        if TaskApplication.objects.filter(event__id = data['event_id'], executer = True).count() == 0:
+        if TaskApplication.objects.filter(event__id = data['event_id'], executor = True).count() == 0:
             executor = TaskApplication.objects.get(event__id = data['event_id'], user__id = data['user_id'])
             executor.executer = True
             executor.save()
@@ -798,27 +837,34 @@ def replace_coordinates(one, two, three, four):
 @login_required
 def map_show(request):
     volunteer = VolunteerUser.objects.filter(django_user_id=request.user).first()
-    if volunteer:
-        if volunteer.city:
-            if volunteer.city.city == "Вінниця":
-                boundaries = {
+    cities = City.objects.all()
+    # if volunteer:
+    #     if volunteer.city:
+    #         if volunteer.city.city == "Вінницька":
+    #             boundaries = {
+    #
+    #                 'SPATIAL_EXTENT': replace_coordinates(28.216839,49.216027,28.544369,49.322549),
+    #                 'DEFAULT_CENTER': (49.269317,28.380604)
+    #             }
+    #             return render(request, 'map.html', context={'boundaries': boundaries, "cities":cities})
+    #         elif volunteer.city.city == "Житомирська":
+    #             boundaries = {
+    #                 'SPATIAL_EXTENT': (25.605223, 28.715773, 50.23924, 52.276012),
+    #                 'DEFAULT_CENTER': (50.257632, 28.660498),
+    #             }
+    #             return render(request, 'map.html', context={'boundaries': boundaries, "cities":cities})
+    #
+    # boundaries = {
+    #     'SPATIAL_EXTENT': (11.163889, 42.387222, 50.198056, 59.34444),
+    #     'DEFAULT_CENTER': (49.4196404, 26.9793793),
+    # }
+    # boundaries = {
+    #     'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
+    #     'DEFAULT_CENTER': (49.4196404, 26.9793793),
+    # }
+    #
 
-                    'SPATIAL_EXTENT': replace_coordinates(28.216839,49.216027,28.544369,49.322549),
-                    'DEFAULT_CENTER': (49.269317,28.380604)
-                }
-                return render(request, 'map.html', context={'boundaries': boundaries})
-            elif volunteer.city.city == "Житомир":
-                boundaries = {
-                    'SPATIAL_EXTENT': (25.605223, 28.715773, 50.23924, 52.276012),
-                    'DEFAULT_CENTER': (50.257632, 28.660498),
-                }
-                return render(request, 'map.html', context={'boundaries': boundaries})
-
-    boundaries = {
-        'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
-        'DEFAULT_CENTER': (49.4196404, 26.9793793),
-    }
-    return render(request, 'map.html', context={'boundaries':boundaries})
+    return render(request, 'map.html', context={"cities":cities})
 
     # html = render_to_string('map.html', cont)
     # return_dict = {'html': html}

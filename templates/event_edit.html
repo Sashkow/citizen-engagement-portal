@@ -24,17 +24,18 @@
                     {% else %}
                     <p>{{event.status}} </p>
                     {% endif %}
-                    <p class="ep_event_reg_date"> Не забудьте змінити статус на Проведено, щоб учасники отримати монети!</p>
+                    <p class="ep_event_reg_date"> Не забудьте змінити статус на Проведено, щоб учасники отримали монети!</p>
             </div>
         </div>
         <div class="row">
             <div class="col-12 edit-event-form">
                 {{form.description.errors}}
                 {{form.description}}
+
                 <br>
                  <label for="{{ form.address.id_for_label }}">Адреса:</label>
-                {{form.address.errors}}
-                {{form.address}}
+                {{form.location.errors}}
+                {{form.location}}
                 <br>
                 <label for="{{ form.date_event.id_for_label }}">Дата:</label>
                 {{form.date_event.errors}}
@@ -55,6 +56,12 @@
                 <label for="{{ form.contact.id_for_label }}">Введіть Ваш контактний e-mail:</label>
                 {{form.contact.errors}}
                 {{form.contact}}
+                <br>
+                <label for="{{ form.fb_page.id_for_label }}">Facebook-сторіка події:</label>
+                {{form.fb_page.errors}}
+                {{form.fb_page}}
+
+
                 <br><br>
                 <button type="submit " class="edit-event-send btn btn-success" >Зберегти зміни</button>
             </div>

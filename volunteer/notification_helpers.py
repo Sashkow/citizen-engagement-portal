@@ -83,6 +83,8 @@ def notification_description(notification):
             sender  = notification.actor
             if sender == None:
                 return "Акаунт відправника сповіщення було видалено"
+            if event == None:
+                return "Подію було видалено"
             event_url = reverse('volunteer_event', args=(event.id,))
             event_edit_url = reverse('form', args=(event.id,))
             task_application = TaskApplication.objects.filter(user__django_user_id=sender, event=event)
@@ -154,7 +156,7 @@ def notification_image(notification):
                 return image
 
         if notifiation_type.id == 3: # welcome
-            image = League.objects.get(league="Пластикова ліга").league_image.url
+            image = League.objects.get(league="Дерев'яна ліга").league_image.url
             return image
 
         if notifiation_type.id == 4: # good job

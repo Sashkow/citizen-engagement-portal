@@ -1,4 +1,7 @@
 from django.db import models
+
+
+from osm_field.fields import LatitudeField, LongitudeField, OSMField
 from django.contrib.auth.models import User as DjangoUser
 from django.forms.models import model_to_dict
 from notifications.models import Notification
@@ -120,7 +123,7 @@ class Status(models.Model):
         return self.status
 
 class City(models.Model):
-    DEFAULT_CITY = 'Хмельницький'
+    DEFAULT_CITY = 'Хмельницька'
 
     city = models.CharField(max_length=100)
 
@@ -132,22 +135,23 @@ class City(models.Model):
         return self.city
 
 
+
 class League(models.Model):
     DEFAULT_PK = 1
     league = models.CharField(max_length = 80)
     quantity_achievement  =models.IntegerField()
-    league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
-    user_frame = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    # league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'achievements'),null=True, blank=True)
+    league_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'achievements'), null=True, blank=True)
     background_color = models.CharField(max_length =20, null=True, blank=True)
     background_image = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT,'profile_backgrounds'), null=True, blank=True)
-    color_league_txt = models.CharField(max_length =20, null=True, blank=True)
-    color_volunteer_name = models.CharField(max_length =20, null=True, blank=True)
-    color_menu_item = models.CharField(max_length =20, null=True, blank=True)
-    color_current_grad1 = models.CharField(max_length =20, null=True, blank=True)
-    color_current_grad2 = models.CharField(max_length =20, null=True, blank=True)
-    color_current_text = models.CharField(max_length =20, null=True, blank=True)
-    color_current_border = models.CharField(max_length =20, null=True, blank=True)
-    color_not_text = models.CharField(max_length =20, null=True, blank=True)
+    # color_league_txt = models.CharField(max_length =20, null=True, blank=True)
+    # color_volunteer_name = models.CharField(max_length =20, null=True, blank=True)
+    # color_menu_item = models.CharField(max_length =20, null=True, blank=True)
+    # color_current_grad1 = models.CharField(max_length =20, null=True, blank=True)
+    # color_current_grad2 = models.CharField(max_length =20, null=True, blank=True)
+    # color_current_text = models.CharField(max_length =20, null=True, blank=True)
+    # color_current_border = models.CharField(max_length =20, null=True, blank=True)
+    # color_not_text = models.CharField(max_length =20, null=True, blank=True)
     img_user_width = models.CharField(max_length =4, null=True, blank=True)
     img_user_height = models.CharField(max_length =4, null=True, blank=True)
     img_user_height_corr = models.CharField(max_length =4, null=True, blank=True)
@@ -156,13 +160,37 @@ class League(models.Model):
         return self.league
 
 
+class CityLeagueDesign(models.Model):
+    DEFAULT_CITY_LEAGUE = 5
+    background = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'profile_backgrounds'), null=True,
+                                           blank=True)
+    background_opacity = models.CharField(max_length=20, null=True, blank=True)
+
+    photo_frame = models.FileField(upload_to=os.path.join(settings.MEDIA_ROOT, 'profile_backgrounds'), null=True,
+                                  blank=True)
+    background_color = models.CharField(max_length=20, null=True, blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Область')
+    league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True)
+    color_league_txt = models.CharField(max_length=20, null=True, blank=True)
+    color_volunteer_name = models.CharField(max_length=20, null=True, blank=True)
+    color_menu_item = models.CharField(max_length=20, null=True, blank=True)
+    color_current_grad1 = models.CharField(max_length=20, null=True, blank=True)
+    color_current_grad2 = models.CharField(max_length=20, null=True, blank=True)
+    color_current_text = models.CharField(max_length=20, null=True, blank=True)
+    color_current_border = models.CharField(max_length=20, null=True, blank=True)
+    color_not_text = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.background)
+
+
 class User(models.Model):
     first_name = models.CharField(max_length=80, verbose_name="Ім'я")
     last_name = models.CharField(max_length=80, verbose_name='Прізвище')
     date_of_registration = models.DateField(auto_now_add=True)
     photo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT,'avatars'), null=True, blank=True)
     league = models.ForeignKey(League, on_delete=models.CASCADE, null=True, blank=True, default=League.DEFAULT_PK)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Місто')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, default='1', null=True, blank=True, verbose_name='Область')
     blocked = models.BooleanField(default=False)
     django_user_id = models.OneToOneField(DjangoUser, on_delete=models.CASCADE)
 
@@ -210,7 +238,6 @@ class DigestList(models.Model):
     type = models.ForeignKey(EventsType, on_delete=models.CASCADE)
 
 
-
 class Event(models.Model):
     name = models.CharField(max_length=300)
     organizer = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -229,6 +256,11 @@ class Event(models.Model):
     description = models.TextField(null=True, blank=True)
     geom = PointField(null=True, blank=True)
     calendar_event = models.ForeignKey(CalendarEvent, on_delete=models.SET_NULL, null=True, blank=True)
+    location = OSMField(lat_field='latitude', lon_field='longitude',null=True, blank=True)
+    latitude = LatitudeField(null=True, blank=True)
+    longitude = LongitudeField(null=True, blank=True)
+    fb_page = models.URLField(null=True, blank=True)
+
 
     @property
     def get_events_type_url(self):
@@ -244,22 +276,30 @@ class Event(models.Model):
 
 
     def save(self, *args, **kwargs):
-
+        if self.city:
+            if self.city.city == "Вінниця":
+                view_box = [(49.3921, 28.3079), (49.072, 28.6219)]
+            elif self.city.city == "Житомир":
+                view_box = [(52.276012, 25.605223), (50.23924, 28.715773)]
+        else:  # khmel
+            view_box = [(49.4770, 26.9048), (49.3631, 27.0995)]
+        nom = Nominatim(user_agent="changer.in.ua", view_box=[(49.4770, 26.9048), (49.3631, 27.0995)], bounded=True)
         if self.address:
-            if self.city:
-                if self.city.city == "Вінниця":
-                    view_box = [(49.3921, 28.3079), (49.072, 28.6219)]
-                elif self.city.city == "Житомир":
-                    view_box = [(52.276012, 25.605223), (50.23924, 28.715773)]
-            else: #khmel
-                view_box = [(49.4770, 26.9048), (49.3631, 27.0995)]
-
-            nom = Nominatim(user_agent="changer.in.ua", view_box=view_box, bounded=True)
             point = nom.geocode(self.address)
             if point:
                 self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}
             else:
                 print('coordinates for address not found')
+        elif self.location:
+            point = nom.geocode(self.location)
+            if point:
+                self.geom = {'coordinates':[point.longitude, point.latitude], 'type':'Point'}
+            else:
+                print('coordinates for address not found')
+        elif self.longitude and self.latitude:
+            self.geom = {'coordinates': [self.longitude, self.latitude], 'type': 'Point'}
+        else:
+            print('coordinates for address not found')
 
         # calendar part
         if self.calendar_event:
@@ -324,7 +364,7 @@ class Event(models.Model):
                                     currency_quantity=self.recommended_points,
                                     currency_type=currency.currency)
             else:
-                user = TaskApplication.objects.get(event__id = self.id, executer = True).user
+                user = TaskApplication.objects.get(event__id = self.id, executor = True).user
                 points_list = PointsList.objects.create(user=user, currency=currency, points_quantity=self.recommended_points)
                 IncreasePointsInfo.objects.create(increase=points_list, increase_type_id=1, event_id=self.id)
                 user_points = UserPoint.objects.get(user=user, currency=currency)
@@ -613,6 +653,8 @@ class NotificaationType(models.Model):
     image_field_name = models.CharField(max_length = 100)
 
 
+
+
 # def user_pre_save(sender, instance, **kwargs):
 #     pass
 #
@@ -637,11 +679,6 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         django_user = instance
         volunteer = User.objects.create(django_user_id=django_user)
-
-        if django_user.first_name or django_user.last_name:
-            volunteer.first_name = django_user.first_name
-            volunteer.last_name = django_user.last_name
-
         volunteer.save()
 
 @receiver(post_save, sender=DjangoUser)

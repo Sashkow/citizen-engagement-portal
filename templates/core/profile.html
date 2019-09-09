@@ -22,20 +22,15 @@
     {% leaflet_js %}
     {% leaflet_css %}
 
-    <style>
-        p.ribbon{
-            color: {{volunteer.league.color_league_txt}};
-            font-size: 16px;
-            padding-top: 3px;
+<style>
 
-        }
 
         .volunteer-name{
-            color: {{volunteer.league.color_volunteer_name}};
+            color: {{design.color_volunteer_name}};
         }
 
         .curr_quat{
-            color: {{volunteer.league.color_menu_item}};
+            color: {{design.color_menu_item}};
             font-size: 12px;
 
         }
@@ -47,36 +42,32 @@
 
 
         .item-menu{
-            color: {{volunteer.league.color_menu_item}};
+            color: {{design.color_menu_item}};
             font-size: 16px;
         }
 
         .current-menu-item{
             background-image:linear-gradient(
               120deg,
-              {{volunteer.league.color_current_grad1}},
-              {{volunteer.league.color_current_grad2}},
-              {{volunteer.league.color_current_grad1}}
+              {{design.color_current_grad1}},
+              {{design.color_current_grad2}},
+              {{design.color_current_grad1}}
             );
-            border-left: 1.3vh solid {{volunteer.league.color_current_border}} ;
+            border-left: 1.3vh solid {{design.color_current_border}} ;
         }
 
-        div.current-menu-item p.item-menu{
-            color: {{volunteer.league.color_current_text}}!important;
+        div.current-menu-item .item-menu{
+            color: {{design.color_current_text}}!important;
 
         .leaflet-container {
                 height:100%!important;
                              }
         }
 
-        .photo-user{
-           width: {{volunteer.league.img_user_width}};
-           right: {{volunteer.league.img_user_height}};
-           height: {{volunteer.league.img_user_height_corr}};
-        }
+
 
         .notif-col{
-            color:{{volunteer.league.color_not_text}};
+            color:{{design.color_not_text}};
         };
 
     </style>
@@ -149,27 +140,58 @@
 
 <div class="wrapper">
 
-    <nav id="sidebar" class="text-center profile-info"  style="background-image:url({{volunteer.league.background_image.url}}); background-color:{{volunteer.league.background_color}}">
+    <nav id="sidebar" class="text-center profile-info"  style=" background-color:{{design.background_color}}">
+        <div class = "side-background" style="background-image:url({{design.background.url}}); opacity:{{design.background_opacity}}"></div>
          {% csrf_token %}
+        {% ifequal volunteer.city|stringformat:'s' "Хмельницька" %}
+            <img class = "elem_anim shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
+            <img class = "elem_hov shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
+            <img class = "elem_anim shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">
+            <img class = "elem_hov shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">
+        {% endifequal %}
+        {% ifequal volunteer.city|stringformat:'s' "Житомирська" %}
+            <img class = "elem_anim tree" src="{% static 'volunteer/images/zhytomyr_anim/дерево(житомир).png'%} ">
+            <img class = "elem_hov tree" src="{% static 'volunteer/images/zhytomyr_anim/дерево(житомир).png'%} ">
+            <img class = "elem_anim ice-cream" src="{% static 'volunteer/images/zhytomyr_anim/мороженое(житомир).png'%} ">
+            <img class = "elem_hov ice-cream" src="{% static 'volunteer/images/zhytomyr_anim/мороженое(житомир).png'%} ">
+            <img class = "elem_anim sock" src="{% static 'volunteer/images/zhytomyr_anim/носок(житомир).png'%} ">
+            <img class = "elem_hov sock" src="{% static 'volunteer/images/zhytomyr_anim/носок(житомир).png'%} ">
+        {% endifequal %}
         <div class="user-name">
             <p get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}} {{volunteer.last_name}}</p>
+        </div>
+        <!--<div class="ribbon-div">-->
+             <!--<p class="ribbon ">{{volunteer.league}}</p>-->
+        <!--</div>-->
+        <div class="shield">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="profile-image" >
+                  <img class="img-legue" id="front-image" src="{{ design.photo_frame.url }}" >
+                  {% if volunteer.photo %}
+                     <img class="photo-user setting-img"  src="{{ volunteer.photo.url }}">
+                   {% endif %}
+              </div>
+                 <!--<img class="user-league-info league-logo setting-img"  src="{{league_user.league_image.url}}">-->
+                    <!--{% if volunteer.photo %}-->
+                        <!--<img class="photo-user setting-img"  src="{{ volunteer.photo.url }}">-->
+                    <!--{% else %}-->
+                        <!--<img class="photo-user setting-img" src="{% static  'volunteer/images/user_profile_default.png' %}" >-->
+                    <!--{% endif %}-->
+                 <!--{{league_user.user_frame.url}}-->
+                 <!--<img class="user-league-info photo-frame" src="{{league_user.user_frame.url}}">-->
+            </div>
+
+            <div class="flip-card-back">
+                <div class="profile-image-1" >
+                    <img class="img-legue" id="back-image" src="{{league_user.league_image.url}}" >
+                </div>
+            </div>
+          </div>
+        </div></div>
 
 
-        </div>
-        <div class="ribbon-div">
-             <p class="ribbon ">{{volunteer.league}}</p>
-        </div>
-
-        <div class="profile-image" >
-             <img class="user-league-info league-logo setting-img" get_url="{% url 'profile_edit' %}" src="{{league_user.league_image.url}}">
-                {% if volunteer.photo %}
-                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{{ volunteer.photo.url }}">
-                {% else %}
-                    <img class="photo-user setting-img" get_url="{% url 'profile_edit' %}" src="{% static  'volunteer/images/user_profile_default.png' %}" >
-                {% endif %}
-             <!--{{league_user.user_frame.url}}-->
-             <img class="user-league-info photo-frame" get_url="{% url 'profile_edit' %}" src="{{league_user.user_frame.url}}">
-        </div>
 
         <div class="own-progress-bar">
             <div class="own-progress-league" style="width: {{achieve_quant|divide:league_user.quantity_achievement|multiply:100|to_int}}%">
@@ -185,7 +207,7 @@
             {% for point in user_points %}
                 {% if forloop.first %} <div class="row justify-content-center padding-0"> {% endif %}
                     <div class="col-auto padding-0">
-                        <img class="currency-image" src="{{ point.currency.image.url }}" >
+                        <img class="currency-image" src="{{ point.currency.image.url }}"  data-tippy-content='Монета категорії "{{ point.currency.type_event }}"'>
                         <p id_curr = "{{point.currency.id}}" class="curr_quat">{{point.quantity}}</p>
                     </div>
                 {% if forloop.counter|divisibleby:4%} </div><div class="row justify-content-center padding-0"> {%endif%}
@@ -245,8 +267,9 @@
             <div class="padding-0"  style="background-color: #f9ffefff;
                                          background-image:url({% static 'volunteer/images/bg_plastic1.png'%}); min-height:100%;">
 
+                 {% include 'events_filter.html' %}
                 <div class="dynamic-block">
-                        {% include 'events_filter.html' %}
+
                        {% include 'events_result.html' %}
                 </div>
             </div>
@@ -259,17 +282,51 @@
     <!--look here-->
 
     <script type="text/javascript">
+            tippy('.shar', {
+              content: 'Щорічний парад повітряних куль!',
+              animation:'perspective',
+
+            })
+            tippy('.tree', {
+              content: 'Найбільші запаси лісових ресурсів!',
+              animation:'perspective',
+
+            })
+            tippy('.ice-cream', {
+              content: 'Кожна третя пачка морозива з Житомира!',
+              animation:'perspective',
+
+            })
+            tippy('.sock', {
+              content: 'На кожен вік і смак:)',
+              animation:'perspective',
+
+            })
 
 
-        tippy('.league-logo', {
-          content: 'Відредагуйте свій профіль!',
-          animation:'perspective',
-        })
-      tippy('.own-progress-bar', {
-          content: 'Відкрий 5 досягень для переходу у наступну лігу!',
-          animation:'perspective',
-          placement:'right-end',
-        })
+
+            tippy('.currency-image')
+            tippy('.map-icon', {
+              content:'Шукай події на мапі',
+              animation:'perspective',
+              placement:'left-end',
+            })
+            tippy('.calendar-icon', {
+              content:'Календар твоїх подій',
+              animation:'perspective',
+              placement:'left-end',
+            })
+              tippy('.first-name', {
+              content: 'Відредагуйте свій профіль!',
+              animation:'perspective',
+              placement:'right-end',
+            })
+            tippy('.own-progress-bar', {
+              content: 'Відкрий 5 досягень для переходу у наступну лігу!',
+              animation:'perspective',
+              placement:'right-end',
+            })
+
 
 
     </script>

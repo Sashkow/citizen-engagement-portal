@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'leaflet',
     'djgeojson',
     'schedule',
-
+    'osm_field'
 
 ]
 
@@ -207,6 +207,11 @@ LOGIN_REDIRECT_URL = 'success_oauth'
 LOGOUT_REDIRECT_URL = 'intropage'
 
 
+SESSION_COOKIE_SECURE = False
+
+
+
+
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['first_name', 'second_name', 'city']
@@ -239,9 +244,9 @@ DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
 # view_box = [(49.4770, 26.9048), (49.3631, 27.0995)] # khmelnitsky city
 # view_box = [(49.3921, 28.3079), (49.072, 28.6219)]  # vinnicya city
 LEAFLET_CONFIG = {
-    'SPATIAL_EXTENT': (12.163889, 39.387222, 50.198056, 57.334444),
-    'DEFAULT_CENTER': ( 49.4196404, 26.9793793),
-    'DEFAULT_ZOOM': 12,
+    'SPATIAL_EXTENT': (13.163889, 39.387222, 52.198056, 58.334444),
+    'DEFAULT_CENTER': (48.8196404, 31.0793793),
+    'DEFAULT_ZOOM': 6,
     'MIN_ZOOM': 5,
     'MAX_ZOOM': 18,
 }

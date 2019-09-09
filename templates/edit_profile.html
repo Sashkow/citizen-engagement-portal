@@ -3,19 +3,19 @@
 
 
 
-    <div class="row text-left" style="padding: 30px 30px">
+    <div class="row text-left edit-profile" >
         <div class="col">
         <form class="edit-profile-send" action="{% url 'profile_edit' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="{{ form.first_name.id_for_label}}">Ім'я:</label>
                 {{form.first_name.errors}}<br>
-                {{form.first_name}}<br><br>
+                {{form.first_name}}<br>
             <label for="{{ form.last_name.id_for_label}}">Прізвище:</label>
                 {{form.last_name.errors}}<br>
-                {{form.last_name}}<br><br>
-             <label for="{{ form.city.id_for_label}}">Місто:</label>
+                {{form.last_name}}<br>
+             <label for="{{ form.city.id_for_label}}">Область:</label>
                 {{form.city.errors}}<br>
-                {{form.city}}<br><br>
+                {{form.city}}<br>
             <label for="{{ form.photo.id_for_label}}"> Змініть фотографію профілю! </label>
                 {{form.photo.errors}}<br>
                 {{form.photo}}<br>

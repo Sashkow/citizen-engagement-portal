@@ -4,9 +4,13 @@
     {% leaflet_js %}
     {% leaflet_css %}
     <style>
+        body{
+            background:lightgrey;}
       .leaflet-container { height: 100%; }
     </style>
     <script type="text/javascript">
+
+
 
 
 function onEachFeature(feature, layer) {
@@ -58,7 +62,22 @@ function onEachFeature(feature, layer) {
     </script>
   </head>
   <body>
-    {% leaflet_map "not_main" settings_overrides=boundaries %}
+   <div class="dropdown open text-left category-filter">
+                        <!--<select id="event-city" class="text-left select" url_get = "{% url 'type_filter' %}">-->
+
+                                <!--<option city_id = "none" selected>Область</option>-->
+
+                            <!--{% for current_city in cities %}-->
+
+                                <!--<option city_id = "{{current_city.id}}">{{current_city.city}}</option>-->
+
+                            <!--{% endfor %}-->
+                        <!--</select>-->
+                            <div class="map-contailer">
+                                {% leaflet_map "not_main" settings_overrides=boundaries%}
+                            </div>
+                    </div>
+    <!--{% leaflet_map "not_main"  %}-->
 
 
   </body>

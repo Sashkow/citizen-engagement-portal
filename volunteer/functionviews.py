@@ -1,4 +1,6 @@
 from volunteer.models import City
+from django.contrib.postgres.search import SearchVector
+
 
 
 #return events, events_part, events_subs
@@ -20,26 +22,41 @@ def make_filter(parameters, DigestList, EventsType, User, Status, django_user):
     return filter
 
 
-def get_events(Event, TaskApplication, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType):
+def get_events(Event, TaskApplication, Status, User, DigestList, EventsSubscriber, EventsParticipant, EventsPhoto, django_user, events_per_page, parameters, EventsType, search=None):
 
     from_page = events_per_page * int(parameters[1]) - events_per_page
     to_page = events_per_page * int(parameters[1])
 
+    if search:
+        search_events = Event.objects.annotate(
+            search=SearchVector(
+                'name',
+                'organizer__first_name',
+                'organizer__last_name',
+                'city__city',
+                'address',
+                'description',
+            ),
+        ).filter(search__icontains=search)
+    else:
+        search_events = Event.objects.all()
+
     if parameters[2] == 'news':
         filter_event = make_filter(parameters, DigestList, EventsType, User, Status, django_user)
-        events = Event.objects.filter(**filter_event).order_by('-publication_date')[from_page:to_page]
-        events_quantity = Event.objects.filter(**filter_event).order_by('-publication_date').count()
+        events = search_events.filter(**filter_event).order_by('-publication_date')[from_page:to_page]
+        events_quantity = search_events.filter(**filter_event).order_by('-publication_date').count()
 
     elif parameters[2] == 'volunteer':
         filter_event = make_filter(parameters, DigestList, EventsType, User, Status, django_user)
         events_many = list(EventsParticipant.objects.filter(user=User.objects.get(django_user_id=django_user)).select_related('event').values_list('event__id', flat = True))
-        events = Event.objects.filter(**filter_event, id__in=events_many).order_by('-publication_date')[from_page:to_page]
-        events_quantity = Event.objects.filter(**filter_event, id__in=events_many).order_by('-publication_date').count()
+        events = search_events.filter(**filter_event, id__in=events_many).order_by('-publication_date')[from_page:to_page]
+        events_quantity = search_events.filter(**filter_event, id__in=events_many).order_by('-publication_date').count()
 
     else:
         filter_event = make_filter(parameters, DigestList, EventsType, User, Status, django_user)
-        events = Event.objects.filter(**filter_event, organizer = User.objects.get(django_user_id=django_user)).order_by('-publication_date')[from_page:to_page]
-        events_quantity = Event.objects.filter(**filter_event, organizer = User.objects.get(django_user_id=django_user)).order_by('-publication_date').count()
+        events = search_events.filter(**filter_event, organizer = User.objects.get(django_user_id=django_user)).order_by('-publication_date')[from_page:to_page]
+        events_quantity = search_events.filter(**filter_event, organizer = User.objects.get(django_user_id=django_user)).order_by('-publication_date').count()
+
 
 
     events_subs = {}
