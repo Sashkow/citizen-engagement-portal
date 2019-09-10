@@ -20,10 +20,6 @@ class Command(BaseCommand):
             Calendar.objects.create(name=calendar_name)
 
         calendar = Calendar.objects.create(name=calendar_name, slug = calendar_slug)
-
-
-
-
         events = Event.objects.all()
 
         i = 0

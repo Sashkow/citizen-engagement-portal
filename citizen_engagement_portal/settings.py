@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'volunteer',
     'social-core-master',
     'disqus',
+    'awesome_avatar',
    # 'background_task',
     'leaflet',
     'djgeojson',

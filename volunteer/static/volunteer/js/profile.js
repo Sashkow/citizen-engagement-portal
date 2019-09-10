@@ -503,11 +503,12 @@ var tipVisibility = 0;
         //        console.log($(this).attr('id_event'))
         $('#task_applicate').find('#id_event').val($(this).attr('id_event')).addClass('d-none')
         document.getElementById("id_event").value = $(this).attr('id_event');
+        $("#task_apply").attr('id_event', $(this).attr('id_event'));
     });
 
 
-
-    $(document).on('click', ".btn-subscribe", function() {
+    $(document).on('click', "#task_apply", function() {
+            console.log("task_apply")
             var csrf_token = $('input[name = "csrfmiddlewaretoken"]').last().val();
             var data = {};
             var event_id = $(this).attr('id_event');
@@ -515,7 +516,7 @@ var tipVisibility = 0;
             data.id_event = event_id;
             data['csrfmiddlewaretoken'] = csrf_token;
             data.add = 1;
-            var url = $(this).attr('url_post');
+            var url = '/subscribe/';
 
             $.ajax({
             url: url,
