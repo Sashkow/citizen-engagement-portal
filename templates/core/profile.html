@@ -157,6 +157,13 @@
             <img class = "elem_anim sock" src="{% static 'volunteer/images/zhytomyr_anim/носок(житомир).png'%} ">
             <img class = "elem_hov sock" src="{% static 'volunteer/images/zhytomyr_anim/носок(житомир).png'%} ">
         {% endifequal %}
+        {% ifequal volunteer.city|stringformat:'s' "Львівська" %}
+            <img class = "elem_anim meat" src="{% static 'volunteer/images/drogob_anim/колбаса(анимация).png'%} ">
+            <img class = "elem_hov meat" src="{% static 'volunteer/images/drogob_anim/колбаса(анимация).png'%} ">
+              {% endifequal %}
+
+
+
         <div class="user-name">
             <p get_url="{% url 'profile_edit' %}" class="volunteer-name first-name setting-img">{{volunteer.first_name}} {{volunteer.last_name}}</p>
         </div>
@@ -302,6 +309,12 @@
               animation:'perspective',
 
             })
+            tippy('.meat', {
+              content: 'Дрогобицька ковбаса - найсмачніша!',
+              animation:'perspective',
+
+            })
+
 
 
 

@@ -93,9 +93,9 @@ class EventsSubscribrsAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(EventsSubscribrsAdmin, self).get_queryset(request)
         user = User.objects.filter(django_user_id=request.user).first()
-        if user:
-            city = user.city
-            qs = qs.filter(event__city=city)
+        # if user:
+        #     city = user.city
+        #     qs = qs.filter(event__city=city)
         return qs
 
 admin.site.register(EventsSubscriber, EventsSubscribrsAdmin)
@@ -107,9 +107,9 @@ class EventsPartcipiantAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(EventsPartcipiantAdmin, self).get_queryset(request)
         user = User.objects.filter(django_user_id=request.user).first()
-        if user:
-            city = user.city
-            qs = qs.filter(event__city=city)
+        # if user:
+            # city = user.city
+            # qs = qs.filter(event__city=city)
         return qs
 
 admin.site.register(EventsParticipant, EventsPartcipiantAdmin)
@@ -131,9 +131,9 @@ class EventsPhotoAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(EventsSubscribrsAdmin, self).get_queryset(request)
         user = User.objects.filter(django_user_id=request.user).first()
-        if user:
-            city = user.city
-            qs = qs.filter(event__city=city)
+        # if user:
+            # city = user.city
+            # qs = qs.filter(event__city=city)
         return qs
 admin.site.register(EventsPhoto, EventsPhotoAdmin)
 
@@ -241,9 +241,9 @@ class TaskApplicationAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(TaskApplicationAdmin, self).get_queryset(request)
         user = User.objects.filter(django_user_id=request.user).first()
-        if user:
-            city = user.city
-            qs = qs.filter(event__city=city)
+        # if user:
+        #     city = user.city
+        #     qs = qs.filter(event__city=city)
         return qs
 
 admin.site.register(TaskApplication, TaskApplicationAdmin)

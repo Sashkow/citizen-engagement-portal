@@ -33,10 +33,13 @@
                 {{form.description}}
 
                 <br>
-                 <label for="{{ form.address.id_for_label }}">Адреса:</label>
-                {{form.location.errors}}
-                {{form.location}}
-                <br>
+
+                {{ form.media }}
+                {{ form.location.label_tag }}
+                {{ form.location }}<br>
+                {{ form.longitude }}
+                {{ form.latitude }}
+
                 <label for="{{ form.date_event.id_for_label }}">Дата:</label>
                 {{form.date_event.errors}}
                 {{form.date_event}}

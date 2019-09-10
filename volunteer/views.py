@@ -117,12 +117,14 @@ def usual_login(request):
 
             login(request, user)
             return redirect('home')
+
     else:
         form = AuthenticationForm()
     return render(request, 'registration/login.html', {'login_form': form, 'usual_login':True })
 
 
 def signup(request):
+
     if request.method == 'POST':
 
         user_form = UserCreationForm(request.POST)
@@ -463,6 +465,9 @@ def profile_edit(request):
             print('form is saved')
             redirect_url = reverse('profile')
             return redirect(redirect_url)
+        else:
+            redirect_url = reverse('profile')
+            return redirect(redirect_url)
     else:
         dict_digest = {}
         type_events = EventsType.objects.all()
@@ -666,6 +671,7 @@ def event_edit(request, id = None):
         form.save()
         redirect_url = reverse('profile')
         return redirect(redirect_url)
+
     return_dict = {}
     subs = EventsSubscriber.objects.filter(event = event).count()
     part = EventsParticipant.objects.filter(event = event).count()

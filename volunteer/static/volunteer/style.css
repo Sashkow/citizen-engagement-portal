@@ -2686,12 +2686,17 @@ form ul li{
     position: absolute;
     width: 65px;
     top: -11px;
-    left: 20px;
+    left: 22px;
     opacity: 0;
 }
 
 
-
+.meat {
+    position: absolute;
+    width: 78px;
+    top: 295px;
+    left: 240px;
+    opacity: 0;}
 
 .shar, .tree{
 
@@ -2708,7 +2713,7 @@ form ul li{
 
 }
 
-.sock{
+.sock, .meat{
 
     animation: sock_anim 10s infinite;
 }
@@ -2742,4 +2747,13 @@ form ul li{
         opacity:0;
     }
 
+}
+
+.close{
+    position: absolute !important;
+    right: 20px !important;
+}
+
+.errorlist li{
+    color: red!important;
 }

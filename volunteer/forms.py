@@ -6,7 +6,7 @@ from django.forms import SelectDateWidget, IntegerField, TimeField, EmailField, 
 from django.forms.widgets import HiddenInput, TimeInput, EmailInput, NumberInput, TextInput, Select
 from volunteer.widgets import SelectTimeWidget
 from volunteer.models import City, DjangoUser
-# from osm_field.fields import OSMWidget
+from osm_field.fields import OSMWidget
 
 
 
@@ -62,7 +62,7 @@ class NewEventForm(ModelForm):
         widgets = {
             'date_event': SelectDateWidget(),
             'time_event': TimeInput(),
-            #'location': OSMWidget(lat_field='latitude', lon_field='longitude'),
+            'location': OSMWidget(lat_field='latitude', lon_field='longitude'),
         }
 
 
@@ -91,15 +91,17 @@ class OrgTaskApplicationForm(ModelForm):
 class EditEventForm(ModelForm):
     time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10),
                            label='Час')
+    city = ModelChoiceField(required=True, queryset=City.objects.all(), label="Область", initial=City.objects.all()[0])
+
     class Meta:
         model = Event
-        fields = ['name', 'date_event', 'time_event', 'location', 'city', 'status', 'contact', 'fb_page', 'description']
+        fields = ['name', 'date_event', 'time_event', 'city', 'status', 'contact', 'fb_page', 'description']
         localized_fields = ('name', 'date_event', 'time_event', 'location', 'city', 'status', 'contact', 'description')
         labels = {
             'name': 'Назва',
             'date_event': 'Дата',
             'time_event': 'Час',
-            'location': 'Адреса',
+
             'status': 'Статус',
             'city': 'Область',
             'fb_page': 'Facebook-сторінка',
@@ -111,6 +113,7 @@ class EditEventForm(ModelForm):
         widgets = {
             'date_event': SelectDateWidget(),
             'time_event': TimeInput(),
+
 
 
         }
@@ -133,13 +136,11 @@ class EventOrgTaskForm(ModelForm):
 
 
 class UserForm(ModelForm):
-    city = ModelChoiceField(
-        queryset=City.objects.all(),
-        label='Область', widget=Select(attrs={
-            'placeholder': "Область",
-        }),
-        empty_label='Обери область'
-    )
+
+    city=ModelChoiceField(required=True, queryset=City.objects.all(), label="Область",
+                              initial=City.objects.all()[0])
+
+
 
     class Meta:
         model = User
