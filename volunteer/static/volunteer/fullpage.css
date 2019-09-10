@@ -12,7 +12,7 @@ html.fp-enabled,
 .fp-enabled body {
     margin: 0;
     padding: 0;
-    overflow:scroll;
+    overflow:hidden;
 
     /*Avoid flicker on slides transitions for mobile phones #336 */
     -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -82,11 +82,11 @@ html.fp-enabled,
 }
 }
 .fp-scrollable {
-    overflow: scroll;
+    overflow: hidden;
     position: relative;
 }
 .fp-scroller{
-    overflow: scroll;
+    overflow: hidden;
 }
 .iScrollIndicator{
     border: 0 !important;
