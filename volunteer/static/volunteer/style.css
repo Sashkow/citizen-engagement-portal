@@ -12,9 +12,12 @@ html,body{
 
 body{
     overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch
 }
 .wrapper{
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch
 
 }
 .inline{
@@ -74,6 +77,7 @@ font-family: 'Ubuntu',sans-serif !important;
 }
 
 .category-image-ev{
+    margin:5px 0px;
     max-width: 150px;
     width:100%;
     height:auto!important;
@@ -2037,9 +2041,12 @@ input[type=password]{
 .fp-viewing-0-0{
     all: none;
     overflow: scroll !important;
+    -webkit-overflow-scrolling: touch
 }
+
 html.fp-enabled, .fp-enabled body {
     overflow: scroll !important;
+    -webkit-overflow-scrolling: touch
 }
 .edit-event-form label{
     font-size: 16px;
@@ -2169,6 +2176,7 @@ select {
 }
 .modal-open .modal{
     overflow: scroll !important;
+    -webkit-overflow-scrolling: touch
 }
 
 .flip-card {

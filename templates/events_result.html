@@ -16,7 +16,10 @@
                         <p  class="event-name" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.name }}</p>
                         <p class="event-description  d-none d-sm-block" get_url="{% url 'volunteer_event' id=event.id %}">{{ event.description|truncatechars:150 }}</p>
                     </div>
+
+             {% ifnotequal event.status|stringformat:'s' "Проведено" %}
                         <div class="btn-div align-self-end ">
+
                              {% if events_org|get_item:event.id == 0 %}
                             {% if events_subs|get_item:event.id == 0 %}
                                 {% if events_part|get_item:event.id == 1  %}
@@ -50,7 +53,7 @@
                         {% endif %}
 
                         </div>
-
+                    {% endifnotequal %}
 
 
 
