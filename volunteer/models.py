@@ -277,13 +277,14 @@ class Event(models.Model):
 
     def save(self, *args, **kwargs):
         if self.city:
-            if self.city.city == "Вінниця":
+            if self.city.city == "Вінницька":
                 view_box = [(49.3921, 28.3079), (49.072, 28.6219)]
-            elif self.city.city == "Житомир":
+            elif self.city.city == "Житомирська":
                 view_box = [(52.276012, 25.605223), (50.23924, 28.715773)]
         else:  # khmel
             view_box = [(49.4770, 26.9048), (49.3631, 27.0995)]
-        nom = Nominatim(user_agent="changer.in.ua", view_box=[(49.4770, 26.9048), (49.3631, 27.0995)], bounded=True)
+        nom = Nominatim(user_agent="changer.in.ua", view_box=view_box, bounded=True)
+
         if self.address:
             point = nom.geocode(self.address)
             if point:
