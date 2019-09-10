@@ -24,6 +24,8 @@ def save_user_name(backend, user, response, *args, **kwargs):
 
     if city:
         volunteer.city = city
+    volunteer.first_name = "Твоє"
+    volunteer.last_name = "Ім'я"
 
     if first_name or second_name:
         print("I am in")
