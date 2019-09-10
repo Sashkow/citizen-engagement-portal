@@ -42,15 +42,15 @@ var tipVisibility = 0;
 
             tipVisibility=1;
         });
-         var myFullpage = new fullpage('#fullpage', {
-
-                sectionsColor: ['#491c65', '#fff', '#f5ec9bff', '#cad893ff', '#7bd5b4ff','#bee6d2ff'],
-
-	            menu: '#myMenu',
-                slidesNavigation: true,
-                <!--&lt;!&ndash;scrollBar: true&ndash;&gt;-->
-
-            });
+//         var myFullpage = new fullpage('#fullpage', {
+//
+//                sectionsColor: ['#491c65', '#fff', '#f5ec9bff', '#cad893ff', '#7bd5b4ff','#bee6d2ff'],
+//
+//	            menu: '#myMenu',
+//                slidesNavigation: true,
+//                <!--&lt;!&ndash;scrollBar: true&ndash;&gt;-->
+//
+//            });
             data = {}
     var url = $(this).attr('url_get')
     if( !$('#event-type').length ){

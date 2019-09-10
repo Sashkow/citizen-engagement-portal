@@ -1771,6 +1771,7 @@ svg{
 }
 
 #sidebar{
+        overflow: scroll;
         background-size: 75px auto;
         position:sticky;
         width: 450px;
@@ -2767,4 +2768,9 @@ form ul li{
 
 .errorlist li{
     color: red!important;
+}
+
+
+.user-name{
+    width: 100%;
 }
