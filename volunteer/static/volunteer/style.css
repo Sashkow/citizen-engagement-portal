@@ -236,46 +236,6 @@ font-size: 155%;
 
 /* for mobile */
 
-@media only screen and (max-width: 576px) and (min-height: 550px){
-
-        .slog{
-            margin-top:9vh!important;
-        }
-        .p-slog{
-            padding-top:5vh;
-
-        }
-        .event-name{
-            font-size: 14px;
-
-        }
-        .event-button {
-            height: 32px;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 0px !important;
-            position: relative;
-        }
-        .btn-app-task {
-            background-color: #00bbbbff!important;
-            border-bottom-right-radius: 25px !important;
-            border-top-right-radius: 25px !important;
-            padding-right: 10px !important;
-        }
-        .btn-resubscribe{
-            padding: 0;
-        }
-        .btn-follow{
-            display: none;
-        }
-        .btn-refollow{
-            display: none;
-        }
-
-
-}
-
 
 @media only screen and (max-height: 550px){
 
@@ -406,6 +366,7 @@ font-size: 155%;
     #sidebar{
         background-size: 75px auto;
         width:100vw!important;
+        overflow: scroll;
         display:none;
         min-height:100%;
         box-shadow: 0px -6px 10px grey;
@@ -1771,7 +1732,7 @@ svg{
 }
 
 #sidebar{
-        overflow: scroll;
+
         background-size: 75px auto;
         position:sticky;
         width: 450px;
@@ -2577,6 +2538,7 @@ form ul li{
 .profile-image-1 {
     background: rgba(0,0,0,0);
     height: 190px;
+    z-index: 500;
 
 }
 
@@ -2773,4 +2735,111 @@ form ul li{
 
 .user-name{
     width: 100%;
+}
+
+
+@media only screen and (max-width: 576px) and (min-height: 550px){
+.own-progress-league {
+        background-color: #75f0fb;
+        height: 17px;
+        float: left;
+        position: relative;
+        border-radius: 10px;
+    }
+    .own-progress-bar {
+        height: 17px;
+        width: 180px;
+        background-color: #fff;
+        margin: 10px auto !important;
+        border-radius: 16px;
+        }
+    .own-progress-bar p {
+        font-size: 13px;
+    }
+    .progress_state {
+        float: left;
+        position: absolute;
+        right: -15px;
+        top: -5px;
+    }
+    .quant-ach notif-col {
+        font-size: 14px;
+    }
+    .img_progress_state {
+        height: 40px;
+    }
+    .currency-holder {
+        margin: 0;
+        margin-top: 25px;
+        margin-bottom: 0;
+        width: 100%;
+    }
+    .currency-image {
+        width: 40px;
+        margin: 0 2px;
+    }
+         .shield {
+
+    width: 245px!important;
+    display: inline-block;}
+    .photo-user {
+        width: 125px !important;
+        left: 60px !important;
+        height: 115px !important;
+        top: 45px;
+    }
+    .profile-image{
+        height: 170px !important;
+
+    }
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 170px;
+      perspective: 1000px;
+    }
+    .profile-image-1 {
+        background: rgba(0,0,0,0);
+        height: 170px !important;
+
+    }
+
+        .slog{
+            margin-top:9vh!important;
+        }
+        .p-slog{
+            padding-top:5vh;
+
+        }
+        .event-name{
+            font-size: 14px;
+
+        }
+        .event-button {
+            height: 32px;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0px !important;
+            position: relative;
+        }
+        .btn-app-task {
+            background-color: #00bbbbff!important;
+            border-bottom-right-radius: 25px !important;
+            border-top-right-radius: 25px !important;
+            padding-right: 10px !important;
+        }
+        .btn-resubscribe{
+            padding: 0;
+        }
+        .btn-follow{
+            display: none;
+        }
+        .btn-refollow{
+            display: none;
+        }
+        .volunteer-name {
+        font-size: 20px !important;
+        }
+
 }
