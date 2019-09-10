@@ -2038,6 +2038,9 @@ input[type=password]{
     all: none;
     overflow: scroll !important;
 }
+html.fp-enabled, .fp-enabled body {
+    overflow: scroll !important;
+}
 .edit-event-form label{
     font-size: 16px;
     margin: 10px 0px;

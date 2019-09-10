@@ -143,12 +143,12 @@
     <nav id="sidebar" class="text-center profile-info"  style=" background-color:{{design.background_color}}">
         <div class = "side-background" style="background-image:url({{design.background.url}}); opacity:{{design.background_opacity}}"></div>
          {% csrf_token %}
-        {% ifequal volunteer.city|stringformat:'s' "Хмельницька" %}
-            <img class = "elem_anim shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
-            <img class = "elem_hov shar" src="{% static 'volunteer/images/шарик 2.png'%} ">
-            <img class = "elem_anim shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">
-            <img class = "elem_hov shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">
-        {% endifequal %}
+        <!--{% ifequal volunteer.city|stringformat:'s' "Хмельницька" %}-->
+            <!--<img class = "elem_anim shar" src="{% static 'volunteer/images/шарик 2.png'%} ">-->
+            <!--<img class = "elem_hov shar" src="{% static 'volunteer/images/шарик 2.png'%} ">-->
+            <!--<img class = "elem_anim shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">-->
+            <!--<img class = "elem_hov shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">-->
+        <!--{% endifequal %}-->
         {% ifequal volunteer.city|stringformat:'s' "Житомирська" %}
             <img class = "elem_anim tree" src="{% static 'volunteer/images/zhytomyr_anim/дерево(житомир).png'%} ">
             <img class = "elem_hov tree" src="{% static 'volunteer/images/zhytomyr_anim/дерево(житомир).png'%} ">
