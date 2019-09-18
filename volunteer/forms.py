@@ -29,7 +29,7 @@ class NewEventForm(ModelForm):
                             label='Рекомендована кількість балів')
 
     time_event = TimeField(required=False, widget=SelectTimeWidget(minute_step=10, second_step=10),label='Час події')
-    city = ModelChoiceField(required=True, queryset=City.objects.all(), label="Область", initial=City.objects.all()[0])
+    city = ModelChoiceField(required=True, queryset=City.objects.order_by('city'), label="Область", initial=City.objects.all()[0])
 
 
 
@@ -137,7 +137,7 @@ class EventOrgTaskForm(ModelForm):
 
 class UserForm(ModelForm):
 
-    city=ModelChoiceField(required=True, queryset=City.objects.all(), label="Область",
+    city=ModelChoiceField(required=True, queryset=City.objects.order_by('city'), label="Область",
                               initial=City.objects.all()[0])
 
 
@@ -167,7 +167,7 @@ class ProfileCreationForm(ModelForm):
         'class': 'input-reg'
     }))
     city = ModelChoiceField(
-        queryset=City.objects.all(),
+        queryset=City.objects.order_by('city'),
         label='Область', widget=Select(attrs={
             'placeholder': "Область",
             'class': 'input-reg'
