@@ -18,6 +18,10 @@
     <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
     <script src="{% static 'volunteer/js/live-test.js' %}" type="text/javascript"></script>
     <script src="{% static 'volunteer/js/profileedit.js' %}"></script>
+    <script src="{% static  'volunteer/js/hammerjs/hammer.min.js' %}"></script>
+    <script src="{% static  'volunteer/js/gallery.min.js' %}"></script>
+    <script src="{% static  'volunteer/js/category_tips_gallery.min.js' %}"></script>
+
 
     {% leaflet_js %}
     {% leaflet_css %}
@@ -161,6 +165,16 @@
             <img class = "elem_anim meat" src="{% static 'volunteer/images/drogob_anim/колбаса(анимация).png'%} ">
             <img class = "elem_hov meat" src="{% static 'volunteer/images/drogob_anim/колбаса(анимация).png'%} ">
               {% endifequal %}
+        {% ifequal volunteer.city|stringformat:'s' "Черкаська" %}
+            <img class = "elem_anim snake" src="{% static 'volunteer/images/cherk_anim/змея.png'%} ">
+            <img class = "elem_hov snake" src="{% static 'volunteer/images/cherk_anim/змея.png'%} ">
+            <img class = "elem_anim tower" src="{% static 'volunteer/images/cherk_anim/вышка.png'%} ">
+            <img class = "elem_hov tower" src="{% static 'volunteer/images/cherk_anim/вышка.png'%} ">
+            <img class = "elem_anim temple" src="{% static 'volunteer/images/cherk_anim/храм.png'%} ">
+            <img class = "elem_hov temple" src="{% static 'volunteer/images/cherk_anim/храм.png'%} ">
+            <img class = "elem_anim statue" src="{% static 'volunteer/images/cherk_anim/статуя.png'%} ">
+            <img class = "elem_hov statue" src="{% static 'volunteer/images/cherk_anim/статуя.png'%} ">
+              {% endifequal %}
 
 
 
@@ -227,11 +241,26 @@
         <div class="menu-profile">
 
             <div class="text-left ">
-                <p class="item-menu my-volonter-events">я волонтер</p>
+
+                <div  class="item-menu my-volonter-events">я волонтер
+                        <div class="inline" >
+                           <a href="https://www.youtube.com/watch?v=F2cDY1QXIG4"  target="_blank">
+                             <img class="what-img volunt-hint menu-hint" src="{% static 'volunteer/images/what.png' %}">
+                           </a>
+                        </div>
+                </div>
+
             </div>
 
             <div class="text-left">
-                <p class="item-menu my-org-events">я організатор</p>
+
+                <div  class="item-menu my-org-events">я організатор
+                        <div class="inline" >
+                            <a href="https://www.youtube.com/watch?v=lsHKC1aO6zk"  target="_blank">
+                             <img class="what-img org-hint menu-hint" src="{% static 'volunteer/images/what.png' %}">
+                            </a>
+                        </div>
+                </div>
             </div>
 
 
@@ -240,12 +269,22 @@
             </div>
 
             <div class="text-left">
-                <p class="get-achievements item-menu" get_url="{% url 'achivments' %}">мої досягнення</p>
+
+                <div  class="get-achievements item-menu" get_url="{% url 'achivments' %}">мої досягнення
+                        <div class="inline" >
+                             <a href="https://www.youtube.com/watch?v=K7274sZPzqM"  target="_blank">
+                                 <img class="what-img player-hint menu-hint" src="{% static 'volunteer/images/what.png' %}">
+                                 </a>
+                        </div>
+                </div>
             </div>
 
 
             <div class="text-left">
-                <p class="item-menu" id="open-reg-modal" post_url="{% url 'newevent' %}">організувати подію</p>
+
+                <div  class="item-menu" id="open-reg-modal" post_url="{% url 'newevent' %}"> oрганізувати подію
+
+                </div>
             </div>
 
 
@@ -288,7 +327,28 @@
 
     <!--look here-->
 
+
     <script type="text/javascript">
+            tippy('.tower', {
+              content: 'Черкаська Ейфелева вежа',
+              animation:'perspective',
+
+            })
+            tippy('.statue', {
+              content: 'Місце зустрічі - Замкова гора',
+              animation:'perspective',
+
+            })
+            tippy('.snake', {
+              content: 'Потоцький назвав парк на честь дружини Софії...',
+              animation:'perspective',
+
+            })
+            tippy('.temple', {
+              content: 'Милуйся видом із храму Усіх Святих в селі Хутори!',
+              animation:'perspective',
+
+            })
             tippy('.shar', {
               content: 'Щорічний парад повітряних куль!',
               animation:'perspective',
@@ -331,6 +391,21 @@
             })
               tippy('.first-name', {
               content: 'Відредагуйте свій профіль!',
+              animation:'perspective',
+              placement:'top',
+            })
+              tippy('.player-hint', {
+              content: 'Відео-інструкція для гравця',
+              animation:'perspective',
+              placement:'right-end',
+            })
+              tippy('.org-hint', {
+              content: 'Відео-інструкція для організатора',
+              animation:'perspective',
+              placement:'right-end',
+            })
+              tippy('.volunt-hint', {
+              content: 'Відео-інструкція для волонтера',
               animation:'perspective',
               placement:'right-end',
             })

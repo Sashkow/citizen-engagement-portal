@@ -1,0 +1,18 @@
+<!--{% ifequal volunteer.city|stringformat:'s' "Хмельницька" %}-->
+            <!--<img class = "elem_anim shar" src="{% static 'volunteer/images/шарик 2.png'%} ">-->
+            <!--<img class = "elem_hov shar" src="{% static 'volunteer/images/шарик 2.png'%} ">-->
+            <!--<img class = "elem_anim shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">-->
+            <!--<img class = "elem_hov shar2" src="{% static 'volunteer/images/шарик 2.png'%} ">-->
+<!--{% endifequal %}-->
+{% ifequal volunteer.city|stringformat:'s' "Житомирська" %}
+    <img class = "elem_anim tree" src="{% static 'volunteer/images/zhytomyr_anim/дерево(житомир).png'%} ">
+    <img class = "elem_hov tree" src="{% static 'volunteer/images/zhytomyr_anim/дерево(житомир).png'%} ">
+    <img class = "elem_anim ice-cream" src="{% static 'volunteer/images/zhytomyr_anim/мороженое(житомир).png'%} ">
+    <img class = "elem_hov ice-cream" src="{% static 'volunteer/images/zhytomyr_anim/мороженое(житомир).png'%} ">
+    <img class = "elem_anim sock" src="{% static 'volunteer/images/zhytomyr_anim/носок(житомир).png'%} ">
+    <img class = "elem_hov sock" src="{% static 'volunteer/images/zhytomyr_anim/носок(житомир).png'%} ">
+{% endifequal %}
+{% ifequal volunteer.city|stringformat:'s' "Львівська" %}
+    <img class = "elem_anim meat" src="{% static 'volunteer/images/drogob_anim/колбаса(анимация).png'%} ">
+    <img class = "elem_hov meat" src="{% static 'volunteer/images/drogob_anim/колбаса(анимация).png'%} ">
+      {% endifequal %}

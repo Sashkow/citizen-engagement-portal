@@ -173,6 +173,22 @@ font-size: 155%;
         display: none !important;
 
     }
+    .notif-image {
+    height: 60px !important;
+    margin: 10px !important;
+}
+.notif-description {
+    font-size: 11px;
+}
+notification-name{
+    font-size: 14px!important;
+}
+
+.read{
+    font-size: 12px;
+    margin-top: 20px;
+    padding: 5px;
+}
 }
 @media screen and (max-width: 355px) {
     .nav-add{
@@ -1854,7 +1870,7 @@ button:disabled {
     z-index:400;
     width:50vw;
     border-radius: 5px;
-    background-color:#c6e8b0;
+    background-color:#333333;
     left: 60px;
     top: 40px;
  }
@@ -2557,7 +2573,7 @@ form ul li{
     opacity:0;
 }
 .elem_hov:hover{
-    opacity:0.8;
+    opacity:1;
     -webkit-animation: 0
 }
 
@@ -2671,15 +2687,47 @@ form ul li{
     top: 295px;
     left: 240px;
     opacity: 0;}
+.snake{
+    position: absolute;
+    width: 38px;
+    top: 4px;
+    left: 78.3px;
+    opacity: 0;
+}
 
-.shar, .tree{
+.tower{
+    position: absolute;
+    width: 22px;
+    top: 461px;
+    left: 198.3px;
+    opacity: 0;
+}
+ .temple{
+    position: absolute;
+    width: 22px;
+    width: 23.6px;
+    top: 418px;
+    left: 10.1px;
+    opacity: 0;
+ }
+ .statue{
+    position: absolute;
+    width: 28px;
+    top: 323px;
+    left: 267px;
+    opacity: 0;
+
+ }
+
+
+.shar, .tree, .snake{
 
     animation: city_elem 10s infinite;
 }
 
 @keyframes city_elem{
     10%{
-        opacity:0.5;
+        opacity:0.8;
     }
     30%{
         opacity:0;
@@ -2687,7 +2735,7 @@ form ul li{
 
 }
 
-.sock, .meat{
+.sock, .meat, .tower{
 
     animation: sock_anim 10s infinite;
 }
@@ -2697,7 +2745,7 @@ form ul li{
         opacity:0;
     }
     30%{
-        opacity:0.5;
+        opacity:0.8;
     }
     50%{
         opacity:0;
@@ -2705,7 +2753,7 @@ form ul li{
 
 }
 
-.ice-cream, shar2{
+.ice-cream, shar2, .temple{
 
     animation: ice_cream_anim 10s infinite;
 }
@@ -2715,14 +2763,29 @@ form ul li{
         opacity:0;
     }
     60%{
-        opacity:0.5;
+        opacity:0.8;
     }
     80%{
         opacity:0;
     }
 
 }
+.statue{
 
+    animation: four_anim 10s infinite;
+}
+@keyframes four_anim{
+    70%{
+        opacity:0;
+    }
+    80%{
+        opacity:0.8;
+    }
+    100%{
+        opacity:0;
+    }
+
+}
 .close{
     position: absolute !important;
     right: 20px !important;
@@ -2737,8 +2800,27 @@ form ul li{
     width: 100%;
 }
 
+.menu-hint{
+    margin-left: 10px;
+}
 
 @media only screen and (max-width: 576px) and (min-height: 550px){
+
+.notif-image {
+    height: 60px;
+    margin: 10px;
+}
+.notif-description {
+    font-size: 11px;
+}
+notification-name{
+    font-size: 14px!important;
+}
+
+.read{
+    font-size: 12px;
+    margin-top: 20px;
+}
 .own-progress-league {
         background-color: #75f0fb;
         height: 17px;

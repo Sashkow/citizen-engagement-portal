@@ -211,7 +211,7 @@ def profile(request):
 
     types_events = EventsType.objects.all()
     status_events = Status.objects.all()
-    cities = City.objects.all()
+    cities = City.objects.order_by('city')
 
 
     curr_category = {}
@@ -843,7 +843,7 @@ def replace_coordinates(one, two, three, four):
 @login_required
 def map_show(request):
     volunteer = VolunteerUser.objects.filter(django_user_id=request.user).first()
-    cities = City.objects.all()
+    cities = City.objects.order_by('city')
     # if volunteer:
     #     if volunteer.city:
     #         if volunteer.city.city == "Вінницька":
