@@ -28,8 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '159.89.111.14', 'localhost', 'changer.in.ua', 'www.changer.in.ua']
-
+ALLOWED_HOSTS = ['www.changer.in.ua', '0.0.0.0', '127.0.0.1', '159.89.111.14', 'localhost', 'changer.in.ua']
 
 # Application definition
 
@@ -166,10 +165,10 @@ MEDIA_URL = '/media/'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
-    #'CustomFacebookOauth',
     'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
     'social_core.backends.google.GoogleOpenId',  # for Google authentication
     'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    # 'CustomFacebookOauth',
 
     # 'social_core.backends.telegram.TelegramAuth',
 
@@ -202,6 +201,7 @@ EL_PAGINATION_PER_PAGE = 3
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
+USE_X_FORWARDED_HOST = True
 LOGIN_URL = 'intropage'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'success_oauth'
